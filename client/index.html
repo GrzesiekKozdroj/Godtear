@@ -4,15 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src='https://code.jquery.com/jquery-3.4.1.js' integrity='sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=' crossorigin='anonymous'></script>
     <title>Godtear</title>
-    <link href = "./style/styles.css" rel="stylesheet"/>
-    <script src = "https://unpkg.com/vue"></script>
+    <link rel="stylesheet" type="text/css" href="./styles/style.css"></link>
+    <link rel="stylesheet" type="text/css" href="./styles/_logInScreen.css"></link>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 <body>
-    <div id="vue-app">
-        <h1>{{ greet({time:time, name:this.name}) }}</h1>
-        <h1>job: {{ job }}</h1>
-    </div>
-    <script src = "./code/app.js"></script>
+    <section id="gameScreen">
+        <div id="bandSelection">
+            <div id="selection_guardian" class="selection_section">
+                <div class="selection_backward_frame">
+                    <div class="selection_backward"></div>
+                </div>
+                <div class="selection_heroImg selection_rhodri" style=background-image:url(../../img/Rhodri.png) data-name="Rhodri"></div>
+                <div class="selection_class_banner selection_banner_guardian"></div>
+            </div>
+            <div id="selection_maelstrom" class="selection_section">
+                <div class="selection_backward_frame">
+                    <div class="selection_backward"></div>
+                </div>
+                <div class="selection_heroImg" style=background-image:url(../../img/Titus.png) data-name="Titus"></div>
+                <div class="selection_class_banner selection_banner_maelstrom"></div>
+            </div>
+            <div id="selection_shaper" class="selection_section">
+                <div class="selection_backward_frame">
+                    <div class="selection_backward"></div>
+                </div>
+                <div class="selection_heroImg" style=background-image:url(../../img/Nia.png) data-name="Nia"></div>
+                <div class="selection_class_banner selection_banner_shaper"></div>
+            </div>
+            <div id="selection_slayer" class="selection_section">
+                <div class="selection_backward_frame">
+                    <div class="selection_backward"></div>
+                </div>
+                <div class="selection_heroImg" style=background-image:url(../../img/Lorsann.png) data-name="Nia"></div>
+                <div class="selection_class_banner selection_banner_slayer"></div>
+            </div>
+        </div>
+
+
+
+        <div id="selection_card">
+
+        </div>
+
+
+
+
+        <div id="bandNamePlace">
+            <div id="bandDisplay"></div>
+            <form>
+
+            </form>
+        </div>
+    </section>
+
+    <script src="./code/app.js"></script>
+    <script src="./code/constructor.js"></script>
 </body>
 </html>

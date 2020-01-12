@@ -1,0 +1,31 @@
+{
+  "name": "Godtear",
+  "version": "1.0.0",
+  "description": "\"# Godtear\"",
+  "main": "index.js",
+  "dependencies": {
+    "dont-sniff-mimetype": "^1.1.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.0",
+    "jquery-touch-events": "^1.0.7",
+    "lodash": "^4.17.15",
+    "node": "^12.9.1",
+    "socket.io": "^2.3.0",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrzesiekKozdroj/Godtear.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GrzesiekKozdroj/Godtear/issues"
+  },
+  "homepage": "https://github.com/GrzesiekKozdroj/Godtear#readme"
+}

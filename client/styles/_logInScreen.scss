@@ -1,0 +1,89 @@
+@mixin arrow($color,$direction,$size){
+    @if $direction == top {
+        width: 0; 
+        height: 0; 
+        border-left: $size solid transparent;
+        border-right: $size solid transparent;
+        border-bottom: $size solid $color;
+
+    }@else if $direction == left {
+
+        width: 0; 
+        height: 0; 
+        border-top: $size solid transparent;
+        border-bottom: $size solid transparent; 
+        border-right:$size solid $color;
+
+    }@else if $direction == bottom {
+
+        width: 0; 
+        height: 0; 
+        border-left: $size solid transparent;
+        border-right: $size solid transparent;
+        border-top: $size solid $color;
+
+    } @else if $direction == right {
+
+        width: 0; 
+        height: 0; 
+        border-top: $size solid transparent;
+        border-bottom: $size solid transparent;
+        border-left: $size solid $color;
+    }
+}
+#bandSelection{
+    background:rgb(168, 149, 107);
+    height: 100vh;
+    width:60vh;
+}
+.selection_section{
+    height:25vh;
+    width:100%;
+    box-shadow: inset 0 0 3vh black;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+@mixin selection_hex_image {
+    background-size: cover;
+    background-position: center;
+    width:30%;
+    height:21vh;
+    
+}
+.selection_class_banner{
+    @include selection_hex_image;
+    z-index:2;
+}
+.selection_heroImg{
+    @include selection_hex_image;
+    z-index:1;
+}
+.selection_backward{
+    @include arrow(rgb(89, 204, 224),left,5vh);
+    z-index:2;
+    top:-5vh;
+    left:1vh;
+    position:relative;
+}
+.selection_backward_frame{
+    transform: scale(1.2);
+    @include arrow(rgb(92, 74, 24),left,7vh);
+    border-left: none;
+    z-index:1;
+}
+.selection_banner_shaper{background-image: url('../../img/classShaper.png');}
+.selection_banner_slayer{background-image: url('../../img/classSlayer.png');}
+.selection_banner_maelstrom{background-image: url('../../img/classMaelstrom.png');}
+.selection_banner_guardian{background-image: url('../../img/classGuardian.png');}
+.selection_rhodri{color:white}
+#selection_card{
+    box-shadow: inset 0 0 3vh black;
+    height:100vh;
+    width:95vh;
+    background-color: rgb(107, 95, 68);
+}
+//#guardianSelect
+//#maelstormSelect
+//#shaperSelect
+//#slayerSelect

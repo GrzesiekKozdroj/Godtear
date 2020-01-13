@@ -12,46 +12,32 @@
 </head>
 <body>
     <section id="gameScreen">
-        <div id="bandSelection">
-            <div id="selection_guardian" class="selection_section">
-                <div class="selection_backward_frame">
-                    <div class="selection_backward"></div>
-                </div>
-                <div class="selection_heroImg selection_rhodri" style=background-image:url(../../img/Rhodri.png) data-name="Rhodri"></div>
-                <div class="selection_class_banner selection_banner_guardian"></div>
-            </div>
-            <div id="selection_maelstrom" class="selection_section">
-                <div class="selection_backward_frame">
-                    <div class="selection_backward"></div>
-                </div>
-                <div class="selection_heroImg" style=background-image:url(../../img/Titus.png) data-name="Titus"></div>
-                <div class="selection_class_banner selection_banner_maelstrom"></div>
-            </div>
-            <div id="selection_shaper" class="selection_section">
-                <div class="selection_backward_frame">
-                    <div class="selection_backward"></div>
-                </div>
-                <div class="selection_heroImg" style=background-image:url(../../img/Nia.png) data-name="Nia"></div>
-                <div class="selection_class_banner selection_banner_shaper"></div>
-            </div>
-            <div id="selection_slayer" class="selection_section">
-                <div class="selection_backward_frame">
-                    <div class="selection_backward"></div>
-                </div>
-                <div class="selection_heroImg" style=background-image:url(../../img/Lorsann.png) data-name="Nia"></div>
-                <div class="selection_class_banner selection_banner_slayer"></div>
-            </div>
-        </div>
 
 
 
         <div id="selection_card">
             <div class="selection_card_images">
                     <div class="selection_card_champion">
-                        <div class="selection_card_hexagram" id="card_walk_white">   <div class="top"></div>  <div class="bottom"></div>   </div>
-                        <div class="selection_card_hexagram" id="card_dodge_white">   <div class="top"></div>  <div class="bottom"></div>   </div>
-                        <div class="selection_card_hexagram" id="card_shield_white">   <div class="top"></div>  <div class="bottom"></div>   </div>
-                        <div class="selection_card_hexagram" id="card_heart_white">   <div class="top"></div>  <div class="bottom"></div>   </div>
+                        <div class="selection_card_hexagram" id="card_walk_white">   
+                            <div class="top"></div>  
+                            <div class="bottom"></div>   
+                            <p id="" class="card_attribute">5</p>
+                        </div>
+                        <div class="selection_card_hexagram" id="card_dodge_white">   
+                            <div class="top"></div>  
+                            <div class="bottom"></div>   
+                            <p id="" class="card_attribute">5</p>
+                        </div>
+                        <div class="selection_card_hexagram" id="card_shield_white">   
+                            <div class="top"></div>  
+                            <div class="bottom"></div>   
+                            <p id="" class="card_attribute">5</p>
+                        </div>
+                        <div class="selection_card_hexagram" id="card_heart_white">   
+                            <div class="top"></div>  
+                            <div class="bottom"></div>   
+                            <p id="" class="card_attribute">5</p>
+                        </div>
                         <div class="selection_card_hexagram card_hex_big" >   
                             <div class="top"></div>  
                             <div class="bottom"></div>
@@ -64,10 +50,26 @@
                         </div>
                     </div>
                     <div class="selection_card_champion">
-                        <div class="selection_card_hexagram attribute" id="card_walk_white">   <div class="top"></div>  <div class="bottom"></div>   </div>
-                        <div class="selection_card_hexagram attribute" id="card_dodge_white">   <div class="top"></div>  <div class="bottom"></div>   </div>
-                        <div class="selection_card_hexagram attribute" id="card_shield_white">   <div class="top"></div>  <div class="bottom"></div>   </div>
-                        <div class="selection_card_hexagram attribute" id="card_heart_white">   <div class="top"></div>  <div class="bottom"></div>   </div>
+                        <div class="selection_card_hexagram attribute" id="card_walk_white">   
+                            <div class="top"></div>  
+                            <div class="bottom"></div>   
+                            <p id="" class="card_attribute">5</p>
+                        </div>
+                        <div class="selection_card_hexagram attribute" id="card_dodge_white">   
+                            <div class="top"></div>  
+                            <div class="bottom"></div>   
+                            <p id="" class="card_attribute">5</p>
+                        </div>
+                        <div class="selection_card_hexagram attribute" id="card_shield_white">   
+                            <div class="top"></div>  
+                            <div class="bottom"></div>   
+                            <p id="" class="card_attribute">5</p>
+                        </div>
+                        <div class="selection_card_hexagram attribute" id="card_heart_white">   
+                            <div class="top"></div>  
+                            <div class="bottom"></div>   
+                            <p id="" class="card_attribute">5</p>
+                        </div>
                         <div class="selection_card_hexagram card_hex_big">   
                             <div class="top"></div>  
                             <div class="bottom"></div>
@@ -80,24 +82,62 @@
                        </div>
                     </div>
             </div>
+
+
+
             <div class="selection_card_skills">
-                <div id="champion_card_skills" class="card_skills"></div>
-                <div id="unit_class_skills" class="card_skills skills_unit"></div>
+                <div id="champion_card_skills" class="card_skills">
+                    <div class="card_tab"></div>
+                    <div class="card_list"></div>
+                </div>
+                <div id="unit_class_skills" class="card_skills skills_unit">
+                    <div class="card_tab unit_tab tab_behind"></div>
+                    <div class="card_list"></div>
+                </div>
             </div>
+
+
+
         </div>
 
 
 
 
         <div id="bandNamePlace">
-            <div id="bandDisplay"></div>
-            <form>
-
+            <div id="bandDisplay">
+                <div class="chosen ch_st">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                    <div class="card_heroImg" style=background-image:url(../../img/Lorsann.png)></div>
+                </div>
+                <div class="chosen ch_nd">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                    <div class="card_heroImg" style=background-image:url(../../img/Rhodri.png)></div>
+                </div>
+                <div class="chosen ch_rd">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                    <div class="card_heroImg" ></div>
+                </div>
+            </div>
+            <form id="gameTypeForm">
+                <div id="beginGameButton" type="submit" class="bobo">
+                    <div class="top"></div>
+                    <p class="card_attribute">
+                        play
+                    </p>
+                    <div class="bottom"></div>
+                </div>
+                <input type="text" id="gamePlayerName" class="introductionInfo" placeholder="What shall we call yer?" required>
+                <div id="wronCharWarning"></div>
+                <input type="text" id="gamePlaceName" class="introductionInfo" placeholder="Where you gonna play?" required>
             </form>
         </div>
     </section>
 
-    <script src="./code/app.js"></script>
     <script src="./code/constructor.js"></script>
+    <script src="./code/cardStitcher.js"></script>
+    <script src="./code/app.js"></script>
 </body>
 </html>

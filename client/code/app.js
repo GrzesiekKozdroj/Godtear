@@ -1,6 +1,7 @@
 let bob = false;
 
 $((e) => {
+    $('#gameScreen').prepend(bandSelection());
     $('.hexagon').each(function (e) {
         let that = $(this);
         let row = Number($(this).data('row'));

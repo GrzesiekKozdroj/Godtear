@@ -150,6 +150,18 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     font-size: large;
     font-weight: 900;
 }
+.card_attribute{
+    position: relative;
+    font-size: 6vh;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    top: -1.1vh;
+}
 .card_hex_big{@include hexagonomicron(5)}
 #bandSelection{
     background:rgb(168, 149, 107);
@@ -170,11 +182,10 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     background-position: center;
     width:30%;
     height:21vh;
-    
+    z-index:3;
 }
 .selection_class_banner{
     @include selection_hex_image;
-    z-index:3;
 }
 .selection_heroImg{
     @include selection_hex_image;
@@ -230,31 +241,35 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     box-shadow: inset 0 0 3vh black;
     background:rgb(168, 149, 107);
     display:flex;
+    flex-wrap: wrap;
     height:100vh;
     width:calc(100vw - 155vh);
 }
-.selection_card_skills{
-    width:100%;
-    height:63vh;
-    box-shadow: inset 0 0 3vh black;
+@mixin white_attrib{
+    color:black;
+    text-shadow: 0 0 .3vh white, 0 0 .2vh white, 0 0 .4vh white, 0 0 .5vh white, 0 0 .7vh white, 0 0 .6vh white;
 }
-#card_walk_white{background-image: url('../../img/walk_white.svg'); color:'black';}
-#card_walk_black{background-image: url('../../img/walk_black.svg'); color:'white';}
+@mixin black_attrib{
+    color:white;
+    text-shadow: 0 0 .3vh black, 0 0 .2vh black, 0 0 .4vh black, 0 0 .5vh black, 0 0 .7vh black, 0 0 .6vh black;
+}
+#card_walk_white{background-image: url('../../img/walk_white.svg'); @include white_attrib;}
+#card_walk_black{background-image: url('../../img/walk_black.svg'); @include black_attrib;}
 
-#card_dodge_white{background-image: url('../../img/dodge_white.svg'); color:'black';}
-#card_dodge_black{background-image: url('../../img/dodge_black.svg'); color:'white';}
+#card_dodge_white{background-image: url('../../img/dodge_white.svg'); @include white_attrib;}
+#card_dodge_black{background-image: url('../../img/dodge_black.svg'); @include black_attrib;}
 
-#card_shield_white{background-image: url('../../img/shield_white.svg'); color:'black';}
-#card_shield_black{background-image: url('../../img/shield_black.svg'); color:'white';}
+#card_shield_white{background-image: url('../../img/shield_white.svg'); @include white_attrib;}
+#card_shield_black{background-image: url('../../img/shield_black.svg'); @include black_attrib;}
 
-#card_heart_white{background-image: url('../../img/heart_white.svg'); color:'black';}
-#card_heart_black{background-image: url('../../img/heart_black.svg'); color:'white';}
+#card_heart_white{background-image: url('../../img/heart_white.svg'); @include white_attrib;}
+#card_heart_black{background-image: url('../../img/heart_black.svg'); @include black_attrib;}
 .card_heroImg{
     position: relative;
     width: 22vh;
     height: 21vh;
     background-size: cover;
-    top: -7vh;
+    top: -7.5vh;
     left: -3.5vh;
     z-index: 3;
 }
@@ -262,3 +277,113 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
 //#maelstormSelect
 //#shaperSelect
 //#slayerSelect
+
+.selection_card_skills{
+    width:100%;
+    height:63vh;
+    box-shadow: inset 0 0 3vh black;
+}
+.card_skills{
+    box-shadow: inset 0 0 3vh black;
+    width:100%;
+    height:63vh;
+    display:flex;
+    flex-wrap:wrap;
+    .card_tab{
+        //box-shadow: inset 0 0 3vh black;
+        width:50%;
+        height:10.5vh;
+        position: relative;
+        top:0;
+        border-right: .3vh solid rgb(58, 49, 49);
+        border-top: .3vh solid rgb(58, 49, 49);
+        border-left: .3vh solid rgb(58, 49, 49);
+    }
+    .card_list{
+        //box-shadow: inset 0 0 3vh black;
+        width:100%;
+        height:52vh;
+        position:relative;
+        top:0;
+        left:0;
+        overflow-y: hidden;
+    }
+}
+.skills_unit{
+    position:relative;
+    top:-63vh;
+    left:0;
+}
+.unit_tab{
+    left:50%;
+}
+.tab_behind{
+    border-bottom: .3vh solid rgb(58, 49, 49);
+    box-shadow: inset 0 0 3vh black;
+}
+
+.introductionInfo{
+    margin: 5% 7% 0 7%;
+    width: 86%;
+    height: 14vh;
+    color: white;
+    background: linear-gradient(0.25turn, darkolivegreen, #636044 20%, #636044 80%, darkolivegreen);
+    border-top: 0.8vw solid #866511;
+    border-bottom: 0.7vw solid #866511;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 5%;
+    text-align: center;
+    font-size: 2vw;
+    font-weight: 500;
+    &:required {
+        box-shadow:none;
+    }    
+}
+.bobo{
+    p{padding-top:2vh;}
+    @include hexagonomicron(6);
+    @include white_attrib;
+    background-color: blue;
+    color:rgb(241, 227, 187); 
+    &:hover{
+        box-shadow: 0;
+    }
+    margin: 4vh auto;
+}
+#gameTypeForm{
+    width:calc(100vw - 155vh);
+    height:63vh;
+}
+#bandDisplay{
+    width:calc(100vw - 155vh);
+    height:27vh;
+    margin-top:10vh;
+    display:flex;
+    flex-wrap:wrap;
+    .chosen{
+        @include hexagonomicron(6);
+        .card_heroImg{
+            @include selection_hex_image;
+            width:100%;
+            top: -6.5vh;
+            left: 0;
+        }
+        box-shadow: 0 0 3vh black;
+    }
+}
+    .ch_st{
+        top:12vh;
+        left:8vh;
+        position:relative;
+    }
+    .ch_nd{
+        top:-4vh;
+        left:1vh;
+        position:relative;
+    }
+    .ch_rd{
+        top: 12vh;
+        left: -6vh;
+        position:relative;
+    }

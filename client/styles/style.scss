@@ -3,10 +3,10 @@
     margin:0;
     padding:0;
     box-sizing: border-box;
+    //box-shadow: inset 0 0 3vh black;
     //border:.5px solid red;
 }
 @import 'logInScreen';
-
 
 $sA: 12;
 $viewHeight: 100vh;
@@ -33,7 +33,6 @@ $hexAfterHeight: ( .4965 / $sA * $viewHeight);
 $hexBottom: (-.353553 / $sA * $viewHeight);
 $hexBottomSize: (.098995 / $sA * $viewHeight);
 $hexMinusQuarter: (-.248261 / $sA * 100vh);
-
 
 $colorFillHex: transparent;
 .hexagon {
@@ -124,9 +123,6 @@ $colorFillHex: transparent;
     display:flex;
     flex-wrap:wrap;
     justify-content: space-evenly;
-    padding-top:3vh;
-    background-image: url("https://image.shutterstock.com/image-photo/stadium-grass-260nw-493319311.jpg");
-    background-size: cover;
 }
 .shelf{
     width:$shelfWidth;

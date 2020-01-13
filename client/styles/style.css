@@ -4,10 +4,331 @@
   box-sizing: border-box;
 }
 
+.selection_card_champion {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  PADDING: 2vh;
+}
+
+.selection_card_stats {
+  width: 95vh;
+  height: 100%;
+  display: flex;
+}
+
+.selection_card_hexagram {
+  position: relative;
+  width: 10vh;
+  height: 5.774vh;
+  margin: 1.787vh 0;
+  background-size: auto 9.93042vh;
+  background-position: center;
+  /* offset-x | offset-y | blur-radius | spread-radius | color */
+  border-left: solid 0.7vh #333333;
+  border-right: solid 0.7vh #333333;
+  padding: 1vh;
+}
+
+.selection_card_hexagram:after {
+  content: "";
+  position: absolute;
+  top: 0.40415vh;
+  left: 0;
+  width: 8.6vh;
+  height: 4.965vh;
+  z-index: 2;
+  background: inherit;
+}
+
+.selection_card_hexagram img {
+  height: 11.6665vh;
+  width: 10.5vh;
+  position: relative;
+  top: -3.426vh;
+  left: -0.89374vh;
+  z-index: 2;
+}
+
+.selection_card_hexagram .top, .selection_card_hexagram .bottom {
+  position: absolute;
+  z-index: 1;
+  width: 7.071vh;
+  height: 7.071vh;
+  overflow: hidden;
+  -webkit-transform: scaleY(0.5774) rotate(-45deg);
+  -ms-transform: scaleY(0.5774) rotate(-45deg);
+  transform: scaleY(0.5774) rotate(-45deg);
+  background: inherit;
+  left: 0.764vh;
+}
+
+.selection_card_hexagram .top:before, .selection_card_hexagram .top:after, .selection_card_hexagram .bottom:before, .selection_card_hexagram .bottom:after {
+  content: "";
+  position: absolute;
+  width: 8.6vh;
+  height: 4.965vh;
+  -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-2.48261vh);
+  -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-2.48261vh);
+  transform: rotate(45deg) scaleY(1.7321) translateY(-2.48261vh);
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  background: inherit;
+}
+
+.selection_card_hexagram .top {
+  top: -3.53553vh;
+  border-top: solid 0.98995vh #333333;
+  border-right: solid 0.98995vh #333333;
+}
+
+.selection_card_hexagram .top:after {
+  background-position: center top;
+}
+
+.selection_card_hexagram .bottom {
+  bottom: -3.53553vh;
+  border-bottom: solid 0.98995vh #333333;
+  border-left: solid 0.98995vh #333333;
+}
+
+.selection_card_hexagram .bottom:after {
+  background-position: center bottom;
+}
+
+.card_hex_big {
+  position: relative;
+  width: 20vh;
+  height: 11.548vh;
+  margin: 3.574vh 0;
+  background-size: auto 19.86084vh;
+  background-position: center;
+  /* offset-x | offset-y | blur-radius | spread-radius | color */
+  border-left: solid 1.4vh #333333;
+  border-right: solid 1.4vh #333333;
+}
+
+.card_hex_big:after {
+  content: "";
+  position: absolute;
+  top: 0.8083vh;
+  left: 0;
+  width: 17.2vh;
+  height: 9.93vh;
+  z-index: 2;
+  background: inherit;
+}
+
+.card_hex_big img {
+  height: 23.333vh;
+  width: 21vh;
+  position: relative;
+  top: -6.852vh;
+  left: -1.78748vh;
+  z-index: 2;
+}
+
+.card_hex_big .top, .card_hex_big .bottom {
+  position: absolute;
+  z-index: 1;
+  width: 14.142vh;
+  height: 14.142vh;
+  overflow: hidden;
+  -webkit-transform: scaleY(0.5774) rotate(-45deg);
+  -ms-transform: scaleY(0.5774) rotate(-45deg);
+  transform: scaleY(0.5774) rotate(-45deg);
+  background: inherit;
+  left: 1.528vh;
+}
+
+.card_hex_big .top:before, .card_hex_big .top:after, .card_hex_big .bottom:before, .card_hex_big .bottom:after {
+  content: "";
+  position: absolute;
+  width: 17.2vh;
+  height: 9.93vh;
+  -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-4.96522vh);
+  -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-4.96522vh);
+  transform: rotate(45deg) scaleY(1.7321) translateY(-4.96522vh);
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  background: inherit;
+}
+
+.card_hex_big .top {
+  top: -7.07106vh;
+  border-top: solid 1.9799vh #333333;
+  border-right: solid 1.9799vh #333333;
+}
+
+.card_hex_big .top:after {
+  background-position: center top;
+}
+
+.card_hex_big .bottom {
+  bottom: -7.07106vh;
+  border-bottom: solid 1.9799vh #333333;
+  border-left: solid 1.9799vh #333333;
+}
+
+.card_hex_big .bottom:after {
+  background-position: center bottom;
+}
+
 #bandSelection {
   background: #a8956b;
   height: 100vh;
-  width: 28vw;
+  width: 60vh;
+}
+
+.selection_section {
+  height: 25vh;
+  width: 100%;
+  box-shadow: inset 0 0 3vh black;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-position: center;
+}
+
+.selection_class_banner {
+  background-size: cover;
+  background-position: center;
+  width: 30%;
+  height: 21vh;
+  z-index: 3;
+}
+
+.selection_heroImg {
+  background-size: cover;
+  background-position: center;
+  width: 30%;
+  height: 21vh;
+  z-index: 2;
+}
+
+.selection_backward {
+  width: 0;
+  height: 0;
+  border-top: 5vh solid transparent;
+  border-bottom: 5vh solid transparent;
+  border-right: 5vh solid #b9d8d4;
+  z-index: 3;
+  top: -5vh;
+  left: 1vh;
+  position: relative;
+}
+
+.selection_backward_frame {
+  transform: scale(1.2);
+  width: 0;
+  height: 0;
+  border-top: 7vh solid transparent;
+  border-bottom: 7vh solid transparent;
+  border-right: 7vh solid #5c4a18;
+  border-left: none;
+  z-index: 2;
+}
+
+#selection_guardian:after {
+  background-image: url("../../img/classGuardian.png");
+  content: "";
+  opacity: 0.32;
+  left: 0;
+  width: 60vh;
+  height: 25vh;
+  position: absolute;
+  background-position: center;
+  z-index: 1;
+  box-shadow: inset 0 0 1vh black, inset 0 0 2vh black, inset 0 0 3vh black, inset 0 0 4vh black, inset 0 0 5vh black;
+  top: 0vh;
+}
+
+#selection_shaper:after {
+  background-image: url("../../img/classShaper.png");
+  content: "";
+  opacity: 0.32;
+  left: 0;
+  width: 60vh;
+  height: 25vh;
+  position: absolute;
+  background-position: center;
+  z-index: 1;
+  box-shadow: inset 0 0 1vh black, inset 0 0 2vh black, inset 0 0 3vh black, inset 0 0 4vh black, inset 0 0 5vh black;
+  top: 25vh;
+}
+
+#selection_slayer:after {
+  background-image: url("../../img/classSlayer.png");
+  content: "";
+  opacity: 0.32;
+  left: 0;
+  width: 60vh;
+  height: 25vh;
+  position: absolute;
+  background-position: center;
+  z-index: 1;
+  box-shadow: inset 0 0 1vh black, inset 0 0 2vh black, inset 0 0 3vh black, inset 0 0 4vh black, inset 0 0 5vh black;
+  top: 50vh;
+}
+
+#selection_maelstrom:after {
+  background-image: url("../../img/classMaelstrom.png");
+  content: "";
+  opacity: 0.32;
+  left: 0;
+  width: 60vh;
+  height: 25vh;
+  position: absolute;
+  background-position: center;
+  z-index: 1;
+  box-shadow: inset 0 0 1vh black, inset 0 0 2vh black, inset 0 0 3vh black, inset 0 0 4vh black, inset 0 0 5vh black;
+  top: 75vh;
+}
+
+.selection_banner_shaper {
+  background-image: url("../../img/classShaper.png");
+}
+
+.selection_banner_slayer {
+  background-image: url("../../img/classSlayer.png");
+}
+
+.selection_banner_maelstrom {
+  background-image: url("../../img/classMaelstrom.png");
+}
+
+.selection_banner_guardian {
+  background-image: url("../../img/classGuardian.png");
+}
+
+.selection_rhodri {
+  color: white;
+}
+
+#selection_card {
+  box-shadow: inset 0 0 3vh black;
+  height: 100vh;
+  width: 95vh;
+  background-color: #6b5f44;
+}
+
+.selection_card_images {
+  width: 95vh;
+  height: 37vh;
+  display: flex;
+}
+
+#bandNamePlace {
+  box-shadow: inset 0 0 3vh black;
+  background: #a8956b;
+  display: flex;
+  height: 100vh;
+  width: calc(100vw - 155vh);
 }
 
 .hexagon {
@@ -98,9 +419,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  padding-top: 3vh;
-  background-image: url("https://image.shutterstock.com/image-photo/stadium-grass-260nw-493319311.jpg");
-  background-size: cover;
 }
 
 .shelf {

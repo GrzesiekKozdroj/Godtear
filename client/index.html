@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src='https://code.jquery.com/jquery-3.4.1.js' integrity='sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=' crossorigin='anonymous'></script>
     <title>Godtear</title>
-    <link rel="stylesheet" type="text/css" href="./styles/style.css"></link>
-    <link rel="stylesheet" type="text/css" href="./styles/_logInScreen.css"></link>
+    <link rel="stylesheet" type="text/css" href="./styles/style.css"/>
+    <link rel="stylesheet" type="text/css" href="./styles/_logInScreen.css"/>
+    <link rel="stylesheet" type="text/css" href="./styles/__breakPoints.css"/>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 <body>
@@ -108,20 +109,18 @@
                 <div class="chosen ch_st">
                     <div class="top"></div>
                     <div class="bottom"></div>
-                    <div class="card_heroImg" style=background-image:url(../../img/Lorsann.png)></div>
+                    <div class="card_heroImg" style=background-image:url(./img/Lorsann.png)></div>
                 </div>
                 <div class="chosen ch_nd">
                     <div class="top"></div>
                     <div class="bottom"></div>
-                    <div class="card_heroImg" style=background-image:url(../../img/Rhodri.png)></div>
+                    <div class="card_heroImg" style=background-image:url(./img/Rhodri.png)></div>
                 </div>
                 <div class="chosen ch_rd">
                     <div class="top"></div>
                     <div class="bottom"></div>
                     <div class="card_heroImg" ></div>
                 </div>
-            </div>
-            <form id="gameTypeForm">
                 <div id="beginGameButton" type="submit" class="bobo">
                     <div class="top"></div>
                     <p class="card_attribute">
@@ -129,9 +128,11 @@
                     </p>
                     <div class="bottom"></div>
                 </div>
-                <input type="text" id="gamePlayerName" class="introductionInfo" placeholder="What shall we call yer?" required>
+            </div>
+            <form id="gameTypeForm">
+                <input type="text" id="gamePlayerName" class="introductionInfo" placeholder="nickname" required>
                 <div id="wronCharWarning"></div>
-                <input type="text" id="gamePlaceName" class="introductionInfo" placeholder="Where you gonna play?" required>
+                <input type="text" id="gamePlaceName" class="introductionInfo" placeholder="battlefield" required>
             </form>
         </div>
     </section>

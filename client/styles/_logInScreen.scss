@@ -166,7 +166,7 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
 #bandSelection{
     background:rgb(168, 149, 107);
     height: 100vh;
-    width:60vh;
+    width:30vw;
 }
 .selection_section{
     height:25vh;
@@ -180,7 +180,7 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
 @mixin selection_hex_image {
     background-size: cover;
     background-position: center;
-    width:30%;
+    width:19vh;
     height:21vh;
     z-index:3;
 }
@@ -208,7 +208,7 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     content: "";
     opacity: 0.32;
     left: 0;
-    width: 60vh;
+    width: 30vw;
     height: 25vh;
     position: absolute;
     background-position: center;
@@ -218,9 +218,9 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     box-shadow: inset 0 0 1vh black, inset 0 0 2vh black, inset 0 0 3vh black, inset 0 0 4vh black, inset 0 0 5vh black;
 }
 #selection_guardian:after{background-image: url('../../img/classGuardian.png'); @include opacifier;top:0vh}
-#selection_shaper:after{background-image: url('../../img/classShaper.png'); @include opacifier;top:25vh}
-#selection_slayer:after{background-image: url('../../img/classSlayer.png'); @include opacifier;top:50vh}
-#selection_maelstrom:after{background-image: url('../../img/classMaelstrom.png'); @include opacifier;top:75vh}
+#selection_shaper:after{background-image: url('../../img/classShaper.png'); @include opacifier;top:50vh}
+#selection_slayer:after{background-image: url('../../img/classSlayer.png'); @include opacifier;top:75vh}
+#selection_maelstrom:after{background-image: url('../../img/classMaelstrom.png'); @include opacifier;top:25vh}
 .selection_banner_shaper{background-image: url('../../img/classShaper.png');}
 .selection_banner_slayer{background-image: url('../../img/classSlayer.png');}
 .selection_banner_maelstrom{background-image: url('../../img/classMaelstrom.png');}
@@ -229,11 +229,11 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
 #selection_card{
     box-shadow: inset 0 0 3vh black;
     height:100vh;
-    width:95vh;
+    width:48vw;
     background-color: rgb(107, 95, 68);
 }
 .selection_card_images{
-    width:95vh;
+    width:100%;
     height:37vh;
     display:flex;
 }
@@ -243,7 +243,7 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     display:flex;
     flex-wrap: wrap;
     height:100vh;
-    width:calc(100vw - 155vh);
+    width:22vw;
 }
 @mixin white_attrib{
     color:black;
@@ -282,6 +282,8 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     width:100%;
     height:63vh;
     box-shadow: inset 0 0 3vh black;
+    display:flex;
+    flex-wrap:wrap;
 }
 .card_skills{
     box-shadow: inset 0 0 3vh black;
@@ -323,8 +325,11 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
 }
 
 .introductionInfo{
-    margin: 5% 7% 0 7%;
-    width: 86%;
+    margin-top: 5%;
+    margin-right: 6%;
+    margin-bottom: 0;
+    margin-left: 6%;
+    width: 88%;
     height: 14vh;
     color: white;
     background: linear-gradient(0.25turn, darkolivegreen, #636044 20%, #636044 80%, darkolivegreen);
@@ -349,15 +354,16 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     &:hover{
         box-shadow: 0;
     }
-    margin: 4vh auto;
+    left:-.75vw;
+    top:3vh;
 }
 #gameTypeForm{
-    width:calc(100vw - 155vh);
+    width:22vw;
     height:63vh;
 }
 #bandDisplay{
-    width:calc(100vw - 155vh);
-    height:27vh;
+    width:22vw;
+    height:49vh;
     margin-top:10vh;
     display:flex;
     flex-wrap:wrap;
@@ -369,21 +375,21 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
             top: -6.5vh;
             left: 0;
         }
-        box-shadow: 0 0 3vh black;
     }
 }
     .ch_st{
         top:12vh;
-        left:8vh;
+        left:5vh;
         position:relative;
     }
     .ch_nd{
         top:-4vh;
-        left:1vh;
+        left:-3vh;
         position:relative;
     }
     .ch_rd{
-        top: 12vh;
-        left: -6vh;
+        top: -12.5vh;
+        left: 23vh;
         position:relative;
     }
+    .bobo{left:-1.75vw;}

@@ -194,7 +194,7 @@
 #bandSelection {
   background: #a8956b;
   height: 100vh;
-  width: 60vh;
+  width: 30vw;
 }
 
 .selection_section {
@@ -210,7 +210,7 @@
 .selection_class_banner {
   background-size: cover;
   background-position: center;
-  width: 30%;
+  width: 19vh;
   height: 21vh;
   z-index: 3;
 }
@@ -218,7 +218,7 @@
 .selection_heroImg {
   background-size: cover;
   background-position: center;
-  width: 30%;
+  width: 19vh;
   height: 21vh;
   z-index: 3;
   z-index: 2;
@@ -252,7 +252,7 @@
   content: "";
   opacity: 0.32;
   left: 0;
-  width: 60vh;
+  width: 30vw;
   height: 25vh;
   position: absolute;
   background-position: center;
@@ -268,23 +268,7 @@
   content: "";
   opacity: 0.32;
   left: 0;
-  width: 60vh;
-  height: 25vh;
-  position: absolute;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: 1;
-  box-shadow: inset 0 0 1vh black, inset 0 0 2vh black, inset 0 0 3vh black, inset 0 0 4vh black, inset 0 0 5vh black;
-  top: 25vh;
-}
-
-#selection_slayer:after {
-  background-image: url("../../img/classSlayer.png");
-  content: "";
-  opacity: 0.32;
-  left: 0;
-  width: 60vh;
+  width: 30vw;
   height: 25vh;
   position: absolute;
   background-position: center;
@@ -295,12 +279,12 @@
   top: 50vh;
 }
 
-#selection_maelstrom:after {
-  background-image: url("../../img/classMaelstrom.png");
+#selection_slayer:after {
+  background-image: url("../../img/classSlayer.png");
   content: "";
   opacity: 0.32;
   left: 0;
-  width: 60vh;
+  width: 30vw;
   height: 25vh;
   position: absolute;
   background-position: center;
@@ -309,6 +293,22 @@
   z-index: 1;
   box-shadow: inset 0 0 1vh black, inset 0 0 2vh black, inset 0 0 3vh black, inset 0 0 4vh black, inset 0 0 5vh black;
   top: 75vh;
+}
+
+#selection_maelstrom:after {
+  background-image: url("../../img/classMaelstrom.png");
+  content: "";
+  opacity: 0.32;
+  left: 0;
+  width: 30vw;
+  height: 25vh;
+  position: absolute;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 1;
+  box-shadow: inset 0 0 1vh black, inset 0 0 2vh black, inset 0 0 3vh black, inset 0 0 4vh black, inset 0 0 5vh black;
+  top: 25vh;
 }
 
 .selection_banner_shaper {
@@ -334,12 +334,12 @@
 #selection_card {
   box-shadow: inset 0 0 3vh black;
   height: 100vh;
-  width: 95vh;
+  width: 48vw;
   background-color: #6b5f44;
 }
 
 .selection_card_images {
-  width: 95vh;
+  width: 100%;
   height: 37vh;
   display: flex;
 }
@@ -350,7 +350,7 @@
   display: flex;
   flex-wrap: wrap;
   height: 100vh;
-  width: calc(100vw - 155vh);
+  width: 22vw;
 }
 
 #card_walk_white {
@@ -415,6 +415,8 @@
   width: 100%;
   height: 63vh;
   box-shadow: inset 0 0 3vh black;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .card_skills {
@@ -460,8 +462,11 @@
 }
 
 .introductionInfo {
-  margin: 5% 7% 0 7%;
-  width: 86%;
+  margin-top: 5%;
+  margin-right: 6%;
+  margin-bottom: 0;
+  margin-left: 6%;
+  width: 88%;
   height: 14vh;
   color: white;
   background: linear-gradient(0.25turn, darkolivegreen, #636044 20%, #636044 80%, darkolivegreen);
@@ -493,7 +498,8 @@
   text-shadow: 0 0 .3vh white, 0 0 .2vh white, 0 0 .4vh white, 0 0 .5vh white, 0 0 .7vh white, 0 0 .6vh white;
   background-color: blue;
   color: #f1e3bb;
-  margin: 4vh auto;
+  left: -.75vw;
+  top: 3vh;
 }
 
 .bobo p {
@@ -572,13 +578,13 @@
 }
 
 #gameTypeForm {
-  width: calc(100vw - 155vh);
+  width: 22vw;
   height: 63vh;
 }
 
 #bandDisplay {
-  width: calc(100vw - 155vh);
-  height: 27vh;
+  width: 22vw;
+  height: 49vh;
   margin-top: 10vh;
   display: flex;
   flex-wrap: wrap;
@@ -594,7 +600,6 @@
   /* offset-x | offset-y | blur-radius | spread-radius | color */
   border-left: solid 1.16667vh #333333;
   border-right: solid 1.16667vh #333333;
-  box-shadow: 0 0 3vh black;
 }
 
 #bandDisplay .chosen:after {
@@ -667,7 +672,7 @@
 #bandDisplay .chosen .card_heroImg {
   background-size: cover;
   background-position: center;
-  width: 30%;
+  width: 19vh;
   height: 21vh;
   z-index: 3;
   width: 100%;
@@ -677,18 +682,22 @@
 
 .ch_st {
   top: 12vh;
-  left: 8vh;
+  left: 5vh;
   position: relative;
 }
 
 .ch_nd {
   top: -4vh;
-  left: 1vh;
+  left: -3vh;
   position: relative;
 }
 
 .ch_rd {
-  top: 12vh;
-  left: -6vh;
+  top: -12.5vh;
+  left: 23vh;
   position: relative;
+}
+
+.bobo {
+  left: -1.75vw;
 }

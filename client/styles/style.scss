@@ -6,7 +6,7 @@
     //box-shadow: inset 0 0 3vh black;
     //border:.5px solid red;
 }
-@import 'logInScreen';
+//@import 'logInScreen';
 
 $sA: 12;
 $viewHeight: 100vh;
@@ -124,6 +124,7 @@ $colorFillHex: transparent;
     flex-wrap:wrap;
     justify-content: space-evenly;
 }
+
 
 .shelf{
     width:$shelfWidth;

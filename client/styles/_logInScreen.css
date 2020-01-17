@@ -5,7 +5,6 @@
   align-items: center;
   width: 50%;
   height: 100%;
-  PADDING: 2vh;
 }
 
 .selection_card_stats {
@@ -486,20 +485,18 @@
 
 .bobo {
   position: relative;
-  width: 16.66667vh;
-  height: 9.62333vh;
-  margin: 2.97833vh 0;
-  background-size: auto 16.5507vh;
+  width: 14.28571vh;
+  height: 8.24857vh;
+  margin: 2.55286vh 0;
+  background-size: auto 14.18631vh;
   background-position: center;
   /* offset-x | offset-y | blur-radius | spread-radius | color */
-  border-left: solid 1.16667vh #333333;
-  border-right: solid 1.16667vh #333333;
+  border-left: solid 1vh #333333;
+  border-right: solid 1vh #333333;
   color: black;
   text-shadow: 0 0 .3vh white, 0 0 .2vh white, 0 0 .4vh white, 0 0 .5vh white, 0 0 .7vh white, 0 0 .6vh white;
   background-color: blue;
   color: #f1e3bb;
-  left: -.75vw;
-  top: 3vh;
 }
 
 .bobo p {
@@ -509,44 +506,44 @@
 .bobo:after {
   content: "";
   position: absolute;
-  top: 0.67358vh;
+  top: 0.57736vh;
   left: 0;
-  width: 14.33333vh;
-  height: 8.275vh;
+  width: 12.28571vh;
+  height: 7.09286vh;
   z-index: 2;
   background: inherit;
 }
 
 .bobo img {
-  height: 19.44417vh;
-  width: 17.5vh;
+  height: 16.66643vh;
+  width: 15vh;
   position: relative;
-  top: -5.71vh;
-  left: -1.48957vh;
+  top: -4.89429vh;
+  left: -1.27677vh;
   z-index: 2;
 }
 
 .bobo .top, .bobo .bottom {
   position: absolute;
   z-index: 1;
-  width: 11.785vh;
-  height: 11.785vh;
+  width: 10.10143vh;
+  height: 10.10143vh;
   overflow: hidden;
   -webkit-transform: scaleY(0.5774) rotate(-45deg);
   -ms-transform: scaleY(0.5774) rotate(-45deg);
   transform: scaleY(0.5774) rotate(-45deg);
   background: inherit;
-  left: 1.27333vh;
+  left: 1.09143vh;
 }
 
 .bobo .top:before, .bobo .top:after, .bobo .bottom:before, .bobo .bottom:after {
   content: "";
   position: absolute;
-  width: 14.33333vh;
-  height: 8.275vh;
-  -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-4.13768vh);
-  -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-4.13768vh);
-  transform: rotate(45deg) scaleY(1.7321) translateY(-4.13768vh);
+  width: 12.28571vh;
+  height: 7.09286vh;
+  -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-3.54659vh);
+  -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-3.54659vh);
+  transform: rotate(45deg) scaleY(1.7321) translateY(-3.54659vh);
   -webkit-transform-origin: 0 0;
   -ms-transform-origin: 0 0;
   transform-origin: 0 0;
@@ -554,9 +551,9 @@
 }
 
 .bobo .top {
-  top: -5.89255vh;
-  border-top: solid 1.64992vh #333333;
-  border-right: solid 1.64992vh #333333;
+  top: -5.05076vh;
+  border-top: solid 1.41421vh #333333;
+  border-right: solid 1.41421vh #333333;
 }
 
 .bobo .top:after {
@@ -564,9 +561,9 @@
 }
 
 .bobo .bottom {
-  bottom: -5.89255vh;
-  border-bottom: solid 1.64992vh #333333;
-  border-left: solid 1.64992vh #333333;
+  bottom: -5.05076vh;
+  border-bottom: solid 1.41421vh #333333;
+  border-left: solid 1.41421vh #333333;
 }
 
 .bobo .bottom:after {
@@ -588,116 +585,116 @@
   margin-top: 10vh;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
-#bandDisplay .chosen {
+.chosen {
   position: relative;
-  width: 16.66667vh;
-  height: 9.62333vh;
-  margin: 2.97833vh 0;
-  background-size: auto 16.5507vh;
+  width: 14.28571vh;
+  height: 8.24857vh;
+  margin: 2.55286vh 0;
+  background-size: auto 14.18631vh;
   background-position: center;
   /* offset-x | offset-y | blur-radius | spread-radius | color */
-  border-left: solid 1.16667vh #333333;
-  border-right: solid 1.16667vh #333333;
+  border-left: solid 1vh #333333;
+  border-right: solid 1vh #333333;
 }
 
-#bandDisplay .chosen:after {
+.chosen:after {
   content: "";
   position: absolute;
-  top: 0.67358vh;
+  top: 0.57736vh;
   left: 0;
-  width: 14.33333vh;
-  height: 8.275vh;
+  width: 12.28571vh;
+  height: 7.09286vh;
   z-index: 2;
   background: inherit;
 }
 
-#bandDisplay .chosen img {
-  height: 19.44417vh;
-  width: 17.5vh;
+.chosen img {
+  height: 16.66643vh;
+  width: 15vh;
   position: relative;
-  top: -5.71vh;
-  left: -1.48957vh;
+  top: -4.89429vh;
+  left: -1.27677vh;
   z-index: 2;
 }
 
-#bandDisplay .chosen .top, #bandDisplay .chosen .bottom {
+.chosen .top, .chosen .bottom {
   position: absolute;
   z-index: 1;
-  width: 11.785vh;
-  height: 11.785vh;
+  width: 10.10143vh;
+  height: 10.10143vh;
   overflow: hidden;
   -webkit-transform: scaleY(0.5774) rotate(-45deg);
   -ms-transform: scaleY(0.5774) rotate(-45deg);
   transform: scaleY(0.5774) rotate(-45deg);
   background: inherit;
-  left: 1.27333vh;
+  left: 1.09143vh;
 }
 
-#bandDisplay .chosen .top:before, #bandDisplay .chosen .top:after, #bandDisplay .chosen .bottom:before, #bandDisplay .chosen .bottom:after {
+.chosen .top:before, .chosen .top:after, .chosen .bottom:before, .chosen .bottom:after {
   content: "";
   position: absolute;
-  width: 14.33333vh;
-  height: 8.275vh;
-  -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-4.13768vh);
-  -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-4.13768vh);
-  transform: rotate(45deg) scaleY(1.7321) translateY(-4.13768vh);
+  width: 12.28571vh;
+  height: 7.09286vh;
+  -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-3.54659vh);
+  -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-3.54659vh);
+  transform: rotate(45deg) scaleY(1.7321) translateY(-3.54659vh);
   -webkit-transform-origin: 0 0;
   -ms-transform-origin: 0 0;
   transform-origin: 0 0;
   background: inherit;
 }
 
-#bandDisplay .chosen .top {
-  top: -5.89255vh;
-  border-top: solid 1.64992vh #333333;
-  border-right: solid 1.64992vh #333333;
+.chosen .top {
+  top: -5.05076vh;
+  border-top: solid 1.41421vh #333333;
+  border-right: solid 1.41421vh #333333;
 }
 
-#bandDisplay .chosen .top:after {
+.chosen .top:after {
   background-position: center top;
 }
 
-#bandDisplay .chosen .bottom {
-  bottom: -5.89255vh;
-  border-bottom: solid 1.64992vh #333333;
-  border-left: solid 1.64992vh #333333;
+.chosen .bottom {
+  bottom: -5.05076vh;
+  border-bottom: solid 1.41421vh #333333;
+  border-left: solid 1.41421vh #333333;
 }
 
-#bandDisplay .chosen .bottom:after {
+.chosen .bottom:after {
   background-position: center bottom;
 }
 
-#bandDisplay .chosen .card_heroImg {
+.chosen .card_heroImg {
   background-size: cover;
   background-position: center;
   width: 19vh;
   height: 21vh;
   z-index: 3;
   width: 100%;
-  top: -6.5vh;
+  top: -4.7vh;
   left: 0;
+  height: 194%;
 }
 
 .ch_st {
-  top: 12vh;
-  left: 5vh;
-  position: relative;
+  margin: 0 30%;
+  margin-bottom: 4vh;
 }
 
 .ch_nd {
-  top: -4vh;
-  left: -3vh;
-  position: relative;
+  margin: 1vh;
 }
 
 .ch_rd {
-  top: -12.5vh;
-  left: 23vh;
-  position: relative;
+  margin: 1vh;
 }
 
 .bobo {
-  left: -1.75vw;
+  margin: 0 30%;
+  margin-top: 4vh;
 }

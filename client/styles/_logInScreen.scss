@@ -1,3 +1,8 @@
+
+$endHexSize:7;
+$middleHexSmall:10;
+$middleHexBig:5;
+
 @mixin arrow($color,$direction,$size){
     @if $direction == top {
         width: 0; 
@@ -135,7 +140,7 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     align-items: center;
     width: 50%;
     height:100%;
-    PADDING:2vh;
+    //padding:2vh;
 }
 .selection_card_stats{
     width:95vh;
@@ -143,7 +148,7 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     display:flex;
 }
 .selection_card_hexagram{
-    @include hexagonomicron(10);
+    @include hexagonomicron($middleHexSmall);
     padding:1vh;
 }
 .attribute{
@@ -162,7 +167,7 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     z-index: 3;
     top: -1.1vh;
 }
-.card_hex_big{@include hexagonomicron(5)}
+.card_hex_big{@include hexagonomicron($middleHexBig)}
 #bandSelection{
     background:rgb(168, 149, 107);
     height: 100vh;
@@ -347,15 +352,15 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
 }
 .bobo{
     p{padding-top:2vh;}
-    @include hexagonomicron(6);
+    @include hexagonomicron($endHexSize);
     @include white_attrib;
     background-color: blue;
     color:rgb(241, 227, 187); 
     &:hover{
         box-shadow: 0;
     }
-    left:-.75vw;
-    top:3vh;
+    //left:-.75vw;
+    //top:3vh;
 }
 #gameTypeForm{
     width:22vw;
@@ -367,29 +372,31 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     margin-top:10vh;
     display:flex;
     flex-wrap:wrap;
-    .chosen{
-        @include hexagonomicron(6);
-        .card_heroImg{
-            @include selection_hex_image;
-            width:100%;
-            top: -6.5vh;
-            left: 0;
-        }
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.chosen{
+    @include hexagonomicron($endHexSize);
+    .card_heroImg{
+        @include selection_hex_image;
+        width:100%;
+        top: -4.7vh;
+        left: 0;
+        height:194%;
     }
 }
     .ch_st{
-        top:12vh;
-        left:5vh;
-        position:relative;
+        margin: 0 30%;
+        margin-bottom:4vh;
     }
     .ch_nd{
-        top:-4vh;
-        left:-3vh;
-        position:relative;
+       margin: 1vh;
     }
     .ch_rd{
-        top: -12.5vh;
-        left: 23vh;
-        position:relative;
+       margin: 1vh;
     }
-    .bobo{left:-1.75vw;}
+    .bobo{
+        margin:0 30%;
+        margin-top:4vh;
+    }

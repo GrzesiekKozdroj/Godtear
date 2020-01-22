@@ -615,24 +615,24 @@ const m =
             },
             swordStrike:
             {
-                name:"Sword Strike",
-                icon:"skull",
-                dist:1,
-                aim:[5,5,5],
-                hurt:[4,5,6],
-                unsed:true,
-                m:function(){}
+                name: "Sword Strike",
+                icon: "skull",
+                dist: 1,
+                aim: [5, 5, 5],
+                hurt: [4, 5, 6],
+                unsed: true,
+                m: function () { }
             }
         },
         white:
         {
             brace:
             {
-                name:"Brace",
-                desc:shieldBoon,
-                icon:"self",
-                unused:true,
-                m:function(){}
+                name: "Brace",
+                desc: shieldBoon,
+                icon: "self",
+                unused: true,
+                m: function () { }
             },
             march:
             {
@@ -641,14 +641,14 @@ const m =
                 icon: "self",
                 unused: true,
                 m: function () { }
-            }            
+            }
         },
         util:
         {
             shieldWall:
             {
-                name:"Shield Wall",
-                desc:"Household Guard in hexes adjacent to Rhodri cannot be moved by enemy models."
+                name: "Shield Wall",
+                desc: "Household Guard in hexes adjacent to Rhodri cannot be moved by enemy models."
             }
         }
     },
@@ -658,69 +658,69 @@ const m =
         {
             deathWind:
             {
-                name:"Death Wind",
-                desc:"If Mournblade's banner is within range, place it on an objective hex within range.",
-                icon:"star",
-                dist:2,
-                unused:true,
-                m:function(){}
+                name: "Death Wind",
+                desc: "If Mournblade's banner is within range, place it on an objective hex within range.",
+                icon: "star",
+                dist: 2,
+                unused: true,
+                m: function () { }
             },
             raiseDead:
             {
-                desc:"Raise Dead",
-                desc:"All friendly champions within range may make a rally action.",
-                icon:"cogs",
-                dist:3,
-                unused:true,
-                m:function(){}
+                desc: "Raise Dead",
+                desc: "All friendly champions within range may make a rally action.",
+                icon: "cogs",
+                dist: 3,
+                unused: true,
+                m: function () { }
             },
             soulClave:
             {
-                name:"Soul Cleave",
-                desc:"Hit Effect: The Knightshades make a recruit action.",
-                icon:"skull",
-                dist:3,
-                aim:5,
-                hurt:5,
-                unused:true,
-                m:function(){}
+                name: "Soul Cleave",
+                desc: "Hit Effect: The Knightshades make a recruit action.",
+                icon: "skull",
+                dist: 3,
+                aim: 5,
+                hurt: 5,
+                unused: true,
+                m: function () { }
             }
         },
         white:
         {
             graveSummons:
             {
-                name:"Grave Summons",
-                desc:"Mournblade makes a claim action. You may place his banner on any objective hex within range.",
-                icon:"star",
-                dist:3,
-                unused:true,
-                m:function(){}
+                name: "Grave Summons",
+                desc: "Mournblade makes a claim action. You may place his banner on any objective hex within range.",
+                icon: "star",
+                dist: 3,
+                unused: true,
+                m: function () { }
             },
             forwardMinions:
             {
-                name:"Forward Minions!",
-                desc:"Move each Knightshade that is within range up to 2 hexes.",
-                icon:"cogs",
-                dist:4,
-                unused:true,
-                m:function(){}
+                name: "Forward Minions!",
+                desc: "Move each Knightshade that is within range up to 2 hexes.",
+                icon: "cogs",
+                dist: 4,
+                unused: true,
+                m: function () { }
             }
         },
         util:
         {
             graspingDead:
             {
-                name:"Graspping Dead",
-                desc:"Remove all Knightshades from the battlefield. Then place all three Knightshades on hexes that are within 3 hexes of Mournblade.",
-                icon:"cogs",
-                unused:true,
-                legendaryUsed:false
+                name: "Graspping Dead",
+                desc: "Remove all Knightshades from the battlefield. Then place all three Knightshades on hexes that are within 3 hexes of Mournblade.",
+                icon: "cogs",
+                unused: true,
+                legendaryUsed: false
             },
             undying:
             {
-                name:"Undying",
-                desc:"When Mournblade is knocked out, he is worth 1 step instead of 4. When an enemy is knocked out, Mournblade may immediately make a rally action."
+                name: "Undying",
+                desc: "When Mournblade is knocked out, he is worth 1 step instead of 4. When an enemy is knocked out, Mournblade may immediately make a rally action."
             }
         }
     },
@@ -730,52 +730,52 @@ const m =
         {
             depthsOfSorrow:
             {
-                name:"Depths of Sorrow",
-                desc:aimBoon,
-                icon:"self",
-                unused:true,
-                m:function(){}
+                name: "Depths of Sorrow",
+                desc: aimBoon,
+                icon: "self",
+                unused: true,
+                m: function () { }
             },
             deathsDoor:
             {
-                name:"Death's Door",
-                desc:`If the Knightshades made a recruit action this activation, Death's Door has +1 ${aim} and ${hurt}.`,
-                icon:"skull",
-                dist:1,
-                aim:[4,5,5],
-                hurt:[4,4,5],
-                unused:true,
-                m:function(){}
+                name: "Death's Door",
+                desc: `If the Knightshades made a recruit action this activation, Death's Door has +1 ${aim} and ${hurt}.`,
+                icon: "skull",
+                dist: 1,
+                aim: [4, 5, 5],
+                hurt: [4, 4, 5],
+                unused: true,
+                m: function () { }
             }
         },
         white:
         {
             carefulMaster:
             {
-                name:"Careful, Master",
-                desc:`If Mournblade is within range, he gains ${dodgeBoon}.`,
-                icon:"cogs",
-                dist:3,
-                unused:true,
-                m:function(){}
+                name: "Careful, Master",
+                desc: `If Mournblade is within range, he gains ${dodgeBoon}.`,
+                icon: "cogs",
+                dist: 3,
+                unused: true,
+                m: function () { }
             },
             wheresMaster:
             {
-                name:"Where's Master?",
-                desc:"If Mournblade is within range, he may make a rally action or move up to 2 hexes.",
-                icon:"cogs",
-                dist:3,
-                unused:true,
-                m:function(){}
+                name: "Where's Master?",
+                desc: "If Mournblade is within range, he may make a rally action or move up to 2 hexes.",
+                icon: "cogs",
+                dist: 3,
+                unused: true,
+                m: function () { }
             }
         },
         util:
         {
             deathGrip:
             {
-                name:"DeathGrip",
-                desc:"Enemy models that make an advance acction while they are adjacent to a Knightshade have speed 0 during that advance action.",
-                m:function(){}
+                name: "DeathGrip",
+                desc: "Enemy models that make an advance acction while they are adjacent to a Knightshade have speed 0 during that advance action.",
+                m: function () { }
             }
         }
     },
@@ -785,71 +785,71 @@ const m =
         {
             mirage:
             {
-                name:"Mirage",
-                desc:"Choose a friendly banner within 2 hexes of Finvarr. Place it on an objective hex that is 1 hex away from its current hex.",
-                icon:"star",
-                dist:2,
-                unused:true,
-                m:function(){}
+                name: "Mirage",
+                desc: "Choose a friendly banner within 2 hexes of Finvarr. Place it on an objective hex that is 1 hex away from its current hex.",
+                icon: "star",
+                dist: 2,
+                unused: true,
+                m: function () { }
             },
             voidWeapon:
             {
-                name:"Void Weapon",
-                desc:hurtBoon,
-                icon:"self",
-                unused:true,
-                m:function(){}
+                name: "Void Weapon",
+                desc: hurtBoon,
+                icon: "self",
+                unused: true,
+                m: function () { }
             },
             lifeBlade:
             {
-                name:"Life Blade",
-                desc:"Hit Effect: Remove up to 1 of Finvarr's wounds.",
-                icon:"skull",
-                dist:1,
-                aim:4,
-                hurt:5,
-                unused:true,
-                m:function(){}
+                name: "Life Blade",
+                desc: "Hit Effect: Remove up to 1 of Finvarr's wounds.",
+                icon: "skull",
+                dist: 1,
+                aim: 4,
+                hurt: 5,
+                unused: true,
+                m: function () { }
             }
         },
         white:
         {
             poisedToStrike:
             {
-                name:"Poised to Strike",
-                desc:walkBoon,
-                icon:"self",
-                unused:true,
-                m:function(){}
+                name: "Poised to Strike",
+                desc: walkBoon,
+                icon: "self",
+                unused: true,
+                m: function () { }
             },
             shadowWard:
             {
-                name:"Shadow Ward",
-                desc:"Hit Effect: Move target up to 1 hex",
-                icon:"skull",
-                dist:2,
-                aim:5,
-                unused:true,
-                m:function(){}
+                name: "Shadow Ward",
+                desc: "Hit Effect: Move target up to 1 hex",
+                icon: "skull",
+                dist: 2,
+                aim: 5,
+                unused: true,
+                m: function () { }
             }
         },
         util:
         {
             phantomBanners:
             {
-                name:"Phantom Banners",
-                desc:"Choose any number of friendly banners within range. Place teh on objective hexes within range.",
-                dist:4,
-                unused:true,
-                legendaryUsed:false,
-                icon:"star",
-                m:function(){}
+                name: "Phantom Banners",
+                desc: "Choose any number of friendly banners within range. Place teh on objective hexes within range.",
+                dist: 4,
+                unused: true,
+                legendaryUsed: false,
+                icon: "star",
+                m: function () { }
             },
             bannerWarden:
             {
-                name:"Banner Warden",
-                desc:`If Finvarr is on an objective hex, his skills have +2${aim}.`,
-                m:function(){}
+                name: "Banner Warden",
+                desc: `If Finvarr is on an objective hex, his skills have +2${aim}.`,
+                m: function () { }
             }
         }
     },
@@ -859,52 +859,52 @@ const m =
         {
             voidWeapon:
             {
-                name:"Void Weapon",
-                desc:aimBoon,
-                icon:"self",
-                unused:true,
-                m:function(){}
+                name: "Void Weapon",
+                desc: aimBoon,
+                icon: "self",
+                unused: true,
+                m: function () { }
             },
             lifeTrade:
             {
-                name:"Life Trade",
-                desc:"If this skill knocks out na enemy while Shadow Sentinels are below their maximum unit size, add 1 Shadow Sentinel to this hex.",
-                icon:"skull",
-                dist:1,
-                aim:[4,5,5],
-                hurt:[4,5,5],
-                unused:true,
-                m:function(){}
+                name: "Life Trade",
+                desc: "If this skill knocks out na enemy while Shadow Sentinels are below their maximum unit size, add 1 Shadow Sentinel to this hex.",
+                icon: "skull",
+                dist: 1,
+                aim: [4, 5, 5],
+                hurt: [4, 5, 5],
+                unused: true,
+                m: function () { }
             }
         },
-        white:{
+        white: {
             protect:
             {
-                name:"Protect",
-                desc:shieldBoon,
-                icon:"cogs",
-                dist:1,
-                unused:true,
-                m:function(){}
+                name: "Protect",
+                desc: shieldBoon,
+                icon: "cogs",
+                dist: 1,
+                unused: true,
+                m: function () { }
             },
             shadowSnare:
             {
-                name:"Shadow Snare",
-                desc:`Hit Effect: ${walkBlight}.`,
-                icon:"skull",
-                dist:1,
-                aim:[4,5,5],
-                unused:true,
-                m:function(){}
+                name: "Shadow Snare",
+                desc: `Hit Effect: ${walkBlight}.`,
+                icon: "skull",
+                dist: 1,
+                aim: [4, 5, 5],
+                unused: true,
+                m: function () { }
             }
         },
         util:
         {
             shadowStep:
             {
-                name:"Shadow Step",
-                desc:"If the Shadow Sentinels do not make an advance action during their activation, each Shadow Sentinel may move up to 1 hex when activation ends.",
-                m:function(){}
+                name: "Shadow Step",
+                desc: "If the Shadow Sentinels do not make an advance action during their activation, each Shadow Sentinel may move up to 1 hex when activation ends.",
+                m: function () { }
             }
         }
     },
@@ -914,78 +914,78 @@ const m =
         {
             crystalGlare:
             {
-                name:"Crystal Glare",
-                desc:"Choose a blight on any model within range. Then Choose an enemy model within range to gain that blight.",
-                icon:"star",
-                dist:2,
-                unused:true,
-                m:function(){}
+                name: "Crystal Glare",
+                desc: "Choose a blight on any model within range. Then Choose an enemy model within range to gain that blight.",
+                icon: "star",
+                dist: 2,
+                unused: true,
+                m: function () { }
             },
             erosion:
             {
-                name:"Erosion",
-                desc:`Hit Effect: ${shieldBlight}.`,
-                icon:"skull",
-                dist:2,
-                aim:5,
-                unused:true,
-                m:function(){}
+                name: "Erosion",
+                desc: `Hit Effect: ${shieldBlight}.`,
+                icon: "skull",
+                dist: 2,
+                aim: 5,
+                unused: true,
+                m: function () { }
             },
             blindingLight:
             {
-                name:"Blinding Light",
-                desc:`Hit Effect: ${aimBlight}`,
-                icon:"skull",
-                dist:2,
-                aim:4,
-                hurt:5,
-                unused:true,
-                m:function(){}
+                name: "Blinding Light",
+                desc: `Hit Effect: ${aimBlight}`,
+                icon: "skull",
+                dist: 2,
+                aim: 4,
+                hurt: 5,
+                unused: true,
+                m: function () { }
             }
         },
         white:
         {
             crystalMirror:
             {
-                name:"Crystal Mirror",
-                desc:"Choose a boon on any friendly model within range. Then choose a friendly model within range to gain that boon.",
-                dist:2,
-                icon:"star",
-                unused:true,
-                m:function(){}
+                name: "Crystal Mirror",
+                desc: "Choose a boon on any friendly model within range. Then choose a friendly model within range to gain that boon.",
+                dist: 2,
+                icon: "star",
+                unused: true,
+                m: function () { }
             },
             meditation:
             {
-                name:"Meditation",
-                desc:aimBoon,
-                icon:"self",
-                unused:true,
-                m:function(){}
+                name: "Meditation",
+                desc: aimBoon,
+                icon: "self",
+                unused: true,
+                m: function () { }
             },
             march:
             {
-                name:"March",
-                desc:"Move Nia up to 1 hex.",
-                icon:"self",
-                unused:true,
-                m:function(){}
+                name: "March",
+                desc: "Move Nia up to 1 hex.",
+                icon: "self",
+                unused: true,
+                m: function () { }
             }
         },
         util:
         {
             geode:
             {
-                name:"Geode",
-                desc:"Plot Phase only. Choose a Quartzling that is the only model in its hex and is adjacent to an objective hex, and replace it with an objective hex. If it is within 2 hexes of Nia, she may make a claim action on that hex.",
-                unused:true,
-                legendaryUsed:false,
-                m:function(){}
+                name: "Geode",
+                desc: "Plot Phase only. Choose a Quartzling that is the only model in its hex and is adjacent to an objective hex, and replace it with an objective hex. If it is within 2 hexes of Nia, she may make a claim action on that hex.",
+                unused: true,
+                legendaryUsed: false,
+                m: function () { }
             },
             rockConcert:
             {
-                name:"Rock Concert",
-                desc:"If all 3 Quartzlings are on the battlefield when Nia activates, she may make a bonus action that activation.",
-                m:function(){}
+                name: "Rock Concert",
+                desc: "If all 3 Quartzlings are on the battlefield when Nia activates, she may make a bonus action that activation.",
+                m: function () { }
             }
         }
     },
@@ -995,51 +995,51 @@ const m =
         {
             rollingStones:
             {
-                name:"Rolling Stones",
-                desc:"Each Quartzling may move up to 3 hexes in a straight line.",
-                icon:"self",
-                unused:true,
-                m:function(){}
+                name: "Rolling Stones",
+                desc: "Each Quartzling may move up to 3 hexes in a straight line.",
+                icon: "self",
+                unused: true,
+                m: function () { }
             },
             stoneThrow:
             {
-                name:"Stone Throw",
-                icon:"skull",
-                dist:2,
-                aim:[4,5,5],
-                hurt:[4,4,5],
-                unused:true,
-                m:function(){}
+                name: "Stone Throw",
+                icon: "skull",
+                dist: 2,
+                aim: [4, 5, 5],
+                hurt: [4, 4, 5],
+                unused: true,
+                m: function () { }
             }
         },
         white:
         {
             calcify:
             {
-                name:"Calcify",
-                desc:"If this Quartzling is the only model in its hex and is adjacent to an objective hex, replace it with an objective hex.",
-                icon:"self",
-                unused:true,
-                m:function(){}
+                name: "Calcify",
+                desc: "If this Quartzling is the only model in its hex and is adjacent to an objective hex, replace it with an objective hex.",
+                icon: "self",
+                unused: true,
+                m: function () { }
             },
             shimmer:
             {
-                name:"Shimmer",
-                desc:`Hit Effect: ${walkBlight}`,
-                dist:2,
-                aim:[4,5,5],
-                icon:"skull",
-                unused:true,
-                m:function(){}
+                name: "Shimmer",
+                desc: `Hit Effect: ${walkBlight}`,
+                dist: 2,
+                aim: [4, 5, 5],
+                icon: "skull",
+                unused: true,
+                m: function () { }
             }
         },
         util:
         {
             rockFormation:
             {
-                name:"Rock Formation",
-                desc:"When Nia's banner is removed from battlefield, the Quartzlings may immediately make a recruit action, even if its the end phase.",
-                m:function(){}
+                name: "Rock Formation",
+                desc: "When Nia's banner is removed from battlefield, the Quartzlings may immediately make a recruit action, even if its the end phase.",
+                m: function () { }
             }
         }
     },
@@ -1049,83 +1049,83 @@ const m =
         {
             kerSplash:
             {
-                name:"Ker-Splash",
-                desc:"Choose a hex within range containing one Splashling. Remove the Splashling and place Raith'Marid in that hex.",
-                icon:"self",
-                dist:3,
-                unused:true,
-                m:function(){}
+                name: "Ker-Splash",
+                desc: "Choose a hex within range containing one Splashling. Remove the Splashling and place Raith'Marid in that hex.",
+                icon: "self",
+                dist: 3,
+                unused: true,
+                m: function () { }
             },
             headbutt:
             {
-                name:"Headbutt",
-                desc:"Hit Effect: Move target up to 1 hex.",
-                icon:"skull",
-                dist:1,
-                aim:5,
-                hurt:5,
-                unused:true,
-                M:function(){}
+                name: "Headbutt",
+                desc: "Hit Effect: Move target up to 1 hex.",
+                icon: "skull",
+                dist: 1,
+                aim: 5,
+                hurt: 5,
+                unused: true,
+                M: function () { }
             },
             lungingStrike:
             {
-                name:"Lunging Strike",
-                desc:"Before the hit roll, move Raith,Marid up to 1 hex towards the target.",
-                icon:"skull",
-                dist:2,
-                aim:6,
-                hurt:4,
-                unused:true,
-                m:function(){}
+                name: "Lunging Strike",
+                desc: "Before the hit roll, move Raith,Marid up to 1 hex towards the target.",
+                icon: "skull",
+                dist: 2,
+                aim: 6,
+                hurt: 4,
+                unused: true,
+                m: function () { }
             }
         },
         white:
         {
             underthrow:
             {
-                name:"Underthrow",
-                desc:"Choose an empty objective hex within range. Place it on an empty non-objective hex within range.",
-                dist:1,
-                icon:"star",
-                unused:true,
-                m:function(){}
+                name: "Underthrow",
+                desc: "Choose an empty objective hex within range. Place it on an empty non-objective hex within range.",
+                dist: 1,
+                icon: "star",
+                unused: true,
+                m: function () { }
             },
             kerSplash:
             {
-                name:"Ker-Splash",
-                desc:"Choose a hex within range containing one Splashling. Remove the Splashling and place Raith'Marid in that hex.",
-                icon:"self",
-                dist:3,
-                unused:true,
-                m:function(){}
+                name: "Ker-Splash",
+                desc: "Choose a hex within range containing one Splashling. Remove the Splashling and place Raith'Marid in that hex.",
+                icon: "self",
+                dist: 3,
+                unused: true,
+                m: function () { }
             },
             jet:
             {
-                name:"Jet",
-                desc:"Move a Splashilng within range up to 3 hexes.",
-                icon:"cogs",
-                dist:2,
-                unused:true,
-                m:function(){}
+                name: "Jet",
+                desc: "Move a Splashilng within range up to 3 hexes.",
+                icon: "cogs",
+                dist: 2,
+                unused: true,
+                m: function () { }
             }
         },
         util:
         {
             tsunami:
             {
-                name:"Tsunami",
-                desc:"Place Raith'Marid on a hex within range. Then move each enemy model within 2 hexes of him up to 2 hexes in the order of your choice.",
-                icon:"star",
-                dist:3,
-                unused:true,
-                legendaryUsed:false,
-                m:function(){}
+                name: "Tsunami",
+                desc: "Place Raith'Marid on a hex within range. Then move each enemy model within 2 hexes of him up to 2 hexes in the order of your choice.",
+                icon: "star",
+                dist: 3,
+                unused: true,
+                legendaryUsed: false,
+                m: function () { }
             },
             ripplingScales:
             {
-                name:"Rippling Scales",
-                desc:"When a splashling leaves the battlefield, Raith'Marid may gain the boon of your choice.",
-                m:function(){}
+                name: "Rippling Scales",
+                desc: "When a splashling leaves the battlefield, Raith'Marid may gain the boon of your choice.",
+                m: function () { }
             }
         },
     },
@@ -1135,51 +1135,51 @@ const m =
         {
             current:
             {
-                name:"Current",
-                desc:"You may place each Splashling in a hex up to 3 hexes from its current hex.",
-                icon:"self",
-                unused:true,
-                m:function(){}
+                name: "Current",
+                desc: "You may place each Splashling in a hex up to 3 hexes from its current hex.",
+                icon: "self",
+                unused: true,
+                m: function () { }
             },
             tide:
             {
-                name:"Tide",
-                desc:"Hit Effect: Move target up to 1 hex.",
-                dist:2,
-                aim:[5,6,7],
-                icon:"skull",
-                unused:true,
-                m:function(){}
+                name: "Tide",
+                desc: "Hit Effect: Move target up to 1 hex.",
+                dist: 2,
+                aim: [5, 6, 7],
+                icon: "skull",
+                unused: true,
+                m: function () { }
             }
         },
         white:
         {
             current:
             {
-                name:"Current",
-                desc:"You may place each Splashling in a hex up to 3 hexes from its current hex.",
-                icon:"self",
-                unused:true,
-                m:function(){}
+                name: "Current",
+                desc: "You may place each Splashling in a hex up to 3 hexes from its current hex.",
+                icon: "self",
+                unused: true,
+                m: function () { }
             },
             tide:
             {
-                name:"Tide",
-                desc:"Hit Effect: Move target up to 1 hex.",
-                dist:2,
-                aim:[5,6,7],
-                icon:"skull",
-                unused:true,
-                m:function(){}
+                name: "Tide",
+                desc: "Hit Effect: Move target up to 1 hex.",
+                dist: 2,
+                aim: [5, 6, 7],
+                icon: "skull",
+                unused: true,
+                m: function () { }
             }
         },
         util:
         {
             likeWater:
             {
-                name:"Like Water",
-                desc:"Once per phase during the Splashlings' activation, you may choose a boon on Raith'Marid. The Splashlings gain that boon.",
-                m:function(){}
+                name: "Like Water",
+                desc: "Once per phase during the Splashlings' activation, you may choose a boon on Raith'Marid. The Splashlings gain that boon.",
+                m: function () { }
             }
         }
     },
@@ -1189,17 +1189,293 @@ const m =
         {
             tremor:
             {
-                name:"Tremor",
-                desc:"Remove all boons from enemies within range",
-                icon:"star",
+                name: "Tremor",
+                desc: "Remove all boons from enemies within range",
+                icon: "star",
+                dist: 2,
+                unused: true,
+                m: function () { }
+            },
+            stoneSpikes:
+            {
+                name: "Stone Spikes",
+                desc: walkBlight,
+                icon: "skull",
+                dist: 3,
+                aim: 5,
+                unused: true,
+                m: function () { }
+            }
+        },
+        white:
+        {
+            stoneStrenght:
+            {
+                name: "Stone Strenght",
+                desc: `If Landslide is within range, it gains ${shieldBoon} and ${hurtBoon}.`,
+                icon: "cogs",
+                dist: 3,
+                unused: true,
+                m: function () { }
+            },
+            runeweaving:
+            {
+                name: "Runeweaving",
+                desc: "Hit Effect: Move a boon from the target to any model within range.",
+                icon: "skull",
+                dist: 3,
+                aim: 6,
+                unused: true,
+                m: function () { }
+            }
+        },
+        util:
+        {
+            avalanche:
+            {
+                name: "Avalanche",
+                desc: "Choose any number of objective hexes within 3 hexes of Landslide. Move each up to 1 hex onto an empty non-objective hex in any order. Models on the objective hexes move with them.",
+                icon: "star",
+                unused: true,
+                legendaryUsed: false,
+                m: function () { }
+            },
+            runecaller:
+            {
+                name: "Runecaller",
+                desc: "After Shayle makes an action during his activation, if he is within 3 hexes of Landslide, you may place Landslide in a hex up to 2 hexes from its current hex.",
+                m: function () { }
+            }
+        }
+    },
+    landslide:
+    {
+        black:
+        {
+            earthquake:
+            {
+                name: "Earthquake",
+                desc: "Hit Effect: Move target champion or all followers in target's unit up to 2 hexes.",
+                icon: "skull",
+                dist: 2,
+                aim: 4,
+                unused: true,
+                m: function () { }
+            },
+            boulderBash:
+            {
+                name: "Boulder Bash",
+                desc: `Hit Effect: ${dodgeBlight}`,
+                icon: "skull",
+                dist: 1,
+                aim: 6,
+                hurt: 6,
+                unused: true,
+                m: function () { }
+            }
+        },
+        white:
+        {
+            eruption:
+            {
+                name: "Eruption",
+                desc: `Friendly and enemy models adjacent to Landslide gain ${shieldBlight}.`,
+                icon: "star",
+                dist: 1,
+                unused: true,
+                m: function () { }
+            },
+            earthquake:
+            {
+                name: "Earthquake",
+                desc: "Hit Effect: Move target champion or all folowers in target's unit up to 2 hexes.",
+                icon: "skull",
+                dist: 2,
+                aim: 4,
+                unused: true,
+                m: function () { }
+            }
+        },
+        util:
+        {
+            rubble:
+            {
+                name: "Rubble",
+                desc: "When Landslide is knocked out, replace it with an objective hex.",
+                m: function () { }
+            }
+        }
+    },
+    rattlebone:
+    {
+        black:
+        {
+            cursedGround:
+            {
+                name: "Cursed Ground",
+                desc: "Place up to two objective hexes on empty non-objective hexes withing range. Remove them at the end of the clash phase.",
+                dist: 2,
+                icon: "star",
+                unused: true,
+                m: function () { }
+            },
+            deadlyCurse:
+            {
+                name: "Deadly Curse",
+                desc: `Hit Effect: The target gains ${aimBlight} or ${hurtBlight}.`,
+                icon: "skull",
+                dist: 2,
+                aim: 4,
+                hurt: 6,
+                unused: true,
+                m: function () { }
+            }
+        },
+        white:
+        {
+            callTotems:
+            {
+                name: "Call Totems",
+                desc: "Remove any number of Hexlings from the battlefield, then place them on hexes within 2 hexes of Rattlebone.",
+                icon: "cogs",
+                unused: true,
+                m: function () { }
+            },
+            graspingCurse:
+            {
+                name: "Grapsing Curse",
+                desc: `Hit Effect: The target gains ${walkBlight} or ${dodgeBlight}.`,
+                dist: 2,
+                aim: 6,
+                unused: true,
+                m: function () { }
+            }
+        },
+        util:
+        {
+            powerHex:
+            {
+                name: "Power Hex",
+                desc: "Chooxe on blight for each Hexling within range. Each enemy champion within range gains those blights.",
+                icon: "star",
+                dist: 2,
+                unused: true,
+                legendaryUsed: false,
+                m: function () { }
+            },
+            rollTheBones:
+            {
+                name: "Roll the Bones",
+                desc: "At the end of Rattlebone's activation, roll one die. If you roll a 1 o 2, you may remove a boon or blight from a odel within that many exes of Rattlebone and place it on a different model within that many hexes.",
+                m: function () { }
+            }
+        }
+    },
+    hexlings:
+    {
+        black:
+        {
+            purgeMagic:
+            {
+                name: "Purge Magic",
+                desc: "Move all boons and blights from the Hexlings, to a friendly model within range.",
+                icon: "cogs",
+                dist: 2,
+                unused: true,
+                m: function () { }
+            },
+            hexBolt:
+            {
+                name: "Hex Bolt",
+                desc: "Hit Effect: The target gains the blights of your choice.",
+                icon: "skull",
+                dist: 2,
+                aim: [2, 4, 6],
+                unused: true,
+                m: function () { }
+            }
+        },
+        white:
+        {
+            attuneMagic:
+            {
+                name: "Attune Magic",
+                desc: "Gain the boon of your choice.",
+                icon: "self",
+                unused: true,
+                m: function () { }
+            },
+            hexBolt:
+            {
+                name: "Hex Bolt",
+                desc: "Hit effect: The target gains the blight of your choice.",
+                icon: "skull",
+                dist: 2,
+                aim: [2, 4, 6],
+                unused: true,
+                m: function () { }
+            }
+        },
+        util:
+        {
+            hexEaters:
+            {
+                name: "Hex Eaters",
+                desc: "When Rattlebone rolls a blank on her Roll the Bones roll, the Hexlings may gain the boon of your choice."
+            }
+        }
+    },
+    lorsann:
+    {
+        black:
+        {
+            piercingShot:
+            {
+                name:"Piercing Shot",
+                desc:"Hit Effect: The target gains 1 wound.",
+                icon:"skull",
+                dist:3,
+                aim:5,
+                unused:true,
+                m:function(){}
+            },
+            mysticArrow:
+            {
+                name:"Mystic Arrow",
+                desc:`After the mystic arrow damage roll, make a 5${hurt} damage roll againt the target.`,
+                icon:"skull",
+                dist:3,
+                aim:3,
+                hurt:5,
+                unused:true,
+                m:function(){}
+            },
+            snipe:
+            {
+                name:"Snipe",
+                icon:"skull",
+                dist:3,
+                aim:8,
+                hurt:4,
+                unused:true,
+                m:function(){}
+            }
+        },
+        white:
+        {
+            fieldInstruction:
+            {
+                name:"Field Instruction",
+                desc:hurtBoon,
+                icon:"cogs",
                 dist:2,
                 unused:true,
                 m:function(){}
             },
-            stoneSpikes:
+            faryFire:
             {
-                name:"Stone Spikes",
-                desc:walkBlight,
+                name:"Fairy Fire",
+                desc:`Hit Effect: ${shieldBlight}.`,
                 icon:"skull",
                 dist:3,
                 aim:5,
@@ -1207,23 +1483,257 @@ const m =
                 m:function(){}
             }
         },
-        white:
+        util:
         {
-            stoneStrenght:
+            deathblow:
             {
-                name:"Stone Strenght",
-                desc:`If Landslide is within range, it gains ${shieldBoon} and ${hurtBoon}.`,
-                icon:"cogs",
+                name:"Deathblow",
+                desc:"Hit Effect: The target gains 2 wounds.",
+                icon:"skull",
                 dist:3,
+                aim:6,
+                unused:true,
+                legendaryUsed:false,
+                m:function(){}
+            },
+            shootAndScoot:
+            {
+                name:"Shoot and Scoot",
+                desc:"After Lorsann uses a skill that inflicts 1 or more wounds, she may move up to 1 hex.",
+                m:function(){}
+            }
+        }
+    },
+    mistwoodRangers:
+    {
+        black:
+        {
+            aim:
+            {
+                name:"Aim",
+                desc:aimBoon,
+                icon:"self",
                 unused:true,
                 m:function(){}
             },
-            runeweaving:
+            fire:
             {
-                name:"Runeweaving",
-                desc:"Hit Effect: Move a boon from the target to any model within range.",
+                name:"Fire",
                 icon:"skull",
                 dist:3,
+                aim:[3,4,5],
+                hurt:[3,4,5],
+                unused:true,
+                m:function(){}
+            }
+        },
+        white:
+        {
+            blur:
+            {
+                name:"Blur",
+                desc:dodgeBoon,
+                icon:"self",
+                unused:true,
+                m:function(){}
+            },
+            faryFire:
+            {
+                name:"Fairy Fire",
+                desc:`Hit Effect: ${shieldBlight}.`,
+                icon:"skull",
+                dist:3,
+                aim:5,
+                unused:true,
+                m:function(){}
+            }
+        },
+        util:
+        {
+            killShot:
+            {
+                name:"Kill Shot",
+                desc:`When the target is a wounded enemy chmpion, the Mistwood Rangers' skills have +1${hurt}.`,
+                m:function(){}
+            }
+        }
+    },
+    sneakyPeet:
+    {
+        black:
+        {
+            plotRevenge:
+            {
+                name:"Plot Revenge",
+                desc:aimBoon,
+                icon:"cogs",
+                dist:2,
+                unused:true,
+                m:function(){}
+            },
+            annoy:
+            {
+                name:"annoy",
+                desc:"Hit Effect: Move target up to 2 hexes toward Sneaky Peet.",
+                icon:"skull",
+                dist:3,
+                aim:5,
+                unused:true,
+                m:function(){}
+            },
+            backstab:
+            {
+                name:"Backstab",
+                desc:"If this attack hits a champion, the champion gains 1 wound.",
+                icon:"skull",
+                dist:1,
+                aim:5,
+                hurt:5,
+                unused:true,
+                m:function(){}
+            }
+        },
+        white:
+        {
+            leap:
+            {
+                name:"Leap",
+                desc:"You may place Sneaky Peet on a hex up to 2 hexes away from his current hex.",
+                icon:"self",
+                unused:true,
+                m:function(){}
+            },
+            backstab:
+            {
+                name:"Backstab",
+                desc:"If this attack hits a champion, the champion gains 1 wound.",
+                icon:"skull",
+                dist:1,
+                aim:5,
+                hurt:5,
+                unused:true,
+                m:function(){}
+            }            
+        },
+        util:
+        {
+            pounce:
+            {
+                name:"Pounce",
+                desc:"Before the hit roll, you may place Sneaky Peet on a hex adjacent to the target.",
+                icon:"skull",
+                dist:2,
+                aim:6,
+                hurt:6,
+                unused:true,
+                legendaryUsed:false,
+                m:function(){}
+            },
+            gangBoss:
+            {
+                name:"Gang Boss",
+                desc:`Sneaky Peet's skill have +1${aim} for Sneaky Stabber adjacent to the target.`,
+                m:function(){}
+            }
+        }
+    },
+    sneakyStabbers:
+    {
+        black:
+        {
+            sneak:
+            {
+                name:"sneak",
+                desc:"Remove one sneaky Stabber from the battlefield. Then make a recruit action.",
+                icon:"self",
+                unused:true,
+                m:function(){}
+            },
+            irritate:
+            {
+                name:"Irritate",
+                desc:`Hit Effect: ${aimBlight}.`,
+                icon:"skull",
+                dist:3,
+                aim:[3,5,7],
+                unused:true,
+                m:function(){}
+            }
+        },
+        white:
+        {
+            sprint:
+            {
+                name:"Sprint",
+                desc:"One Sneaky Stabber may move up to 3 hexes.",
+                icon:"self",
+                unused:true,
+                m:function(){}
+            },
+            letMeDoIt:
+            {
+                name:"Let Me Do It!",
+                icon:"skull",
+                dist:1,
+                aim:[7,5,3],
+                hurt:[4,5,6],
+                unused:true,
+                m:function(){}
+            }
+        },
+        util:
+        {
+            smallAndSneaky:
+            {
+                name:"Small and Sneaky",
+                desc:"Sneaky Stabber may move through other models' hexes but cannot end their movement on those hexes.",
+                m:function(){}
+            }
+        }
+    },
+    rangosh:
+    {
+        black:
+        {
+            jawbreaker:
+            {
+                name:"Jawbreaker",
+                desc:"Hit Effect: Move target up to 1 hex away from Rangosh.",
+                icon:"skull",
+                dist:1,
+                aim:3,
+                hurt:7,
+                unused:true,
+                m:function(){}
+            },
+            whiplash:
+            {
+                name:"Whiplash",
+                desc:"Hit Effect: Move Target up to 1 hex towards Rangosh.",
+                icon:"skull",
+                dist:2,
+                aim:5,
+                hurt:5,
+                unused:true,
+                m:function(){}
+            }
+        },
+        white:
+        {
+            channelRage:
+            {
+                name:"Channel Rage",
+                desc:hurtBoon,
+                icon:"self",
+                unused:true,
+                m:function(){}
+            },
+            breakSpirit:
+            {
+                name:"Break Spirit",
+                desc:`Hit Effect: ${dodgeBlight}.`,
+                icon:"skull",
+                dist:2,
                 aim:6,
                 unused:true,
                 m:function(){}
@@ -1231,150 +1741,211 @@ const m =
         },
         util:
         {
-            avalanche:
+            beastlyCharge:
             {
-                name:"Avalanche",
-                desc:"Choose any number of objective hexes within 3 hexes of Landslide. Move each up to 1 hex onto an empty non-objective hex in any order. Models on the objective hexes move with them.",
+                name:"Beastly Charge",
+                desc:"Move Rangosh up to 2 hexes. Then you may place up to 2 wounds on an enemy within range.",
                 icon:"star",
+                dist:1,
                 unused:true,
                 legendaryUsed:false,
                 m:function(){}
             },
-            runecaller:
+            brutalMaster:
             {
-                name:"Runecaller",
-                desc:"After Shayle makes an action during his activation, if he is within 3 hexes of Landslide, you may place Landslide in a hex up to 2 hexes from its current hex.",
+                name:"Brutal Master",
+                desc:"Once per hit roll or damage roll before rolling the dice, you may remove one Red Bandit from a hex within 3 hexes of Rangosh to add 1 die to Rangosh's roll.",
+                m:function(){}
+            }
+        }
+    },
+    redBandits:
+    {
+        black:
+        {
+            ambush:
+            {
+                name:"Ambush",
+                desc:"Hit Effect: The target gains 1 wound.",
+                icon:"skull",
+                dist:1,
+                aim:[3,4,5],
+                unused:true,
+                m:function(){}
+            },
+            shoot:
+            {
+                name:"Shoot",
+                icon:"skull",
+                dist:3,
+                aim:[3,4,5],
+                hurt:[4,4,4],
+                unused:true,
                 m:function(){}
             }
         },
-        landslide:
+        white:
         {
-            black:
+            induct:
             {
-                earthquake:
-                {
-                    name:"Earthquake",
-                    desc:"Hit Effect: Move target champion or all followers in target's unit up to 2 hexes.",
-                    icon:"skull",
-                    dist:2,
-                    aim:4,
-                    unused:true,
-                    m:function(){}
-                },
-                boulderBash:
-                {
-                    name:"Boulder Bash",
-                    desc:`Hit Effect: ${dodgeBlight}`,
-                    icon:"skull",
-                    dist:1,
-                    aim:6,
-                    hurt:6,
-                    unused:true,
-                    m:function(){}
-                }
+                name:"Induct",
+                desc:"If the Red Bandits are below their maximum unit size, add one to a hex containing at least one Red Bandit.",
+                icon:"self",
+                unused:true,
+                m:function(){}
             },
-            white:
+            ambush:
             {
-                eruption:
-                {
-                    name:"Eruption",
-                    desc:`Friendly and enemy models adjacent to Landslide gain ${shieldBlight}.`,
-                    icon:"star",
-                    dist:1,
-                    unused:true,
-                    m:function(){}
-                },
-                earthquake:
-                {
-                    name:"Earthquake",
-                    desc:"Hit Effect: Move target champion or all folowers in target's unit up to 2 hexes.",
-                    icon:"skull",
-                    dist:2,
-                    aim:4,
-                    unused:true,
-                    m:function(){}
-                }
-            },
-            util:
-            {
-                rubble:
-                {
-                    name:"Rubble",
-                    desc:"When Landslide is knocked out, replace it with an objective hex.",
-                    m:function(){}
-                }
+                name:"Ambush",
+                desc:"Hit Effect: The target gains 1 wound.",
+                icon:"skull",
+                dist:1,
+                aim:[3,4,5],
+                unused:true,
+                m:function(){}
             }
         },
-        rattlebone:
+        util:
         {
-            black:
+            stolenTreasure:
             {
-                cursedGround:
-                {
-                    name:"Cursed Ground",
-                    desc:"Place up to two objective hexes on empty non-objective hexes withing range. Remove them at the end of the clash phase.",
-                    dist:2,
-                    icon:"star",
-                    unused:true,
-                    m:function(){}
-                },
-                deadlyCurse:
-                {
-                    name:"Deadly Curse",
-                    desc:`Hit Effect: The target gains ${aimBlight} or ${hurtBlight}.`,
-                    icon:"skull",
-                    dist:2,
-                    aim:4,
-                    hurt:6,
-                    unused:true,
-                    m:function(){}
-                }
+                name:"Stolen Treasure",
+                desc:"If the Red Bandits cause an enemy model to gain a wound when they use a skill action, they may gain a boon of your choice.",
+                m:function(){}
+            }
+        }
+    },
+    morrigan:
+    {
+        black:
+        {
+            snowballsChance:
+            {
+                name:"Snowball's Chance",
+                desc:"If this skill wounds the targe, they gain wounds untill they are knocked out.",
+                icon:"skull",
+                dist:1,
+                aim:1,
+                hurt:2,
+                unused:true,
+                m:function(){}
             },
-            white:
+            iceblade:
             {
-                callTotems:
-                {
-                    name:"Call Totems",
-                    desc:"Remove any number of Hexlings from the battlefield, then place them on hexes within 2 hexes of Rattlebone.",
-                    icon:"cogs",
-                    unused:true,
-                    m:function(){}
-                },
-                graspingCurse:
-                {
-                    name:"Grapsing Curse",
-                    desc:`Hit Effect: The target gains ${walkBlight} or ${dodgeBlight}.`,
-                    dist:2,
-                    aim:6,
-                    unused:true,
-                    m:function(){}
-                }
+                name:"Iceblade",
+                desc:`Hit Effect: If the target has ${walkBlight} ${aimBlight} or ${hurtBlight}, it gains 1 wound.`,
+                icon:"skull",
+                dist:1,
+                aim:5,
+                hurt:5,
+                unused:true,
+                m:function(){}
             },
-            util:
+            icebolt:
             {
-                powerHex:
-                {
-                    name:"Power Hex",
-                    desc:"Chooxe on blight for each Hexling within range. Each enemy champion within range gains those blights.",
-                    icon:"star",
-                    dist:2,
-                    unused:true,
-                    legendaryUsed:false,
-                    m:function(){}
-                },
-                rollTheBones:
-                {
-                    name:"Roll the Bones",
-                    desc:"At the end of Rattlebone's activation, roll one die. If you roll a 1 o 2, you may remove a boon or blight from a odel within that many exes of Rattlebone and place it on a different model within that many hexes.",
-                    m:function(){}
-                }
+                name:"Icebolt",
+                desc:`Hit Effect: ${aimBlight}.`,
+                dist:3,
+                aim:7,
+                hurt:3,
+                unused:true,
+                m:function(){}
             }
         },
-        hexlings:
+        white:
         {
-            black:
+            forwardMinions:
             {
-                
+                name:"Forward, Minions!",
+                desc:"Move each Cold Bones that is within range up top 2 hexes.",
+                icon:"cogs",
+                dist:4,
+                unused:true,
+                m:function(){}
+            },
+            frostyGlance:
+            {
+                name:"Frosty Glance",
+                desc:`Hit Effect: ${shieldBlight}. Move Morrigan up to 1 hex towards the target.`,
+                icon:"skull",
+                dist:3,
+                aim:5,
+                unused:true,
+                m:function(){}
+            }
+        },
+        util:
+        {
+            flashFreeze:
+            {
+                name:"Flash Freeze",
+                desc:`All enemies within range gain ${dodgeBlight} and ${walkBlight}.`,
+                icon:"star",
+                dist:3,
+                unused:true,
+                legendaryUsed:false,
+                m:function(){}
+            },
+            frostForged:
+            {
+                name:"Frost Forged",
+                desc:"Morrigan gains a +2 bonus for boons instead of a +1 bonus.",
+                m:function(){}
+            }
+        }
+    },
+    coldBones:
+    {
+        black:
+        {
+            intenseCold:
+            {
+                name:"Intense Cold",
+                desc:hurtBoon,
+                icon:"self",
+                unused:true,
+                m:function(){}
+            },
+            snowbladefight:
+            {
+                name:"Snowblade Fight!",
+                desc:`This skill has +1 ${aim} for each Cold Bones adjacent to the target.`,
+                dist:1,
+                aim:[1,1,1],
+                hurt:[3,4,5],
+                unused:true,
+                m:function(){}
+            }
+        },
+        white:
+        {
+            soCoolMistress:
+            {
+                name:"So Cool, Mistress!",
+                desc:`If Morrigan is within rnage, she gains ${aimBoon} or ${walkBoon}.`,
+                icon:"cogs",
+                dist:3,
+                unused:true,
+                m:function(){}
+            },
+            chillOut:
+            {
+                name:"Chill Out",
+                desc:`This skill has +1 ${aim} for each Cold Bones adjacent to the target. Hit Effect: ${hurtBlight}.`,
+                dist:1,
+                aim:[1,1,1],
+                icon:"skull",
+                unused:true,
+                m:function(){}
+            }
+        },
+        util:
+        {
+            brainFreeze:
+            {
+                name:"Brain Freeze",
+                desc:`After an enemy model uses a skill to knock out one or more Cold Bones, the enemy model gains ${dodgeBlight}.`,
+                m:function(){}
             }
         }
     }

@@ -32,7 +32,7 @@ class Character{
 }
 ;
 
-const Halftusk = new Character("guardian","champion","Halftusk",1,'./client/img/Halftusk.png',[2,2],3,3,7);
+const Halftusk = new Character("guardian","champion","Halftusk",1,'./img/Halftusk.png',[2,2],3,3,7);
 const Froglodytes = new Character("guardian","unit","Froglodytes",3,"",[3,1],2,3,1);
 
 const Rhodri = new Character("guardian","champion","Rhodri",1,"./img/Rhodri.png",[1,2],2,4,7);
@@ -59,7 +59,7 @@ const Hexlings = new Character("shaper","unit","Hexlings",5,"",[2,2],3,2,1);
 const Nia = new Character("shaper","champion","Nia",1,'./img/Nia.png',[1,2],4,2,6);
 const Quartzlings = new Character("shaper","unit","Quartzlings",3,"",[2,0],2,4,1);
 
-const RaithMaid = new Character("shaper","champion","Raith'Maid",1,'./img/RaithMaid.png',[1,1],2,3,7);
+const RaithMaid = new Character("shaper","champion","Raith'Maid",1,'./img/RaithMarid.png',[1,1],2,3,7);
 const Splashlings = new Character("shaper","unit","Splashlings",3,"",[0,0],4,1,1);
 
 const Shayle = new Character("shaper","champion","Shayle",1,'./img/Shayle.png',[2,2],4,2,5);
@@ -76,3 +76,34 @@ const SneakyStabbers = new Character("slayer","unit","Sneaky Stabbers", 3, "", [
 
 const Rangosh = new Character("slayer","champion", "Rangosh",1,'./img/Rangosh.png',[4,2],4,2,7);
 const RedBandits = new Character("slayer","unit","Red Bandits",5,"",[2,2],3,2,1);
+
+const rosters = 
+{
+    guardian:
+    [
+        {champ:Halftusk,gunt:Froglodytes},
+        {champ:Rhodri,grunt:HouseholdGuard},
+        {champ:Mournblade,grunt:Knightshades},
+        {champ:Finvarr,grunt:ShadowSentinels}
+    ],
+    slayer:
+    [
+        {champ:Morrigan, grunt:ColdBones},
+        {champ:Lorsann, grunt:MistwoodRangers},
+        {champ:SneakyPeet, grunt:SneakyStabbers},
+        {champ:Rangosh, grunt:RedBandits}
+    ],
+    maelstrom:
+    [
+        {champ:Blackjaw, grunt:UnburntReavers},
+        {champ:Titus, grunt:GlorySeekers},
+        {champ:Grimgut, grunt:Retchlings}
+    ],
+    shaper:
+    [
+        {champ:Rattlebone, grunt:Hexlings},
+        {champ:Nia, grunt:Quartzlings},
+        {champ:RaithMaid, grunt:Splashlings},
+        {champ:Shayle, grunt: Landslide}
+    ]
+};

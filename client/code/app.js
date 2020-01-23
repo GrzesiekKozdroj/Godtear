@@ -1,23 +1,4 @@
-let bob = false;
 
-$((e) => {
-    $('#gameScreen').prepend(bandSelection());
-    $('.hexagon').each(function (e) {
-        let that = $(this);
-        let row = Number($(this).data('row'));
-        let hex = Number($(this).data('hex'));
-        $(this).on('click', (e) => {
-            e.preventDefault();
-            console.log(row, hex);
-            if (!bob) {
-                $(this).append(`<img src="img/Rhodri.png" class="heroImg" data-row="${row}" data-hex="${hex}"/>`);
-                bob = true;
-            } else if($(this).children('.heroImg').length>0){
-                makeAnim(e, that.children('.heroImg'));
-            }
-        })
-    })
-})//DOM
 
 function makeGameBoard(){
     let  board = `

@@ -1,3 +1,4 @@
+let walk, walkBlight, walkBoon, aim, aimBlight, aimBoon, dodge, dodgeBlight, dodgeBoon, hurt, hurtBlight, hurtBoon, shield, shieldBlight, shieldBoon;
 const m =
 {
     universal:

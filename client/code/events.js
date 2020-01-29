@@ -1,4 +1,5 @@
 let bob = false;
+let zIndex = 1;
 
 $((e) => {
     $('#gameScreen').prepend(bandSelection());
@@ -9,11 +10,24 @@ $((e) => {
             let champ = $(this).siblings('.selection_heroImg');
             $(this).on('click',(e)=>{
                 e.preventDefault();
-                selection_animator({anime:{left: '11.75vw'}, champ:champ})
+                selection_animator({anime:{left: '11.75vw'}, champ:champ});
             })
         }
     );
-
+    $('#card').on('click','.champ_tab',e=>{
+                e.preventDefault();
+                $('.champ_tab').parent('.card_skills').css('z-index', zIndex)
+                $('.card_tab').toggleClass('tab_behind');
+                if($('.champ_tab').hasClass('tab_behind'))$('.card_tab').toggleClass('tab_behind');
+                zIndex++;
+            });
+    $('#card').on('click','.unit_tab',e=>{
+                e.preventDefault();
+                $('.unit_tab').parent('.card_skills').css('z-index', zIndex)
+                $('.card_tab').toggleClass('tab_behind');
+                if($('.unit_tab').hasClass('tab_behind'))$('.card_tab').toggleClass('tab_behind');
+                zIndex++;
+            });
     $('.selection_heroImg').each(
         function(e){
             $(this).on('click',e=>{
@@ -25,11 +39,19 @@ $((e) => {
         }
     )
 
-    $('.card_heroImg').each(
+    $('.chosen').children('.card_heroImg').each(
         function(){
             $(this).on('click',e=>{
                 e.preventDefault();
-                $(this).animate( {opacity:.3,'backdrop-filter': 'grayscale(100%)'}, 420, ()=>$(this).removeAttr('style') )
+                $(this).animate( 
+                    {opacity:.3,'backdrop-filter': 'grayscale(100%)'}, 
+                    420, 
+                    ()=>{
+                        $(this).removeAttr('style') 
+                        $(this).removeData()
+                        $(this).removeAttr('data-name')
+                    }
+                )
             })
         }
     )

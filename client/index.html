@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src='https://code.jquery.com/jquery-3.4.1.js' integrity='sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=' crossorigin='anonymous'></script>
     <title>Godtear</title>
+    <link href="https://fonts.googleapis.com/css?family=Cardo&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./styles/style.css"/>
     <link rel="stylesheet" type="text/css" href="./styles/_logInScreen.css"/>
     <link rel="stylesheet" type="text/css" href="./styles/__breakPoints.css"/>
@@ -14,95 +15,7 @@
 <body>
     <section id="gameScreen">
 
-
-
-        <div id="selection_card">
-            <div class="selection_card_images">
-                    <div class="selection_card_champion">
-                        <div class="selection_card_hexagram" id="card_walk_white">   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>   
-                            <p id="" class="card_attribute">5</p>
-                        </div>
-                        <div class="selection_card_hexagram" id="card_dodge_white">   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>   
-                            <p id="" class="card_attribute">5</p>
-                        </div>
-                        <div class="selection_card_hexagram" id="card_shield_white">   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>   
-                            <p id="" class="card_attribute">5</p>
-                        </div>
-                        <div class="selection_card_hexagram" id="card_heart_white">   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>   
-                            <p id="" class="card_attribute">5</p>
-                        </div>
-                        <div class="selection_card_hexagram card_hex_big" >   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>
-                            <div class="card_heroImg" style=background-image:url(../../img/Lorsann.png)></div>
-                        </div>
-                        <div class="selection_card_hexagram card_hex_big">   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>   
-                            <div class="card_heroImg" style=background-image:url(../../img/Lorsann.png)></div>
-                        </div>
-                    </div>
-                    <div class="selection_card_champion">
-                        <div class="selection_card_hexagram attribute" id="card_walk_white">   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>   
-                            <p id="" class="card_attribute">5</p>
-                        </div>
-                        <div class="selection_card_hexagram attribute" id="card_dodge_white">   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>   
-                            <p id="" class="card_attribute">5</p>
-                        </div>
-                        <div class="selection_card_hexagram attribute" id="card_shield_white">   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>   
-                            <p id="" class="card_attribute">5</p>
-                        </div>
-                        <div class="selection_card_hexagram attribute" id="card_heart_white">   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>   
-                            <p id="" class="card_attribute">5</p>
-                        </div>
-                        <div class="selection_card_hexagram card_hex_big">   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>
-                            <div class="card_heroImg" style=background-image:url(../../img/Lorsann.png)></div>
-                       </div>
-                        <div class="selection_card_hexagram card_hex_big">   
-                            <div class="top"></div>  
-                            <div class="bottom"></div>
-                            <div class="card_heroImg" style=background-image:url(../../img/Lorsann.png)></div>
-                       </div>
-                    </div>
-            </div>
-
-
-
-            <div class="selection_card_skills">
-                <div id="champion_card_skills" class="card_skills">
-                    <div class="card_tab"></div>
-                    <div class="card_list"></div>
-                </div>
-                <div id="unit_class_skills" class="card_skills skills_unit">
-                    <div class="card_tab unit_tab tab_behind"></div>
-                    <div class="card_list"></div>
-                </div>
-            </div>
-
-
-
-        </div>
-
-
-
+        <div id="card"></div>
 
         <div id="bandNamePlace">
             <div id="bandDisplay">
@@ -135,6 +48,7 @@
                 <input type="text" id="gamePlaceName" class="introductionInfo" placeholder="battlefield" required>
             </form>
         </div>
+
     </section>
     <script src="./code/methods.js"></script>
     <script src="./code/constructor.js"></script>

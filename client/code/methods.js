@@ -1,4 +1,4 @@
-let walk, walkBlight, walkBoon, aim, aimBlight, aimBoon, dodge, dodgeBlight, dodgeBoon, hurt, hurtBlight, hurtBoon, shield, shieldBlight, shieldBoon;
+let walk, walkBlight, walkBoon, aim, aimBlight, aimBoon, dodge, dodgeBlight, dodgeBoon, hurt, hurtBlight, hurtBoon, shield, shieldBlight, shieldBoon, skull, cogs, self, star;
 const m =
 {
     universal:
@@ -18,10 +18,10 @@ const m =
             {
                 name: "Kick",
                 desc: "Must target a follower.",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 6,
-                hurt: 6,
+                aim: [6],
+                hurt: [6],
                 unused: true,
                 m: function () { }
             },
@@ -29,10 +29,10 @@ const m =
             {
                 name: "Fiery Axe",
                 desc: "This skill may target up to three models in one hex.",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 4,
-                hurt: 5,
+                aim: [4],
+                hurt: [5],
                 unused: true,
                 m: function () { }
             },
@@ -40,10 +40,10 @@ const m =
             {
                 name: "Fireball",
                 desc: "This skill may target up to three models in one hex.",
-                icon: "skull",
+                icon: skull,
                 dist: 2,
-                aim: 5,
-                hurt: 4,
+                aim: [5],
+                hurt: [4],
                 unused: true,
                 m: function () { }
             }
@@ -54,7 +54,7 @@ const m =
             {
                 name: "Hootfoot",
                 desc: walkBoon,
-                icon: "cogs",
+                icon: cogs,
                 dist: 2,
                 unused: true,
                 m: function () { }
@@ -63,23 +63,23 @@ const m =
             {
                 name: "Evil Eye",
                 desc: `Must target a follower. ${shieldBlight}`,
-                icon: "skull",
+                icon: skull,
                 dist: 2,
-                aim: 6,
+                aim: [6],
                 unused: true,
                 m: function () { }
             }
         },
         util:
         {
-            fireStorm:
+            legendary:
             {
                 name: "Fire Storm",
                 desc: "Must target followers. This skill may target up to five followers on any hexes within range.",
-                icon: "skull",
+                icon: skull,
                 dist: 2,
-                aim: 6,
-                hurt: 5,
+                aim: [6],
+                hurt: [5],
                 unused: true,
                 legendaryUsed: false,
                 m: function () { }
@@ -100,13 +100,13 @@ const m =
             {
                 name: "War Cry",
                 desc: aimBoon,
-                icon: "self",
+                icon: self,
                 m: function () { }
             },
             cleavingStrike:
             {
                 name: "Cleaving Strike",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
                 aim: [3, 4, 5],
                 hurt: [4, 5, 6]
@@ -118,13 +118,14 @@ const m =
             {
                 name: "Rush",
                 desc: "Choose a hex. Each Unburnt Reaver in that hex may move up to 2 hexes.",
-                icon: "self",
+                icon: self,
                 m: function () { }
             },
             intimidation:
             {
                 name: "Intimidation",
                 desc: `Hit Effect: ${dodgeBlight}`,
+                icon:skull,
                 dist: 1,
                 aim: [2, 4, 6],
                 m: function () { }
@@ -148,10 +149,10 @@ const m =
             {
                 name: "Piercing Strike",
                 desc: "This skill may target up to two models in the same hex.",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 5,
-                hurt: 6,
+                aim: [5],
+                hurt: [6],
                 unused: true,
                 m: function () { }
             },
@@ -159,10 +160,10 @@ const m =
             {
                 name: "Sweeping Slash",
                 desc: "This skill may target up to two models that are in different hexes",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 6,
-                hurt: 5,
+                aim: [6],
+                hurt: [5],
                 unused: true,
                 m: function () { }
             }
@@ -173,7 +174,7 @@ const m =
             {
                 name: "Challenge",
                 desc: "An enemy model within range gains two different blights of your choice. Titus gains a blight of your opponents choice.",
-                icon: "star",
+                icon: star,
                 dist: 2,
                 unused: true,
                 m: function () { }
@@ -182,19 +183,20 @@ const m =
             {
                 name: "I'll Kill You All!",
                 desc: `Must target a follower. <br/> Hit Effect: Move all followers in target's unit that are within range up to 1 hex.`,
+                icon:skull,
                 dist: 3,
-                aim: 6,
+                aim: [6],
                 unused: true,
                 m: function () { }
             }
         },
         util:
         {
-            pathOfDestruction:
+            legendary:
             {
                 name: "Path of Destruction",
                 desc: "Titus may make a skill action. Then he may move 1 hex. Then he may make another skill action",
-                icon: "self",
+                icon: self,
                 unused: true,
                 legendaryUsed: false,
                 m: function () { }
@@ -214,7 +216,7 @@ const m =
             {
                 name: "Hack",
                 desc: `Hit Effect: ${shieldBlight}`,
-                icon: "skull",
+                icon: skull,
                 dist: 1,
                 aim: [5, 5, 6],
                 unused: true,
@@ -224,7 +226,7 @@ const m =
             {
                 name: "SurroundPound",
                 desc: `This skill has +1 ${aim} and ${hurt} for each other hex adjacent to the target that contains one or more Glory Seekers.`,
-                icon: "skull",
+                icon: skull,
                 dist: 1,
                 aim: [4, 4, 4],
                 hurt: [3, 4, 5],
@@ -238,7 +240,7 @@ const m =
             {
                 name: "Roar of Battle",
                 desc: "One champion within range may move 1 hex.",
-                icon: "cogs",
+                icon: cogs,
                 dist: 1,
                 unused: true,
                 m: function () { }
@@ -247,7 +249,7 @@ const m =
             {
                 name: "Outflank",
                 desc: "Hit Effect: Place each Glory Seeker that is adjacent to the target in a hex adjacent to the target.",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
                 aim: [6, 6, 6],
                 unused: true,
@@ -272,7 +274,7 @@ const m =
             {
                 name: "Roll",
                 desc: "Grimgut moves up to 3 hexes in a straight line.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -280,7 +282,7 @@ const m =
             {
                 name: "New Spew",
                 desc: "Remove all Retchlings from the battlefield. Then they make five recruit actions.",
-                icon: "cogs",
+                icon: cogs,
                 unused: true,
                 m: function () { }
             },
@@ -288,10 +290,10 @@ const m =
             {
                 name: "Nom Nom Nom",
                 desc: "Must target a follower.",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 7,
-                hurt: 7,
+                aim: [7],
+                hurt: [7],
                 unused: true,
                 m: function () { }
             }
@@ -303,7 +305,7 @@ const m =
             {
                 name: "New Spew",
                 desc: "Remove all Retchlings from the battlefield. Then they make five recruit actions.",
-                icon: "cogs",
+                icon: cogs,
                 unused: true,
                 m: function () { }
             },
@@ -312,8 +314,8 @@ const m =
                 name: "Flu Spew",
                 desc: `This skill targets each enemy champion and follower adjacent to one or more Retchlings. 
                     Hit Effect ${hurtBlight}.`,
-                icon: "skull",
-                aim: 4,
+                icon: skull,
+                aim: [4],
                 unused: true,
                 m: function () { }
             },
@@ -322,8 +324,8 @@ const m =
                 name: "Goo Spew",
                 desc: `This skill targets each enemy champion and follower unit adjacent to one or more Retchlings. 
                     Hit Effect: ${dodgeBlight}`,
-                icon: "skull",
-                aim: 4,
+                icon: skull,
+                aim: [4],
                 unused: true,
                 m: function () { }
             }
@@ -334,10 +336,10 @@ const m =
             {
                 name: "Buffet",
                 desc: "Must target followers. This skill may target up to three followers on any hexes within range.",
-                icon: "skull",
+                icon:skull,
                 dist: 1,
-                aim: 7,
-                hurt: 7,
+                aim: [7],
+                hurt: [7],
                 unused: true,
                 legendaryUsed: false,
                 m: function () { }
@@ -358,7 +360,7 @@ const m =
             {
                 name: "Slimed",
                 desc: "This skill may target up to three models in one hex. Two Retchlings may use this skill in the same activaction if they are in different hexes.",
-                icon: "skull",
+                icon: skull,
                 dist: 2,
                 aim: [3, 4, 5],
                 hurt: [5, 5, 5],
@@ -372,7 +374,7 @@ const m =
             {
                 name: "Slip andSlide",
                 desc: `${walkBoon}. Two Retchlings may use this skill in the same activation if they are on different hexes.`,
-                icon: "cogs",
+                icon: cogs,
                 dist: 1,
                 unused: true,
                 m: function () { }
@@ -395,7 +397,7 @@ const m =
             {
                 name: "Regenerate",
                 desc: "Remove up to 2 of Halftusk's wounds.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -403,10 +405,10 @@ const m =
             {
                 name: "One Punch",
                 desc: "Hit Effect: Halftusk may use Two Punch this turm as a bonus action.",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 6,
-                hurt: 4,
+                aim: [6],
+                hurt: [4],
                 unused: true,
                 m: function () { }
             },
@@ -414,10 +416,10 @@ const m =
             {
                 name: "Two Punch",
                 desc: "Hit Effect: Halftusk may move up to 1 hex.",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 4,
-                hurt: 5,
+                aim: [4],
+                hurt: [5],
                 unused: true,
                 m: function () { }
             },
@@ -428,7 +430,7 @@ const m =
             {
                 name: "Regenerate",
                 desc: "Remove up to 2 of Halftusk's wounds.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -436,7 +438,7 @@ const m =
             {
                 name: "Footwork",
                 desc: dodgeBoon,
-                icon: "cogs",
+                icon: cogs,
                 dist: 2,
                 unused: true,
                 m: function () { }
@@ -445,20 +447,20 @@ const m =
             {
                 name: "Feint",
                 desc: `Hit Effect: ${aimBlight}`,
-                icon: "skull",
+                icon: skull,
                 dist: 2,
-                aim: 5,
+                aim: [5],
                 unused: true,
                 m: function () { }
             }
         },
         util:
         {
-            theGreatTusk:
+            legendary:
             {
                 name: "the Great Tusk",
                 desc: `Plot Phase only. Halftusk may make a claim action. Then choose ${dodgeBoon} or ${shieldBoon}. Friendy models within range gain the boon you chose.`,
-                icon: "star",
+                icon: star,
                 dist: 2,
                 unused: true,
                 legendaryUsed: false,
@@ -479,7 +481,7 @@ const m =
             {
                 name: "Tongue Tow",
                 desc: "Move a friendly banner that is within range up to 1 hex toward this froglodyte",
-                icon: "star",
+                icon: star,
                 dist: 2,
                 unused: true,
                 m: function () { }
@@ -488,7 +490,7 @@ const m =
             {
                 name: "Tongue Lash",
                 desc: "Hit effect: Move target up to 1 hex towards this Froglodyte.",
-                icon: "skull",
+                icon: skull,
                 dist: 2,
                 aim: [5, 6, 7],
                 unused: true,
@@ -509,7 +511,7 @@ const m =
             {
                 name: "Hop",
                 desc: "You may place each Froglodyte in a hex up to 2 hexes from its current hex.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             }
@@ -530,7 +532,7 @@ const m =
             {
                 name: "March",
                 desc: "Move Rhodri up to 1 hex.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -538,19 +540,19 @@ const m =
             {
                 name: "Shield Bash",
                 desc: `Hit Effect: ${hurtBlight}. Move target up to 2 hexes away from Rhodri.`,
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 7,
+                aim: [7],
                 unused: true,
                 m: function () { }
             },
             swordSlash:
             {
                 name: "Sword Slash",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 5,
-                hurt: 6,
+                aim: [5],
+                hurt: [6],
                 unused: true,
                 m: function () { }
             },
@@ -561,7 +563,7 @@ const m =
             {
                 name: "March",
                 desc: "Move Rhodri up to 1 hex.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -569,7 +571,7 @@ const m =
             {
                 name: "Answer the Call",
                 desc: "Choose a follower within range. Its unit makes a recruit action.",
-                icon: "cogs",
+                icon: cogs,
                 dist: 2,
                 unused: true,
                 m: function () { }
@@ -578,7 +580,7 @@ const m =
             {
                 name: "Hold!",
                 desc: shieldBoon,
-                icon: "cogs",
+                icon: cogs,
                 dist: 2,
                 unused: true,
                 m: function () { }
@@ -592,7 +594,7 @@ const m =
                 desc: "Clash phase only. Make a claim action.",
                 unused: true,
                 legendaryUsed: false,
-                icon: "self",
+                icon: self,
                 m: function () { }
             },
             unyielding:
@@ -610,14 +612,14 @@ const m =
             {
                 name: "March",
                 desc: "Move each Household Guard up to 1 hex.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
             swordStrike:
             {
                 name: "Sword Strike",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
                 aim: [5, 5, 5],
                 hurt: [4, 5, 6],
@@ -631,7 +633,7 @@ const m =
             {
                 name: "Brace",
                 desc: shieldBoon,
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -639,7 +641,7 @@ const m =
             {
                 name: "March",
                 desc: "Move each Household Guard up to 1 hex.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             }
@@ -670,7 +672,7 @@ const m =
             {
                 desc: "Raise Dead",
                 desc: "All friendly champions within range may make a rally action.",
-                icon: "cogs",
+                icon: cogs,
                 dist: 3,
                 unused: true,
                 m: function () { }
@@ -679,10 +681,10 @@ const m =
             {
                 name: "Soul Cleave",
                 desc: "Hit Effect: The Knightshades make a recruit action.",
-                icon: "skull",
+                icon: skull,
                 dist: 3,
-                aim: 5,
-                hurt: 5,
+                aim: [5],
+                hurt: [5],
                 unused: true,
                 m: function () { }
             }
@@ -693,7 +695,7 @@ const m =
             {
                 name: "Grave Summons",
                 desc: "Mournblade makes a claim action. You may place his banner on any objective hex within range.",
-                icon: "star",
+                icon: star,
                 dist: 3,
                 unused: true,
                 m: function () { }
@@ -702,7 +704,7 @@ const m =
             {
                 name: "Forward Minions!",
                 desc: "Move each Knightshade that is within range up to 2 hexes.",
-                icon: "cogs",
+                icon: cogs,
                 dist: 4,
                 unused: true,
                 m: function () { }
@@ -733,7 +735,7 @@ const m =
             {
                 name: "Depths of Sorrow",
                 desc: aimBoon,
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -741,7 +743,7 @@ const m =
             {
                 name: "Death's Door",
                 desc: `If the Knightshades made a recruit action this activation, Death's Door has +1 ${aim} and ${hurt}.`,
-                icon: "skull",
+                icon: skull,
                 dist: 1,
                 aim: [4, 5, 5],
                 hurt: [4, 4, 5],
@@ -755,7 +757,7 @@ const m =
             {
                 name: "Careful, Master",
                 desc: `If Mournblade is within range, he gains ${dodgeBoon}.`,
-                icon: "cogs",
+                icon: cogs,
                 dist: 3,
                 unused: true,
                 m: function () { }
@@ -764,7 +766,7 @@ const m =
             {
                 name: "Where's Master?",
                 desc: "If Mournblade is within range, he may make a rally action or move up to 2 hexes.",
-                icon: "cogs",
+                icon: cogs,
                 dist: 3,
                 unused: true,
                 m: function () { }
@@ -788,7 +790,7 @@ const m =
             {
                 name: "Mirage",
                 desc: "Choose a friendly banner within 2 hexes of Finvarr. Place it on an objective hex that is 1 hex away from its current hex.",
-                icon: "star",
+                icon: star,
                 dist: 2,
                 unused: true,
                 m: function () { }
@@ -797,7 +799,7 @@ const m =
             {
                 name: "Void Weapon",
                 desc: hurtBoon,
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -805,10 +807,10 @@ const m =
             {
                 name: "Life Blade",
                 desc: "Hit Effect: Remove up to 1 of Finvarr's wounds.",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 4,
-                hurt: 5,
+                aim: [4],
+                hurt: [5],
                 unused: true,
                 m: function () { }
             }
@@ -819,7 +821,7 @@ const m =
             {
                 name: "Poised to Strike",
                 desc: walkBoon,
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -827,7 +829,7 @@ const m =
             {
                 name: "Shadow Ward",
                 desc: "Hit Effect: Move target up to 1 hex",
-                icon: "skull",
+                icon: skull,
                 dist: 2,
                 aim: 5,
                 unused: true,
@@ -836,14 +838,14 @@ const m =
         },
         util:
         {
-            phantomBanners:
+            legendary:
             {
                 name: "Phantom Banners",
                 desc: "Choose any number of friendly banners within range. Place teh on objective hexes within range.",
                 dist: 4,
                 unused: true,
                 legendaryUsed: false,
-                icon: "star",
+                icon: star,
                 m: function () { }
             },
             bannerWarden:
@@ -862,7 +864,7 @@ const m =
             {
                 name: "Void Weapon",
                 desc: aimBoon,
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -870,7 +872,7 @@ const m =
             {
                 name: "Life Trade",
                 desc: "If this skill knocks out na enemy while Shadow Sentinels are below their maximum unit size, add 1 Shadow Sentinel to this hex.",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
                 aim: [4, 5, 5],
                 hurt: [4, 5, 5],
@@ -883,7 +885,7 @@ const m =
             {
                 name: "Protect",
                 desc: shieldBoon,
-                icon: "cogs",
+                icon: cogs,
                 dist: 1,
                 unused: true,
                 m: function () { }
@@ -892,7 +894,7 @@ const m =
             {
                 name: "Shadow Snare",
                 desc: `Hit Effect: ${walkBlight}.`,
-                icon: "skull",
+                icon: skull,
                 dist: 1,
                 aim: [4, 5, 5],
                 unused: true,
@@ -917,7 +919,7 @@ const m =
             {
                 name: "Crystal Glare",
                 desc: "Choose a blight on any model within range. Then Choose an enemy model within range to gain that blight.",
-                icon: "star",
+                icon: star,
                 dist: 2,
                 unused: true,
                 m: function () { }
@@ -926,9 +928,9 @@ const m =
             {
                 name: "Erosion",
                 desc: `Hit Effect: ${shieldBlight}.`,
-                icon: "skull",
+                icon: skull,
                 dist: 2,
-                aim: 5,
+                aim: [5],
                 unused: true,
                 m: function () { }
             },
@@ -936,10 +938,10 @@ const m =
             {
                 name: "Blinding Light",
                 desc: `Hit Effect: ${aimBlight}`,
-                icon: "skull",
+                icon: skull,
                 dist: 2,
-                aim: 4,
-                hurt: 5,
+                aim: [4],
+                hurt: [5],
                 unused: true,
                 m: function () { }
             }
@@ -951,7 +953,7 @@ const m =
                 name: "Crystal Mirror",
                 desc: "Choose a boon on any friendly model within range. Then choose a friendly model within range to gain that boon.",
                 dist: 2,
-                icon: "star",
+                icon: star,
                 unused: true,
                 m: function () { }
             },
@@ -959,7 +961,7 @@ const m =
             {
                 name: "Meditation",
                 desc: aimBoon,
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -967,17 +969,18 @@ const m =
             {
                 name: "March",
                 desc: "Move Nia up to 1 hex.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             }
         },
         util:
         {
-            geode:
+            legendary:
             {
                 name: "Geode",
                 desc: "Plot Phase only. Choose a Quartzling that is the only model in its hex and is adjacent to an objective hex, and replace it with an objective hex. If it is within 2 hexes of Nia, she may make a claim action on that hex.",
+                icon:star,
                 unused: true,
                 legendaryUsed: false,
                 m: function () { }
@@ -998,14 +1001,14 @@ const m =
             {
                 name: "Rolling Stones",
                 desc: "Each Quartzling may move up to 3 hexes in a straight line.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
             stoneThrow:
             {
                 name: "Stone Throw",
-                icon: "skull",
+                icon: skull,
                 dist: 2,
                 aim: [4, 5, 5],
                 hurt: [4, 4, 5],
@@ -1019,7 +1022,7 @@ const m =
             {
                 name: "Calcify",
                 desc: "If this Quartzling is the only model in its hex and is adjacent to an objective hex, replace it with an objective hex.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -1029,7 +1032,7 @@ const m =
                 desc: `Hit Effect: ${walkBlight}`,
                 dist: 2,
                 aim: [4, 5, 5],
-                icon: "skull",
+                icon: skull,
                 unused: true,
                 m: function () { }
             }
@@ -1052,7 +1055,7 @@ const m =
             {
                 name: "Ker-Splash",
                 desc: "Choose a hex within range containing one Splashling. Remove the Splashling and place Raith'Marid in that hex.",
-                icon: "self",
+                icon: self,
                 dist: 3,
                 unused: true,
                 m: function () { }
@@ -1061,10 +1064,10 @@ const m =
             {
                 name: "Headbutt",
                 desc: "Hit Effect: Move target up to 1 hex.",
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 5,
-                hurt: 5,
+                aim: [5],
+                hurt: [5],
                 unused: true,
                 M: function () { }
             },
@@ -1072,10 +1075,10 @@ const m =
             {
                 name: "Lunging Strike",
                 desc: "Before the hit roll, move Raith,Marid up to 1 hex towards the target.",
-                icon: "skull",
+                icon: skull,
                 dist: 2,
-                aim: 6,
-                hurt: 4,
+                aim: [6],
+                hurt: [4],
                 unused: true,
                 m: function () { }
             }
@@ -1087,7 +1090,7 @@ const m =
                 name: "Underthrow",
                 desc: "Choose an empty objective hex within range. Place it on an empty non-objective hex within range.",
                 dist: 1,
-                icon: "star",
+                icon: star,
                 unused: true,
                 m: function () { }
             },
@@ -1095,7 +1098,7 @@ const m =
             {
                 name: "Ker-Splash",
                 desc: "Choose a hex within range containing one Splashling. Remove the Splashling and place Raith'Marid in that hex.",
-                icon: "self",
+                icon: self,
                 dist: 3,
                 unused: true,
                 m: function () { }
@@ -1104,7 +1107,7 @@ const m =
             {
                 name: "Jet",
                 desc: "Move a Splashilng within range up to 3 hexes.",
-                icon: "cogs",
+                icon: cogs,
                 dist: 2,
                 unused: true,
                 m: function () { }
@@ -1112,7 +1115,7 @@ const m =
         },
         util:
         {
-            tsunami:
+            legendary:
             {
                 name: "Tsunami",
                 desc: "Place Raith'Marid on a hex within range. Then move each enemy model within 2 hexes of him up to 2 hexes in the order of your choice.",
@@ -1138,7 +1141,7 @@ const m =
             {
                 name: "Current",
                 desc: "You may place each Splashling in a hex up to 3 hexes from its current hex.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -1148,7 +1151,7 @@ const m =
                 desc: "Hit Effect: Move target up to 1 hex.",
                 dist: 2,
                 aim: [5, 6, 7],
-                icon: "skull",
+                icon: skull,
                 unused: true,
                 m: function () { }
             }
@@ -1159,7 +1162,7 @@ const m =
             {
                 name: "Current",
                 desc: "You may place each Splashling in a hex up to 3 hexes from its current hex.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -1169,7 +1172,7 @@ const m =
                 desc: "Hit Effect: Move target up to 1 hex.",
                 dist: 2,
                 aim: [5, 6, 7],
-                icon: "skull",
+                icon: skull,
                 unused: true,
                 m: function () { }
             }
@@ -1192,7 +1195,7 @@ const m =
             {
                 name: "Tremor",
                 desc: "Remove all boons from enemies within range",
-                icon: "star",
+                icon: star,
                 dist: 2,
                 unused: true,
                 m: function () { }
@@ -1201,9 +1204,9 @@ const m =
             {
                 name: "Stone Spikes",
                 desc: walkBlight,
-                icon: "skull",
-                dist: 3,
-                aim: 5,
+                icon: skull,
+                dist: [3],
+                aim: [5],
                 unused: true,
                 m: function () { }
             }
@@ -1214,7 +1217,7 @@ const m =
             {
                 name: "Stone Strenght",
                 desc: `If Landslide is within range, it gains ${shieldBoon} and ${hurtBoon}.`,
-                icon: "cogs",
+                icon: cogs,
                 dist: 3,
                 unused: true,
                 m: function () { }
@@ -1223,20 +1226,20 @@ const m =
             {
                 name: "Runeweaving",
                 desc: "Hit Effect: Move a boon from the target to any model within range.",
-                icon: "skull",
-                dist: 3,
-                aim: 6,
+                icon: skull,
+                dist:[3],
+                aim: [6],
                 unused: true,
                 m: function () { }
             }
         },
         util:
         {
-            avalanche:
+            legendary:
             {
                 name: "Avalanche",
                 desc: "Choose any number of objective hexes within 3 hexes of Landslide. Move each up to 1 hex onto an empty non-objective hex in any order. Models on the objective hexes move with them.",
-                icon: "star",
+                icon: star,
                 unused: true,
                 legendaryUsed: false,
                 m: function () { }
@@ -1257,9 +1260,9 @@ const m =
             {
                 name: "Earthquake",
                 desc: "Hit Effect: Move target champion or all followers in target's unit up to 2 hexes.",
-                icon: "skull",
-                dist: 2,
-                aim: 4,
+                icon: skull,
+                dist:[2],
+                aim: [4],
                 unused: true,
                 m: function () { }
             },
@@ -1267,10 +1270,10 @@ const m =
             {
                 name: "Boulder Bash",
                 desc: `Hit Effect: ${dodgeBlight}`,
-                icon: "skull",
+                icon: skull,
                 dist: 1,
-                aim: 6,
-                hurt: 6,
+                aim: [6],
+                hurt: [6],
                 unused: true,
                 m: function () { }
             }
@@ -1281,7 +1284,7 @@ const m =
             {
                 name: "Eruption",
                 desc: `Friendly and enemy models adjacent to Landslide gain ${shieldBlight}.`,
-                icon: "star",
+                icon: star,
                 dist: 1,
                 unused: true,
                 m: function () { }
@@ -1290,9 +1293,9 @@ const m =
             {
                 name: "Earthquake",
                 desc: "Hit Effect: Move target champion or all folowers in target's unit up to 2 hexes.",
-                icon: "skull",
+                icon: skull,
                 dist: 2,
-                aim: 4,
+                aim: [4],
                 unused: true,
                 m: function () { }
             }
@@ -1316,7 +1319,7 @@ const m =
                 name: "Cursed Ground",
                 desc: "Place up to two objective hexes on empty non-objective hexes withing range. Remove them at the end of the clash phase.",
                 dist: 2,
-                icon: "star",
+                icon: star,
                 unused: true,
                 m: function () { }
             },
@@ -1324,10 +1327,10 @@ const m =
             {
                 name: "Deadly Curse",
                 desc: `Hit Effect: The target gains ${aimBlight} or ${hurtBlight}.`,
-                icon: "skull",
+                icon: skull,
                 dist: 2,
-                aim: 4,
-                hurt: 6,
+                aim: [4],
+                hurt: [6],
                 unused: true,
                 m: function () { }
             }
@@ -1338,7 +1341,7 @@ const m =
             {
                 name: "Call Totems",
                 desc: "Remove any number of Hexlings from the battlefield, then place them on hexes within 2 hexes of Rattlebone.",
-                icon: "cogs",
+                icon: cogs,
                 unused: true,
                 m: function () { }
             },
@@ -1347,18 +1350,19 @@ const m =
                 name: "Grapsing Curse",
                 desc: `Hit Effect: The target gains ${walkBlight} or ${dodgeBlight}.`,
                 dist: 2,
-                aim: 6,
+                aim: [6],
+                icon:skull,
                 unused: true,
                 m: function () { }
             }
         },
         util:
         {
-            powerHex:
+            legendary:
             {
                 name: "Power Hex",
                 desc: "Chooxe on blight for each Hexling within range. Each enemy champion within range gains those blights.",
-                icon: "star",
+                icon: star,
                 dist: 2,
                 unused: true,
                 legendaryUsed: false,
@@ -1380,7 +1384,7 @@ const m =
             {
                 name: "Purge Magic",
                 desc: "Move all boons and blights from the Hexlings, to a friendly model within range.",
-                icon: "cogs",
+                icon: cogs,
                 dist: 2,
                 unused: true,
                 m: function () { }
@@ -1389,7 +1393,7 @@ const m =
             {
                 name: "Hex Bolt",
                 desc: "Hit Effect: The target gains the blights of your choice.",
-                icon: "skull",
+                icon: skull,
                 dist: 2,
                 aim: [2, 4, 6],
                 unused: true,
@@ -1402,7 +1406,7 @@ const m =
             {
                 name: "Attune Magic",
                 desc: "Gain the boon of your choice.",
-                icon: "self",
+                icon: self,
                 unused: true,
                 m: function () { }
             },
@@ -1410,7 +1414,7 @@ const m =
             {
                 name: "Hex Bolt",
                 desc: "Hit effect: The target gains the blight of your choice.",
-                icon: "skull",
+                icon: skull,
                 dist: 2,
                 aim: [2, 4, 6],
                 unused: true,
@@ -1434,9 +1438,9 @@ const m =
             {
                 name:"Piercing Shot",
                 desc:"Hit Effect: The target gains 1 wound.",
-                icon:"skull",
+                icon:skull,
                 dist:3,
-                aim:5,
+                aim:[5],
                 unused:true,
                 m:function(){}
             },
@@ -1444,20 +1448,20 @@ const m =
             {
                 name:"Mystic Arrow",
                 desc:`After the mystic arrow damage roll, make a 5${hurt} damage roll againt the target.`,
-                icon:"skull",
+                icon:skull,
                 dist:3,
-                aim:3,
-                hurt:5,
+                aim:[3],
+                hurt:[5],
                 unused:true,
                 m:function(){}
             },
             snipe:
             {
                 name:"Snipe",
-                icon:"skull",
+                icon:skull,
                 dist:3,
-                aim:8,
-                hurt:4,
+                aim:[8],
+                hurt:[4],
                 unused:true,
                 m:function(){}
             }
@@ -1468,7 +1472,7 @@ const m =
             {
                 name:"Field Instruction",
                 desc:hurtBoon,
-                icon:"cogs",
+                icon:cogs,
                 dist:2,
                 unused:true,
                 m:function(){}
@@ -1477,22 +1481,22 @@ const m =
             {
                 name:"Fairy Fire",
                 desc:`Hit Effect: ${shieldBlight}.`,
-                icon:"skull",
+                icon:skull,
                 dist:3,
-                aim:5,
+                aim:[5],
                 unused:true,
                 m:function(){}
             }
         },
         util:
         {
-            deathblow:
+            legendary:
             {
                 name:"Deathblow",
                 desc:"Hit Effect: The target gains 2 wounds.",
-                icon:"skull",
+                icon:skull,
                 dist:3,
-                aim:6,
+                aim:[6],
                 unused:true,
                 legendaryUsed:false,
                 m:function(){}
@@ -1513,14 +1517,14 @@ const m =
             {
                 name:"Aim",
                 desc:aimBoon,
-                icon:"self",
+                icon:self,
                 unused:true,
                 m:function(){}
             },
             fire:
             {
                 name:"Fire",
-                icon:"skull",
+                icon:skull,
                 dist:3,
                 aim:[3,4,5],
                 hurt:[3,4,5],
@@ -1534,7 +1538,7 @@ const m =
             {
                 name:"Blur",
                 desc:dodgeBoon,
-                icon:"self",
+                icon:self,
                 unused:true,
                 m:function(){}
             },
@@ -1542,9 +1546,9 @@ const m =
             {
                 name:"Fairy Fire",
                 desc:`Hit Effect: ${shieldBlight}.`,
-                icon:"skull",
+                icon:skull,
                 dist:3,
-                aim:5,
+                aim:[5],
                 unused:true,
                 m:function(){}
             }
@@ -1567,7 +1571,7 @@ const m =
             {
                 name:"Plot Revenge",
                 desc:aimBoon,
-                icon:"cogs",
+                icon:cogs,
                 dist:2,
                 unused:true,
                 m:function(){}
@@ -1576,9 +1580,9 @@ const m =
             {
                 name:"annoy",
                 desc:"Hit Effect: Move target up to 2 hexes toward Sneaky Peet.",
-                icon:"skull",
+                icon:skull,
                 dist:3,
-                aim:5,
+                aim:[5],
                 unused:true,
                 m:function(){}
             },
@@ -1586,10 +1590,10 @@ const m =
             {
                 name:"Backstab",
                 desc:"If this attack hits a champion, the champion gains 1 wound.",
-                icon:"skull",
+                icon:skull,
                 dist:1,
-                aim:5,
-                hurt:5,
+                aim:[5],
+                hurt:[5],
                 unused:true,
                 m:function(){}
             }
@@ -1600,7 +1604,7 @@ const m =
             {
                 name:"Leap",
                 desc:"You may place Sneaky Peet on a hex up to 2 hexes away from his current hex.",
-                icon:"self",
+                icon:self,
                 unused:true,
                 m:function(){}
             },
@@ -1608,10 +1612,10 @@ const m =
             {
                 name:"Backstab",
                 desc:"If this attack hits a champion, the champion gains 1 wound.",
-                icon:"skull",
+                icon:skull,
                 dist:1,
-                aim:5,
-                hurt:5,
+                aim:[5],
+                hurt:[5],
                 unused:true,
                 m:function(){}
             }            
@@ -1622,10 +1626,10 @@ const m =
             {
                 name:"Pounce",
                 desc:"Before the hit roll, you may place Sneaky Peet on a hex adjacent to the target.",
-                icon:"skull",
+                icon:skull,
                 dist:2,
-                aim:6,
-                hurt:6,
+                aim:[6],
+                hurt:[6],
                 unused:true,
                 legendaryUsed:false,
                 m:function(){}
@@ -1646,7 +1650,7 @@ const m =
             {
                 name:"sneak",
                 desc:"Remove one sneaky Stabber from the battlefield. Then make a recruit action.",
-                icon:"self",
+                icon:self,
                 unused:true,
                 m:function(){}
             },
@@ -1654,7 +1658,7 @@ const m =
             {
                 name:"Irritate",
                 desc:`Hit Effect: ${aimBlight}.`,
-                icon:"skull",
+                icon:skull,
                 dist:3,
                 aim:[3,5,7],
                 unused:true,
@@ -1667,14 +1671,14 @@ const m =
             {
                 name:"Sprint",
                 desc:"One Sneaky Stabber may move up to 3 hexes.",
-                icon:"self",
+                icon:self,
                 unused:true,
                 m:function(){}
             },
             letMeDoIt:
             {
                 name:"Let Me Do It!",
-                icon:"skull",
+                icon:skull,
                 dist:1,
                 aim:[7,5,3],
                 hurt:[4,5,6],
@@ -1700,10 +1704,10 @@ const m =
             {
                 name:"Jawbreaker",
                 desc:"Hit Effect: Move target up to 1 hex away from Rangosh.",
-                icon:"skull",
+                icon:skull,
                 dist:1,
-                aim:3,
-                hurt:7,
+                aim:[3],
+                hurt:[7],
                 unused:true,
                 m:function(){}
             },
@@ -1711,10 +1715,10 @@ const m =
             {
                 name:"Whiplash",
                 desc:"Hit Effect: Move Target up to 1 hex towards Rangosh.",
-                icon:"skull",
+                icon:skull,
                 dist:2,
-                aim:5,
-                hurt:5,
+                aim:[5],
+                hurt:[5],
                 unused:true,
                 m:function(){}
             }
@@ -1725,7 +1729,7 @@ const m =
             {
                 name:"Channel Rage",
                 desc:hurtBoon,
-                icon:"self",
+                icon:self,
                 unused:true,
                 m:function(){}
             },
@@ -1733,20 +1737,20 @@ const m =
             {
                 name:"Break Spirit",
                 desc:`Hit Effect: ${dodgeBlight}.`,
-                icon:"skull",
+                icon:skull,
                 dist:2,
-                aim:6,
+                aim:[6],
                 unused:true,
                 m:function(){}
             }
         },
         util:
         {
-            beastlyCharge:
+            legendary:
             {
                 name:"Beastly Charge",
                 desc:"Move Rangosh up to 2 hexes. Then you may place up to 2 wounds on an enemy within range.",
-                icon:"star",
+                icon:star,
                 dist:1,
                 unused:true,
                 legendaryUsed:false,
@@ -1768,7 +1772,7 @@ const m =
             {
                 name:"Ambush",
                 desc:"Hit Effect: The target gains 1 wound.",
-                icon:"skull",
+                icon:skull,
                 dist:1,
                 aim:[3,4,5],
                 unused:true,
@@ -1777,7 +1781,7 @@ const m =
             shoot:
             {
                 name:"Shoot",
-                icon:"skull",
+                icon:skull,
                 dist:3,
                 aim:[3,4,5],
                 hurt:[4,4,4],
@@ -1791,7 +1795,7 @@ const m =
             {
                 name:"Induct",
                 desc:"If the Red Bandits are below their maximum unit size, add one to a hex containing at least one Red Bandit.",
-                icon:"self",
+                icon:self,
                 unused:true,
                 m:function(){}
             },
@@ -1799,7 +1803,7 @@ const m =
             {
                 name:"Ambush",
                 desc:"Hit Effect: The target gains 1 wound.",
-                icon:"skull",
+                icon:skull,
                 dist:1,
                 aim:[3,4,5],
                 unused:true,
@@ -1824,10 +1828,10 @@ const m =
             {
                 name:"Snowball's Chance",
                 desc:"If this skill wounds the targe, they gain wounds untill they are knocked out.",
-                icon:"skull",
+                icon:skull,
                 dist:1,
-                aim:1,
-                hurt:2,
+                aim:[1],
+                hurt:[2],
                 unused:true,
                 m:function(){}
             },
@@ -1835,10 +1839,10 @@ const m =
             {
                 name:"Iceblade",
                 desc:`Hit Effect: If the target has ${walkBlight} ${aimBlight} or ${hurtBlight}, it gains 1 wound.`,
-                icon:"skull",
+                icon:skull,
                 dist:1,
-                aim:5,
-                hurt:5,
+                aim:[5],
+                hurt:[5],
                 unused:true,
                 m:function(){}
             },
@@ -1846,9 +1850,10 @@ const m =
             {
                 name:"Icebolt",
                 desc:`Hit Effect: ${aimBlight}.`,
+                icon:skull,
                 dist:3,
-                aim:7,
-                hurt:3,
+                aim:[7],
+                hurt:[3],
                 unused:true,
                 m:function(){}
             }
@@ -1859,7 +1864,7 @@ const m =
             {
                 name:"Forward, Minions!",
                 desc:"Move each Cold Bones that is within range up top 2 hexes.",
-                icon:"cogs",
+                icon:cogs,
                 dist:4,
                 unused:true,
                 m:function(){}
@@ -1868,20 +1873,20 @@ const m =
             {
                 name:"Frosty Glance",
                 desc:`Hit Effect: ${shieldBlight}. Move Morrigan up to 1 hex towards the target.`,
-                icon:"skull",
+                icon:skull,
                 dist:3,
-                aim:5,
+                aim:[5],
                 unused:true,
                 m:function(){}
             }
         },
         util:
         {
-            flashFreeze:
+            legendary:
             {
                 name:"Flash Freeze",
                 desc:`All enemies within range gain ${dodgeBlight} and ${walkBlight}.`,
-                icon:"star",
+                icon:star,
                 dist:3,
                 unused:true,
                 legendaryUsed:false,
@@ -1903,7 +1908,7 @@ const m =
             {
                 name:"Intense Cold",
                 desc:hurtBoon,
-                icon:"self",
+                icon:self,
                 unused:true,
                 m:function(){}
             },
@@ -1912,6 +1917,7 @@ const m =
                 name:"Snowblade Fight!",
                 desc:`This skill has +1 ${aim} for each Cold Bones adjacent to the target.`,
                 dist:1,
+                icon:skull,
                 aim:[1,1,1],
                 hurt:[3,4,5],
                 unused:true,
@@ -1924,7 +1930,7 @@ const m =
             {
                 name:"So Cool, Mistress!",
                 desc:`If Morrigan is within rnage, she gains ${aimBoon} or ${walkBoon}.`,
-                icon:"cogs",
+                icon:cogs,
                 dist:3,
                 unused:true,
                 m:function(){}
@@ -1935,7 +1941,7 @@ const m =
                 desc:`This skill has +1 ${aim} for each Cold Bones adjacent to the target. Hit Effect: ${hurtBlight}.`,
                 dist:1,
                 aim:[1,1,1],
-                icon:"skull",
+                icon:skull,
                 unused:true,
                 m:function(){}
             }

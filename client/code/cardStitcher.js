@@ -131,16 +131,16 @@ function roster_ability(o,phase){
     let desc = o.desc ? o.desc : '';
     let icon = o.icon ? o.icon : '';
     return `
-    <div class="card_list_item">
-        <div class=img_${phase}>${icon}</div>
+    <div class="card_list_item_${phase}">
+        <div class=img_${icon}_${phase}></div>
         <div class="roster_description">
-            <div class="roster_abil_name_${phase}">${o.name}</div>
-            <div class="roster_abil_desc_${phase}">${desc}</div>
+            <div class="roster_abil_name">${o.name}</div>
+            <div class="roster_abil_desc">${desc}</div>
         </div>
         <div class="roster_abil_stats">
             <div class="roster_abil_column roster_distance">
-                <div class="roster_abil_icon roster_abil_dist"></div>
-                <div class="roster_abil_number roster_dist_num_${phase}">${dist}</div>
+                <div class="roster_abil_icon roster_abil_dist_${phase}"></div>
+                <div class="roster_abil_number roster_dist_num">${dist}</div>
             </div>
             <div class="roster_abil_column">
                 <div class="roster_abil_icon roster_abil_aim_${phase}"></div>
@@ -188,7 +188,6 @@ function list_of_abilities(o){
         let skill = o.skills.util[key];
         if(skill)skills.push(roster_ability(skill,'white'))
     }
-    skills.join('')
     return skills
 }
 function roster_card(o){
@@ -202,13 +201,13 @@ function roster_card(o){
              <div id="champion_card_skills" class="card_skills">
                  <div class="card_tab champ_tab tab_behind">${o.champ.name}</div>
                  <div class="selection_list_of_skills">
-                    ${list_of_abilities(o.champ)}
+                    ${list_of_abilities(o.champ).join('')}
                  </div>
              </div>
              <div id="unit_class_skills" class="card_skills skills_unit">
                  <div class="card_tab unit_tab ">${o.grunt.name}</div>
                  <div class="selection_list_of_skills">
-                    ${list_of_abilities(o.grunt)}
+                    ${list_of_abilities(o.grunt).join('')}
                  </div>
              </div>
          </div>

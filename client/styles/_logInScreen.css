@@ -399,13 +399,17 @@
   text-shadow: 0 0 .3vh black, 0 0 .2vh black, 0 0 .4vh black, 0 0 .5vh black, 0 0 .7vh black, 0 0 .6vh black;
 }
 
+#card {
+  width: 48vw;
+}
+
 .card_heroImg {
   position: relative;
-  width: 22vh;
-  height: 21vh;
+  width: 21vh;
+  height: 23vh;
   background-size: cover;
   top: -7.5vh;
-  left: -3.5vh;
+  left: -3.7vh;
   z-index: 3;
 }
 
@@ -456,38 +460,81 @@
   pointer-events: auto;
 }
 
-.card_skills .selection_list_of_skills .card_list_item {
+.card_skills .selection_list_of_skills .card_list_item_black {
   display: flex;
-  width: 100%;
+  width: 46vw;
   height: auto;
   padding: 1%;
-  background-color: #fff0f0;
+  margin: .5vh 1vw;
+  border-radius: .3vw;
+  background-color: black;
+  color: white;
+  box-shadow: inset 0 0 3vh white, 0 0 2vh black;
 }
 
-.card_skills .selection_list_of_skills .card_list_item .img {
-  width: 15%;
+.card_skills .selection_list_of_skills .card_list_item_black .img_skull_black {
+  margin: 1vh -2vw;
+  min-height: 10vh;
+  max-height: 11vh;
   flex: 1;
-  background-image: url("../img/skull_white.png");
+  border-radius: 50%;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  background-image: url("../img/skull_black.png");
 }
 
-.card_skills .selection_list_of_skills .card_list_item .roster_description {
+.card_skills .selection_list_of_skills .card_list_item_black .img_self_black {
+  margin: 1vh -2vw;
+  min-height: 10vh;
+  max-height: 11vh;
+  flex: 1;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url("../img/self_black.png");
+}
+
+.card_skills .selection_list_of_skills .card_list_item_black .img_star_black {
+  margin: 1vh -2vw;
+  min-height: 10vh;
+  max-height: 11vh;
+  flex: 1;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url("../img/star_black.png");
+}
+
+.card_skills .selection_list_of_skills .card_list_item_black .img_cogs_black {
+  margin: 1vh -2vw;
+  min-height: 10vh;
+  max-height: 11vh;
+  flex: 1;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url("../img/cogs_black.png");
+}
+
+.card_skills .selection_list_of_skills .card_list_item_black .roster_description {
   min-height: 20vh;
   width: 66%;
   height: auto;
   padding: .7%;
 }
 
-.card_skills .selection_list_of_skills .card_list_item .roster_description .roster_abil_name {
+.card_skills .selection_list_of_skills .card_list_item_black .roster_description .roster_abil_name {
   font-size: 110%;
   font-weight: 700;
   letter-spacing: .04vw;
   flex: 1;
 }
 
-.card_skills .selection_list_of_skills .card_list_item .roster_description .roster_abil_desc {
+.card_skills .selection_list_of_skills .card_list_item_black .roster_description .roster_abil_desc {
   font-size: 100%;
   font-weight: 400;
   line-height: 1.25;
@@ -495,39 +542,159 @@
   height: auto;
 }
 
-.card_skills .selection_list_of_skills .card_list_item .roster_abil_stats {
+.card_skills .selection_list_of_skills .card_list_item_black .roster_abil_stats {
   display: flex;
-  width: 15%;
+  min-width: 15%;
+  max-width: 20%;
   flex: 1;
 }
 
-.card_skills .selection_list_of_skills .card_list_item .roster_abil_stats .roster_abil_column {
+.card_skills .selection_list_of_skills .card_list_item_black .roster_abil_stats .roster_abil_column {
   width: 33%;
 }
 
-.card_skills .selection_list_of_skills .card_list_item .roster_abil_stats .roster_abil_column .roster_abil_icon {
+.card_skills .selection_list_of_skills .card_list_item_black .roster_abil_stats .roster_abil_column .roster_abil_icon {
   height: 25%;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
 }
 
-.card_skills .selection_list_of_skills .card_list_item .roster_abil_stats .roster_abil_column .roster_abil_number {
+.card_skills .selection_list_of_skills .card_list_item_black .roster_abil_stats .roster_abil_column .roster_abil_number {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 25%;
 }
 
-.card_skills .selection_list_of_skills .card_list_item .roster_abil_stats .roster_abil_column .roster_abil_dist {
+.card_skills .selection_list_of_skills .card_list_item_black .roster_abil_stats .roster_abil_column .roster_abil_dist_black {
+  background-image: url("../img/dist_black.png");
+}
+
+.card_skills .selection_list_of_skills .card_list_item_black .roster_abil_stats .roster_abil_column .roster_abil_aim_black {
+  background-image: url("../img/aim_black.png");
+}
+
+.card_skills .selection_list_of_skills .card_list_item_black .roster_abil_stats .roster_abil_column .roster_abil_hurt_black {
+  background-image: url("../img/hurt_black.png");
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white {
+  display: flex;
+  width: 46vw;
+  height: auto;
+  padding: 1%;
+  margin: .5vh 1vw;
+  border-radius: .3vw;
+  background-color: white;
+  color: black;
+  box-shadow: inset 0 0 3vh black, 0 0 2vh black;
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .img_skull_white {
+  margin: 1vh -2vw;
+  min-height: 10vh;
+  max-height: 11vh;
+  flex: 1;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url("../img/skull_white.png");
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .img_self_white {
+  margin: 1vh -2vw;
+  min-height: 10vh;
+  max-height: 11vh;
+  flex: 1;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url("../img/self_white.png");
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .img_star_white {
+  margin: 1vh -2vw;
+  min-height: 10vh;
+  max-height: 11vh;
+  flex: 1;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url("../img/star_white.png");
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .img_cogs_white {
+  margin: 1vh -2vw;
+  min-height: 10vh;
+  max-height: 11vh;
+  flex: 1;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url("../img/cogs_white.png");
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .roster_description {
+  min-height: 20vh;
+  width: 66%;
+  height: auto;
+  padding: .7%;
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .roster_description .roster_abil_name {
+  font-size: 110%;
+  font-weight: 700;
+  letter-spacing: .04vw;
+  flex: 1;
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .roster_description .roster_abil_desc {
+  font-size: 100%;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -.06vw;
+  height: auto;
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .roster_abil_stats {
+  display: flex;
+  min-width: 15%;
+  max-width: 20%;
+  flex: 1;
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .roster_abil_stats .roster_abil_column {
+  width: 33%;
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .roster_abil_stats .roster_abil_column .roster_abil_icon {
+  height: 25%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .roster_abil_stats .roster_abil_column .roster_abil_number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25%;
+}
+
+.card_skills .selection_list_of_skills .card_list_item_white .roster_abil_stats .roster_abil_column .roster_abil_dist_white {
   background-image: url("../img/dist_white.png");
 }
 
-.card_skills .selection_list_of_skills .card_list_item .roster_abil_stats .roster_abil_column .roster_abil_aim {
+.card_skills .selection_list_of_skills .card_list_item_white .roster_abil_stats .roster_abil_column .roster_abil_aim_white {
   background-image: url("../img/aim_white.png");
 }
 
-.card_skills .selection_list_of_skills .card_list_item .roster_abil_stats .roster_abil_column .roster_abil_hurt {
+.card_skills .selection_list_of_skills .card_list_item_white .roster_abil_stats .roster_abil_column .roster_abil_hurt_white {
   background-image: url("../img/hurt_white.png");
 }
 
@@ -796,6 +963,6 @@
   margin-top: 4vh;
 }
 
-.card_list_item * {
-  border-radius: 5%;
+.img__white, .img__black {
+  min-width: 5vh;
 }

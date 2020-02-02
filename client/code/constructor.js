@@ -71,19 +71,19 @@ const Morrigan = new Character("slayer","champion","Morrigan",1,'./img/Morrigan.
 const ColdBones = new Character("slayer","unit","Cold Bones",5,"",[1,1],2,3,1,m.coldBones,'./img/classSlayer.png');
 
 const Lorsann = new Character("slayer","champion","Lorsann",1,"./img/Lorsann.png",[2,3],4,1,6,m.lorsann,'./img/classSlayer.png');
-const MistwoodRangers = new Character("slayer","unit","MistwoodRangers",3,"",[2,3],3,1,1,m.mistwoodRangers,'./img/classSlayer.png');
+const MistwoodRangers = new Character("slayer","unit","Mistwood Rangers",3,"",[2,3],3,1,1,m.mistwoodRangers,'./img/classSlayer.png');
 
 const SneakyPeet = new Character("slayer","champion","Sneaky Peet",1,'./img/SneakyPeet.png',[3,1],5,1,5,m.sneakyPeet,'./img/classSlayer.png');
 const SneakyStabbers = new Character("slayer","unit","Sneaky Stabbers", 3, "", [3,1],5,1,1,m.sneakyStabbers,'./img/classSlayer.png');
 
 const Rangosh = new Character("slayer","champion", "Rangosh",1,'./img/Rangosh.png',[4,2],4,2,7,m.rangosh,'./img/classSlayer.png');
-const RedBandits = new Character("slayer","unit","Red Bandits",5,"",[2,2],3,2,1,m.RedBandits,'./img/classSlayer.png');
+const RedBandits = new Character("slayer","unit","Red Bandits",5,"",[2,2],3,2,1,m.redBandits,'./img/classSlayer.png');
 
 const rosters = 
 {
     guardian:
     [
-        {champ:Halftusk,gunt:Froglodytes},
+        {champ:Halftusk,grunt:Froglodytes},
         {champ:Rhodri,grunt:HouseholdGuard},
         {champ:Mournblade,grunt:Knightshades},
         {champ:Finvarr,grunt:ShadowSentinels}

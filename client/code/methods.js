@@ -1,4 +1,19 @@
-let walk, walkBlight, walkBoon, aim, aimBlight, aimBoon, dodge, dodgeBlight, dodgeBoon, hurt, hurtBlight, hurtBoon, shield, shieldBlight, shieldBoon, skull, cogs, self, star;
+const blight_icon = o => `
+    <div class="${o} small_icon blight" style="background-image:url('../img/${o}.png')">
+        <div class="small_minus"></div>
+    </div>
+`;
+const boon_icon = o => `
+    <div class="${o} small_icon boon" style="background-image:url('../img/${o}.png')">
+        <div class="small_plus"></div>
+    </div>
+`;
+let walk = 'walk', 
+walkBlight = `walkBlight`, walkBoon = 'walkBoon', aim = 'aim', aimBlight = 'aimBlight', aimBoon = 'aimBoon', dodge = 'dodge', dodgeBlight = 'dodgeBlight', dodgeBoon = 'dodgeBoon', hurt = 'hurt', hurtBlight = 'hurtBlight', hurtBoon = 'hurtBoon', shield = 'shield', shieldBlight = 'shieldBlight', shieldBoon = 'shieldBoon', 
+skull = 'skull', 
+cogs = 'cogs', 
+self = 'self', 
+star = 'star';
 const m =
 {
     universal:
@@ -831,7 +846,7 @@ const m =
                 desc: "Hit Effect: Move target up to 1 hex",
                 icon: skull,
                 dist: 2,
-                aim: 5,
+                aim: [5],
                 unused: true,
                 m: function () { }
             }

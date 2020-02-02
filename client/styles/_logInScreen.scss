@@ -269,13 +269,16 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
 
 #card_health_white{background-image: url('../../img/heart_white.svg'); @include white_attrib;}
 #card_health_black{background-image: url('../../img/heart_black.svg'); @include black_attrib;}
-.card_heroImg{
+#card{
+    width:48vw
+}
+.card_heroImg{    
     position: relative;
-    width: 22vh;
-    height: 21vh;
+    width: 21vh;
+    height: 23vh;
     background-size: cover;
     top: -7.5vh;
-    left: -3.5vh;
+    left: -3.7vh;
     z-index: 3;
 }
 //#guardianSelect
@@ -290,6 +293,81 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     display:flex;
     flex-wrap:wrap;
 }
+@mixin img($icon,$phase){
+    margin:1vh -2vw;
+    min-height:10vh;
+    max-height: 11vh;
+    flex:1;
+    border-radius:50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url('../img/' + $icon + '_' + $phase + '.png');
+}
+$icons: 'skull' 'self' 'star' 'cogs';
+$phases:'black' 'white';
+$black: black;
+$white: white;
+@mixin phase_theme($phase){
+    @if $phase == 'black' { background-color: $black; color: $white;box-shadow: inset 0 0 3vh $white, 0 0 2vh $black;}; 
+    @if $phase == 'white' {background-color: $white; color: $black;box-shadow: inset 0 0 3vh $black, 0 0 2vh $black;};
+}
+
+@mixin all_skills {
+    @each $phase in $phases {
+        .card_list_item_#{$phase}{
+            display:flex;
+            width:46vw;
+            height:auto;
+            padding:1%;
+            margin:.5vh 1vw;
+            border-radius:.3vw;
+            @each $icon in $icons {
+                .img_#{$icon}_#{$phase} {
+                    @include img($icon, $phase);
+                }
+            }
+            @include phase_theme($phase);
+            .roster_description{
+                min-height:20vh;
+                width:66%;
+                height:auto;
+                padding: .7%;
+                .roster_abil_name{
+                    font-size: 110%;
+                    font-weight: 700;
+                    letter-spacing: .04vw;
+                    flex:1;
+                }
+                .roster_abil_desc{
+                    font-size: 100%;
+                    font-weight: 400;
+                    line-height: 1.25;
+                    letter-spacing: -.06vw;
+                    height:auto;
+                }
+            }
+            .roster_abil_stats{
+                display:flex;
+                min-width:15%;
+                max-width:20%;
+                flex:1;
+                .roster_abil_column{
+                    width:33%;
+                    .roster_abil_icon{
+                        height:25%;
+                        background-repeat: no-repeat;background-size: contain;background-position: center;
+                    }
+                    .roster_abil_number{display:flex;justify-content: center;align-items: center;height:25%}
+                    .roster_abil_dist_#{$phase}{ background-image: url('../img/dist_' + $phase + '.png'); }
+                    .roster_abil_aim_#{$phase}{ background-image: url('../img/aim_' + $phase + '.png'); }
+                    .roster_abil_hurt_#{$phase}{ background-image: url('../img/hurt_' + $phase + '.png'); }
+                }
+            }
+        }
+    }
+}
+
 .card_skills{
     box-shadow: inset 0 0 3vh black;
     width:100%;
@@ -324,54 +402,7 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
         box-shadow: inset 0 0 3vh black;
         background:rgb(168, 149, 107);
         pointer-events: auto;
-        .card_list_item{
-            display:flex;
-            width:100%;
-            height:auto;
-            padding:1%;
-            background-color:rgb(255, 240, 240);
-            .img{
-                width:15%;
-                flex:1;
-                background-image: url('../img/skull_white.png');
-                background-repeat: no-repeat;background-size: contain;background-position: center;
-            }
-            .roster_description{
-                min-height:20vh;
-                width:66%;
-                height:auto;
-                padding: .7%;
-                .roster_abil_name{
-                    font-size: 110%;
-                    font-weight: 700;
-                    letter-spacing: .04vw;
-                    flex:1;
-                }
-                .roster_abil_desc{
-                    font-size: 100%;
-                    font-weight: 400;
-                    line-height: 1.25;
-                    letter-spacing: -.06vw;
-                    height:auto;
-                }
-            }
-            .roster_abil_stats{
-                display:flex;
-                width:15%;
-                flex:1;
-                .roster_abil_column{
-                    width:33%;
-                    .roster_abil_icon{
-                        height:25%;
-                        background-repeat: no-repeat;background-size: contain;background-position: center;
-                    }
-                    .roster_abil_number{display:flex;justify-content: center;align-items: center;height:25%}
-                    .roster_abil_dist{ background-image: url('../img/dist_white.png'); }
-                    .roster_abil_aim{ background-image: url('../img/aim_white.png'); }
-                    .roster_abil_hurt{ background-image: url('../img/hurt_white.png'); }
-                }
-            }
-        }
+        @include all_skills;
     }
     .card_list{
         //box-shadow: inset 0 0 3vh black;
@@ -469,7 +500,6 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
         margin:0 30%;
         margin-top:4vh;
     }
-    .card_list_item * {
-        border-radius: 5%;
-     //  border: 1px solid red;
+    .img__white, .img__black {
+        min-width:5vh;
     }

@@ -503,3 +503,17 @@ $white: white;
     .img__white, .img__black {
         min-width:5vh;
     }
+    @keyframes pulsating_chosen{
+        0%{
+            box-shadow:0 0 0vh inset white;
+        }
+        50%{
+            box-shadow: 0 0 40vh inset white;
+        }
+        100%{
+            box-shadow:0 0 0vh inset white;
+        }
+    }
+    .marked_group{
+        animation: pulsating_chosen 2.8s forwards infinite;
+    }

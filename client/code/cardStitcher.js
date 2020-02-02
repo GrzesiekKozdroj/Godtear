@@ -26,8 +26,6 @@ function char_swiper(o){
 }
 
 function selection_animator(o){
-
-    $('#card').empty()
     //let o = {that:that,dist:howfar,callback:o=>o}
     o.champ.css('position','relative').animate(o.anime, 420, function(){
         for(let k in rosters){
@@ -38,19 +36,18 @@ function selection_animator(o){
                         let skipper = 1;
                         let newChamp = () => ( h + skipper ) % subjects.length;
                         let c = newChamp();
-                        $('.chosen').children('.card_heroImg')
-                            .each(function(){
-            if( $(this).attr('style') === `background-image: url("${subjects[c].champ.icon}");` ){    
-                skipper++;
-                c = newChamp();
-             }  
-                            }) 
+                        $('.chosen').children('.card_heroImg').each(function(){
+                            if( $(this).attr('style') === `background-image: url("${subjects[c].champ.icon}");` ){    
+                                skipper++;
+                                c = newChamp();
+                            }  
+                        }) 
                         o.champ
                             .css('background-image',`url(${subjects[c].champ.icon})`)
                             .data('name',subjects[c].champ.name)
                             .animate({
                                 left:'0vw'
-                            }, 420,()=>$('#card').append(roster_card(subjects[c])));
+                            }, 420,()=>$('#card').empty().append(roster_card(subjects[c])));
                         break;
                     }
                 }

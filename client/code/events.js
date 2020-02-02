@@ -4,18 +4,41 @@ let zIndex = 1;
 $((e) => {
     $('#gameScreen').prepend(bandSelection());
 
-
+    $('.selection_section').each(
+        function(){
+            let daddy = $(this)
+            $(this).on('click',e=>{
+                e.preventDefault();
+                e.stopPropagation();
+                $('.marked_group').removeClass('marked_group')
+                daddy.toggleClass('marked_group');
+                let nameOfDisplayed = daddy.children('.selection_heroImg').data('name')
+                for(let key in rosters){
+                    let champs = rosters[key]
+                    for(let i = 0; i < champs.length; i++){
+                        if(champs[i].champ.name === nameOfDisplayed){
+                            console.log(champs[i].champ.name)
+                            $('#card').empty().append(roster_card(champs[i]))
+                            break;
+                        }
+                    }
+                }
+            })
+        }
+    )
     $(".selection_backward_frame").each(
         function(e){
             let champ = $(this).siblings('.selection_heroImg');
             $(this).on('click',(e)=>{
                 e.preventDefault();
-                selection_animator({anime:{left: '11.75vw'}, champ:champ});
+                e.stopPropagation();
+                selection_animator({anime:{left: '11.75vw'}, champ:champ})
             })
         }
     );
     $('#card').on('click','.champ_tab',e=>{
                 e.preventDefault();
+                e.stopPropagation();
                 $('.champ_tab').parent('.card_skills').css('z-index', zIndex)
                 $('.card_tab').toggleClass('tab_behind');
                 if($('.champ_tab').hasClass('tab_behind'))$('.card_tab').toggleClass('tab_behind');
@@ -23,6 +46,7 @@ $((e) => {
             });
     $('#card').on('click','.unit_tab',e=>{
                 e.preventDefault();
+                e.stopPropagation();
                 $('.unit_tab').parent('.card_skills').css('z-index', zIndex)
                 $('.card_tab').toggleClass('tab_behind');
                 if($('.unit_tab').hasClass('tab_behind'))$('.card_tab').toggleClass('tab_behind');
@@ -32,6 +56,7 @@ $((e) => {
         function(e){
             $(this).on('click',e=>{
                 e.preventDefault();
+                e.stopPropagation();
                 let chosen = $(this);
                 selection_animator({anime:{left: '11.75vw'}, champ:chosen});
                 chosen_move(chosen);
@@ -43,6 +68,7 @@ $((e) => {
         function(){
             $(this).on('click',e=>{
                 e.preventDefault();
+                e.stopPropagation();
                 $(this).animate( 
                     {opacity:.3,'backdrop-filter': 'grayscale(100%)'}, 
                     420, 
@@ -56,8 +82,8 @@ $((e) => {
         }
     )
 
-
-
+$($('#bandSelection').children('.selection_section')[0]).addClass('marked_group')
+$('#card').append(roster_card(rosters.guardian[1]))
 
 
 

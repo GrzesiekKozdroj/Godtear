@@ -17,7 +17,6 @@ $((e) => {
                     let champs = rosters[key]
                     for(let i = 0; i < champs.length; i++){
                         if(champs[i].champ.name === nameOfDisplayed){
-                            console.log(champs[i].champ.name)
                             $('#card').empty().append(roster_card(champs[i]))
                             break;
                         }
@@ -73,7 +72,7 @@ $((e) => {
                     {opacity:.3,'backdrop-filter': 'grayscale(100%)'}, 
                     420, 
                     ()=>{
-                        $(this).removeAttr('style') 
+                        $(this).removeAttr('style')
                         $(this).removeData()
                         $(this).removeAttr('data-name')
                     }
@@ -81,7 +80,21 @@ $((e) => {
             })
         }
     )
-
+    $('#beginGameButton').on('click',(e)=>{
+        nickName = $("#gamePlayerName").val();
+        gamePlaceName = $("#gamePlaceName").val();
+        let teamNames = $('#bandDisplay').find('.card_heroImg');console.log(teamNames)
+        e.preventDefault();
+        if( /^[0-9A-Za-z]+$/.test(nickName) && /^[0-9A-Za-z]+$/.test(gamePlaceName)   ){
+            socket.emit('namePlace',{nickName:nickName, place:gamePlaceName }  );
+        } else if(nickName === '' ){
+            $("#wronCharWarning").text("missing nick name");
+        } else if(gamePlaceName === ''){
+            $("#wronCharWarning").text("missing place name");
+        }else{
+            $("#wronCharWarning").text("can't use special symbols");
+        }
+    })
 $($('#bandSelection').children('.selection_section')[0]).addClass('marked_group')
 $('#card').append(roster_card(rosters.guardian[1]))
 

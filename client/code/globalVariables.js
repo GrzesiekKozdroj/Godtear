@@ -1,0 +1,2 @@
+var nickName;
+var gamePlaceName;

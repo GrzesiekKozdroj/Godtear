@@ -65,12 +65,8 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
         width: $one; 
         height: $hexHeight;
         margin: $hexMargin 0;
-        //background-image: url(../img/Finvarr.png);
-        //background-repeat: no-repeat;
         background-size: auto $hexBackground;
         background-position: center;
-        /* offset-x | offset-y | blur-radius | spread-radius | color */
-        //box-shadow: 0 0 2vh rgba(0,0,0,1);
         border-left: solid $hexBorder #333333;
         border-right: solid $hexBorder #333333;
         &:after {
@@ -87,8 +83,8 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
             height:($hexHeight + $hexTriangleSize / 1.2);
             width:$one * 1.05;
             position:relative;
-            top:($hexMinusQuarter * 1.38);//-.248261 / 12 * 138vh
-            left:($hexMinusQuarter * .36);//-.248261 / 12 * 36vh
+            top:($hexMinusQuarter * 1.38);
+            left:($hexMinusQuarter * .36);
             z-index: 2;
         }
         .top, .bottom{
@@ -140,7 +136,6 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     align-items: center;
     width: 50%;
     height:100%;
-    //padding:2vh;
 }
 .selection_card_stats{
     width:95vh;
@@ -178,36 +173,25 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     width:100%;
     box-shadow: inset 0 0 3vh black;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     background-position: center;
 }
 @mixin selection_hex_image {
-    background-size: cover;
-    background-position: center;
-    width:19vh;
-    height:21vh;
+    width:25%;
+    height:0;
+    padding-bottom:25%;
     z-index:3;
 }
 .selection_class_banner{
     @include selection_hex_image;
 }
+.selection_champCointajner{
+    width:25%;
+}
 .selection_heroImg{
-    @include selection_hex_image;
     z-index:2;
-}
-.selection_backward{
-    @include arrow(rgb(185, 216, 212),left,5vh);
-    z-index:3;
-    top:-5vh;
-    left:1vh;
-    position:relative;
-}
-.selection_backward_frame{
-    transform: scale(1.2);
-    @include arrow(rgb(92, 74, 24),left,7vh);
-    border-left: none;
-    z-index:2;
+    max-width:100%;
 }
 @mixin opacifier{
     content: "";
@@ -232,7 +216,6 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
 .selection_banner_guardian{background-image: url('../../img/classGuardian.png');}
 .selection_rhodri{color:white}
 #selection_card{
-   // box-shadow: inset 0 0 3vh black;
     height:100vh;
     width:48vw;
     background-color: rgb(107, 95, 68);
@@ -281,10 +264,6 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     left: -3.7vh;
     z-index: 3;
 }
-//#guardianSelect
-//#maelstormSelect
-//#shaperSelect
-//#slayerSelect
 
 .selection_card_skills{
     width:100%;
@@ -405,7 +384,6 @@ $white: white;
         @include all_skills;
     }
     .card_list{
-        //box-shadow: inset 0 0 3vh black;
         width:100%;
         height:52vh;
         position:relative;
@@ -459,8 +437,6 @@ $white: white;
     &:hover{
         box-shadow: 0;
     }
-    //left:-.75vw;
-    //top:3vh;
 }
 #gameTypeForm{
     width:22vw;
@@ -480,10 +456,12 @@ $white: white;
     @include hexagonomicron($endHexSize);
     .card_heroImg{
         @include selection_hex_image;
-        width:100%;
+        padding-bottom: 25%;
+        z-index: 3;
+        width: 131%;
         top: -4.7vh;
-        left: 0;
-        height:194%;
+        left: -2vh;
+        height: 196%;
     }
 }
     .ch_st{
@@ -518,3 +496,39 @@ $white: white;
         animation: pulsating_chosen 2.8s forwards infinite;
     }
     #wronCharWarning{color:red; display:flex;justify-content: center;height:2vh;}
+    @keyframes card_displayed{
+        0%{}
+        50%{filter:contrast(1.5) blur(1px);transform:scale(1.3)}
+        100%{filter:contrast(1.9) blur(0);transform:scale(1.2)}
+    }
+    @keyframes greyOut {
+        0%{
+            transform:scale(1.2);filter:contrast(1.9);
+        }
+        100%{
+            transform:scale(.93);filter:contrast(1) grayscale(80%);
+        }
+    }
+    .cardDisplayed{
+        animation: card_displayed 1s forwards;
+    }
+    .cardDeselected{
+        animation: card_displayed 1s reverse;
+    }
+    .greyedOut{
+        animation: greyOut 1s forwards;
+    }
+    @keyframes dechosen {
+        0%{
+            transform:scale(.93);filter:contrast(1) grayscale(80%);
+        }
+        50%{
+            transform:scale(1.2);filter:contrast(1) grayscale(40%);
+        }
+        100%{
+            transform:scale(1);filter:contrast(1) grayscale(0%);
+        }
+    }
+    .dechosen{
+        animation: dechosen 1s forwards;
+    }

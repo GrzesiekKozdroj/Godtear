@@ -9,32 +9,10 @@ $((e) => {
             let daddy = $(this)
             $(this).on('click',e=>{
                 e.preventDefault();
-                e.stopPropagation();
-                $('.marked_group').removeClass('marked_group')
-                daddy.toggleClass('marked_group');
-                let nameOfDisplayed = daddy.children('.selection_heroImg').data('name')
-                for(let key in rosters){
-                    let champs = rosters[key]
-                    for(let i = 0; i < champs.length; i++){
-                        if(champs[i].champ.name === nameOfDisplayed){
-                            $('#card').empty().append(roster_card(champs[i]))
-                            break;
-                        }
-                    }
-                }
+                make_selected_group_flashing(daddy)
             })
         }
     )
-    $(".selection_backward_frame").each(
-        function(e){
-            let champ = $(this).siblings('.selection_heroImg');
-            $(this).on('click',(e)=>{
-                e.preventDefault();
-                e.stopPropagation();
-                selection_animator({anime:{left: '11.75vw'}, champ:champ})
-            })
-        }
-    );
     $('#card').on('click','.champ_tab',e=>{
                 e.preventDefault();
                 e.stopPropagation();
@@ -54,11 +32,10 @@ $((e) => {
     $('.selection_heroImg').each(
         function(e){
             $(this).on('click',e=>{
-                e.preventDefault();
-                e.stopPropagation();
-                let chosen = $(this);
-                selection_animator({anime:{left: '11.75vw'}, champ:chosen});
-                chosen_move(chosen);
+                e.preventDefault()
+                let chosen = $(this)
+                if( chosen.hasClass('cardDisplayed') )chosen_move(chosen)
+                selection_animator({   champ:chosen  })
             })
         }
     )
@@ -67,9 +44,11 @@ $((e) => {
         function(){
             $(this).on('click',e=>{
                 e.preventDefault();
-                e.stopPropagation();
+                e.stopPropagation()
+                if($(`[data-name="${$(this).data('name')}"]`).hasClass('greyedOut'))
+                    $(`[data-name="${$(this).data('name')}"]`).removeClass('greyedOut').addClass('dechosen')
                 $(this).animate( 
-                    {opacity:.3,'backdrop-filter': 'grayscale(100%)'}, 
+                    {opacity:.3}, 
                     420, 
                     ()=>{
                         $(this).removeAttr('style')
@@ -97,6 +76,7 @@ $((e) => {
     })
 $($('#bandSelection').children('.selection_section')[0]).addClass('marked_group')
 $('#card').append(roster_card(rosters.guardian[1]))
+$('[data-name="Rhodri"]').addClass('cardDisplayed')
 
 
 

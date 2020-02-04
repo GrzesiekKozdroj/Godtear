@@ -1,63 +1,49 @@
 function bandSelection(){
     return `        
         <div id="bandSelection">
-            ${char_swiper(Rhodri)}
-            ${char_swiper(Grimgut)}
-            ${char_swiper(Nia)}
-            ${char_swiper(Lorsann)}
+            ${char_swiper(rosters.guardian)}
+            ${char_swiper(rosters.maelstrom)}
+            ${char_swiper(rosters.shaper)}
+            ${char_swiper(rosters.slayer)}
         </div>`
 }
 
 
-function char_swiper(o){
- // o = {klass : "slayer",img:"./img/Lorsann.png",name:"Nia"};
+function char_swiper(o){ 
+let all_champs = [];
+for(let key in o){
+    let champ = o[key].champ;
+    all_champs.push(`
+        <div class="selection_champCointajner">
+            <img 
+                class="selection_heroImg" 
+                data-name="${champ.name}" 
+                data-klass="${champ.klass}" 
+                data-index="${champ.index}"
+                src="${champ.icon}"
+            />
+        </div>
+    `)
+}
  return `
-         <div id="selection_${o.klass}" class="selection_section">
-             <div class="selection_backward_frame">
-                 <div class="selection_backward">
-                 </div>
-             </div>
-             <div class="selection_heroImg" style=background-image:url(${o.icon}) data-name="${o.name}" data-klass="${o.klass}">
-             </div>
-             <div class="selection_class_banner selection_banner_${o.klass}">
-             </div>
+        <div id="selection_${o.klass}" class="selection_section">
+            ${all_champs.join('')}
         </div>
      `
 }
 
 function selection_animator(o){
-    //let o = {that:that,dist:howfar,callback:o=>o}
-    o.champ.css('position','relative').animate(o.anime, 420, function(){
-        for(let k in rosters){
-            let subjects = rosters[k];
-            if(subjects[0].champ.klass === o.champ.data('klass')){
-                for(let h=0; h<subjects.length;h++){
-                    if( subjects[h].champ.name===o.champ.data('name') ){
-                        let skipper = 1;
-                        let newChamp = () => ( h + skipper ) % subjects.length;
-                        let c = newChamp();
-                        $('.chosen').children('.card_heroImg').each(function(){
-                            if( $(this).attr('style') === `background-image: url("${subjects[c].champ.icon}");` ){    
-                                skipper++;
-                                c = newChamp();
-                            }  
-                        }) 
-                        o.champ
-                            .css('background-image',`url(${subjects[c].champ.icon})`)
-                            .data('name',subjects[c].champ.name)
-                            .animate({
-                                left:'0vw'
-                            }, 420,()=>$('#card').empty().append(roster_card(subjects[c])));
-                        break;
-                    }
-                }
-            }
-        }
-    });
+    //let o = { anime:{ start:{}, end:{} }, callback:o=>o }
+    $('.selection_heroImg').removeClass('cardDisplayed').removeClass('dechosen')
+    if(!o.champ.hasClass('greyedOut'))o.champ.toggleClass('cardDisplayed')
+    $('#card')
+        .empty()
+        .append(    roster_card( rosters[o.champ.data('klass')][Number(o.champ.data('index'))] )    )
 }
 
 function chosen_move(img) {
     let icon = (o)=>{
+        img.removeClass('nameDisplayed').addClass('greyedOut')
         for(let k in rosters){
             let subjects = rosters[k];
             if(subjects[0].champ.klass === img.data('klass')){
@@ -187,7 +173,7 @@ function list_of_abilities(o){
     }
     return skills
 }
-function roster_card(o){
+function roster_card(o){//console.log(o)
  return `
      <div id="selection_card">
          <div class="selection_card_images">
@@ -210,4 +196,19 @@ function roster_card(o){
          </div>
     </div>
  `
+}
+
+function make_selected_group_flashing(daddy){
+    $('.marked_group').removeClass('marked_group')
+    daddy.toggleClass('marked_group');
+    let nameOfDisplayed = daddy.children('.selection_heroImg').data('name')
+    for(let key in rosters){
+        let champs = rosters[key]
+        for(let i = 0; i < champs.length; i++){
+            if(champs[i].champ.name === nameOfDisplayed){
+                $('#card').empty().append(roster_card(champs[i]))
+                break;
+            }
+        }
+    }
 }

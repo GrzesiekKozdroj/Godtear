@@ -39,7 +39,7 @@ const Halftusk = new Character("guardian","champion","Halftusk",1,'./img/Halftus
 const Froglodytes = new Character("guardian","unit","Froglodytes",3,"",[3,1],2,3,1,m.froglodytes,'./img/classGuardian.png');
 
 const Rhodri = new Character("guardian","champion","Rhodri",1,"./img/Rhodri.png",[1,2],2,4,7,m.Rhodri,'./img/classGuardian.png',1);
-const HouseholdGuard = new Character("guardian","unit","Household Guard",4,"",[1,2],2,4,1,m.householdGuard,'./img/classGuardian.png',1);
+const HouseholdGuard = new Character("guardian","unit","HouseholdGuard",4,"",[1,2],2,4,1,m.householdGuard,'./img/classGuardian.png',1);
 
 const Mournblade = new Character("guardian","champion","Mournblade",1,'./img/Mournblade.png',[2,2],2,4,1,m.mournblade,'./img/classGuardian.png',2);
 const Knightshades = new Character("guardian","unit","Knightshades",3,"",[1,1],2,3,1,m.knightshades,'./img/classGuardian.png',2);

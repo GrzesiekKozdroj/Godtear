@@ -35,7 +35,7 @@ $((e) => {
                 e.preventDefault()
                 let chosen = $(this)
                 if( chosen.hasClass('cardDisplayed') )chosen_move(chosen)
-                selection_animator({   champ:chosen  })
+                else selection_animator({   champ:chosen  })
             })
         }
     )
@@ -62,10 +62,15 @@ $((e) => {
     $('#beginGameButton').on('click',(e)=>{
         nickName = $("#gamePlayerName").val();
         gamePlaceName = $("#gamePlaceName").val();
-        let teamNames = $('#bandDisplay').find('.card_heroImg');console.log(teamNames)
+        let teamNames = $('#bandDisplay').find('.card_heroImg');
+        let roster = [];
+        for(let k=0; k<3;k++){
+             let el = teamNames[k];
+             roster.push($(el).data('name'))
+        }
         e.preventDefault();
         if( /^[0-9A-Za-z]+$/.test(nickName) && /^[0-9A-Za-z]+$/.test(gamePlaceName)   ){
-            socket.emit('namePlace',{nickName:nickName, place:gamePlaceName }  );
+            socket.emit('namePlace',{nickName:nickName, place:gamePlaceName, roster:roster }  );
         } else if(nickName === '' ){
             $("#wronCharWarning").text("missing nick name");
         } else if(gamePlaceName === ''){
@@ -74,9 +79,37 @@ $((e) => {
             $("#wronCharWarning").text("can't use special symbols");
         }
     })
+    $('#introductory_insructions_info').on('click',e=>{
+        e.preventDefault(); 
+        $('#introductory_insructions_info')
+            .removeClass('hinge-in-from-top mui-enter mui-enter-active')
+            .addClass('hinge-out-from-top mui-leave mui-leave-active')
+    })
 $($('#bandSelection').children('.selection_section')[0]).addClass('marked_group')
 $('#card').append(roster_card(rosters.guardian[1]))
 $('[data-name="Rhodri"]').addClass('cardDisplayed')
+$('#selection_maelstrom').addClass('hinge-in-from-right mui-enter')
+$('#selection_guardian').addClass('hinge-in-from-left mui-enter')
+$('#selection_slayer').addClass('hinge-in-from-bottom mui-enter')
+$('#selection_shaper').addClass('hinge-in-from-left mui-enter')
+
+
+setTimeout(()=>{
+    let o = 'mui-enter-active';
+    $('.selection_section').addClass(o)
+    $('#bandNamePlace').addClass(o)
+},400)
+setTimeout(()=>{
+    let o = 'mui-enter-active';
+    $('#selection_card').addClass(o)
+},500)
+setTimeout(()=>{
+    let o = 'mui-enter-active';
+    $('#introductory_insructions_info').addClass(o)
+    $('#st_info').addClass('st_inf_ani')
+    $('#nd_info').addClass('nd_inf_ani')
+    $('#rd_info').addClass('rd_inf_ani')
+},1050)
 
 
 

@@ -1,6 +1,6 @@
 function bandSelection(){
     return `        
-        <div id="bandSelection">
+        <div id="bandSelection" class="">
             ${char_swiper(rosters.guardian)}
             ${char_swiper(rosters.maelstrom)}
             ${char_swiper(rosters.shaper)}
@@ -19,14 +19,14 @@ for(let key in o){
                 class="selection_heroImg" 
                 data-name="${champ.name}" 
                 data-klass="${champ.klass}" 
-                data-index="${champ.index}"
-                src="${champ.icon}"
+                data-index="${champ.index}" 
+                src="${champ.icon}" 
             />
         </div>
     `)
 }
  return `
-        <div id="selection_${o.klass}" class="selection_section">
+        <div id="selection_${o[1].champ.klass}" class="selection_section">
             ${all_champs.join('')}
         </div>
      `
@@ -36,9 +36,15 @@ function selection_animator(o){
     //let o = { anime:{ start:{}, end:{} }, callback:o=>o }
     $('.selection_heroImg').removeClass('cardDisplayed').removeClass('dechosen')
     if(!o.champ.hasClass('greyedOut'))o.champ.toggleClass('cardDisplayed')
-    $('#card')
-        .empty()
-        .append(    roster_card( rosters[o.champ.data('klass')][Number(o.champ.data('index'))] )    )
+    $('#selection_card')
+        .removeClass('hinge-in-from-bottom mui-enter mui-enter-active')
+        .addClass('hinge-out-from-top mui-leave mui-leave-active')
+    setTimeout(()=>{
+        $('#card')
+            .empty()
+            .append(    roster_card( rosters[o.champ.data('klass')][Number(o.champ.data('index'))] )    )
+    },450)
+    setTimeout(()=>$('#selection_card').addClass('mui-enter-active'),750)
 }
 
 function chosen_move(img) {
@@ -77,7 +83,13 @@ function chosen_move(img) {
     {
         $('.ch_rd').children('.card_heroImg').css('background-image',`url(${icon(true)})`)
         $('.ch_rd').children('.card_heroImg').attr('data-name',icon(false))
-    }
+    } 
+    if($('.ch_rd').children('.card_heroImg').attr('style') &&
+       $('.ch_nd').children('.card_heroImg').attr('style') &&
+       $('.ch_st').children('.card_heroImg').attr('style') ){
+            $('#gameTypeForm').addClass('mui-enter-active')
+            $('#beginGameButton').addClass('mui-enter-active')
+       }
 }
 function roster_attribute(o,attrib,phase){
     return `
@@ -175,7 +187,7 @@ function list_of_abilities(o){
 }
 function roster_card(o){//console.log(o)
  return `
-     <div id="selection_card">
+     <div id="selection_card" class="hinge-in-from-bottom mui-enter ">
          <div class="selection_card_images">
             ${roster_banner(o.champ)}
             ${roster_banner(o.grunt)}

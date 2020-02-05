@@ -189,12 +189,12 @@
 }
 
 #bandSelection {
-  background: #a8956b;
   height: 100vh;
   width: 30vw;
 }
 
 .selection_section {
+  background: #a8956b;
   height: 25vh;
   width: 100%;
   box-shadow: inset 0 0 3vh black;
@@ -213,11 +213,13 @@
 
 .selection_champCointajner {
   width: 25%;
+  z-index: 5;
 }
 
 .selection_heroImg {
   z-index: 2;
   max-width: 100%;
+  opacity: 1;
 }
 
 #selection_guardian:after {
@@ -249,7 +251,7 @@
   background-size: cover;
   z-index: 1;
   box-shadow: inset 0 0 1vh black, inset 0 0 2vh black, inset 0 0 3vh black, inset 0 0 4vh black, inset 0 0 5vh black;
-  top: 50vh;
+  top: 0vh;
 }
 
 #selection_slayer:after {
@@ -265,7 +267,7 @@
   background-size: cover;
   z-index: 1;
   box-shadow: inset 0 0 1vh black, inset 0 0 2vh black, inset 0 0 3vh black, inset 0 0 4vh black, inset 0 0 5vh black;
-  top: 75vh;
+  top: 0vh;
 }
 
 #selection_maelstrom:after {
@@ -281,7 +283,7 @@
   background-size: cover;
   z-index: 1;
   box-shadow: inset 0 0 1vh black, inset 0 0 2vh black, inset 0 0 3vh black, inset 0 0 4vh black, inset 0 0 5vh black;
-  top: 25vh;
+  top: 0vh;
 }
 
 .selection_banner_shaper {
@@ -691,6 +693,7 @@
 
 .unit_tab {
   left: 50%;
+  font-size: 80% !important;
 }
 
 .tab_behind {
@@ -960,7 +963,7 @@
   color: red;
   display: flex;
   justify-content: center;
-  height: 2vh;
+  height: 4vh;
 }
 
 @keyframes card_displayed {
@@ -1016,4 +1019,75 @@
 
 .dechosen {
   animation: dechosen 1s forwards;
+}
+
+#introductory_insructions_info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.562);
+  z-index: 40;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#introductory_insructions_info article {
+  border: 1vh solid #a56c2a;
+  background: #d18e36;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  width: 42vw;
+  height: 42vh;
+  border-radius: 0 5vh 0 5vh;
+  box-shadow: 0 0 5px white;
+}
+
+#introductory_insructions_info article #st_info {
+  font-size: 140%;
+  color: #336318;
+  text-shadow: black;
+  font-weight: 900;
+}
+
+#introductory_insructions_info article #nd_info {
+  font-size: 120%;
+  color: #6d1b1b;
+  text-shadow: black;
+  font-weight: 900;
+}
+
+#introductory_insructions_info article #rd_info {
+  font-size: 100%;
+  color: #332f2f;
+  text-shadow: black;
+  font-weight: 900;
+}
+
+@keyframes anime_letteros {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.st_inf_ani {
+  animation: anime_letteros .8s forwards;
+}
+
+.nd_inf_ani {
+  animation: anime_letteros 1s forwards;
+}
+
+.rd_inf_ani {
+  animation: anime_letteros 1.3s forwards;
 }

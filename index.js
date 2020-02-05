@@ -28,7 +28,7 @@ io.sockets.on('connection', (socket) => {
         if (/^[0-9A-Za-z]+$/.test(data.nickName) && /^[0-9A-Za-z]+$/.test(data.place)) {
             socket.nickName = data.nickName;
             socket.gamePlace = "";
-
+            console.log(data)
             //quickame room generation module
             if (data.place!=='quickGame') {
                 if ( (data.place in LOBBY_LIST) && (socket.nickName in LOBBY_LIST[data.place]) ){

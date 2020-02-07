@@ -224,3 +224,141 @@ function make_selected_group_flashing(daddy){
         }
     }
 }
+function selectionFirstInfo(){
+    return `
+        <div id="introductory_insructions_info" class="hinge-in-from-top mui-enter">
+            <article>
+                <p id="st_info">click champ to see card</p>
+                <p id="nd_info">click again to add to roster</p>
+                <p id="rd_info">click to continue</p>
+            </article>
+        </div>
+    `
+}
+function selectionForm(){
+    return `
+        <div id="bandNamePlace" class="hinge-in-from-right mui-enter">
+            <div id="bandDisplay">
+                <div class="chosen ch_st">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                    <div class="card_heroImg" ></div>
+                </div>
+                <div class="chosen ch_nd">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                    <div class="card_heroImg" ></div>
+                </div>
+                <div class="chosen ch_rd">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                    <div class="card_heroImg" ></div>
+                </div>
+                <div id="beginGameButton" type="submit" class="bobo scale-in-down mui-enter">
+                    <div class="top"></div>
+                    <p class="card_attribute">
+                        play
+                    </p>
+                    <div class="bottom"></div>
+                </div>
+            </div>
+            <form id="gameTypeForm" class="slide-in-up mui-enter">
+                <input type="text" id="gamePlayerName" class="introductionInfo" placeholder="nickname" required>
+                <div id="wronCharWarning"></div>
+                <input type="text" id="gamePlaceName" class="introductionInfo" placeholder="battlefield" required>
+            </form>
+        </div>
+    `
+}
+function firstStitch(){
+    return `
+        ${bandSelection()}
+        ${selectionFirstInfo()}
+        <div id="card" class=""></div>
+        ${selectionForm()}
+    `
+}
+function waiting_block(o){
+    return `
+    <div class="waiting_hex waiting_left">
+        <div class="top"></div>
+        <div class="bottom"></div>
+    </div>
+    <div class="waiting_name">${o}</div>
+    <div class="waiting_hex waiting_right">
+        <div class="top"></div>
+        <div class="bottom"></div>
+    </div>
+    `
+}
+function opponentWaitingScreen(){}
+
+function spinning_loader(b){
+    let a = [`
+        <div class='loader loader1'>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`,
+        `
+        <div class='loader loader2'>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    <div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `,`
+        <div class='loader loader3'>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `,`
+        <div class='loader loader4'>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    <div>
+                      <div>
+                        <div>
+                          <div>
+                            <div></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    `]
+    return a[b]
+}

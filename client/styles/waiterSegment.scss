@@ -1,0 +1,247 @@
+
+@mixin hexagonomicron ($sA) {
+    $viewHeight: 100vh;
+    $one: (1 / $sA * $viewHeight);
+    $hexHeight:(.5774 / $sA * $viewHeight);
+    $half: (.5 / $sA * $viewHeight);
+    $hexMargin:(.1787 / $sA * $viewHeight);
+    $hexBackground: ( .993042 / $sA * $viewHeight);
+    $quarter: (.25 / $sA * $viewHeight);
+    $minusQuarter: (-.25 / $sA * $viewHeight);
+    $fifive: (.55 / $sA * $viewHeight);
+    $hexBorder: (.07 / $sA * $viewHeight);
+    $margin: .1vh;//(.1 / $sA * $viewHeight);
+    $marginLeft:(5vh);
+    $appWidth:147vh;
+    $appHeight:95vh;
+    $minusQuarterht: 99vh;
+    $shelfWidth:160vh;
+    $border: ($margin * 5);
+    $hexTriangleSize: (.7071 / $sA * $viewHeight);
+    $hexTriangleOffsetLeft: (.0764 / $sA * $viewHeight);
+    $hexAfterWidth: (.86 / $sA * $viewHeight);
+    $hexAfterHeight: ( .4965 / $sA * $viewHeight);
+    $hexBottom: (-.353553 / $sA * $viewHeight);
+    $hexBottomSize: (.098995 / $sA * $viewHeight);
+    $hexMinusQuarter: (-.248261 / $sA * 100vh);
+            position: relative;
+            width: $one; 
+            height: $hexHeight;
+            margin: $hexMargin 0;
+            background-size: auto $hexBackground;
+            background-position: center;
+            border-left: solid $hexBorder #333333;
+            border-right: solid $hexBorder #333333;
+            &:after {
+                content: "";
+                position: absolute;
+                top: (.040415 / $sA * $viewHeight);
+                left: 0;
+                width: $hexAfterWidth;
+                height: $hexAfterHeight;
+                z-index: 2;
+                background: inherit;
+            }
+            img{
+                height:($hexHeight + $hexTriangleSize / 1.2);
+                width:$one * 1.05;
+                position:relative;
+                top:($hexMinusQuarter * 1.38);
+                left:($hexMinusQuarter * .36);
+                z-index: 2;
+            }
+            .top, .bottom{
+                position: absolute;
+                z-index: 1;
+                width: $hexTriangleSize;
+                height: $hexTriangleSize;
+                overflow: hidden;
+                -webkit-transform: scaleY(0.5774) rotate(-45deg);
+                -ms-transform: scaleY(0.5774) rotate(-45deg);
+                transform: scaleY(0.5774) rotate(-45deg);
+                background: inherit;
+                left: $hexTriangleOffsetLeft;
+                &:before, &:after{
+                    content: "";
+                    position: absolute;
+                    width: $hexAfterWidth;
+                    height: $hexAfterHeight;
+                    -webkit-transform:  rotate(45deg) scaleY(1.7321) translateY($hexMinusQuarter);
+                    -ms-transform:      rotate(45deg) scaleY(1.7321) translateY($hexMinusQuarter);
+                    transform:          rotate(45deg) scaleY(1.7321) translateY($hexMinusQuarter);
+                    -webkit-transform-origin: 0 0;
+                    -ms-transform-origin: 0 0;
+                    transform-origin: 0 0;
+                    background: inherit;
+                }
+            }
+            .top {
+              top: (-.353553 / $sA * 100vh);
+              border-top: solid $hexBottomSize #333333;
+              border-right: solid $hexBottomSize #333333;
+            }
+            .top:after {
+              background-position: center top;
+            }
+            .bottom {
+              bottom: $hexBottom;
+              border-bottom: solid $hexBottomSize #333333;
+              border-left: solid $hexBottomSize #333333;
+            }        
+            .bottom:after {
+              background-position: center bottom;
+            }
+    }//mixin
+
+
+
+
+
+
+
+
+#waiter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+    width:100vw;
+}
+#waiter_list{
+    height:98vh;
+    width:43vw;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: center;   
+    align-items: center;
+}
+#spinner1,#spinner2{
+    width:25vw;height:100vh;
+}
+.waiter_segment{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:35vw;
+    height:15vh;
+}
+.waiter_segment:nth-child(2n){
+    margin-left:-3vw;
+}
+.waiter_segment:nth-child(2n+1){
+    margin-left:3vw;
+}
+.waiting_hex{
+    @include hexagonomicron(7)
+}
+.waiting_name{
+    border-top:1vh solid black;
+    border-bottom:1vh solid black;
+    width:18vw;
+    margin: 0 2vw;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+        // color: white;
+        // background: linear-gradient(0.25turn, darkolivegreen, #636044 20%, #636044 80%, darkolivegreen);
+        // border-top: 0.8vw solid #866511;
+        // border-bottom: 0.7vw solid #866511;
+        border:none;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 5%;
+        text-align: center;
+        font-size: 130%;
+        font-weight: 500;
+}
+
+
+
+$grey: rgba(0, 0, 0, .5);
+$blue: rgba(0, 0, 255, .5);
+
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(180deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes rotate2 {
+	0% {
+		transform: rotate(0deg);
+		border-top-color: $grey;
+	}
+	50% {
+		transform: rotate(180deg);
+		border-top-color: $blue;
+	}
+	100% {
+		transform: rotate(360deg);
+		border-top-color: $grey;
+	}
+}
+
+@mixin loaderDivMixin {
+	border-radius: 50%;
+	padding: .08vh;
+	border: 2px solid transparent;
+	animation: rotate linear 3.5s infinite;
+}
+
+.loader {
+	position: relative;
+	margin: 7.5vh auto;
+	width: 38vh;
+	height: 38vh;
+	display: block;
+	overflow: hidden;
+	div {
+		height: 100%;
+	}
+}
+
+/* loader 1 */
+.loader1, .loader1 div {
+	@include loaderDivMixin;
+	border-top-color: $grey;
+	border-bottom-color: $blue;
+}
+
+/*loader 2  */
+.loader2, .loader2 div {
+	@include loaderDivMixin;
+	border-top-color: $blue;
+	border-left-color: $grey;
+	border-right-color: $grey;
+}
+
+/*loader 3  */
+.loader3, .loader3 div {
+	@include loaderDivMixin;
+	border-top-color: $grey;
+	border-left-color: $blue;
+	animation-timing-function: cubic-bezier(.55, .38, .21, .88);
+	animation-duration: 3s;
+}
+
+/* loader 4 */
+.loader4, .loader4 div {
+	@include loaderDivMixin;
+	border-radius: 50%;
+	padding: .04vh;
+	animation: rotate2 4s infinite linear;
+}
+
+div:hover {
+	animation-play-state: paused;
+}
+
+.loader, .loader * {
+	will-change: transform;
+}

@@ -1,0 +1,5 @@
+socket.on('duplicateGamerName',()=>$("#wronCharWarning").text("nickname already taken"))
+socket.on('duplicateGameLobbyName',()=>$("#wronCharWarning").text("room already in use"))
+socket.on('serverEvalMSG',o=>console.log(o))
+socket.on('alfaTime',()=>$('#gameScreen').empty().off().append(opponentWaitingScreen()))
+socket.on('betaTime',p=>console.log(p))

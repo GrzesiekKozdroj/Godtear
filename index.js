@@ -5,13 +5,14 @@ const serv = require('http').Server(app);
 let SOCKET_LIST = {};
 let LOBBY_LIST = {quickGame0:{}};
 const serverPort = 4200;
+const alaska = 4;
 
 class GameClient {
-    constructor(id, nickName, roomName, otherGajmer = {}, Gajmer = {}) {
+    constructor(id, nickName, roomName, otherGajmer, roster) {
         this.id = id;
         this.nickName = nickName;
         this.roomName = roomName;
-        this.Gajmer = Gajmer;
+        this.roster = roster
         this.otherGajmer = otherGajmer;
     }
 }
@@ -28,7 +29,6 @@ io.sockets.on('connection', (socket) => {
         if (/^[0-9A-Za-z]+$/.test(data.nickName) && /^[0-9A-Za-z]+$/.test(data.place)) {
             socket.nickName = data.nickName;
             socket.gamePlace = "";
-            console.log(data)
             //quickame room generation module
             if (data.place!=='quickGame') {
                 if ( (data.place in LOBBY_LIST) && (socket.nickName in LOBBY_LIST[data.place]) ){
@@ -38,11 +38,15 @@ io.sockets.on('connection', (socket) => {
                 } else if((data.place in LOBBY_LIST) && Object.keys(LOBBY_LIST[data.place]).length < 2 &&
                 !(socket.nickName in LOBBY_LIST[data.place])){
                     socket.gamePlace = data.place;
-                    LOBBY_LIST[data.place][data.nickName] = new GameClient(socket.id,data.nickName,data.place); 
-                    socket.emit('alfaTime');
+                    let oponame = Object.keys(LOBBY_LIST[data.place])[0]
+                    LOBBY_LIST[data.place][data.nickName] = new GameClient(socket.id,data.nickName,data.place,oponame,data.roster);
+                    socket.opoName = oponame;
+                    let plac = LOBBY_LIST[data.place]
+                    plac[oponame].otherGajmer = data.nickName
+                    loopRoom({socket:socket,pack:LOBBY_LIST[data.place],stringEmit:'betaTime',callback:o=>o,twoWay:true})
                 } else if( !(data.place in LOBBY_LIST) ){
                     socket.gamePlace = data.place;
-                    LOBBY_LIST[data.place] = { [data.nickName]: new GameClient(socket.id,data.nickName,data.place) };
+                    LOBBY_LIST[data.place] = { [data.nickName]: new GameClient(socket.id,data.nickName,data.place,'',data.roster) };
                     socket.emit('alfaTime');
                 } else if( (data.place in LOBBY_LIST) && Object.keys(LOBBY_LIST[data.place]).length > 1){
                     socket.emit("duplicateGameLobbyName");
@@ -55,15 +59,20 @@ io.sockets.on('connection', (socket) => {
                 for (let pg in LOBBY_LIST) {
                     let room = LOBBY_LIST[pg];
                     if (Object.keys(room).length === 1 && pg.includes('quickGame')) {
-                        room[data.nickName] = new GameClient(socket.id, data.nickName,pg);
+                        let opoName = LOBBY_LIST[pg][Object.keys(room)[0]]
+                        room[data.nickName] = new GameClient(socket.id, data.nickName,pg,oponame,data.roster);
                         socket.gamePlace = pg;
-                        socket.emit('alfaTime');
+                        socket.opoName = opoName;
+                        LOBBY_LIST[pg][Object.keys(room)[0]].otherGajmer = data.nickName;
+                        socket.emit('betaTime');
                     } else if (Object.keys(room).length === 2 || Object.keys(room).length === 0) {
                         roomsCounterToCheckIfAllRoomsAreEmpty++;
                         let roomName = data.place + Math.floor( Math.random () * (42000000 - 1 + 1)) + 1;
                         socket.gamePlace = roomName;
                         if (roomsCounterToCheckIfAllRoomsAreEmpty >= Object.keys(LOBBY_LIST).length){
-                            LOBBY_LIST[roomName] = { [data.nickName]: new GameClient(socket.id,data.nickName,roomName) };
+                            LOBBY_LIST[roomName] = { 
+                                [data.nickName]: new GameClient(socket.id,data.nickName,roomName,'',data.roster) 
+                            };
                             socket.emit('alfaTime');
                         }
                     }
@@ -123,13 +132,15 @@ function loopRoom (options) {
         }
         let returnPackage = evokeMe(pack, options.callback);
 
-    for(let bc in LOBBY_LIST[options.socket.gamePlace]){
-        let playjer = LOBBY_LIST[options.socket.gamePlace][bc];
+        let playjer = LOBBY_LIST[options.socket.gamePlace][options.socket.nickName];
+        let oplayer = LOBBY_LIST[options.socket.gamePlace][options.socket.opoName]
 
-        options.twoWay === 'selfie' && playjer.id === options.socket.id ?
-            SOCKET_LIST[playjer.id].emit(options.stringEmit, returnPackage) :
-        !options.twoWay && playjer.id === options.socket.id ? 
-            null : 
+        if(options.twoWay === 'selfie')
+            {SOCKET_LIST[playjer.id].emit(options.stringEmit, returnPackage) }
+        else if(!options.twoWay) 
+            {null} 
+        else {
             SOCKET_LIST[playjer.id].emit(options.stringEmit, returnPackage);
-    }
+            SOCKET_LIST[oplayer.id].emit(options.stringEmit, returnPackage);
+        }
 }

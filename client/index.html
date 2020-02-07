@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Cardo&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./styles/style.css"/>
+    <link rel="stylesheet" type="text/css" href="./styles/waiterSegment.css"/>
     <script src="./code/motion-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="./styles/motion-ui.css"/>
     <link rel="stylesheet" type="text/css" href="./styles/_logInScreen.css"/>
@@ -17,47 +18,19 @@
 </head>
 <body>
     <section id="gameScreen">
-        <div id="introductory_insructions_info" class="hinge-in-from-top mui-enter">
-            <article>
-                <p id="st_info">click champ to see card</p>
-                <p id="nd_info">click again to add to roster</p>
-                <p id="rd_info">click to continue</p>
-            </article>
+        <div id=waiter>
+            <div id="spinner1"></div>
+                <div id="waiter_list">
+                    <div class="waiter_segment"></div>
+                    <div class="waiter_segment"></div>
+                    <div class="waiter_segment"></div>
+                    <div class="waiter_segment"></div>
+                    <div class="waiter_segment"></div>
+                    <div class="waiter_segment"></div>
+                </div>
+            <div id="spinner2"></div>
         </div>
-        <div id="card" class=""></div>
-
-        <div id="bandNamePlace" class="hinge-in-from-right mui-enter">
-            <div id="bandDisplay">
-                <div class="chosen ch_st">
-                    <div class="top"></div>
-                    <div class="bottom"></div>
-                    <div class="card_heroImg" ></div>
-                </div>
-                <div class="chosen ch_nd">
-                    <div class="top"></div>
-                    <div class="bottom"></div>
-                    <div class="card_heroImg" ></div>
-                </div>
-                <div class="chosen ch_rd">
-                    <div class="top"></div>
-                    <div class="bottom"></div>
-                    <div class="card_heroImg" ></div>
-                </div>
-                <div id="beginGameButton" type="submit" class="bobo scale-in-down mui-enter">
-                    <div class="top"></div>
-                    <p class="card_attribute">
-                        play
-                    </p>
-                    <div class="bottom"></div>
-                </div>
-            </div>
-            <form id="gameTypeForm" class="slide-in-up mui-enter">
-                <input type="text" id="gamePlayerName" class="introductionInfo" placeholder="nickname" required>
-                <div id="wronCharWarning"></div>
-                <input type="text" id="gamePlaceName" class="introductionInfo" placeholder="battlefield" required>
-            </form>
-        </div>
-
+    </section>
     <script>var socket = io()</script>
     <script src="./code/globalVariables.js"></script>
     <script src="./code/methods.js"></script>
@@ -65,5 +38,6 @@
     <script src="./code/cardStitcher.js"></script>
     <script src="./code/app.js"></script>
     <script src="./code/events.js"></script>
+    <script src="./code/socks.js"></script>
 </body>
 </html>

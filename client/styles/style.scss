@@ -22,7 +22,7 @@ $fifive: (.55 / $sA * $viewHeight);
 $hexBorder: (.07 / $sA * $viewHeight);
 $margin: .1vh;//(.1 / $sA * $viewHeight);
 $marginLeft:(5vh);
-$appWidth:147vh;
+$appWidth:94vw;
 $appHeight:95vh;
 $minusQuarterht: 99vh;
 $shelfWidth:160vh;
@@ -121,6 +121,7 @@ $colorFillHex: transparent;
 #app{
     height:$appHeight;
     width:$appWidth;
+    max-width: 329vh;
     display:flex;
     flex-wrap:wrap;
     justify-content: space-evenly;

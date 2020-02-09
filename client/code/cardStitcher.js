@@ -278,20 +278,70 @@ function firstStitch(){
         ${selectionForm()}
     `
 }
-function waiting_block(o){
+function waiting_block(o){ 
+    let img_src;
+    let txt;
+    if(o.msg) {
+        img_src = "./img/pocket-watch.png"
+        txt = o.msg
+    } else if (o.roster) {
+        img_src = `./img/${o.roster}.png`;
+        txt = o.roster;
+    } else if (o.nickName) {
+        img_src = "./img/barbute.png";
+        txt = o.nickName;
+    } else if (o.gamePlaceName) {
+        img_src = "./img/treasure-map.png";
+        txt = o.gamePlaceName;
+    }
     return `
-    <div class="waiting_hex waiting_left">
+    <div class="waiting_hex waiting_left" ${!o.roster?`style="background-image:url('../${img_src}')"`:``}>
         <div class="top"></div>
+        ${o.roster?`<img class="waiter_img" src="${img_src}"/>`:``}
         <div class="bottom"></div>
     </div>
-    <div class="waiting_name">${o}</div>
-    <div class="waiting_hex waiting_right">
+    <div class="waiting_name">${txt}</div>
+    <div class="waiting_hex waiting_right" ${!o.roster?`style="background-image:url('../${img_src}')"`:``}>
         <div class="top"></div>
+        ${o.roster?`<img class="waiter_img" src="${img_src}"/>`:``}
         <div class="bottom"></div>
     </div>
     `
 }
-function opponentWaitingScreen(){}
+function opponentWaitingScreen(){
+    return `
+        <div id="waiter" class="backfield_glow">
+            <div id="spinner1">
+                ${spinning_loader(Math.floor( Math.random () * (3 - 0 + 1)) + 0)}
+                ${spinning_loader(Math.floor( Math.random () * (3 - 0 + 1)) + 0)}
+            </div>
+                <div id="waiter_list">
+                    <div class="waiter_segment">
+                        ${waiting_block({nickName:nickName})}
+                    </div>
+                    <div class="waiter_segment">
+                        ${waiting_block({gamePlaceName:gamePlaceName})}
+                    </div>
+                    <div class="waiter_segment">
+                        ${waiting_block({roster:roster[0]})}
+                    </div>
+                    <div class="waiter_segment">
+                        ${waiting_block({roster:roster[1]})}
+                    </div>
+                    <div class="waiter_segment">
+                        ${waiting_block({roster:roster[2]})}
+                    </div>
+                    <div class="waiter_segment">
+                        ${waiting_block({msg:"waiting for opponent"})}
+                    </div>
+                </div>
+            <div id="spinner2">
+                ${spinning_loader(Math.floor( Math.random () * (3 - 0 + 1)) + 0)}
+                ${spinning_loader(Math.floor( Math.random () * (3 - 0 + 1)) + 0)}
+            </div>
+        </div>
+    `
+}
 
 function spinning_loader(b){
     let a = [`

@@ -2,10 +2,8 @@ let bob = false;
 let zIndex = 1;
 
 $((e) => {
-    //$('#gameScreen').empty().append(firstStitch());
-    $('.waiter_segment').each(function(){ $(this).append(waiting_block(waitinInfoAsArray[waitingTicker])); waitingTicker++ })
-    $('#spinner1').append( spinning_loader(0) ).append( spinning_loader(1) )
-    $('#spinner2').append( spinning_loader(2) ).append( spinning_loader(3) )
+    $('#gameScreen').empty().append(firstStitch());
+    //$('#gameScreen').empty().append(opponentWaitingScreen())
 
     $('.selection_section').each(
         function(){
@@ -66,7 +64,7 @@ $((e) => {
         nickName = $("#gamePlayerName").val();
         gamePlaceName = $("#gamePlaceName").val();
         let teamNames = $('#bandDisplay').find('.card_heroImg');
-        let roster = [];
+        roster = [];
         for(let k=0; k<3;k++){
              let el = teamNames[k];
              roster.push($(el).data('name'))

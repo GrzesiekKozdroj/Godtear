@@ -90,7 +90,8 @@
 
 #app {
   height: 95vh;
-  width: 147vh;
+  width: 94vw;
+  max-width: 329vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;

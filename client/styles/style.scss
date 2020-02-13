@@ -178,14 +178,15 @@ $colorFillHex: transparent;
 
 
 
+.elevator{z-index:3}
 
 
 .shelf:nth-child(odd){
-    margin-left: $marginLeft;
+    margin-right: $marginLeft;
     color:white;
 }
 .shelf:nth-child(even){
-    margin-right: $marginLeft;
+    margin-left: $marginLeft;
     color:white;
 }
 @mixin arrow($color,$direction,$size){

@@ -1,6 +1,5 @@
-
-
-function makeGameBoard(){
+function makeGameBoard(o){
+    //o={nickName:{roster,nickName,opoName,gamePlace,socket.id},opoName:{roster,nickName,opoName,gamePlace,socket.id}}
     let  board = `
         <div id="app"></div>
         <div id="ladder"></div>
@@ -27,17 +26,17 @@ function makeGameBoard(){
     `);
     }
 }
-const makeAnim = (that) => {
+const makeAnim = (e,that) => {
     $('.hexagon').each(function(){
         $(this).on('click.anima',(e)=>{
             e.preventDefault();
-            that.animate({
+            that.children('.heroImg').animate({
                 left: $(this).offset().left - .3 *(.248261 / 12  * 1.38 * window.innerHeight)- that.offset().left,
                 top: $(this).offset().top - 7.5 * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
             }, 420, ()=>{
                 let row = $(this).data('row');
                 let hex = $(this).data('hex');
-                that.removeAttr('style').finish().off().detach().appendTo(this);
+                that.children('.heroImg').removeAttr('style').finish().off().detach().appendTo(this);
                 $('.hexagon').off('click.anima');
                 $(this).children('img').attr('data-row',row);
                 $(this).children('img').attr('data-hex',hex);

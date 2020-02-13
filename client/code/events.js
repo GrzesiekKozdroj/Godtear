@@ -2,8 +2,11 @@ let bob = false;
 let zIndex = 1;
 
 $((e) => {
-    $('#gameScreen').empty().append(firstStitch());
+    //$('#gameScreen').empty().append(firstStitch());
     //$('#gameScreen').empty().append(opponentWaitingScreen())
+    $('#gameScreen').empty().css('background-color','darkgreen').append( makeGameBoard() )
+    createGameEvents()
+    buildScenarioLayout(scenarios[5].layout)
 
     $('.selection_section').each(
         function(){
@@ -128,19 +131,4 @@ setTimeout(()=>{
 
 
 
-    $('.hexagon').each(function (e) {
-        let that = $(this);
-        let row = Number($(this).data('row'));
-        let hex = Number($(this).data('hex'));
-        $(this).on('click', (e) => {
-            e.preventDefault();
-            console.log(row, hex);
-            if (!bob) {
-                $(this).append(`<img src="img/Rhodri.png" class="heroImg" data-row="${row}" data-hex="${hex}"/>`);
-                bob = true;
-            } else if($(this).children('.heroImg').length>0){
-                makeAnim(e, that.children('.heroImg'));
-            }
-        })
-    })
 })//DOM

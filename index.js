@@ -63,8 +63,8 @@ io.sockets.on('connection', (socket) => {
                         room[data.nickName] = new GameClient(socket.id, data.nickName,pg,oponame,data.roster);
                         socket.gamePlace = pg;
                         socket.opoName = opoName;
-                        LOBBY_LIST[pg][Object.keys(room)[0]].otherGajmer = data.nickName;
-                        socket.emit('betaTime');
+                        room[Object.keys(room)[0]].otherGajmer = data.nickName;
+                        socket.emit('betaTime',room);
                     } else if (Object.keys(room).length === 2 || Object.keys(room).length === 0) {
                         roomsCounterToCheckIfAllRoomsAreEmpty++;
                         let roomName = data.place + Math.floor( Math.random () * (42000000 - 1 + 1)) + 1;

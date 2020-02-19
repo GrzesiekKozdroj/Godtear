@@ -6,7 +6,6 @@ $((e) => {
     //$('#gameScreen').empty().append(opponentWaitingScreen())
     $('#gameScreen').empty().css('background-color','darkgreen').append( makeGameBoard() )
     createGameEvents()
-    buildScenarioLayout(scenarios[5].layout)
 
     $('.selection_section').each(
         function(){

@@ -139,6 +139,11 @@
   align-items: center;
 }
 
+#board {
+  display: flex;
+  align-items: center;
+}
+
 .elevator {
   z-index: 3;
 }

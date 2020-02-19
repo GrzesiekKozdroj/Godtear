@@ -1,0 +1,297 @@
+
+
+@mixin img($icon,$phase){
+    margin:1vh -2vw;
+    min-height:10vh;
+    max-height: 11vh;
+    flex:1;
+    border-radius:50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url('../img/' + $icon + '_' + $phase + '.png');
+}
+$icons: 'skull' 'self' 'star' 'cogs';
+$phases:'black' 'white';
+$black: black;
+$white: white;
+@mixin phase_theme($phase){
+    @if $phase == 'black' { background-color: $black; color: $white;box-shadow: inset 0 0 3vh $white, 0 0 2vh $black;}; 
+    @if $phase == 'white' {background-color: $white; color: $black;box-shadow: inset 0 0 3vh $black, 0 0 2vh $black;};
+}
+
+@mixin all_skills {
+    @each $phase in $phases {
+        .card_list_item_#{$phase}{
+            display:flex;
+            width:46vw;
+            height:auto;
+            padding:1%;
+            margin:.5vh 1vw;
+            border-radius:.3vw;
+            overflow:hidden;
+            opacity:.65;
+            font-size:85%;
+            @each $icon in $icons {
+                .img_#{$icon}_#{$phase} {
+                    @include img($icon, $phase);
+                }
+            }
+            @include phase_theme($phase);
+            .roster_description{
+                min-height:20vh;
+                width:66%;
+                height:auto;
+                padding: .7%;
+                .roster_abil_name{
+                    font-size: 110%;
+                    font-weight: 700;
+                    letter-spacing: .04vw;
+                    flex:1;
+                }
+                .roster_abil_desc{
+                    font-size: 100%;
+                    font-weight: 400;
+                    line-height: 1.25;
+                    letter-spacing: -.06vw;
+                    height:auto;
+                }
+            }
+            .roster_abil_stats{
+                display:flex;
+                min-width:15%;
+                max-width:20%;
+                flex:1;
+                .roster_abil_column{
+                    width:33%;
+                    .roster_abil_icon{
+                        height:25%;
+                        background-repeat: no-repeat;background-size: contain;background-position: center;
+                    }
+                    .roster_abil_number{display:flex;justify-content: center;align-items: center;height:25%}
+                    .roster_abil_dist_#{$phase}{ background-image: url('../img/dist_' + $phase + '.png'); }
+                    .roster_abil_aim_#{$phase}{ background-image: url('../img/aim_' + $phase + '.png'); }
+                    .roster_abil_hurt_#{$phase}{ background-image: url('../img/hurt_' + $phase + '.png'); }
+                }
+            }
+        }
+    }
+}
+@mixin hexagonomicron ($sA) {
+    $viewHeight: 100vh;
+    $one: (1 / $sA * $viewHeight);
+    $hexHeight:(.5774 / $sA * $viewHeight);
+    $half: (.5 / $sA * $viewHeight);
+    $hexMargin:(.1787 / $sA * $viewHeight);
+    $hexBackground: ( .993042 / $sA * $viewHeight);
+    $quarter: (.25 / $sA * $viewHeight);
+    $minusQuarter: (-.25 / $sA * $viewHeight);
+    $fifive: (.55 / $sA * $viewHeight);
+    $hexBorder: (.07 / $sA * $viewHeight);
+    $margin: .1vh;//(.1 / $sA * $viewHeight);
+    $marginLeft:(5vh);
+    $appWidth:147vh;
+    $appHeight:95vh;
+    $minusQuarterht: 99vh;
+    $shelfWidth:160vh;
+    $border: ($margin * 5);
+    $hexTriangleSize: (.7071 / $sA * $viewHeight);
+    $hexTriangleOffsetLeft: (.0764 / $sA * $viewHeight);
+    $hexAfterWidth: (.86 / $sA * $viewHeight);
+    $hexAfterHeight: ( .4965 / $sA * $viewHeight);
+    $hexBottom: (-.353553 / $sA * $viewHeight);
+    $hexBottomSize: (.098995 / $sA * $viewHeight);
+    $hexMinusQuarter: (-.248261 / $sA * 100vh);
+            position: relative;
+            width: $one; 
+            height: $hexHeight;
+            margin: $hexMargin 0;
+            background-size: auto $hexBackground;
+            background-position: center;
+            border-left: solid $hexBorder #333333;
+            border-right: solid $hexBorder #333333;
+            &:after {
+                content: "";
+                position: absolute;
+                top: (.040415 / $sA * $viewHeight);
+                left: 0;
+                width: $hexAfterWidth;
+                height: $hexAfterHeight;
+                z-index: 2;
+                background: inherit;
+            }
+            img{
+                height:($hexHeight + $hexTriangleSize / 1.2);
+                width:$one * 1.05;
+                position:relative;
+                top:($hexMinusQuarter * 1.38);
+                left:($hexMinusQuarter * .36);
+                z-index: 2;
+            }
+            .top, .bottom{
+                position: absolute;
+                z-index: 1;
+                width: $hexTriangleSize;
+                height: $hexTriangleSize;
+                overflow: hidden;
+                -webkit-transform: scaleY(0.5774) rotate(-45deg);
+                -ms-transform: scaleY(0.5774) rotate(-45deg);
+                transform: scaleY(0.5774) rotate(-45deg);
+                background: inherit;
+                left: $hexTriangleOffsetLeft;
+                &:before, &:after{
+                    content: "";
+                    position: absolute;
+                    width: $hexAfterWidth;
+                    height: $hexAfterHeight;
+                    -webkit-transform:  rotate(45deg) scaleY(1.7321) translateY($hexMinusQuarter);
+                    -ms-transform:      rotate(45deg) scaleY(1.7321) translateY($hexMinusQuarter);
+                    transform:          rotate(45deg) scaleY(1.7321) translateY($hexMinusQuarter);
+                    -webkit-transform-origin: 0 0;
+                    -ms-transform-origin: 0 0;
+                    transform-origin: 0 0;
+                    background: inherit;
+                }
+            }
+            .top {
+              top: (-.353553 / $sA * 100vh);
+              border-top: solid $hexBottomSize #333333;
+              border-right: solid $hexBottomSize #333333;
+            }
+            .top:after {
+              background-position: center top;
+            }
+            .bottom {
+              bottom: $hexBottom;
+              border-bottom: solid $hexBottomSize #333333;
+              border-left: solid $hexBottomSize #333333;
+            }        
+            .bottom:after {
+              background-position: center bottom;
+            }
+    }//mixin
+    
+@mixin instaFlex {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+#game_card{
+    position:absolute;
+    height:100vh;
+    width:24vw;
+    z-index:42;@include instaFlex;
+    flex-wrap: wrap;
+}
+.left_card{
+    left:0;
+}
+.right_card{
+    right:0;
+    top:0;
+}
+
+.game_card-portrait{
+    width:100%;
+    @include instaFlex;
+    height:28vh;
+    min-height:10vw;
+    max-height:20vw;
+}
+.game_card-actions{
+    width:100%;
+    @include instaFlex;
+    justify-content: space-evenly;
+    height:17vh;
+    min-height:5vw;
+    max-height:10vw;
+}
+.game_card-skill_list{
+    width:100%;
+    @include instaFlex;
+    flex-wrap:wrap;
+    @include all_skills;
+    height:48vh;
+    min-height: 20vw;
+    max-height: 40vw;
+    overflow-y: scroll;
+    pointer-events: auto;
+    min-height: min-content;
+}
+.card_shadow-left{
+    background:linear-gradient(90deg, rgba(0,4,36,0.77) 0%, rgba(3,5,60,0.637) 35%, rgba(0,26,255,0.012) 100%);
+}
+
+.card_shadow-right{
+    background:linear-gradient(270deg, rgba(0,4,36,0.77) 0%, rgba(3,5,60,0.637) 35%, rgba(0,26,255,0.012) 100%);
+}
+.game_card-picture{
+    @include hexagonomicron(5.7);
+}
+.game_card-attribs{
+    width:50%;
+    @include instaFlex;
+    height: 100%;
+    .offset-speed{top:-20%;left:8%;}
+    .offset-dodge{top:-20%;left:36%;}
+    .offset-protection{top:16%;left:-16%;}
+    .offset-health{top:16%;left:11%;}
+}
+.game_card-attrib{
+    @include hexagonomicron(11);
+    position: relative;
+    p{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        width: 50%;
+        height: 100%;
+        left: 75%;
+        text-align: center;
+        z-index:21;
+        @include instaFlex; 
+        font-size:130%;
+        font-weight: 900;
+    }
+}
+.walk.champion.black{ 
+    background: center / 115% no-repeat url('../img/walk_black.png');
+}
+.claim.champion.black{ 
+    background: center / 115% no-repeat url('../img/claim.png');
+}
+.rally.champion.black{ 
+    background: center / 115% no-repeat url('../img/rally.png');
+}
+.walk.champion.white{ 
+    background: center / 115% no-repeat url('../img/walk_white.png');
+}
+.claim.champion.white{ 
+    background: center / 115% no-repeat url('../img/claim.png');
+}
+.rally.champion.white{ 
+    background: center / 115% no-repeat url('../img/rally.png');
+}
+.walk.unit.black{ 
+    background: center / 115% no-repeat url('../img/walk_black.png');
+}
+.claim.unit.black{ 
+    background: center / 115% no-repeat url('../img/claim.png');
+}
+.rally.unit.black{ 
+    background: center / 115% no-repeat url('../img/recruit_black.png');
+}
+.walk.unit.white{ 
+    background: center / 115% no-repeat url('../img/walk_white.png');
+}
+.claim.unit.white{ 
+    background: center / 115% no-repeat url('../img/claim.png');
+}
+.rally.unit.white{ 
+    background: center / 115% no-repeat url('../img/recruit_white.png');
+}
+.offset-speed.right{left:-35%}
+.offset-health.right{left:-82%}
+.offset-protection.right{left:-61%}
+.offset-dodge.right{left:42%}

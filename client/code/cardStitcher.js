@@ -412,3 +412,8 @@ function spinning_loader(b){
     `]
     return a[b]
 }
+function hexoMaker ({img, background, text, classes}) {
+    return `
+        <div 
+    `
+}

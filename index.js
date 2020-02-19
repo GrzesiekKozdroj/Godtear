@@ -43,7 +43,8 @@ io.sockets.on('connection', (socket) => {
                     socket.opoName = oponame;
                     let plac = LOBBY_LIST[data.place]
                     plac[oponame].otherGajmer = data.nickName
-                    loopRoom({socket:socket,pack:LOBBY_LIST[data.place],stringEmit:'betaTime',callback:o=>o,twoWay:true})
+                    let rr = Math.floor( Math.random () * (5 - 0 + 1)) + 0
+                    loopRoom({socket:socket,pack:{pack:LOBBY_LIST[data.place],scenario:rr},stringEmit:'betaTime',callback:o=>o,twoWay:true})
                 } else if( !(data.place in LOBBY_LIST) ){
                     socket.gamePlace = data.place;
                     LOBBY_LIST[data.place] = { [data.nickName]: new GameClient(socket.id,data.nickName,data.place,'',data.roster) };
@@ -64,7 +65,8 @@ io.sockets.on('connection', (socket) => {
                         socket.gamePlace = pg;
                         socket.opoName = opoName;
                         room[Object.keys(room)[0]].otherGajmer = data.nickName;
-                        socket.emit('betaTime',room);
+                        let rr = Math.floor( Math.random () * (5 - 0 + 1)) + 0
+                        loopRoom({socket:socket,pack:{pack:LOBBY_LIST[data.place],scenario:rr},stringEmit:'betaTime',callback:o=>o,twoWay:true})
                     } else if (Object.keys(room).length === 2 || Object.keys(room).length === 0) {
                         roomsCounterToCheckIfAllRoomsAreEmpty++;
                         let roomName = data.place + Math.floor( Math.random () * (42000000 - 1 + 1)) + 1;

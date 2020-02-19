@@ -13,11 +13,16 @@ socket.on('alfaTime',()=>{
 socket.on('betaTime',
     p=>{
         $('#gameScreen').addClass('scale-out-down mui-leave mui-leave-active')
-        setTimeout(()=>$('#gameScreen')
-            .empty().off()
-            .append(  $('#gameScreen').empty().append( makeGameBoard(p) )  )
-            .removeClass('scale-out-down mui-leave mui-leave-active')
-            .addClass('scale-in-up mui-enter mui-enter-active')
+        setTimeout(
+            ()=>{
+                $('#gameScreen')
+                    .empty().off()
+                    .append(  $('#gameScreen').empty().append( makeGameBoard(p.pack) )  )
+                    .removeClass('scale-out-down mui-leave mui-leave-active')
+                    .addClass('scale-in-up mui-enter mui-enter-active')
+                
+                buildScenarioLayout(scenarios[p.scenario].layout)
+            }
             ,600)
     }
 )

@@ -23,8 +23,8 @@ function makeGameBoard(o){
             let hexClass = "hexagon hex_" + h + "_in_row_" + r;
             let hex = `
             <div class="${hexClass}" data-row=${r} data-hex=${h}>
-                <div class="hexTop"></div>
-                <div class="hexBottom"></div>
+                <div class="top"></div>
+                <div class="bottom"></div>
             </div>`;
             $(`.row${r}`).append(hex);
         }

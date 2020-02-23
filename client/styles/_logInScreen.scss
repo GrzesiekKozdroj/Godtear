@@ -293,6 +293,11 @@ $white: white;
     @if $phase == 'black' { background-color: $black; color: $white;box-shadow: inset 0 0 3vh $white, 0 0 2vh $black;}; 
     @if $phase == 'white' {background-color: $white; color: $black;box-shadow: inset 0 0 3vh $black, 0 0 2vh $black;};
 }
+@each $phase in $phases {
+    .roster_abil_dist_#{$phase}{ background-image: url('../img/dist_' + $phase + '.png'); }
+    .roster_abil_aim_#{$phase}{ background-image: url('../img/aim_' + $phase + '.png'); }
+    .roster_abil_hurt_#{$phase}{ background-image: url('../img/hurt_' + $phase + '.png'); }
+}
 
 @mixin all_skills {
     @each $phase in $phases {
@@ -339,7 +344,6 @@ $white: white;
                         height:25%;
                         background-repeat: no-repeat;background-size: contain;background-position: center;
                     }
-                    .roster_abil_number{display:flex;justify-content: center;align-items: center;height:25%}
                     .roster_abil_dist_#{$phase}{ background-image: url('../img/dist_' + $phase + '.png'); }
                     .roster_abil_aim_#{$phase}{ background-image: url('../img/aim_' + $phase + '.png'); }
                     .roster_abil_hurt_#{$phase}{ background-image: url('../img/hurt_' + $phase + '.png'); }
@@ -349,6 +353,20 @@ $white: white;
     }
 }
 
+.roster_abil_stats{
+    display:flex;
+    min-width:15%;
+    max-width:20%;
+    flex:1;
+    .roster_abil_column{
+        width:33%;
+        .roster_abil_icon{
+            height:25%;
+            background-repeat: no-repeat;background-size: contain;background-position: center;
+        }
+    }
+}
+.roster_abil_number{display:flex;justify-content: center;align-items: center;height:25%}
 .card_skills{
     box-shadow: inset 0 0 3vh black;
     width:100%;
@@ -571,3 +589,8 @@ $white: white;
 .st_inf_ani {animation: anime_letteros .8s forwards;}
 .nd_inf_ani {animation: anime_letteros 1s forwards;}
 .rd_inf_ani {animation: anime_letteros 1.3s forwards;}
+.roster_abil_number.smaller_num{height:21%!important;}
+
+.legendary{
+    box-shadow: inset 0  0 5vh goldenrod!important;
+}

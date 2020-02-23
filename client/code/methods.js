@@ -347,7 +347,7 @@ const m =
         },
         util:
         {
-            buffet:
+            legendary:
             {
                 name: "Buffet",
                 desc: "Must target followers. This skill may target up to three followers on any hexes within range.",
@@ -603,7 +603,7 @@ const m =
         },
         util:
         {
-            bannerfall:
+            legendary:
             {
                 name: "Bannerfall",
                 desc: "Clash phase only. Make a claim action.",
@@ -727,7 +727,7 @@ const m =
         },
         util:
         {
-            graspingDead:
+            legendary:
             {
                 name: "Graspping Dead",
                 desc: "Remove all Knightshades from the battlefield. Then place all three Knightshades on hexes that are within 3 hexes of Mournblade.",
@@ -1637,7 +1637,7 @@ const m =
         },
         util:
         {
-            pounce:
+            legendary:
             {
                 name:"Pounce",
                 desc:"Before the hit roll, you may place Sneaky Peet on a hex adjacent to the target.",

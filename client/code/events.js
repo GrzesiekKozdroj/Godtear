@@ -4,10 +4,14 @@ let zIndex = 1;
 $((e) => {
     //$('#gameScreen').empty().append(firstStitch());
     //$('#gameScreen').empty().append(opponentWaitingScreen())
-    $('#gameScreen').empty().css('background-color','darkgreen').append( makeGameBoard() )
+
+    // $('#gameScreen').append(miniCard(Rhodri,'white','left'))
+    $('#gameScreen').append(leftCard(Lorsann,'black','left'))
+     $('#gameScreen')/*.empty()*/.css('background-color','darkgreen').append( makeGameBoard() )
+    $('#gameScreen').append(rightCard(ShadowSentinels,'white','right'))
+    // $('#gameScreen').append(miniCard(Morrigan,'black','right'))
+    
     createGameEvents()
-    //$('#gameScreen').append(rightCard(null))
-    //$('#gameScreen').append(leftCard(false))
 
     $('.selection_section').each(
         function(){

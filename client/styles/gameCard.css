@@ -66,6 +66,7 @@
   background-color: black;
   color: white;
   box-shadow: inset 0 0 3vh white, 0 0 2vh black;
+  text-shadow: 0 0 2vh black, 0 0 1vh black, 0 0 1.5vh #3a0e0e;
 }
 
 .game_card-skill_list .card_list_item_black .img_skull_black {
@@ -78,6 +79,8 @@
   background-size: contain;
   background-position: center;
   background-image: url("../img/skull_black.png");
+  top: -5.7vh;
+  position: relative;
 }
 
 .game_card-skill_list .card_list_item_black .img_self_black {
@@ -90,6 +93,8 @@
   background-size: contain;
   background-position: center;
   background-image: url("../img/self_black.png");
+  top: -5.7vh;
+  position: relative;
 }
 
 .game_card-skill_list .card_list_item_black .img_star_black {
@@ -102,6 +107,8 @@
   background-size: contain;
   background-position: center;
   background-image: url("../img/star_black.png");
+  top: -5.7vh;
+  position: relative;
 }
 
 .game_card-skill_list .card_list_item_black .img_cogs_black {
@@ -114,6 +121,8 @@
   background-size: contain;
   background-position: center;
   background-image: url("../img/cogs_black.png");
+  top: -5.7vh;
+  position: relative;
 }
 
 .game_card-skill_list .card_list_item_black .roster_description {
@@ -131,11 +140,14 @@
 }
 
 .game_card-skill_list .card_list_item_black .roster_description .roster_abil_desc {
-  font-size: 100%;
+  padding-right: 4%;
+  font-size: 95%;
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: -.06vw;
   height: auto;
+  width: 129%;
+  position: relative;
 }
 
 .game_card-skill_list .card_list_item_black .roster_abil_stats {
@@ -188,6 +200,7 @@
   background-color: white;
   color: black;
   box-shadow: inset 0 0 3vh black, 0 0 2vh black;
+  text-shadow: 0 0 2vh white, 0 0 1vh white, 0 0 1.5vh #a4e6e0;
 }
 
 .game_card-skill_list .card_list_item_white .img_skull_white {
@@ -200,6 +213,8 @@
   background-size: contain;
   background-position: center;
   background-image: url("../img/skull_white.png");
+  top: -5.7vh;
+  position: relative;
 }
 
 .game_card-skill_list .card_list_item_white .img_self_white {
@@ -212,6 +227,8 @@
   background-size: contain;
   background-position: center;
   background-image: url("../img/self_white.png");
+  top: -5.7vh;
+  position: relative;
 }
 
 .game_card-skill_list .card_list_item_white .img_star_white {
@@ -224,6 +241,8 @@
   background-size: contain;
   background-position: center;
   background-image: url("../img/star_white.png");
+  top: -5.7vh;
+  position: relative;
 }
 
 .game_card-skill_list .card_list_item_white .img_cogs_white {
@@ -236,6 +255,8 @@
   background-size: contain;
   background-position: center;
   background-image: url("../img/cogs_white.png");
+  top: -5.7vh;
+  position: relative;
 }
 
 .game_card-skill_list .card_list_item_white .roster_description {
@@ -253,11 +274,14 @@
 }
 
 .game_card-skill_list .card_list_item_white .roster_description .roster_abil_desc {
-  font-size: 100%;
+  padding-right: 4%;
+  font-size: 95%;
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: -.06vw;
   height: auto;
+  width: 129%;
+  position: relative;
 }
 
 .game_card-skill_list .card_list_item_white .roster_abil_stats {
@@ -536,7 +560,7 @@
 }
 
 .claim.unit.black {
-  background: center/115% no-repeat url("../img/claim.png");
+  display: none;
 }
 
 .rally.unit.black {
@@ -548,7 +572,7 @@
 }
 
 .claim.unit.white {
-  background: center/115% no-repeat url("../img/claim.png");
+  display: none;
 }
 
 .rally.unit.white {
@@ -569,4 +593,162 @@
 
 .offset-dodge.right {
   left: 42%;
+}
+
+.white p {
+  color: black;
+  text-shadow: 0px .1vw white;
+}
+
+.black p {
+  color: white;
+  text-shadow: 0px .1vw black;
+}
+
+.speed.white {
+  background: center/115% no-repeat url("../img/walk_black.svg");
+  color: black;
+}
+
+.speed.black {
+  background: center/115% no-repeat url("../img/walk_white.svg");
+  color: white;
+}
+
+.dodge.white {
+  background: center/115% no-repeat url("../img/dodge_white.svg");
+  color: black;
+}
+
+.dodge.black {
+  background: center/115% no-repeat url("../img/dodge_black.svg");
+  color: white;
+}
+
+.protection.white {
+  background: center/115% no-repeat url("../img/shield_white.svg");
+  color: black;
+}
+
+.protection.black {
+  background: center/115% no-repeat url("../img/shield_black.svg");
+  color: white;
+}
+
+.health.white {
+  background: center/115% no-repeat url("../img/heart_white.svg");
+  color: black;
+}
+
+.health.black {
+  background: center/115% no-repeat url("../img/heart_black.svg");
+  color: white;
+}
+
+.smallCard p {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  z-index: 21;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 130%;
+  font-weight: 900;
+}
+
+.list {
+  max-width: 56%;
+}
+
+.list .img_skull_black {
+  background-color: black;
+  color: white;
+  box-shadow: inset 0 0 3vh white, 0 0 2vh black;
+  text-shadow: 0 0 2vh black, 0 0 1vh black, 0 0 1.5vh #3a0e0e;
+  background: center/115% no-repeat url("../img/skull_black.png");
+  font-size: 79%;
+  line-height: 1.1rem;
+}
+
+.list .img_self_black {
+  background-color: black;
+  color: white;
+  box-shadow: inset 0 0 3vh white, 0 0 2vh black;
+  text-shadow: 0 0 2vh black, 0 0 1vh black, 0 0 1.5vh #3a0e0e;
+  background: center/115% no-repeat url("../img/self_black.png");
+  font-size: 79%;
+  line-height: 1.1rem;
+}
+
+.list .img_star_black {
+  background-color: black;
+  color: white;
+  box-shadow: inset 0 0 3vh white, 0 0 2vh black;
+  text-shadow: 0 0 2vh black, 0 0 1vh black, 0 0 1.5vh #3a0e0e;
+  background: center/115% no-repeat url("../img/star_black.png");
+  font-size: 79%;
+  line-height: 1.1rem;
+}
+
+.list .img_cogs_black {
+  background-color: black;
+  color: white;
+  box-shadow: inset 0 0 3vh white, 0 0 2vh black;
+  text-shadow: 0 0 2vh black, 0 0 1vh black, 0 0 1.5vh #3a0e0e;
+  background: center/115% no-repeat url("../img/cogs_black.png");
+  font-size: 79%;
+  line-height: 1.1rem;
+}
+
+.list .img_skull_white {
+  background-color: white;
+  color: black;
+  box-shadow: inset 0 0 3vh black, 0 0 2vh black;
+  text-shadow: 0 0 2vh white, 0 0 1vh white, 0 0 1.5vh #a4e6e0;
+  background: center/115% no-repeat url("../img/skull_white.png");
+  font-size: 79%;
+  line-height: 1.1rem;
+}
+
+.list .img_self_white {
+  background-color: white;
+  color: black;
+  box-shadow: inset 0 0 3vh black, 0 0 2vh black;
+  text-shadow: 0 0 2vh white, 0 0 1vh white, 0 0 1.5vh #a4e6e0;
+  background: center/115% no-repeat url("../img/self_white.png");
+  font-size: 79%;
+  line-height: 1.1rem;
+}
+
+.list .img_star_white {
+  background-color: white;
+  color: black;
+  box-shadow: inset 0 0 3vh black, 0 0 2vh black;
+  text-shadow: 0 0 2vh white, 0 0 1vh white, 0 0 1.5vh #a4e6e0;
+  background: center/115% no-repeat url("../img/star_white.png");
+  font-size: 79%;
+  line-height: 1.1rem;
+}
+
+.list .img_cogs_white {
+  background-color: white;
+  color: black;
+  box-shadow: inset 0 0 3vh black, 0 0 2vh black;
+  text-shadow: 0 0 2vh white, 0 0 1vh white, 0 0 1.5vh #a4e6e0;
+  background: center/115% no-repeat url("../img/cogs_white.png");
+  font-size: 79%;
+  line-height: 1.1rem;
+}
+
+.list.right {
+  margin-left: -10vh;
+}
+
+.roster_abil_description.left {
+  left: -23% !important;
 }

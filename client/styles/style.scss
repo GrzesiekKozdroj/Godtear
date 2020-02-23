@@ -215,10 +215,7 @@ $colorFillHex: transparent;
 #gameScreen{
     height:100vh;
     width:100vw;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content: center;
-    align-items: center;
+    @include instaFlex;
     padding:0;
 }
 body{
@@ -335,10 +332,10 @@ body{
 .puller.right{
     border-radius: 50% 0 0 50%;
     top:-43vh;
-    left:-3vw;
+    left:-40%;
 }
 .puller.left{
     border-radius: 0 50% 50% 0;
     top:-36vh;
-    left:9.5vw;
+    right:-80%;
 }

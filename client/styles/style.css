@@ -161,7 +161,7 @@ body {
   color: white;
 }
 
-.miniCard {
+.miniGameCard {
   width: 10vw;
   height: 100vh;
   background-color: darkslategrey;
@@ -170,7 +170,7 @@ body {
   align-items: center;
 }
 
-.miniCard .list {
+.miniGameCard .list {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -309,11 +309,15 @@ body {
 .puller.right {
   border-radius: 50% 0 0 50%;
   top: -43vh;
-  left: -40%;
+  left: -11vh;
 }
 
 .puller.left {
   border-radius: 0 50% 50% 0;
   top: -36vh;
   right: -80%;
+}
+
+.roster_abil_desc.left {
+  padding-right: 29% !important;
 }

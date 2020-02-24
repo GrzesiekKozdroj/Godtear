@@ -37,7 +37,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
                     <div class="img_${icon}_${phase}"></div>
 
                     <div class="roster_description">
-                        <div class="roster_abil_name">${name}</div>
+                        <div class="roster_abil_name left">${name}</div>
                         <div class="roster_abil_desc left">${desc ? desc : ''}</div>
                     </div>
 
@@ -65,7 +65,14 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
         }).join('') 
     }
     return `
-        <div id='game_card' class='${side}_card'>
+        <div id='game_card-big' class='${side}_card'
+            data-klass='${klass}' 
+            data-type='${type}' 
+            data-name='${name}' 
+            data-index='${index}'
+            data-side='${side}'
+            data-phase='${phase}'
+            >
 
         <div class='game_card-portrait card_shadow-${side}'>
 
@@ -197,7 +204,15 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
     }
 
     return `
-    <div id='game_card' class='${side}_card'>
+    <div id='game_card-big' class='${side}_card' 
+        data-klass='${klass}' 
+        data-type='${type}' 
+        data-name='${name}' 
+        data-index='${index}'
+        data-side='${side}'
+        data-phase='${phase}'
+        >
+
         <div class='game_card-portrait card_shadow-${side}'>
             <div class='game_card-attribs'>
                 <div id='card_dodge_${phase}' class='game_card-attrib offset-dodge ${side}'>
@@ -259,7 +274,7 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             `
                 <div class='smallCard img_${skill.icon}_${phase}'>
                     <div class='top'></div>
-                    <p>${skill.name}</p>
+                    <p>${/*skill.name*/''}</p>
                     <div class='bottom'></div>
                 </div>
             `
@@ -267,7 +282,15 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
     }
 
     return `
-    <div class='miniCard'>
+    <div class='miniGameCard ${side}' 
+        data-klass='${klass}' 
+        data-type='${type}' 
+        data-name='${name}' 
+        data-index='${index}'
+        data-side='${side}'
+        data-phase='${phase}'
+        >
+
     <div class='puller ${side}'>
         <div class='pullerCircle ${side}'>
             <div class='pullerTriangle ${side}'></div>

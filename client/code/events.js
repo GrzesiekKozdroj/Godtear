@@ -4,13 +4,11 @@ let zIndex = 1;
 $((e) => {
     //$('#gameScreen').empty().append(firstStitch());
     //$('#gameScreen').empty().append(opponentWaitingScreen())
+    //beginBattle()
 
-    // $('#gameScreen').append(miniCard(Rhodri,'white','left'))
-    $('#gameScreen').append(leftCard(Lorsann,'black','left'))
-     $('#gameScreen')/*.empty()*/.css('background-color','darkgreen').append( makeGameBoard() )
-    $('#gameScreen').append(rightCard(ShadowSentinels,'white','right'))
-    // $('#gameScreen').append(miniCard(Morrigan,'black','right'))
-    
+
+
+
     createGameEvents()
 
     $('.selection_section').each(
@@ -48,7 +46,6 @@ $((e) => {
             })
         }
     )
-
     $('.chosen').children('.card_heroImg').each(
         function(){
             $(this).on('click',e=>{
@@ -93,10 +90,10 @@ $((e) => {
         $('#introductory_insructions_info')
             .removeClass('hinge-in-from-top mui-enter mui-enter-active')
             .addClass('hinge-out-from-top mui-leave mui-leave-active')
-    })
+    })//
 $($('#bandSelection').children('.selection_section')[0]).addClass('marked_group')
 $('#card').append(roster_card(rosters.guardian[1]))
-$('[data-name="Rhodri"]').addClass('cardDisplayed')
+$('#selection_guardian').find('[data-name="Rhodri"]').addClass('cardDisplayed')
 $('#selection_maelstrom').addClass('hinge-in-from-right mui-enter')
 $('#selection_guardian').addClass('hinge-in-from-left mui-enter')
 $('#selection_slayer').addClass('hinge-in-from-bottom mui-enter')
@@ -120,11 +117,48 @@ setTimeout(()=>{
     $('#rd_info').addClass('rd_inf_ani')
 },1050)
 
+$('#gameScreen').on('click','.puller',function(e){
+    e.preventDefault();
+    const data = $(this).parent('.miniGameCard').data()
+    const selectedChar = rosters[ data.klass ][ data.index ][ data.type === 'champion' ? 'champ' : 'grunt' ]
+    const selectedForm = data.side === 'left' ? leftCard : rightCard
+    $(this).closest('#game_card')
+        .removeClass(`hinge-in-from-${data.side} mui-enter mui-enter-active`)
+        .addClass(`hinge-out-from-${data.side} mui-leave mui-leave-active`)
+    setTimeout(()=>{
+        $(this)
+            .closest(`#game_card`)
+            .empty()
+            .append( selectedForm(selectedChar, data.phase, data.side) )
+            .removeClass(`hinge-out-from-${data.side} mui-leave mui-leave-active`)
+            .addClass(`hinge-in-from-${data.side} mui-enter mui-enter-active`)
+    },750)
+})
+$('#gameScreen').on('click','#game_card-big',function(e){
+    e.preventDefault()
+    const data = $(this).data()
+    console.log(data)
+    const selectedChar = rosters[ data.klass ][ data.index ][ data.type === 'champion' ? 'champ' : 'grunt' ]
+    $(this).closest('#game_card')
+        .removeClass(`hinge-in-from-${data.side} mui-enter mui-enter-active`)
+        .addClass(`hinge-out-from-${data.side} mui-leave mui-leave-active`)
+    setTimeout(()=>{
+        $(this)
+            .closest(`#game_card`)
+            .empty()
+            .append( miniCard(selectedChar,data.phase,data.side) )
+            .removeClass(`hinge-out-from-${data.side} mui-leave mui-leave-active`)
+            .addClass(`hinge-in-from-${data.side} mui-enter mui-enter-active`)
+    }, 750)
+})
 
 
 
 
 
+
+
+ 
 
 
 

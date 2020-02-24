@@ -7,13 +7,6 @@ function makeGameBoard(o){
             opoRoster = plajer.roster
         }
     }
-    let  board = `
-        <div id='board'>
-            <div id="app"></div>
-            <div id="ladder"></div>
-        </div>
-    `;
-    $('#gameScreen').append(board);
     for (let r = 1; r < 13; r++) {
         let shelfClass = 'shelf row' + r;
         let shelf = `<div class="${shelfClass}"></div>`;
@@ -58,5 +51,47 @@ function gameCard (name, roster, color) {
     <div id="${name}" class="game_card">
         
     </div>
+    `
+}
+function beginBattle(){
+        //      rightCard(Rhodri,'white','right')
+        $('#gameScreen').css('background-color','darkgreen')
+        //      leftCard(Lorsann,'black','left')
+        $('#gameScreen').empty().append(`
+            <div id='game_card' class='left cardsContainer left_card'>
+                ${/*miniCard(Morrigan,'black','left')*/ deeploy(roster,'left')}
+            </div>
+            <div id='board'>
+                <div id="app"></div>
+                <div id="ladder"></div>
+            </div>
+            <div id='game_card' class='right cardsContainer right_card'>
+                ${/*miniCard(Rhodri,'white','right')*/ deeploy(opoRoster,'right')}
+            </div>
+        `)
+        makeGameBoard()
+}
+
+function deeploy (group,side){
+
+    const makeModels = o => {
+        let models = o.forEach(model => {
+            
+        });
+        return models.map(model=>`
+
+            <div class='smallCard img_${skill.icon}img_${phase}'>
+                <div class='top'></div>
+                <p>${/*skill.name*/''}</p>
+                <div class='bottom'></div>
+            </div>
+        `).join('')
+    }
+
+    return `
+        <div class='miniGameCard ${side} hinge-in-from-${side} mui-enter mui-enter-active'>
+            <div class='list ${side}'>
+            </div>
+        </div>
     `
 }

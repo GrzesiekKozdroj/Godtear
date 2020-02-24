@@ -214,6 +214,13 @@ $white: white;
     z-index:42;@include instaFlex;
     flex-wrap: wrap;
 }
+#game_card-big{
+    position:absolute;
+    height:100vh;
+    width:24vw;
+    z-index:42;@include instaFlex;
+    flex-wrap: wrap;
+}
 .left_card{
     left:0;
 }
@@ -276,9 +283,9 @@ $white: white;
         display: flex;
         justify-content: center;
         align-content: center;
-        width: 50%;
+        width: 131%;
         height: 100%;
-        left: 75%;
+        left: 0;
         text-align: center;
         z-index:21;
         @include instaFlex; 
@@ -380,3 +387,14 @@ $white: white;
     margin-left:-10vh;
 }
 .roster_abil_description.left{left: -23%!important;}
+.roster_abil_name.left{padding-left: 10%!important;}
+.miniGameCard.left{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.miniGameCard.right{
+    position: absolute;
+    right: 0;
+    top: 0;
+}

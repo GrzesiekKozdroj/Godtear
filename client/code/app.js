@@ -73,24 +73,38 @@ function beginBattle(){
 }
 
 function deeploy (group,side){
-
-    const makeModels = o => {
-        let models = o.forEach(model => {
-            
-        });
-        return models.map(model=>`
-
-            <div class='smallCard img_${skill.icon}img_${phase}'>
-                <div class='top'></div>
-                <p>${/*skill.name*/''}</p>
-                <div class='bottom'></div>
-            </div>
-        `).join('')
+    let championBands = []
+    for(let k in rosters){
+        let klass = rosters[k]
+        let band = klass.filter(b => group[0]===b.champ.name || group[1] === b.champ.name || group[2] === b.champ.name )
+        if(band.length){
+            championBands = [...championBands,...band]
+        }
     }
+    let models = championBands.map(model => {
+        let team = [
+            `<div class='smallCard  hexagrama-8'>
+                <div class='top'></div>
+                <img src='${model.champ.icon}'/>
+                <div class='bottom'></div>
+            </div>`];
+        for(let i = 0; i < model.grunt.unitSize;i++){
+            let grunt = 
+                `<div class='smallCard  hexagrama-14'>
+                    <div class='top'></div>
+                    <img src='${model.grunt.icon}'/>
+                    <div class='bottom'></div>
+                </div>`
+            team = [...team,grunt]
+        }
+        return team
+    })
+    console.log(models)
 
     return `
         <div class='miniGameCard ${side} hinge-in-from-${side} mui-enter mui-enter-active'>
-            <div class='list ${side}'>
+            <div class='list ${side} tray'>
+                ${ models.map(team=>team.join('')).join('') }
             </div>
         </div>
     `

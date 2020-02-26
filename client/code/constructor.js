@@ -1,10 +1,11 @@
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 class Character{
-    constructor(klass, role, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index) {
+    constructor(klass, role, name, unitSize, icon, speed, dodge, protection, health, skills,banner, index) {
     this.klass = klass;
     this.type = role;
     this.name = name;
+    this.index = index
     this.nameTech = `${name}${Math.random()}`; 
     this.unitSize = unitSize;
     this.icon = icon;

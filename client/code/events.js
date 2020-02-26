@@ -4,7 +4,7 @@ let zIndex = 1;
 $((e) => {
     //$('#gameScreen').empty().append(firstStitch());
     //$('#gameScreen').empty().append(opponentWaitingScreen())
-    //beginBattle()
+    beginBattle()
 
 
 

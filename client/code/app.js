@@ -1,12 +1,22 @@
-function makeGameBoard(o){
-    //o={nickName:{roster,nickName,opoName,gamePlace,socket.id},opoName:{roster,nickName,opoName,gamePlace,socket.id}}
+function buildRosters(o,coin){
+    //console.log(o)
+    //o={nickName:{roster,nickName,opoName,gamePlace,socket.id,side},opoName:{roster,nickName,opoName,gamePlace,socket.id}}
     if(o) for (let key in o){
-        let plajer = o[key]
+        let plajer = o[key];
         if(plajer.nickName !== nickName){
-            opoName = plajer.nickname
+            opoName = key
             opoRoster = plajer.roster
+            opoSide = plajer.side
+        } else if(plajer.nickName === nickName){
+            nickName = plajer.nickName;
+            roster = plajer.roster;
+            mySide = plajer.side;
+            myTurn = (plajer.side === 'left' && coin === 11) || (plajer.side === 'right' && coin === 12) ? true : false;
+            myDeployment = plajer.side === 'left' ? 'greenGlow' : 'redGlow';
         }
     }
+}
+function beginBattle(){
     for (let r = 1; r < 13; r++) {
         let shelfClass = 'shelf row' + r;
         let shelf = `<div class="${shelfClass}"></div>`;
@@ -28,17 +38,18 @@ function makeGameBoard(o){
     `);
     }
 }
-const makeAnim = (e,that) => {
-    $('.hexagon').each(function(){
+const makeAnim = (e,that,thiz) => {
+    console.log(that)
+    $(thiz).each(function(){
         $(this).on('click.anima',(e)=>{
             e.preventDefault();
-            that.children('.heroImg').animate({
+            that.animate({
                 left: $(this).offset().left - .3 *(.248261 / 12  * 1.38 * window.innerHeight)- that.offset().left,
                 top: $(this).offset().top - 3.5 * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
             }, 420, ()=>{
                 let row = $(this).data('row');
                 let hex = $(this).data('hex');
-                that.children('.heroImg').removeAttr('style').finish().off().detach().appendTo(this);
+                that.removeAttr('style').finish().off().detach().appendTo(this);
                 $('.hexagon').off('click.anima');
                 $(this).children('img').attr('data-row',row);
                 $(this).children('img').attr('data-hex',hex);
@@ -53,23 +64,25 @@ function gameCard (name, roster, color) {
     </div>
     `
 }
-function beginBattle(){
+function makeGameBoard(o,coin){
+    buildRosters(o,coin)
         //      rightCard(Rhodri,'white','right')
-        $('#gameScreen').css('background-color','darkgreen')
+        $('#gameScreen').empty().css('background-color','darkgreen')
         //      leftCard(Lorsann,'black','left')
-        $('#gameScreen').empty().append(`
-            <div id='game_card' class='left cardsContainer left_card'>
-                ${/*miniCard(Morrigan,'black','left')*/ deeploy(roster,'left')}
-            </div>
-            <div id='board'>
-                <div id="app"></div>
-                <div id="ladder"></div>
-            </div>
-            <div id='game_card' class='right cardsContainer right_card'>
-                ${/*miniCard(Rhodri,'white','right')*/ deeploy(opoRoster,'right')}
-            </div>
-        `)
-        makeGameBoard()
+            .append(`
+                <div id='game_card' class='${opoSide} cardsContainer ${opoSide}_card'>
+                    ${/*miniCard(Morrigan,'black','left')*/ deeploy(opoRoster,opoSide)}
+                </div>
+                <div id='board'>
+                    <div id="app"></div>
+                    <div id="ladder"></div>
+                </div>
+                <div id='game_card' class='${mySide} cardsContainer ${mySide}_card'>
+                    ${/*miniCard(Rhodri,'white','right')*/ deeploy(roster,mySide)}
+                </div>
+            `)
+    //createGameEvents()
+    beginBattle()
 }
 
 function deeploy (group,side){
@@ -82,15 +95,26 @@ function deeploy (group,side){
         }
     }
     let models = championBands.map(model => {
-        let team = [
-            `<div class='smallCard  hexagrama-8'>
+        let team = []
+        const makedata = (who)=>{
+            let champDATA = []
+            for(let D in model[who]){
+                let data = model[who][D];
+                let dataModel = `data-${D}=${data}`
+                champDATA = [...champDATA,dataModel]
+            }
+            return champDATA.join(' ')
+        }
+         team = [...team,
+            `<div class='${side} smallCard hexagrama-7' data-tenmodel=${model.champ.name} ${makedata('champ')}>
                 <div class='top'></div>
                 <img src='${model.champ.icon}'/>
                 <div class='bottom'></div>
             </div>`];
+
         for(let i = 0; i < model.grunt.unitSize;i++){
             let grunt = 
-                `<div class='smallCard  hexagrama-14'>
+                `<div class='${side} smallCard hexagrama-14' ${makedata('grunt') + ` data-tenmodel=${model.grunt.name + i}` }>
                     <div class='top'></div>
                     <img src='${model.grunt.icon}'/>
                     <div class='bottom'></div>
@@ -99,11 +123,25 @@ function deeploy (group,side){
         }
         return team
     })
-    console.log(models)
+    if(side===mySide){
+        $('#gameScreen').on('click',`.smallCard.${mySide} `,function(){
+            deployEvent($(this))
+        })
+        $('#gameScreen').on('click',`.${myDeployment}`,function(e){
+            e.preventDefault()
+            console.log($(this))
+            let className = $('.selected-model').data('type') === 'unit' ? 30 : 14;
+            $('.selected-model')
+                .removeClass( `selected-model hexagrama-${ className === 30 ? 14 : 7} smallCard:nth-child(2n+1)`)
+                .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : 'champModel'}`)
+                .detach()
+                .appendTo( $(this) )
+        })
+    }
 
     return `
-        <div class='miniGameCard ${side} hinge-in-from-${side} mui-enter mui-enter-active'>
-            <div class='list ${side} tray'>
+        <div class='${side} miniGameCard hinge-in-from-${side} mui-enter mui-enter-active'>
+            <div class='${side} list tray'>
                 ${ models.map(team=>team.join('')).join('') }
             </div>
         </div>

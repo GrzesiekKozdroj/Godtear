@@ -2,14 +2,9 @@ let bob = false;
 let zIndex = 1;
 
 $((e) => {
-    //$('#gameScreen').empty().append(firstStitch());
-    //$('#gameScreen').empty().append(opponentWaitingScreen())
-    beginBattle()
+  //  $('#gameScreen').empty().append(firstStitch());
 
-
-
-
-    createGameEvents()
+    socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
 
     $('.selection_section').each(
         function(){
@@ -137,7 +132,6 @@ $('#gameScreen').on('click','.puller',function(e){
 $('#gameScreen').on('click','#game_card-big',function(e){
     e.preventDefault()
     const data = $(this).data()
-    console.log(data)
     const selectedChar = rosters[ data.klass ][ data.index ][ data.type === 'champion' ? 'champ' : 'grunt' ]
     $(this).closest('#game_card')
         .removeClass(`hinge-in-from-${data.side} mui-enter mui-enter-active`)

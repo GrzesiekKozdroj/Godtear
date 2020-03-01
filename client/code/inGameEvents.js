@@ -1,20 +1,20 @@
-const createGameEvents = () =>
-    $('.hexagon').each(function (e) {
-        let that = $(this);
-        let row = Number($(this).data('row'));
-        let hex = Number($(this).data('hex'));
-        $(this).on('click', (e) => {
-            e.preventDefault();
-            if (!bob) {
-                $(this).append(`
-                <img src="img/Rhodri.png" style="" class="heroImg elevator" data-row="${row}" data-hex="${hex}"/>
-                `);
-                bob = true;
-            } else if($(this).children('.heroImg').length>0){
-                makeAnim(e, that);
-            }
-        })
-    })
+// const createGameEvents = () =>
+//     $('.hexagon').each(function (e) {
+//         let that = $(this);
+//         let row = Number($(this).data('row'));
+//         let hex = Number($(this).data('hex'));
+//         $(this).on('click', (e) => {
+//             e.preventDefault();
+//             if (!bob) {
+//                 $(this).append(`
+//                 <img src="img/Rhodri.png" style="" class="heroImg elevator" data-row="${row}" data-hex="${hex}"/>
+//                 `);
+//                 bob = true;
+//             } else if($(this).children('.heroImg').length>0){
+//                 makeAnim(e, that,$(this));
+//             }
+//         })
+//     })
 
 
 const makeObjectiveHex =  (row,hex) => {
@@ -74,4 +74,12 @@ const buildScenarioLayout = ({redHexes, greenHexes, objectiveHexes}) => {
         }
     });
     objectiveHexes.forEach( el => makeObjectiveHex(el[0],el[1]) )
+}
+function deployEvent (model){
+    //console.log(model.data())
+    if(myTurn){
+        socket.emit('deployment-select',model.data('tenmodel') )
+        $('.selected-model').removeClass('selected-model')
+        model.addClass('selected-model')
+    }
 }

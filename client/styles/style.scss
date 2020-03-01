@@ -170,7 +170,8 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     }//mixin
 $colorFillHex: transparent;
 .hexagon {
-    @include hexagonomicron(15)
+    @include hexagonomicron(15);
+    @include instaFlex;
 }
 #app{
     height:$appHeight;
@@ -201,6 +202,7 @@ $colorFillHex: transparent;
     border-right:none;
     width:calc((100% / 17.23 ) - 1vw);//calc($appWidth / 22);
     height:100%;//calc((100% / 18.2 ) - 1vh);
+    @include instaFlex;
 }
 .block1{
     border-radius: 50% 0 0 50%;
@@ -342,7 +344,7 @@ body{
 .roster_abil_desc.left{
     padding-right:29%!important;
 }
-$sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17;
+$sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
 @for $i from 1 through 18 {
     .hexagrama-#{$i}{
         @include hexagonomicron($i)
@@ -353,4 +355,16 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17;
     margin: auto auto !important;
     width:90%;
     max-width:90%;
+}
+.unitModel{
+    transform:scale(30%);
+    z-index:2;
+    margin:auto -47%!important;
+
+}
+.champModel{
+    position:relative;
+    top: -10%;
+    left: -17%;
+    z-index:2;
 }

@@ -5,7 +5,6 @@ const serv = require('http').Server(app);
 let SOCKET_LIST = {};
 let LOBBY_LIST = {quickGame0:{}};
 const serverPort = 4200;
-const alaska = 4;
 
 class GameClient {
     constructor(id, nickName, roomName, otherGajmer, roster) {
@@ -23,63 +22,41 @@ io.sockets.on('connection', (socket) => {
     socket.emit('online');
             socket.id = Math.random();
             SOCKET_LIST[socket.id] = socket;
+            socket.opoName = 'bad bob'
 
 
     socket.on('namePlace', (data) => {//after that client chooses his team.
         if (/^[0-9A-Za-z]+$/.test(data.nickName) && /^[0-9A-Za-z]+$/.test(data.place)) {
-            socket.nickName = data.nickName;
-            socket.gamePlace = "";
             //quickame room generation module
-            if (data.place!=='quickGame') {
-                if ( (data.place in LOBBY_LIST) && (socket.nickName in LOBBY_LIST[data.place]) ){
+                if ( (data.place in LOBBY_LIST) && (data.nickName in LOBBY_LIST[data.place]) ){
                     socket.emit("duplicateGamerName");
-                    socket.gamePlace = "";
-                    socket.nickName = ""
                 } else if((data.place in LOBBY_LIST) && Object.keys(LOBBY_LIST[data.place]).length < 2 &&
-                !(socket.nickName in LOBBY_LIST[data.place])){
+                !(data.nickName in LOBBY_LIST[data.place])){
+                    socket.nickName = data.nickName;
                     socket.gamePlace = data.place;
                     let oponame = Object.keys(LOBBY_LIST[data.place])[0]
-                    LOBBY_LIST[data.place][data.nickName] = new GameClient(socket.id,data.nickName,data.place,oponame,data.roster);
-                    socket.opoName = oponame;
+                    LOBBY_LIST[data.place][data.nickName] = 
+                        new GameClient(socket.id,data.nickName,data.place,'bad  bob',data.roster);
                     let plac = LOBBY_LIST[data.place]
-                    plac[oponame].otherGajmer = data.nickName
+                    socket.opoName = plac[oponame].id;
+                    plac[oponame].otherGajmer = socket.id
                     let rr = Math.floor( Math.random () * (5 - 0 + 1)) + 0
-                    loopRoom({socket:socket,pack:{pack:LOBBY_LIST[data.place],scenario:rr},stringEmit:'betaTime',callback:o=>o,twoWay:true})
+                    for(let c in SOCKET_LIST){
+                        let opz = SOCKET_LIST[c]
+                        if(socket.gamePlace === opz.gamePlace && opz.id !== socket.id){ opz.opoName=socket.id; }
+                    }
+                    let coinToss = Math.random() > .5 ? 12 : 11;
+                    plac[Object.keys(LOBBY_LIST[data.place])[0]].side = coinToss < 12 ? 'left' : 'right';
+                    plac[Object.keys(LOBBY_LIST[data.place])[1]].side = coinToss > 11 ? 'left' : 'right';
+                    loopRoom({socket:socket,pack:{pack:LOBBY_LIST[data.place],scenario:rr, coin: coinToss},
+                        stringEmit:'betaTime',callback:o=>o,twoWay:true})
                 } else if( !(data.place in LOBBY_LIST) ){
-                    socket.gamePlace = data.place;
+                    socket.gamePlace = data.place;socket.nickName=data.nickName
                     LOBBY_LIST[data.place] = { [data.nickName]: new GameClient(socket.id,data.nickName,data.place,'',data.roster) };
                     socket.emit('alfaTime');
                 } else if( (data.place in LOBBY_LIST) && Object.keys(LOBBY_LIST[data.place]).length > 1){
-                    socket.emit("duplicateGameLobbyName");
-                    socket.gamePlace = "";
+                    socket.emit("duplicateGameLobbyName")
                 }
-
-            } else if(data.place === 'quickGame') {
-
-                let roomsCounterToCheckIfAllRoomsAreEmpty = 0;
-                for (let pg in LOBBY_LIST) {
-                    let room = LOBBY_LIST[pg];
-                    if (Object.keys(room).length === 1 && pg.includes('quickGame')) {
-                        let opoName = LOBBY_LIST[pg][Object.keys(room)[0]]
-                        room[data.nickName] = new GameClient(socket.id, data.nickName,pg,oponame,data.roster);
-                        socket.gamePlace = pg;
-                        socket.opoName = opoName;
-                        room[Object.keys(room)[0]].otherGajmer = data.nickName;
-                        let rr = Math.floor( Math.random () * (5 - 0 + 1)) + 0
-                        loopRoom({socket:socket,pack:{pack:LOBBY_LIST[data.place],scenario:rr},stringEmit:'betaTime',callback:o=>o,twoWay:true})
-                    } else if (Object.keys(room).length === 2 || Object.keys(room).length === 0) {
-                        roomsCounterToCheckIfAllRoomsAreEmpty++;
-                        let roomName = data.place + Math.floor( Math.random () * (42000000 - 1 + 1)) + 1;
-                        socket.gamePlace = roomName;
-                        if (roomsCounterToCheckIfAllRoomsAreEmpty >= Object.keys(LOBBY_LIST).length){
-                            LOBBY_LIST[roomName] = { 
-                                [data.nickName]: new GameClient(socket.id,data.nickName,roomName,'',data.roster) 
-                            };
-                            socket.emit('alfaTime');
-                        }
-                    }
-                }
-            }
         };
     });
 
@@ -116,6 +93,23 @@ io.sockets.on('connection', (socket) => {
             }
         }
     });
+    socket.on('deployment-select',p=>{
+            loopRoom({socket:socket,pack:p,stringEmit:'deployment-select',callback:o=>o,twoWay:false})
+        }
+        )
+
+    //FOR QUICK SETUP GAME DEV PURPOSES ONLY:
+    //o={nickName:{roster,nickName,opoName,gamePlace,socket.id},opoName:{roster,nickName,opoName,gamePlace,socket.id}}
+    // let RrR = Math.floor( Math.random () * (5 - 0 + 1)) + 0
+    // socket.emit(  'betaTime', {
+    //     pack:{
+    //    Larhendiel:{ id: 0.6372239419915802, nickName: "Larhendiel", roomName: "Mordor", roster:[ "Morrigan", "Titus", "Nia" ] },
+    //    BadBob:{ id: 0.363702456547883, nickName: "BadBob", roomName: "Mordor" , roster:[ "Shayle", "Titus", "RaithMarid" ] },
+    //     },
+    //     scenario:RrR
+    // }  )
+    //////////////////////////////////////////////
+
 });
 
 
@@ -135,14 +129,15 @@ function loopRoom (options) {
         let returnPackage = evokeMe(pack, options.callback);
 
         let playjer = LOBBY_LIST[options.socket.gamePlace][options.socket.nickName];
-        let oplayer = LOBBY_LIST[options.socket.gamePlace][options.socket.opoName]
-
-        if(options.twoWay === 'selfie')
-            {SOCKET_LIST[playjer.id].emit(options.stringEmit, returnPackage) }
-        else if(!options.twoWay) 
-            {null} 
+        let oplayer = LOBBY_LIST[options.socket.gamePlace][options.socket.opoName];
+        if(options.twoWay === 'selfie'){
+            SOCKET_LIST[options.socket.id].emit(options.stringEmit, returnPackage) 
+        }
+        else if(!options.twoWay){
+            SOCKET_LIST[options.socket.opoName].emit(options.stringEmit, returnPackage);
+        } 
         else {
-            SOCKET_LIST[playjer.id].emit(options.stringEmit, returnPackage);
-            SOCKET_LIST[oplayer.id].emit(options.stringEmit, returnPackage);
+            SOCKET_LIST[options.socket.id].emit(options.stringEmit, returnPackage);
+            SOCKET_LIST[options.socket.opoName].emit(options.stringEmit, returnPackage);
         }
 }

@@ -15,6 +15,9 @@
   background-position: center;
   border-left: solid 0.46667vh #333333;
   border-right: solid 0.46667vh #333333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hexagon:after {
@@ -113,6 +116,9 @@
   border-right: none;
   width: calc((100% / 17.23 ) - 1vw);
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .block1 {
@@ -1734,4 +1740,17 @@ body {
 
 .list.left.tray .smallCard, .list.right.tray .smallCard {
   margin: 0;
+}
+
+.unitModel {
+  transform: scale(30%);
+  z-index: 2;
+  margin: auto -47% !important;
+}
+
+.champModel {
+  position: relative;
+  top: -10%;
+  left: -17%;
+  z-index: 2;
 }

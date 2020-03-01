@@ -6,7 +6,7 @@ class Character{
     this.type = role;
     this.name = name;
     this.index = index
-    this.nameTech = `${name}${Math.random()}`; 
+    this.nameTech = `${name}${Math.floor( Math.random () * (100000 - 0 + 1)) + 0 }`; 
     this.unitSize = unitSize;
     this.icon = icon;
     this.speed = speed; //{clash:X,plot:Y}
@@ -17,7 +17,6 @@ class Character{
     this.actionsTaken = 0;
     this.skills = skills;
     this.banner = banner;
-    this.index = index;
 
     this.healthLeft = health;
     this.row = false;
@@ -29,7 +28,7 @@ class Character{
     this.bAim = 0;
     this.bDamage = 0;
 
-    this.doing = 'not used';
+    //this.doing = 'not used';
     this.stepsGiven = this.name !== "Mournblade" ? 4 : 1;
     }
 //methods
@@ -63,7 +62,7 @@ const Hexlings = new Character("shaper","unit","Hexlings",5,"./img/Rattlebone.pn
 const Nia = new Character("shaper","champion","Nia",1,'./img/Nia.png',[1,2],4,2,6,m.Nia,'./img/classShaper.png',1);
 const Quartzlings = new Character("shaper","unit","Quartzlings",3,"./img/Nia.png",[2,0],2,4,1,m.quartzlings,'./img/classShaper.png',1);
 
-const RaithMarid = new Character("shaper","champion","RaithMaid",1,'./img/RaithMarid.png',[1,1],2,3,7,m.raithMarid,'./img/classShaper.png',2);
+const RaithMarid = new Character("shaper","champion","RaithMarid",1,'./img/RaithMarid.png',[1,1],2,3,7,m.raithMarid,'./img/classShaper.png',2);
 const Splashlings = new Character("shaper","unit","Splashlings",3,"./img/RaithMarid.png",[0,0],4,1,1,m.splashlings,'./img/classShaper.png',2);
 
 const Shayle = new Character("shaper","champion","Shayle",1,'./img/Shayle.png',[2,2],4,2,5,m.shayle,'./img/classShaper.png',3);
@@ -111,6 +110,12 @@ const rosters =
         {champ:Shayle, grunt: Landslide}
     ]
 };
+roster = [
+    rosters.guardian[Math.floor( Math.random () * (3 - 0 + 1)) + 0].champ.name, 
+    rosters.shaper[Math.floor( Math.random () * (3 - 0 + 1)) + 0].champ.name, 
+    rosters.slayer[Math.floor( Math.random () * (3 - 0 + 1)) + 0].champ.name
+];
+
 for(let c in rosters){
     let group = rosters[c]
     for(let g = 0; g < group.length; g++){

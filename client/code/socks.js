@@ -10,6 +10,7 @@ socket.on('alfaTime',()=>{
         .addClass('scale-in-up mui-enter mui-enter-active')
         ,600)
 }/*.empty().off().append(opponentWaitingScreen())*/)
+
 socket.on('betaTime',
     p=>{
         $('#gameScreen').addClass('scale-out-down mui-leave mui-leave-active')
@@ -17,12 +18,21 @@ socket.on('betaTime',
             ()=>{
                 $('#gameScreen')
                     .empty().off()
-                    .append(  $('#gameScreen').empty().append( makeGameBoard(p.pack) )  )
+                    .append(  $('#gameScreen').empty().append( makeGameBoard(p.pack,p.coin) )  )
                     .removeClass('scale-out-down mui-leave mui-leave-active')
                     .addClass('scale-in-up mui-enter mui-enter-active')
                 
                 buildScenarioLayout(scenarios[p.scenario].layout)
+                $(`.ladderBlock.block${p.coin}`).append( makeCoin() )
+                makeAnim('.selected-model',$(`.${myDeployment}`))
             }
             ,600)
     }
 )
+
+socket.on('deployment-select',p=>{
+    console.log(p)
+    $('.selected-enemy-model').removeClass('selected-enemy-model')
+    $(`.${opoSide}.miniGameCard`).find(`[data-tenModel=${p}]`).addClass('selected-enemy-model')
+})
+

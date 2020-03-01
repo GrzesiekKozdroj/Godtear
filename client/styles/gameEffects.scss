@@ -62,3 +62,35 @@
 .greenGlow{
     @include makeGlow('green', rgb(81, 255, 0), rgb(0, 240, 12), rgb(84, 155, 67), rgb(73, 187, 8))
 }
+@keyframes popbigAndSmall{
+    10%{transform:scale(.7)}
+    26%{transform:scale(1.3)}
+    48%{transform:scale(.9)}
+    76%{transform:scale(1.2)}
+    100%{transform: scale(1)}
+}
+$selectedAllyGlow:rgba(8, 112, 184, 1);
+$selectedByEnemyGlow:rgba(238, 65, 53, 1);
+.selected-model{
+    box-shadow: 0 0 3vh $selectedAllyGlow,0 0 1vh $selectedAllyGlow,0 0 2.5vh $selectedAllyGlow, 0 0 2vh $selectedAllyGlow;
+    z-index:10;
+    animation: forwards 2s popbigAndSmall;
+}
+.selected-enemy-model{
+    box-shadow: 0 0 3vh $selectedByEnemyGlow,0 0 1vh $selectedByEnemyGlow,0 0 2.5vh $selectedByEnemyGlow, 0 0 2vh $selectedByEnemyGlow;
+    z-index:10;
+    animation: forwards 2s popbigAndSmall;
+}
+@keyframes coinPulse {
+    25%{transform:scale(1.1)}
+    75%{transform: scale(.8);}
+}
+#coin{
+    width:1px;
+    height: 1px;
+    margin:auto auto;
+    border-radius: 50%;
+    background-color: goldenrod;
+    box-shadow: 0 0 1vh 2vh rgba(218, 165, 32, 1);
+    animation: alternate infinite 4s coinPulse;
+}

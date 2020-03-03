@@ -36,3 +36,7 @@ socket.on('deployment-select',p=>{
     $(`.${opoSide}.miniGameCard`).find(`[data-tenModel=${p}]`).addClass('selected-enemy-model')
 })
 
+socket.on('d-o-h',p=>{
+    let that = $(`.hex_${p.hex}_in_row_${p.row}`)
+    deployTrayToBoard('selected-enemy-model',that)
+})

@@ -1754,3 +1754,11 @@ body {
   left: -17%;
   z-index: 2;
 }
+
+.teamBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 29%;
+}

@@ -39,7 +39,7 @@ function beginBattle(){
     }
 }
 const makeAnim = (e,that,thiz) => {
-    console.log(that)
+  //  console.log(that)
     $(thiz).each(function(){
         $(this).on('click.anima',(e)=>{
             e.preventDefault();
@@ -96,6 +96,7 @@ function deeploy (group,side){
     }
     let models = championBands.map(model => {
         let team = []
+        let modelCount = 0;
         const makedata = (who)=>{
             let champDATA = []
             for(let D in model[who]){
@@ -120,29 +121,40 @@ function deeploy (group,side){
                     <div class='bottom'></div>
                 </div>`
             team = [...team,grunt]
+            modelCount = i
         }
-        return team
+        return `<div class='teamBox ${side}' data-modelcount=${modelCount+2}>
+                ${team.join('')}
+            </div>`
     })
     if(side===mySide){
-        $('#gameScreen').on('click',`.smallCard.${mySide} `,function(){
+        $('#gameScreen').on('click',`.teamBox.${mySide}`,function(e){
+            e.preventDefault()
+            let chosenBox = $(`.teamBox.${mySide}.${myDeployment}`)
+            if( !chosenBox.hasClass(myDeployment) && !chosenBox.length || chosenBox.data('modelcount') == chosenBox.children(`.smallCard`).length  )
+            {
+                chosenBox.removeClass(myDeployment)
+                $(this).addClass(myDeployment)
+                if(!$('.selected-model').parent(`.teamBox.${mySide}`).hasClass(myDeployment)){
+                    $('.selected-model').removeClass('selected-model')
+                }
+            }
+        })
+        $('#gameScreen').on('click',`.smallCard.${mySide} `,function(e){
+            e.preventDefault()
             deployEvent($(this))
         })
-        $('#gameScreen').on('click',`.${myDeployment}`,function(e){
+        $('#gameScreen').on('click',`.${myDeployment}.hexagon`,function(e){
             e.preventDefault()
-            console.log($(this))
-            let className = $('.selected-model').data('type') === 'unit' ? 30 : 14;
-            $('.selected-model')
-                .removeClass( `selected-model hexagrama-${ className === 30 ? 14 : 7} smallCard:nth-child(2n+1)`)
-                .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : 'champModel'}`)
-                .detach()
-                .appendTo( $(this) )
+            socket.emit('deploy-on-hex',{row:$(this).data('row'),hex:$(this).data('hex')})
+            deployTrayToBoard('selected-model',$(this))
         })
     }
 
     return `
         <div class='${side} miniGameCard hinge-in-from-${side} mui-enter mui-enter-active'>
             <div class='${side} list tray'>
-                ${ models.map(team=>team.join('')).join('') }
+                ${ models.join('') }
             </div>
         </div>
     `

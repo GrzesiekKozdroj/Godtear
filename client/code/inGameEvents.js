@@ -76,10 +76,18 @@ const buildScenarioLayout = ({redHexes, greenHexes, objectiveHexes}) => {
     objectiveHexes.forEach( el => makeObjectiveHex(el[0],el[1]) )
 }
 function deployEvent (model){
-    //console.log(model.data())
     if(myTurn){
         socket.emit('deployment-select',model.data('tenmodel') )
         $('.selected-model').removeClass('selected-model')
         model.addClass('selected-model')
     }
+}
+function deployTrayToBoard(modelClass, thiz){
+    let className = $('.'+modelClass).data('type') === 'unit' ? 30 : 14;
+    if($('.'+modelClass).parent(`.teamBox.${mySide}`).hasClass(myDeployment))
+        $('.'+modelClass)
+            .removeClass( `${modelClass} hexagrama-${ className === 30 ? 14 : 7}`)
+            .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : 'champModel'}`)
+            .detach()
+            .appendTo( thiz )
 }

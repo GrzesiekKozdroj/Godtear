@@ -23,6 +23,9 @@ socket.on('betaTime',
                     .addClass('scale-in-up mui-enter mui-enter-active')
                 
                 buildScenarioLayout(scenarios[p.scenario].layout)
+
+                setTimeout(()=>$('body').append(  displayDeploymentInfo(scenarios[p.scenario])  ),600)
+                
                 $(`.ladderBlock.block${p.coin}`).append( makeCoin() )
                 makeAnim('.selected-model',$(`.${myDeployment}`))
             }
@@ -31,12 +34,21 @@ socket.on('betaTime',
 )
 
 socket.on('deployment-select',p=>{
-    console.log(p)
     $('.selected-enemy-model').removeClass('selected-enemy-model')
     $(`.${opoSide}.miniGameCard`).find(`[data-tenModel=${p}]`).addClass('selected-enemy-model')
 })
 
 socket.on('d-o-h',p=>{
+    myTurn = p.turnChange ? false : true
     let that = $(`.hex_${p.hex}_in_row_${p.row}`)
-    deployTrayToBoard('selected-enemy-model',that)
+    deployTrayToBoard('selected-enemy-model',that,false)
+
+    if( !$('.list.tray').find('.teamBox').children('.smallCard').length && myTurn) socket.emit('beginBattle')
+    else if(myTurn) displayAnimatedNews ('Your turn')
+})
+
+
+socket.on('horn',p=>{
+    console.log(p)
+    beginFirstPlotPhase()
 })

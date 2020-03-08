@@ -82,12 +82,22 @@ function deployEvent (model){
         model.addClass('selected-model')
     }
 }
-function deployTrayToBoard(modelClass, thiz){
+function deployTrayToBoard(modelClass, thiz, deployment){
     let className = $('.'+modelClass).data('type') === 'unit' ? 30 : 14;
-    if($('.'+modelClass).parent(`.teamBox.${mySide}`).hasClass(myDeployment))
+    let modeOfControl  = deployment ? $('.'+modelClass).parent(`.teamBox.${mySide}`).hasClass(myDeployment) : true
+    if
+    ( 
+      !thiz.children(`.smallCard`).length || 
+      ( 
+        $(`.${modelClass}`).data('name') === thiz.children(`.smallCard`).first().data('name') && 
+        thiz.children(`.smallCard`).length < 3
+      ) && 
+      modeOfControl
+    )
         $('.'+modelClass)
             .removeClass( `${modelClass} hexagrama-${ className === 30 ? 14 : 7}`)
             .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : 'champModel'}`)
             .detach()
             .appendTo( thiz )
+
 }

@@ -58,11 +58,7 @@ const makeAnim = (e,that,thiz) => {
     });
 };//anim
 function gameCard (name, roster, color) {
-    return `
-    <div id="${name}" class="game_card">
-        
-    </div>
-    `
+    return `    <div id="${name}" class="game_card"></div>    `
 }
 function makeGameBoard(o,coin){
     buildRosters(o,coin)
@@ -146,8 +142,11 @@ function deeploy (group,side){
         })
         $('#gameScreen').on('click',`.${myDeployment}.hexagon`,function(e){
             e.preventDefault()
-            socket.emit('deploy-on-hex',{row:$(this).data('row'),hex:$(this).data('hex')})
-            deployTrayToBoard('selected-model',$(this))
+            deployTrayToBoard('selected-model',$(this),true)
+            let turnChange = !$(`.teamBox.${mySide}.${myDeployment}`).children('.smallCard').length ? false : true
+            myTurn = turnChange
+            if( !turnChange ) $(`.teamBox.${mySide}.${myDeployment}`).removeClass(myDeployment)
+            socket.emit('deploy-on-hex',{row:$(this).data('row'),hex:$(this).data('hex'),turnChange:turnChange})
         })
     }
 

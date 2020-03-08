@@ -145,6 +145,13 @@ $('#gameScreen').on('click','#game_card-big',function(e){
             .addClass(`hinge-in-from-${data.side} mui-enter mui-enter-active`)
     }, 750)
 })
+$('body').on('click','.gameTip', function(e){
+    e.preventDefault()
+    $('.gameTip')
+        .removeClass('hinge-in-from-top mui-enter mui-enter-active')
+        .addClass('hinge-out-from-bottom mui-leave mui-leave-active')
+    setTimeout(()=> $('.gameTip').remove(),750)
+})
 
 
 

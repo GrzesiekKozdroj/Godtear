@@ -98,6 +98,7 @@ io.sockets.on('connection', (socket) => {
         }
         )
     socket.on('deploy-on-hex',p=>loopRoom({socket:socket,pack:p,stringEmit:'d-o-h',callback:o=>o,twoWay:false}) )
+    socket.on('beginBattle',()=>loopRoom({socket:socket,pack:'white',stringEmit:'horn',callback:o=>o,twoWay:true}))
 
     //FOR QUICK SETUP GAME DEV PURPOSES ONLY:
     //o={nickName:{roster,nickName,opoName,gamePlace,socket.id},opoName:{roster,nickName,opoName,gamePlace,socket.id}}

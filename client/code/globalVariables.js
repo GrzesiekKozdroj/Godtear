@@ -7,4 +7,5 @@ var opoSide;
 var mySide;
 var myTurn;
 var myDeployment;
+var phase = 'white'
 let waitinInfoAsArray = [roster[0],roster[1],roster[2],nickName,gamePlaceName,"waiting for opponent"];let waitingTicker = 0;

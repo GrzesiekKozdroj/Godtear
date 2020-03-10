@@ -54,8 +54,22 @@ function displayAnimatedNews (message){
 }
 
 function beginFirstPlotPhase(){
+    //.append(miniCard(Morrigan,phase,opoSide)
     displayAnimatedNews ('Begin Plot Phase')
-    $(`.${opoSide}.cardsContainer.${opoSide}_card`).empty().append(miniCard(Morrigan,phase,opoSide))
-    $(`.${mySide}.cardsContainer.${mySide}_card`).empty().append(miniCard(Morrigan,phase,mySide))
-
+    $(`.${opoSide}.cardsContainer.${opoSide}_card`).empty().addClass(`hinge-out-from-${opoSide} mui-leave mui-leave-active`)
+    $(`.${mySide}.cardsContainer.${mySide}_card`).empty().addClass(`hinge-out-from-${mySide} mui-leave mui-leave-active`)
+    $('.'+myDeployment).removeClass(myDeployment)
+    $('.'+opoDeployment).removeClass(opoDeployment)
+    setTimeout(()=>{
+        $(`.${opoSide}.cardsContainer.${opoSide}_card`)
+            .removeClass(`hinge-out-from-${opoSide} mui-leave mui-leave-active`)
+            .addClass(`hinge-in-from-${opoSide} mui-enter`)
+            .append(  miniCard($($('.blackTeam')[0]).data(), phase, opoSide)  )
+            .addClass('mui-enter-active')
+        $(`.${mySide}.cardsContainer.${mySide}_card`)
+            .removeClass(`hinge-out-from-${mySide} mui-leave mui-leave-active`)
+            .addClass(`hinge-in-from-${mySide} mui-enter`)
+            .append(  miniCard($($('.whiteTeam')[0]).data(), phase, mySide) )
+            .addClass('mui-enter-active')
+    },600)
 }

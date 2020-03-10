@@ -13,6 +13,7 @@ function buildRosters(o,coin){
             mySide = plajer.side;
             myTurn = (plajer.side === 'left' && coin === 11) || (plajer.side === 'right' && coin === 12) ? true : false;
             myDeployment = plajer.side === 'left' ? 'greenGlow' : 'redGlow';
+            opoDeployment = plajer.side === 'left' ? 'redGlow' : 'greenGlow';
         }
     }
 }
@@ -96,25 +97,27 @@ function deeploy (group,side){
         const makedata = (who)=>{
             let champDATA = []
             for(let D in model[who]){
-                let data = model[who][D];
+                let data = D !== 'skills' ? model[who][D] : encodeURIComponent(JSON.stringify(model[who][D]));
+                
                 let dataModel = `data-${D}=${data}`
                 champDATA = [...champDATA,dataModel]
             }
             return champDATA.join(' ')
         }
+        let teamColor = side === mySide ? 'whiteTeam' : 'blackTeam'
          team = [...team,
-            `<div class='${side} smallCard hexagrama-7' data-tenmodel=${model.champ.name} ${makedata('champ')}>
-                <div class='top'></div>
+            `<div class='${side} smallCard hexagrama-7 ${teamColor}' data-tenmodel=${model.champ.name} ${makedata('champ')}>
+                <div class='top ${teamColor}'></div>
                 <img src='${model.champ.icon}'/>
-                <div class='bottom'></div>
+                <div class='bottom ${teamColor}'></div>
             </div>`];
 
         for(let i = 0; i < model.grunt.unitSize;i++){
             let grunt = 
-                `<div class='${side} smallCard hexagrama-14' ${makedata('grunt') + ` data-tenmodel=${model.grunt.name + i}` }>
-                    <div class='top'></div>
+                `<div class='${side} smallCard hexagrama-14 ${teamColor}' ${makedata('grunt') + ` data-tenmodel=${model.grunt.name + i}` }>
+                    <div class='top ${teamColor}'></div>
                     <img src='${model.grunt.icon}'/>
-                    <div class='bottom'></div>
+                    <div class='bottom ${teamColor}'></div>
                 </div>`
             team = [...team,grunt]
             modelCount = i
@@ -138,7 +141,7 @@ function deeploy (group,side){
         })
         $('#gameScreen').on('click',`.smallCard.${mySide} `,function(e){
             e.preventDefault()
-            deployEvent($(this))
+            if(phase==='deployment')deployEvent($(this))
         })
         $('#gameScreen').on('click',`.${myDeployment}.hexagon`,function(e){
             e.preventDefault()

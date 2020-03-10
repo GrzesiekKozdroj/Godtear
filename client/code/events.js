@@ -2,9 +2,9 @@ let bob = false;
 let zIndex = 1;
 
 $((e) => {
-  //  $('#gameScreen').empty().append(firstStitch());
+    $('#gameScreen').empty().append(firstStitch());
 
-    socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
+  //  socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
 
     $('.selection_section').each(
         function(){
@@ -112,7 +112,7 @@ setTimeout(()=>{
     $('#rd_info').addClass('rd_inf_ani')
 },1050)
 
-$('#gameScreen').on('click','.puller',function(e){
+$('body').on('click','.puller',function(e){
     e.preventDefault();
     const data = $(this).parent('.miniGameCard').data()
     const selectedChar = rosters[ data.klass ][ data.index ][ data.type === 'champion' ? 'champ' : 'grunt' ]
@@ -129,7 +129,7 @@ $('#gameScreen').on('click','.puller',function(e){
             .addClass(`hinge-in-from-${data.side} mui-enter mui-enter-active`)
     },750)
 })
-$('#gameScreen').on('click','#game_card-big',function(e){
+$('body').on('click','#game_card-big',function(e){
     e.preventDefault()
     const data = $(this).data()
     const selectedChar = rosters[ data.klass ][ data.index ][ data.type === 'champion' ? 'champ' : 'grunt' ]
@@ -153,6 +153,27 @@ $('body').on('click','.gameTip', function(e){
     setTimeout(()=> $('.gameTip').remove(),750)
 })
 
+
+$('body').on('click','.hexagon',function(e){
+    e.preventDefault()
+    const thiz = $( $(this).children('.smallCard')[0] )
+    const animateCart = (site) => 
+    {
+        $(`.${site}.cardsContainer.${site}_card.hinge-in-from-${site}.mui-enter.mui-enter-active`)
+            .removeClass(`hinge-in-from-${site} mui-enter mui-enter-active`)
+            .addClass(`hinge-out-from-${site} mui-leave mui-leave-active`)
+        setTimeout(()=>
+            $(`.${site}.cardsContainer`)
+                .empty()
+                .append( miniCard(thiz.data(), phase, site) )
+                .removeClass(`hinge-out-from-${site} mui-leave mui-leave-active`)
+                .addClass(`hinge-in-from-${site} mui-enter mui-enter-active`)
+            ,550)
+    }
+    if(phase!=='deployment')
+        if    ( thiz.hasClass(opoSide) ) animateCart(opoSide)
+        else if( thiz.hasClass(mySide) ) animateCart(mySide)
+})
 
 
 

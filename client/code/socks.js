@@ -14,6 +14,7 @@ socket.on('alfaTime',()=>{
 socket.on('betaTime',
     p=>{
         $('#gameScreen').addClass('scale-out-down mui-leave mui-leave-active')
+        phase='deployment'
         setTimeout(
             ()=>{
                 $('#gameScreen')
@@ -49,6 +50,6 @@ socket.on('d-o-h',p=>{
 
 
 socket.on('horn',p=>{
-    console.log(p)
+    phase = p
     beginFirstPlotPhase()
 })

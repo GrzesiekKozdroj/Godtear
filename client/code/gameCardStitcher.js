@@ -262,14 +262,14 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
 }
 
 function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index},phase,side){
-
-    const skillzBlack = (skills,phase)=>{
+    let skillx = rosters[klass][index][type==='champion'?'champ':'grunt'].skills// JSON.parse(decodeURIComponent(skills));
+    const skillzBlack = (skillx,phase)=>{
         let skillList = []
-        for(let s in skills[phase]){
-            let skill = skills[phase][s]
+        for(let s in skillx[phase]){
+            let skill = skillx[phase][s]
             skillList = [...skillList, skill]
         }
-        skillList = skills.util.legendary ? [...skillList, skills.util.legendary] : skillList;
+        skillList = skillx.util.legendary ? [...skillList, skillx.util.legendary] : skillList;
         return skillList.map(skill=>
             `
                 <div class='smallCard img_${skill.icon}_${phase}'>
@@ -327,7 +327,7 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             <p >${health}</p>
             <div class='bottom'></div>
         </div>
-        ${skillzBlack(skills,phase,false)}
+        ${skillzBlack(skillx,phase,false)}
     </div>
 </div>
     `

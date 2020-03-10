@@ -1732,6 +1732,30 @@ body {
   background-position: center bottom;
 }
 
+.smallCard.whiteTeam.hexagrama-30.unitModel {
+  box-shadow: 0 0 3vh white, 0 0 4vh white !important;
+}
+
+.smallCard.whiteTeam.hexagrama-30.unitModel .top.whiteTeam {
+  box-shadow: 0 0 4vh white, 0 0 5vh white !important;
+}
+
+.smallCard.whiteTeam.hexagrama-30.unitModel .bottom.whiteTeam {
+  box-shadow: 0 0 4vh white, 0 0 5vh white !important;
+}
+
+.smallCard.blackTeam.hexagrama-30.unitModel {
+  box-shadow: 0 0 3vh black, 0 0 4vh black !important;
+}
+
+.smallCard.blackTeam.hexagrama-30.unitModel .top.blackTeam {
+  box-shadow: 0 0 4vh black, 0 0 5vh black !important;
+}
+
+.smallCard.blackTeam.hexagrama-30.unitModel .bottom.blackTeam {
+  box-shadow: 0 0 4vh black, 0 0 5vh black !important;
+}
+
 .list.left.tray, .list.right.tray {
   margin: auto auto !important;
   width: 90%;
@@ -1743,7 +1767,7 @@ body {
 }
 
 .unitModel {
-  transform: scale(30%);
+  transform: scale(35%);
   z-index: 2;
   margin: auto -47% !important;
 }
@@ -1838,4 +1862,12 @@ body {
   position: absolute;
   z-index: 23;
   margin: auto auto;
+}
+
+.whiteTeam {
+  box-shadow: 0 0 1vh white, 0 0 1.2vh white;
+}
+
+.blackTeam {
+  box-shadow: 0 0 1vh black, 0 0 1.2vh black;
 }

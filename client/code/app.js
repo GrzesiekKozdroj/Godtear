@@ -80,6 +80,8 @@ function makeGameBoard(o,coin){
             `)
     //createGameEvents()
     beginBattle()
+
+    QUICK_DEEPLOY()
 }
 
 function deeploy (group,side){
@@ -160,4 +162,21 @@ function deeploy (group,side){
             </div>
         </div>
     `
+}
+
+function QUICK_DEEPLOY() {
+    console.log('HI -_-')
+    let roow = 1;
+    let heex = 1;
+    $(`.teamBox`).children(`.smallCard`).each(function(){
+        let className = $(this).data('type') === 'unit' ? 30 : 14 
+        $(this)
+            .detach()
+            .removeClass( `hexagrama-${ className === 30 ? 14 : 7}`)
+            .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : 'champModel'}`)
+            .appendTo(`.hex_${heex}_in_row_${roow}`)
+        roow += heex <15 ? 0 : 1;
+        heex += heex < 15 ? 1 : -14;
+    })
+    socket.emit('beginBattle')
 }

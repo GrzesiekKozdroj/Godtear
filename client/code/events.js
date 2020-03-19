@@ -2,9 +2,9 @@ let bob = false;
 let zIndex = 1;
 
 $((e) => {
-    $('#gameScreen').empty().append(firstStitch());
+  //  $('#gameScreen').empty().append(firstStitch());
 
-  //  socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
+    socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
 
     $('.selection_section').each(
         function(){

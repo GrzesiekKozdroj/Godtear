@@ -153,26 +153,110 @@ $('body').on('click','.gameTip', function(e){
     setTimeout(()=> $('.gameTip').remove(),750)
 })
 
+const animateCart = (site, thiz) => 
+{
+    $(`.${site}.cardsContainer.${site}_card.hinge-in-from-${site}.mui-enter.mui-enter-active`)
+        .removeClass(`hinge-in-from-${site} mui-enter mui-enter-active`)
+        .addClass(`hinge-out-from-${site} mui-leave mui-leave-active`)
+    setTimeout(()=>
+        $(`.${site}.cardsContainer`)
+            .empty()
+            .append( miniCard(thiz.data(), phase, site) )
+            .removeClass(`hinge-out-from-${site} mui-leave mui-leave-active`)
+            .addClass(`hinge-in-from-${site} mui-enter mui-enter-active`)
+        ,550)
+}
+const checkCardContents = (site, chosenModel) => 
+    $(`.miniGameCard.${site}`).data('name') !== chosenModel.data('name')
 
+const addSelectedColor = (thiz = false) =>
+    {
+        if(thiz)
+        {
+            $(".selectedModel").removeClass("selectedModel")
+            thiz.addClass("selectedModel")
+        }
+    }
+
+const oddRowPosition = (r,h) => {
+    const colour = 'yellowGlow'
+    $(`.hex_${h - 1}_in_row_${r - 1}`).addClass(colour)
+    $(`.hex_${h}_in_row_${r - 1}`).addClass(colour)
+    $(`.hex_${h - 1}_in_row_${r}`).addClass(colour)
+    $(`.hex_${h + 1}_in_row_${r}`).addClass(colour)
+    $(`.hex_${h - 1}_in_row_${r + 1}`).addClass(colour)
+    $(`.hex_${h}_in_row_${r + 1}`).addClass(colour)
+    $('.'+colour).children('.top').addClass(colour)
+    $('.'+colour).children('.bottom').addClass(colour)
+}
+
+const evenRowPosition = (r,h) => {
+    const colour = 'yellowGlow'
+    $(`.hex_${h}_in_row_${r - 1}`).addClass(colour)
+    $(`.hex_${h + 1}_in_row_${r - 1}`).addClass(colour)
+    $(`.hex_${h - 1}_in_row_${r}`).addClass(colour)
+    $(`.hex_${h + 1}_in_row_${r}`).addClass(colour)
+    $(`.hex_${h}_in_row_${r + 1}`).addClass(colour)
+    $(`.hex_${h + 1}_in_row_${r + 1}`).addClass(colour)
+    $('.'+colour).children('.top').addClass(colour)
+    $('.'+colour).children('.bottom').addClass(colour)
+}
+const infectMovementHexesWithYellow = (r,h) => {
+    if(r % 2 === 1) oddRowPosition(r,h) 
+    else if (r % 2 === 0) evenRowPosition(r,h)
+}
+const spreadTheInfection = () =>
+    $('.yellowGlow').each(
+        function(){
+            let rg = Number( $(this).data('row') )
+            let hg = Number( $(this).data('hex') )
+            infectMovementHexesWithYellow(rg,hg)
+        }
+    )
+
+const displayMovementAura = thiz => {
+
+    $('.yellowGlow').removeClass('yellowGlow')
+
+    let h = Number(thiz.parent('.hexagon').data('hex'))
+    let r = Number(thiz.parent('.hexagon').data('row'))
+
+    for(let m = 0; m < Number( [...thiz.data('speed')][0] ); m++ ){
+        m === 0 ?
+            infectMovementHexesWithYellow(r,h)
+        :
+            spreadTheInfection()
+    }
+    thiz.parent('.hexagon').removeClass('yellowGlow')
+    thiz.parent('.hexagon').children().removeClass('yellowGlow')
+}
+
+$('body').on('click','.hexagon.yellowGlow', function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    makeAnim( e, $('.selectedModel'), $(this), displayMovementAura )
+})
+
+
+
+
+
+//ON CLICKING EACH HEXAGON
 $('body').on('click','.hexagon',function(e){
     e.preventDefault()
     const thiz = $( $(this).children('.smallCard')[0] )
-    const animateCart = (site) => 
-    {
-        $(`.${site}.cardsContainer.${site}_card.hinge-in-from-${site}.mui-enter.mui-enter-active`)
-            .removeClass(`hinge-in-from-${site} mui-enter mui-enter-active`)
-            .addClass(`hinge-out-from-${site} mui-leave mui-leave-active`)
-        setTimeout(()=>
-            $(`.${site}.cardsContainer`)
-                .empty()
-                .append( miniCard(thiz.data(), phase, site) )
-                .removeClass(`hinge-out-from-${site} mui-leave mui-leave-active`)
-                .addClass(`hinge-in-from-${site} mui-enter mui-enter-active`)
-            ,550)
+
+    if(  $(this).children('.smallCard').length  ){
+        //add movement aura
+        displayMovementAura(thiz)
+        //add "selected" class for easier model picking
+        addSelectedColor(thiz)
     }
+
+    //display appropriate card if needed
     if(phase!=='deployment')
-        if    ( thiz.hasClass(opoSide) ) animateCart(opoSide)
-        else if( thiz.hasClass(mySide) ) animateCart(mySide)
+        if   ( thiz.hasClass(opoSide) && checkCardContents(opoSide, thiz) ) animateCart(opoSide, thiz)
+        else if( thiz.hasClass(mySide) && checkCardContents(mySide, thiz) ) animateCart(mySide, thiz)
 })
 
 

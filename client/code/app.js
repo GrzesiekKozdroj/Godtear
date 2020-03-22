@@ -39,24 +39,16 @@ function beginBattle(){
     `);
     }
 }
-const makeAnim = (e,that,thiz) => {
-  //  console.log(that)
-    $(thiz).each(function(){
-        $(this).on('click.anima',(e)=>{
-            e.preventDefault();
-            that.animate({
-                left: $(this).offset().left - .3 *(.248261 / 12  * 1.38 * window.innerHeight)- that.offset().left,
-                top: $(this).offset().top - 3.5 * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
-            }, 420, ()=>{
-                let row = $(this).data('row');
-                let hex = $(this).data('hex');
-                that.removeAttr('style').finish().off().detach().appendTo(this);
-                $('.hexagon').off('click.anima');
-                $(this).children('img').attr('data-row',row);
-                $(this).children('img').attr('data-hex',hex);
-            });
+const makeAnim = (e,that,thiz,callback) => {
+    if(thiz)
+        that.animate({
+            left: thiz.offset().left - .3 *(.248261 / 12  * 1.38 * window.innerHeight)- that.offset().left,
+            top: thiz.offset().top - 3.5 * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
+        }, 420, ()=>{
+            that.removeAttr('style').finish().detach().appendTo(thiz);
+            thiz.removeClass('yellowGlow')
+            if(callback)callback(that)
         });
-    });
 };//anim
 function gameCard (name, roster, color) {
     return `    <div id="${name}" class="game_card"></div>    `

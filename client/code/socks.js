@@ -48,8 +48,19 @@ socket.on('d-o-h',p=>{
     else if(myTurn) displayAnimatedNews ('Your turn')
 })
 
-
 socket.on('horn',p=>{
     phase = p
     beginFirstPlotPhase()
+})
+
+socket.on('sM',p=>{
+    const thiz = $(`.blackTeam[data-tenmodel=${p}]`)
+    declareSelectedModel(thiz)
+    displayMovementAura(thiz)
+})
+
+socket.on('mM',p=>{
+    let thiz = $(`.hex_${p.h}_in_row_${p.r}`)
+    reduceSpeedLeft()
+    makeAnim(  $('.selectedModel'), thiz, displayMovementAura )
 })

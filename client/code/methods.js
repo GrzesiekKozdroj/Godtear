@@ -18,7 +18,28 @@ const m =
 {
     universal:
     {
-        walk: function () { },
+        walk: function (e, thiz, displayMovementAura) { 
+            if( 
+              (
+                !thiz.hasClass('objectiveGlow') || 
+                $('.selectedModel.whiteTeam').data('type') !== 'unit'
+              ) &&
+              (
+                  !thiz.children(`.smallCard`).length || 
+                ( 
+                  $(`.selectedModel.whiteTeam`).data('name') === thiz.children(`.smallCard.whiteTeam`).first().data('name') && 
+                  thiz.children(`.smallCard`).length < 3
+                )
+              ) && onlyOneStep(thiz)
+            )
+            {
+                const h = thiz.data('hex')
+                const r = thiz.data('row')
+                reduceSpeedLeft()
+                makeAnim( $('.selectedModel.whiteTeam'), thiz, displayMovementAura )
+                socket.emit('modelMoving',{h:h,r:r})
+            }
+        },
         recruit: function () { },
         rally: function () { },
         dieGrunt: function () { },

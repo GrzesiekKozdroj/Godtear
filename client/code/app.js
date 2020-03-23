@@ -39,11 +39,12 @@ function beginBattle(){
     `);
     }
 }
-const makeAnim = (e,that,thiz,callback) => {
+const makeAnim = (that,thiz,callback) => {
+    let ofsetSize = that.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
     if(thiz)
         that.animate({
-            left: thiz.offset().left - .3 *(.248261 / 12  * 1.38 * window.innerHeight)- that.offset().left,
-            top: thiz.offset().top - 3.5 * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
+            left: thiz.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * window.innerHeight)- that.offset().left,
+            top: thiz.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
         }, 420, ()=>{
             that.removeAttr('style').finish().detach().appendTo(thiz);
             thiz.removeClass('yellowGlow')

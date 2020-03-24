@@ -101,13 +101,13 @@ function highlightHexes ({colour, dist}){
     thiz.parent('.hexagon').children().removeClass(colour)
 }
 
-function placeBanner(){
+function placeBanner(teamColor){
     const klass = $('.selectedModel').data('klass')
     const color = klass ==='guardian' ? 'blue' : 
                   klass === 'maelstrom' ? 'yellow' : 
                   klass === 'shaper' ? 'green' : 
                   'red'
     return `
-        <img class="claimedBanner" src='./img/${color}Flag.png' />
+        <img class="claimedBanner ${teamColor}" src='./img/${color}Flag.png' />
     `
 }

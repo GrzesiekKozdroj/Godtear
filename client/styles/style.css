@@ -1899,8 +1899,10 @@ body {
 }
 
 .hexagon .claimedBanner {
+  border-radius: 50%;
   z-index: 3;
   position: relative;
   left: 0%;
   top: 0%;
+  transform: scale(120%);
 }

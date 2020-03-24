@@ -160,12 +160,19 @@ $('body').on('click','.hexagon.yellowGlow', function(e){
 })
 
 $('body').on('click','#claimAction',function(e){
-    e.preventDefault()
-    $('.yellowGlow').removeClass('yellowGlow')
-    highlightHexes({colour:'claimColor',dist:1})
+    if(phase==='white' && myTurn){
+        e.preventDefault()
+        $('.yellowGlow').removeClass('yellowGlow')
+        highlightHexes({colour:'claimColor',dist:1})
+        socket.emit('HH', {color:'claimColor',dist:1})
+    }
 })
 $('body').on('click','.objectiveGlow.claimColor', function(){
-    m.universal.claim( $(this) )
+    if(phase==='white' && myTurn){
+        m.universal.claim( $(this), 'whiteTeam' )
+        const {hex, row} = $(this).data()
+        socket.emit('stakeClaim',{hex: hex, row: row})
+    }
 })
 
 

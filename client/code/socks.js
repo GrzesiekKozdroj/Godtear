@@ -64,3 +64,10 @@ socket.on('mM',p=>{
     reduceSpeedLeft()
     makeAnim(  $('.selectedModel'), thiz, displayMovementAura )
 })
+socket.on('HH',p=>{
+    $('.yellowGlow').removeClass('yellowGlow')
+    highlightHexes({colour:p.color,dist:p.dist})
+})
+socket.on('sC',p=>{
+    m.universal.claim( $(`.hex_${p.hex}_in_row_${p.row}`), 'blackTeam' )
+})

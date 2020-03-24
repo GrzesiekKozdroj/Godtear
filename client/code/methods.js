@@ -44,9 +44,9 @@ const m =
         rally: function () { },
         dieGrunt: function () { },
         dieChamp: function () { },
-        claim: function (thiz) { 
+        claim: function (thiz, teamColor) { 
             const {row, hex} = thiz.data()
-            thiz.append(placeBanner())
+            thiz.append(placeBanner(teamColor))
             $('.claimColor').removeClass('claimColor')
         }
     },

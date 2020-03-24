@@ -44,7 +44,11 @@ const m =
         rally: function () { },
         dieGrunt: function () { },
         dieChamp: function () { },
-        claim: function () { }
+        claim: function (thiz) { 
+            const {row, hex} = thiz.data()
+            thiz.append(placeBanner())
+            $('.claimColor').removeClass('claimColor')
+        }
     },
     blackjaw:
     {

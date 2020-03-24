@@ -62,6 +62,9 @@
 .greenGlow{
     @include makeGlow('green', rgb(81, 255, 0), rgb(0, 240, 12), rgb(84, 155, 67), rgb(73, 187, 8))
 }
+.claimColor{
+    @include makeGlow('white', rgb(245, 245, 245), rgb(194, 197, 194), rgb(243, 243, 243), rgb(238, 250, 231))
+}
 @keyframes popbigAndSmall{
     10%{transform:scale(.7)}
     26%{transform:scale(1.3)}

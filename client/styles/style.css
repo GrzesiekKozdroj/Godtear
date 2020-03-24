@@ -1897,3 +1897,10 @@ body {
     transform: scale(45%);
   }
 }
+
+.hexagon .claimedBanner {
+  z-index: 3;
+  position: relative;
+  left: 0%;
+  top: 0%;
+}

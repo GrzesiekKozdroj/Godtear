@@ -117,6 +117,25 @@
   }
 }
 
+.claimColor {
+  animation: 30s infinite alternate glowwhite;
+}
+
+@keyframes glowwhite {
+  0% {
+    box-shadow: 0 0 0.5vw 0.4vw whitesmoke, 0 0 0.5vw 0.4vw inset whitesmoke;
+  }
+  33% {
+    box-shadow: 0 0 0.5vw 0.42vw #c2c5c2, 0 0 0.5vw 0.4vw inset #c2c5c2;
+  }
+  66% {
+    box-shadow: 0 0 0.5vw 0.44vw #f3f3f3, 0 0 0.5vw 0.4vw inset #f3f3f3;
+  }
+  100% {
+    box-shadow: 0 0 0.5vw 0.48vw #eefae7, 0 0 0.5vw 0.4vw inset #eefae7;
+  }
+}
+
 @keyframes popbigAndSmall {
   10% {
     transform: scale(0.7);

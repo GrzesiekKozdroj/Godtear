@@ -79,3 +79,35 @@ function reduceSpeedLeft(){
     speed[p]-=1
     $('.selectedModel').data('speedleft', speed)
 }
+function highlightHexes ({colour, dist}){
+    const applyClass = ({colour, row, hex}) => {
+        if(row % 2 === 1) oddRowPosition(row, hex, colour) 
+        else if (row % 2 === 0) evenRowPosition(row, hex, colour)
+    }
+    const thiz = $('.selectedModel')
+    const {hex, row} = thiz.parent('.hexagon').data()
+    for(let m = 0; m < dist; m++ ){
+        if(m === 0) 
+            applyClass({colour:colour, hex: hex, row: row})
+        else
+            $('.'+colour).each(
+                function(){
+                    let rg = Number( $(this).data('row') )
+                    let hg = Number( $(this).data('hex') )
+                    applyClass({row: rg, hex: hg, colour: colour})
+                })
+    }
+    thiz.parent('.hexagon').removeClass(colour)
+    thiz.parent('.hexagon').children().removeClass(colour)
+}
+
+function placeBanner(){
+    const klass = $('.selectedModel').data('klass')
+    const color = klass ==='guardian' ? 'blue' : 
+                  klass === 'maelstrom' ? 'yellow' : 
+                  klass === 'shaper' ? 'green' : 
+                  'red'
+    return `
+        <img class="claimedBanner" src='./img/${color}Flag.png' />
+    `
+}

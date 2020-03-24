@@ -118,8 +118,7 @@ const addSelectedColor = (thiz = false) =>
         }
     }
 
-const oddRowPosition = (r,h) => {
-    const colour = 'yellowGlow'
+const oddRowPosition = (r,h, colour = 'yellowGlow') => {
     $(`.hex_${h - 1}_in_row_${r - 1}`).addClass(colour)
     $(`.hex_${h}_in_row_${r - 1}`).addClass(colour)
     $(`.hex_${h - 1}_in_row_${r}`).addClass(colour)
@@ -130,8 +129,7 @@ const oddRowPosition = (r,h) => {
     $('.'+colour).children('.bottom').addClass(colour)
 }
 
-const evenRowPosition = (r,h) => {
-    const colour = 'yellowGlow'
+const evenRowPosition = (r,h, colour = 'yellowGlow') => {
     $(`.hex_${h}_in_row_${r - 1}`).addClass(colour)
     $(`.hex_${h + 1}_in_row_${r - 1}`).addClass(colour)
     $(`.hex_${h - 1}_in_row_${r}`).addClass(colour)

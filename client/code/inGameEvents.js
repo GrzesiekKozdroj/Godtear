@@ -112,7 +112,7 @@ const declareSelectedModel = thiz => {
 const addSelectedColor = (thiz = false) =>
     {
         if(thiz)
-        {   
+        {
             declareSelectedModel(thiz)
             socket.emit('selectedModel',$('.selectedModel').data('tenmodel'))
         }

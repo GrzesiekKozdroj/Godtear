@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src='https://code.jquery.com/jquery-3.4.1.js' integrity='sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=' crossorigin='anonymous'></script>
-    <title>Godtear</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Cardo&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./styles/style.css"/>
-    <link rel="stylesheet" type="text/css" href="./styles/waiterSegment.css"/>
-    <link rel="stylesheet" type="text/css" href="./styles/motion-ui.css"/>
-    <link rel="stylesheet" type="text/css" href="./styles/_logInScreen.css"/>
-    <link rel="stylesheet" type="text/css" href="./styles/__breakPoints.css"/>
-    <link rel="stylesheet" type="text/css" href="./styles/gameCard.css"/>
-    <link rel="stylesheet" type="text/css" href="./styles/gameEffects.css"/>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script 
+            src='https://code.jquery.com/jquery-3.4.1.js' 
+            integrity='sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU='   crossorigin='anonymous'>
+        </script>
+        <title>Godtear</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Cardo&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./styles/style.css"/>
+        <link rel="stylesheet" type="text/css" href="./styles/waiterSegment.css"/>
+        <link rel="stylesheet" type="text/css" href="./styles/motion-ui.css"/>
+        <link rel="stylesheet" type="text/css" href="./styles/_logInScreen.css"/>
+        <link rel="stylesheet" type="text/css" href="./styles/__breakPoints.css"/>
+        <link rel="stylesheet" type="text/css" href="./styles/gameCard.css"/>
+        <link rel="stylesheet" type="text/css" href="./styles/gameEffects.css"/>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    </head>
+    <body>
 
-    <section id="gameScreen">    </section>
+        <section id="gameScreen">               </section>
 
-    <script>var socket = io()</script>
-    <script src="./code/globalVariables.js"></script>
-    <script src="./code/methods.js"></script>
-    <script src="./code/constructor.js"></script>
-    <script src="./code/cardStitcher.js"></script>
-    <script src="./code/gameCardStitcher.js"></script>
-    <script src="./code/inGameEvents.js"></script>
-    <script src="./code/app.js"></script>
-    <script src="./code/events.js"></script>
-    <script src="./code/gameElements.js"></script>
-    <script src="./code/socks.js"></script>
-</body>
+        <script>        var socket = io()        </script>
+        <script src="./code/globalVariables.js"> </script>
+        <script src="./code/methodsHelp.js">     </script>
+        <script src="./code/methods.js">         </script>
+        <script src="./code/constructor.js">     </script>
+        <script src="./code/cardStitcher.js">    </script>
+        <script src="./code/gameCardStitcher.js"></script>
+        <script src="./code/inGameEvents.js">    </script>
+        <script src="./code/app.js">             </script>
+        <script src="./code/events.js">          </script>
+        <script src="./code/gameElements.js">    </script>
+        <script src="./code/socks.js">           </script>
+
+    </body>
 </html>

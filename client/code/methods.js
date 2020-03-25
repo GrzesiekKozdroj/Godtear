@@ -30,7 +30,7 @@ const m =
                   $(`.selectedModel.whiteTeam`).data('name') === thiz.children(`.smallCard.whiteTeam`).first().data('name') && 
                   thiz.children(`.smallCard`).length < 3
                 )
-              ) && onlyOneStep(thiz)
+              ) && onlyOneStep(thiz) &&  check_actions_count()
             )
             {
                 const h = thiz.data('hex')
@@ -44,10 +44,11 @@ const m =
         rally: function () { },
         dieGrunt: function () { },
         dieChamp: function () { },
-        claim: function (thiz, teamColor) { 
-            const {row, hex} = thiz.data()
+        claim: function (thiz, teamColor) {
+            if_moved_end_it()
             thiz.append(placeBanner(teamColor))
             $('.claimColor').removeClass('claimColor')
+            add_action_taken()
         }
     },
     blackjaw:

@@ -160,7 +160,7 @@ $('body').on('click','.hexagon.yellowGlow', function(e){
 })
 
 $('body').on('click','#claimAction',function(e){
-    if(phase==='white' && myTurn){
+    if( phase==='white' && myTurn && check_actions_count() ){
         e.preventDefault()
         $('.yellowGlow').removeClass('yellowGlow')
         highlightHexes({colour:'claimColor',dist:1})
@@ -183,10 +183,10 @@ $('body').on('click','.hexagon',function(e){
     const thiz = $( $(this).children('.smallCard')[0] )
 
     if( $(this).children('.smallCard').length && myTurn && phase !== 'deployment' ){
-        //add movement aura
-        displayMovementAura(thiz)
         //add "selected" class for easier model picking
         addSelectedColor(thiz)
+        //add movement aura
+        displayMovementAura(thiz)
     }
 
     //display appropriate card if needed

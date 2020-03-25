@@ -29,7 +29,7 @@ class Character{
     this.bDamage = 0;
 
     //this.doing = 'not used';
-    this.stepsGiven = this.name !== "Mournblade" ? 4 : 1;
+    this.stepsGiven = this.name !== "Mournblade" && this.klass === "champion" ? 4 : 1;
     }
 //methods
 }

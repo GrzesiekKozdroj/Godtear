@@ -18,7 +18,7 @@ const m =
 {
     universal:
     {
-        walk: function (e, thiz, displayMovementAura) { 
+        walk: function (e, thiz) { 
             if( 
               (
                 !thiz.hasClass('objectiveGlow') || 

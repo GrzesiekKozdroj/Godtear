@@ -156,7 +156,7 @@ $('body').on('click','.gameTip', function(e){
 $('body').on('click','.hexagon.yellowGlow', function(e){
     e.preventDefault()
     e.stopPropagation()
-    m.universal.walk(e,$(this),displayMovementAura)
+    m.universal.walk(e,$(this))
 })
 
 $('body').on('click','#claimAction',function(e){

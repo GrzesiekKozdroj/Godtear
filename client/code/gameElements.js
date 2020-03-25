@@ -74,10 +74,10 @@ function beginFirstPlotPhase(){
     },600)
 }
 function reduceSpeedLeft(){
-    const speed = [...$('.selectedModel').data('speedleft')].filter(el=>el!==',')
+    const speed = [...$('.selectedModel').attr('data-speedleft')].filter(el=>el!==',')
     const p = phase === 'white' ? 0 : 1
     speed[p]-=1
-    $('.selectedModel').data('speedleft', speed)
+    $('.selectedModel').attr('data-speedleft', speed)
 }
 function highlightHexes ({colour, dist}){
     const applyClass = ({colour, row, hex}) => {

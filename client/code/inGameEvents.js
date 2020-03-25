@@ -153,13 +153,13 @@ const spreadTheInfection = () =>
     )
 
 function displayMovementAura (thiz) {
-
+    let  bspeed = thiz.attr('data-bspeed')
     $('.yellowGlow').removeClass('yellowGlow')
-
     let h = Number(thiz.parent('.hexagon').data('hex'))
     let r = Number(thiz.parent('.hexagon').data('row'))
-    if( thiz.data('speedleft') )
-        for(let m = 0; m < Number( [...thiz.data('speedleft')][phase === 'white' ? 0 : 1] ); m++ ){
+    let numbeOfSteps = Number( [...thiz.attr('data-speedleft')][phase === 'white' ? 0 : 1] ) + Number(bspeed)
+    if( numbeOfSteps )
+        for(let m = 0; m < numbeOfSteps; m++ ){
             m === 0 ?
                 infectMovementHexesWithYellow(r,h)
             :

@@ -1,3 +1,13 @@
+
+        const makedata = (skill)=>{
+            let champDATA = []
+            for(let D in skill){
+                let data = /*D === 'm' ? encodeURIComponent(JSON.stringify(skill[D])) :*/ `"${skill[D]}"`
+                let dataModel = `data-${D}=${data} `
+                champDATA = [...champDATA, dataModel]
+            }
+            return champDATA.join(' ')
+        }
 function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index},phase,side) {
     const skillList = (skills)=>{
         let skillzList = []
@@ -32,7 +42,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
                 `<div class='roster_abil_number'>${hurt}</div>` : '';
 
         return `
-                <div class="card_list_item_${phase} ${skill.legendaryUsed === false ? 'legendary' : ''}">
+                <div class="card_list_item_${phase} ${skill.legendaryUsed === false ? 'legendary' : ''}" ${makedata(skill)}>
 
                     <div class="img_${icon}_${phase}"></div>
 
@@ -86,7 +96,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
                 <div id='card_speed_${phase}' class='game_card-attrib offset-speed'>
                     <div class='top'></div>
-                    <p >${phase==='white'?speed[0]:speed[1]}</p>
+                    <p >${phase==='white'?speed[0]:speed[2]}</p>
                     <div class='bottom'></div>
                 </div> 
 
@@ -170,7 +180,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
                 `<div class='roster_abil_number'>${hurt}</div>` : '';
 
         return `
-                <div class="card_list_item_${phase} ${skill.legendaryUsed === false ? 'legendary' : ''}">
+                <div class="card_list_item_${phase} ${skill.legendaryUsed === false ? 'legendary' : ''}" ${makedata(skill)} >
 
                     <div class="roster_abil_stats">
 
@@ -222,7 +232,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
                 </div>
                 <div id='card_speed_${phase}' class='game_card-attrib offset-speed ${side}'>
                     <div class='top'></div>
-                    <p >${phase==='white' ? speed[0] : speed[1]}</p>
+                    <p >${phase==='white' ? speed[0] : speed[2]}</p>
                     <div class='bottom'></div>
                 </div> 
                 <div id='card_health_${phase}' class='game_card-attrib offset-health ${side}'>
@@ -263,6 +273,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
 
 function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index},phase,side){
     let skillx = rosters[klass][index][type==='champion'?'champ':'grunt'].skills// JSON.parse(decodeURIComponent(skills));
+    feedSkillstheData (skillx)
     const skillzBlack = (skillx,phase)=>{
         let skillList = []
         for(let s in skillx[phase]){
@@ -270,15 +281,13 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             skillList = [...skillList, skill]
         }
         skillList = skillx.util.legendary ? [...skillList, skillx.util.legendary] : skillList;
-        return skillList.map(skill=>
-            `
-                <div class='smallCard img_${skill.icon}_${phase}'>
+        return skillList.map(skill=>`
+                <div class='smallCard img_${skill.icon}_${phase}' ${makedata(skill)} >
                     <div class='top'></div>
                     <p>${/*skill.name*/''}</p>
                     <div class='bottom'></div>
                 </div>
-            `
-        ).join('')
+            `).join('')
     }
 
     return `
@@ -306,7 +315,7 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
         <div class='smallCard speed ${phase}'>
             <div class='top'></div>
-            <p >${phase==='white' ? speed[0] : speed[1]}</p>
+            <p >${phase==='white' ? speed[0] : speed[2]}</p>
             <div class='bottom'></div>
         </div>
 
@@ -331,4 +340,7 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
     </div>
 </div>
     `
+}
+
+const feedSkillstheData = (s) => {
 }

@@ -14,6 +14,8 @@ skull = 'skull',
 cogs = 'cogs', 
 self = 'self', 
 star = 'star';
+
+
 const m =
 {
     universal:
@@ -47,8 +49,9 @@ const m =
         claim: function (thiz, teamColor) {
             if_moved_end_it()
             thiz.append(placeBanner(teamColor))
-            $('.claimColor').removeClass('claimColor')
+            $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
+            moveLadder(thiz.children('.claimedBanner'),$(thiz.children('.claimedBanner')).data('color')  )
         }
     },
     blackjaw:
@@ -64,7 +67,7 @@ const m =
                 aim: [6],
                 hurt: [6],
                 unused: true,
-                m: function () { }
+                m: "kick"
             },
             fieryAxe:
             {
@@ -436,7 +439,7 @@ const m =
         {
             regenerate:
             {
-                name: "Regenerate",
+                name: "Regenerate ",
                 desc: "Remove up to 2 of Halftusk's wounds.",
                 icon: self,
                 unused: true,
@@ -1520,7 +1523,7 @@ const m =
             },
             faryFire:
             {
-                name:"Fairy Fire",
+                name:"Fairy Fire ",
                 desc:`Hit Effect: ${shieldBlight}.`,
                 icon:skull,
                 dist:3,
@@ -1995,6 +1998,33 @@ const m =
                 desc:`After an enemy model uses a skill to knock out one or more Cold Bones, the enemy model gains ${dodgeBlight}.`,
                 m:function(){}
             }
+        }
+    }
+}
+
+const _m = {
+    kick: function (origin, target) {
+        const baim = Number(origin.attr('data-baim'))
+        const bdamage = Number(origin.attr('data-bdamage'))
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) && $target.hasClass('unitModel') )
+            socket.emit('rolloSkill',{ aim: (6 + baim), hurt:(6 + bdamage), socksMethod:"kick", hex, row })
+    }
+}
+const m_ = {
+    kick: function (o) {
+        const { aim, hurt, hex, row, key } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,2)
         }
     }
 }

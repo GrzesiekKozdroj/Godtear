@@ -111,9 +111,9 @@ const rosters =
     ]
 };
 roster = [
-    rosters.guardian[Math.floor( Math.random () * (3 - 0 + 1)) + 0].champ.name, 
-    rosters.shaper[Math.floor( Math.random () * (3 - 0 + 1)) + 0].champ.name, 
-    rosters.slayer[Math.floor( Math.random () * (3 - 0 + 1)) + 0].champ.name
+    rosters.shaper[Math.floor( Math.random () * (2 - 0 + 1)) + 0].champ.name, 
+    rosters.maelstrom[Math.floor( Math.random () * (2 - 0 + 1)) + 0].champ.name, 
+    rosters.maelstrom[Math.floor( Math.random () * (2 - 0 + 1)) + 0].champ.name
 ];
 
 for(let c in rosters){

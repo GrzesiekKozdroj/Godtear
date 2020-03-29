@@ -4,7 +4,8 @@
   height: 173.21px;
   background-color: #64C7CC;
   margin: 86.60px 0;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
   border-left: solid 5px #333333;
   border-right: solid 5px #333333;
 }
@@ -17,11 +18,11 @@
   width: 212.13px;
   height: 212.13px;
   -webkit-transform: scaleY(0.5774) rotate(-45deg);
-  -ms-transform: scaleY(0.5774) rotate(-45deg);
   transform: scaleY(0.5774) rotate(-45deg);
   background-color: inherit;
   left: 38.9340px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
 .hexagon:before {
@@ -47,3 +48,4 @@
   z-index: 2;
   background: inherit;
 }
+/*# sourceMappingURL=hexa.css.map */

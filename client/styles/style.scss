@@ -500,3 +500,22 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     top: 0%;
     transform:scale(120%);
 }
+.displayDamageRecieved{
+    position: relative;
+    top: -138%;
+    left: -78%;
+    z-index: 5;
+    width: 0;
+    height: 0;
+    font-size: 8vh;
+    font-weight: 600;
+    font-family: $coinFont2;
+}
+.displayDamageRecieved.redPain{
+    color:rgb(206, 71, 71);
+    text-shadow: 0 0 .5vh rgb(99, 29, 7), 0 0 .75vh rgb(99, 29, 7), 0 0 .1vh rgb(99, 29, 7), 0 0 1.5vh rgb(99, 29, 7);
+}
+.displayDamageRecieved.noPain{
+    color:rgb(168, 156, 156);
+    text-shadow: 0 0 1vh rgb(18, 18, 24), 0 0 .5vh rgb(18, 18, 24), 0 0 .75vh rgb(18, 18, 24), 0 0 1.5vh rgb(18, 18, 24);
+}

@@ -153,7 +153,7 @@ $('body').on('click','.gameTip', function(e){
     setTimeout(()=> $('.gameTip').remove(),750)
 })
 
-$('body').on('click','.hexagon.yellowGlow', function(e){
+$('body').on('click','.hexagon[data-glow="yellowGlow"]', function(e){
     e.preventDefault()
     e.stopPropagation()
     m.universal.walk(e,$(this))
@@ -162,12 +162,12 @@ $('body').on('click','.hexagon.yellowGlow', function(e){
 $('body').on('click','#claimAction',function(e){
     if( phase==='white' && myTurn && check_actions_count() ){
         e.preventDefault()
-        $('.yellowGlow').removeClass('yellowGlow')
+        $('[data-glow="yellowGlow"]').removeClass('[data-glow="yellowGlow"]')
         highlightHexes({colour:'claimColor',dist:1})
         socket.emit('HH', {color:'claimColor',dist:1})
     }
 })
-$('body').on('click','.objectiveGlow.claimColor', function(){
+$('body').on('click','.objectiveGlow[data-glow="claimColor"]', function(){
     if(phase==='white' && myTurn){
         m.universal.claim( $(this), 'whiteTeam' )
         const {hex, row} = $(this).data()
@@ -182,8 +182,11 @@ $('body').on('click','.hexagon',function(e){
     e.preventDefault()
     const thiz = $( $(this).children('.smallCard')[0] )
 
-    if( $(this).children('.smallCard').length && myTurn && phase !== 'deployment' ){
-        //add "selected" class for easier model picking
+    if( 
+        $(this).children('.smallCard.whiteTeam').length && 
+        myTurn && phase !== 'deployment' 
+       ){
+        //add "selectedModel" class for easier model picking
         addSelectedColor(thiz)
         //add movement aura
         displayMovementAura(thiz)
@@ -196,7 +199,34 @@ $('body').on('click','.hexagon',function(e){
 })
 
 
+for(let K in m){
+    const character = m[K]
+    for(let P in character){
+        const PHASE_PLAY = character[P]
+        for(let S in PHASE_PLAY){
+            let SKILL = PHASE_PLAY[S]
+            $('body').on('click',`[data-name="${SKILL.name}"]`,function(){
+                const data = $(this).data()
+                let modo = ['white','black'].includes(P) ? P === phase ? true : false : true
+                    if(modo && myTurn && mySide){
+                        let glow = data.icon === "skull" ? 'redGlow' :
+                                   data.icon === "cogs"  ? 'blueGlow' :
+                                   data.icon === "self"  ? 'legedaryGlow' :
+                                   data.icon === "star" ? 'greenGlow' : ''
+                        highlightHexes({colour:glow,dist:data.dist})
+                        socket.emit('HH', {color:glow,dist:data.dist})
+                        current_ability_method = _m[data.m]
+                    }
+            })
+        }
+    }
+}
 
+$('body').on('click','[data-glow]', function (){
+    const thiz_target = $(this).data()
+    const thiz_origin = $('.selectedModel')
+    current_ability_method(thiz_origin, thiz_target)
+})
 
 
 

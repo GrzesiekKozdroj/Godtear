@@ -8,5 +8,9 @@ var mySide;
 var myTurn;
 var myDeployment;
 var opoDeployment;
-var phase = 'white'
-let waitinInfoAsArray = [roster[0],roster[1],roster[2],nickName,gamePlaceName,"waiting for opponent"];let waitingTicker = 0;
+var phase = 'white';
+var glow;
+var graveyard = {};
+var current_ability_method = o => o
+let waitinInfoAsArray = [roster[0],roster[1],roster[2],nickName,gamePlaceName,"waiting for opponent"];
+let waitingTicker = 0;

@@ -47,7 +47,7 @@ const makeAnim = (that,thiz,callback) => {
             top: thiz.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
         }, 420, ()=>{
             that.removeAttr('style').finish().detach().appendTo(thiz);
-            thiz.removeClass('yellowGlow')
+            thiz.removeAttr('data-glow')
             if(callback)callback(that)
         });
 };//anim

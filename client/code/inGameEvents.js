@@ -119,32 +119,32 @@ const addSelectedColor = (thiz = false) =>
     }
 
 const oddRowPosition = (r,h, colour = 'yellowGlow') => {
-    $(`.hex_${h - 1}_in_row_${r - 1}`).addClass(colour)
-    $(`.hex_${h}_in_row_${r - 1}`).addClass(colour)
-    $(`.hex_${h - 1}_in_row_${r}`).addClass(colour)
-    $(`.hex_${h + 1}_in_row_${r}`).addClass(colour)
-    $(`.hex_${h - 1}_in_row_${r + 1}`).addClass(colour)
-    $(`.hex_${h}_in_row_${r + 1}`).addClass(colour)
-    $('.'+colour).children('.top').addClass(colour)
-    $('.'+colour).children('.bottom').addClass(colour)
+    $(`.hex_${h - 1}_in_row_${r - 1}`).attr('data-glow',colour)
+    $(`.hex_${h}_in_row_${r - 1}`).attr('data-glow',colour)
+    $(`.hex_${h - 1}_in_row_${r}`).attr('data-glow',colour)
+    $(`.hex_${h + 1}_in_row_${r}`).attr('data-glow',colour)
+    $(`.hex_${h - 1}_in_row_${r + 1}`).attr('data-glow',colour)
+    $(`.hex_${h}_in_row_${r + 1}`).attr('data-glow',colour)
+    $(`[data-glow="${colour}"`).children('.top').attr('data-glow',colour)
+    $(`[data-glow="${colour}"`).children('.bottom').attr('data-glow',colour)
 }
 
 const evenRowPosition = (r,h, colour = 'yellowGlow') => {
-    $(`.hex_${h}_in_row_${r - 1}`).addClass(colour)
-    $(`.hex_${h + 1}_in_row_${r - 1}`).addClass(colour)
-    $(`.hex_${h - 1}_in_row_${r}`).addClass(colour)
-    $(`.hex_${h + 1}_in_row_${r}`).addClass(colour)
-    $(`.hex_${h}_in_row_${r + 1}`).addClass(colour)
-    $(`.hex_${h + 1}_in_row_${r + 1}`).addClass(colour)
-    $('.'+colour).children('.top').addClass(colour)
-    $('.'+colour).children('.bottom').addClass(colour)
+    $(`.hex_${h}_in_row_${r - 1}`).attr('data-glow',colour)
+    $(`.hex_${h + 1}_in_row_${r - 1}`).attr('data-glow',colour)
+    $(`.hex_${h - 1}_in_row_${r}`).attr('data-glow',colour)
+    $(`.hex_${h + 1}_in_row_${r}`).attr('data-glow',colour)
+    $(`.hex_${h}_in_row_${r + 1}`).attr('data-glow',colour)
+    $(`.hex_${h + 1}_in_row_${r + 1}`).attr('data-glow',colour)
+    $(`[data-glow="${colour}"`).children('.top').attr('data-glow',colour)
+    $(`[data-glow="${colour}"`).children('.bottom').attr('data-glow',colour)
 }
 const infectMovementHexesWithYellow = (r,h) => {
     if(r % 2 === 1) oddRowPosition(r,h) 
     else if (r % 2 === 0) evenRowPosition(r,h)
 }
 const spreadTheInfection = () =>
-    $('.yellowGlow').each(
+    $('[data-glow="yellowGlow"]').each(
         function(){
             let rg = Number( $(this).data('row') )
             let hg = Number( $(this).data('hex') )
@@ -154,10 +154,10 @@ const spreadTheInfection = () =>
 
 function displayMovementAura (thiz) {
     let  bspeed = thiz.attr('data-bspeed')
-    $('.yellowGlow').removeClass('yellowGlow')
+    $('[data-glow]').removeAttr('data-glow')
     let h = Number(thiz.parent('.hexagon').data('hex'))
     let r = Number(thiz.parent('.hexagon').data('row'))
-    let numbeOfSteps = Number( [...thiz.attr('data-speedleft')][phase === 'white' ? 0 : 1] ) + Number(bspeed)
+    let numbeOfSteps = Number( [...thiz.attr('data-speedleft')][phase === 'white' ? 0 : 2] ) + Number(bspeed)
     if( numbeOfSteps )
         for(let m = 0; m < numbeOfSteps; m++ ){
             m === 0 ?
@@ -165,8 +165,8 @@ function displayMovementAura (thiz) {
             :
                 spreadTheInfection()
         }
-    thiz.parent('.hexagon').removeClass('yellowGlow')
-    thiz.parent('.hexagon').children().removeClass('yellowGlow')
+    thiz.parent('.hexagon').removeAttr('data-glow')
+    thiz.parent('.hexagon').children().removeAttr('data-glow')
 }
 
 const onlyOneStep = thiz => {

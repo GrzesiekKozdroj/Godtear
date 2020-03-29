@@ -103,6 +103,9 @@ io.sockets.on('connection', (socket) => {
     socket.on('modelMoving',p=>loopRoom({socket:socket,pack:p,stringEmit:'mM',callback:o=>o,twoWay:false}))
     socket.on('HH',p=>loopRoom({socket:socket,pack:p,stringEmit:'HH',callback:o=>o,twoWay:false}))
     socket.on('stakeClaim',p=>loopRoom({socket:socket,pack:p,stringEmit:'sC',callback:o=>o,twoWay:false}))
+    socket.on('rolloSkill',p=>loopRoom({socket:socket,pack:p,stringEmit:p.socksMethod,callback:roll,twoWay:true}))
+
+
     //FOR QUICK SETUP GAME DEV PURPOSES ONLY:
     //o={nickName:{roster,nickName,opoName,gamePlace,socket.id},opoName:{roster,nickName,opoName,gamePlace,socket.id}}
     // let RrR = Math.floor( Math.random () * (5 - 0 + 1)) + 0
@@ -145,4 +148,27 @@ function loopRoom (options) {
             SOCKET_LIST[options.socket.id].emit(options.stringEmit, returnPackage);
             SOCKET_LIST[options.socket.opoName].emit(options.stringEmit, returnPackage);
         }
+}
+const DICE = () => {
+    let r = (Math.ceil(Math.random() * 6))
+    return r < 3 ? 0 : r < 6 ? 1 : 2
+}
+function roll(o){
+    const { aim, hurt, socksMethod, hex, row } = o
+    let aim_rolls = [];
+    let hurt_rolls = [];
+    let die_hurt = 0;
+    let die_aim = 0;
+
+    do {
+        aim_rolls = [ ...aim_rolls, DICE()];
+        die_aim++
+    } while (die_aim < aim)
+    
+    do {
+        hurt_rolls = [ ...hurt_rolls, DICE()];
+        die_hurt++
+    } while (die_hurt < hurt)
+
+    return {aim:aim_rolls, hurt:hurt_rolls, socksMethod, hex, row}
 }

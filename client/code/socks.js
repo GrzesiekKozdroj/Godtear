@@ -65,7 +65,7 @@ socket.on('mM',p=>{
     makeAnim(  $('.selectedModel'), thiz, displayMovementAura )
 })
 socket.on('HH',p=>{
-    $('.yellowGlow').removeClass('yellowGlow')
+    $('[data-glow]').removeAttr('data-glow')
     highlightHexes({colour:p.color,dist:p.dist})
 })
 socket.on('sC',p=>{

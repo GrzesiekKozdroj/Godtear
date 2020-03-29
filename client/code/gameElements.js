@@ -80,6 +80,8 @@ function reduceSpeedLeft(){
     $('.selectedModel').attr('data-speedleft', speed)
 }
 function highlightHexes ({colour, dist}){
+
+    $('[data-glow]').removeAttr('data-glow')
     const applyClass = ({colour, row, hex}) => {
         if(row % 2 === 1) oddRowPosition(row, hex, colour) 
         else if (row % 2 === 0) evenRowPosition(row, hex, colour)
@@ -90,15 +92,15 @@ function highlightHexes ({colour, dist}){
         if(m === 0) 
             applyClass({colour:colour, hex: hex, row: row})
         else
-            $('.'+colour).each(
+            $(`[data-glow="${colour}"]`).each(
                 function(){
                     let rg = Number( $(this).data('row') )
                     let hg = Number( $(this).data('hex') )
                     applyClass({row: rg, hex: hg, colour: colour})
                 })
     }
-    thiz.parent('.hexagon').removeClass(colour)
-    thiz.parent('.hexagon').children().removeClass(colour)
+    thiz.parent('.hexagon').removeAttr('data-glow')
+    thiz.parent('.hexagon').children().removeAttr('data-glow')
 }
 
 function placeBanner(teamColor){
@@ -107,7 +109,14 @@ function placeBanner(teamColor){
                   klass === 'maelstrom' ? 'yellow' : 
                   klass === 'shaper' ? 'green' : 
                   'red'
+    let steps = color === 'green' ? 2 : 1
     return `
-        <img class="claimedBanner ${teamColor}" src='./img/${color}Flag.png' />
+        <img class="claimedBanner ${teamColor}" src='./img/${color}Flag.png' data-color=${steps} />
+    `
+}
+function displayDamageRecieved(pain){
+    const wound_colour = pain < 0 ? 'redPain' : 'noPain'
+    return `
+        <div class="displayDamageRecieved ${wound_colour}">${pain}</div>
     `
 }

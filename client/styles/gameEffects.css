@@ -435,6 +435,7 @@
   background-color: goldenrod;
   -webkit-box-shadow: 0 0 1vh 2vh goldenrod;
           box-shadow: 0 0 1vh 2vh goldenrod;
+  position: relative;
   -webkit-animation: alternate infinite 4s coinPulse;
           animation: alternate infinite 4s coinPulse;
 }

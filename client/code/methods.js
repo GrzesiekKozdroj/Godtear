@@ -51,7 +51,7 @@ const m =
             thiz.append(placeBanner(teamColor))
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
-            moveLadder(thiz.children('.claimedBanner'),$(thiz.children('.claimedBanner')).data('color')  )
+            moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
         }
     },
     blackjaw:
@@ -78,7 +78,7 @@ const m =
                 aim: [4],
                 hurt: [5],
                 unused: true,
-                m: function () { }
+                m: "fieryAxe"
             },
             fireball:
             {
@@ -2004,12 +2004,29 @@ const m =
 
 const _m = {
     kick: function (origin, target) {
-        const baim = Number(origin.attr('data-baim'))
-        const bdamage = Number(origin.attr('data-bdamage'))
+        const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         if($target.hasClass(`blackTeam`) && $target.hasClass('unitModel') )
             socket.emit('rolloSkill',{ aim: (6 + baim), hurt:(6 + bdamage), socksMethod:"kick", hex, row })
+    },
+    fieryAxe:function(origin, target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) && $target.hasClass('unitModel') ) {
+            let modelCount = $(`.hex_${hex}_in_row_${row}`).children('.smallCard').length
+            let doneTimes = 0
+        const interval = setInterval(function() { 
+            if (doneTimes < modelCount) { 
+                doneTimes++
+                const multiAction = doneTimes === 1 ? false : true
+                socket.emit('rolloSkill',{ aim: (40 + baim), hurt:(50 + bdamage), socksMethod:"fieryAxe", hex, row, multiAction })
+            } else { 
+                clearInterval(interval)
+            }
+        }, 1000);
+        }
     }
 }
 const m_ = {
@@ -2024,7 +2041,22 @@ const m_ = {
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
-                        moveLadder(target,2)
+                        moveLadder(target,1 + target.data('stepsgiven'))
+        }
+    },
+    fieryAxe: function (o){
+        const { aim, hurt, hex, row, key, multiAction } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+            console.log('attacked!')
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken(multiAction)
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,1 + target.data('stepsgiven'))
         }
     }
 }

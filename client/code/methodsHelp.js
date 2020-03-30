@@ -12,12 +12,14 @@ const if_moved_end_it  = () => {
             $(this).attr('data-speedleft', left)
         })
 }
-const add_action_taken = () => {
-    const actionstaken = Number($('.selectedModel').attr('data-actionstaken'))
-    const name  = $('.selectedModel').attr('data-name')
-    $(`[data-name=${name}]`).each(function(){
-        $(this).attr('data-actionstaken', (Number(actionstaken) + 1) )
-    })
+const add_action_taken = (shallI = true) => {
+    if(shallI){
+        const actionstaken = Number($('.selectedModel').attr('data-actionstaken'))
+        const name  = $('.selectedModel').attr('data-name')
+        $(`[data-name=${name}]`).each(function(){
+            $(this).attr('data-actionstaken', (Number(actionstaken) + 1) )
+        })
+    }
 }
 const check_actions_count = () => Number( $('.selectedModel').attr('data-actionstaken') ) < 2 ? true : false
 
@@ -62,11 +64,31 @@ const checkIfStillAlive = (target) => {
     }
 }
 const moveLadder = (target,steps) => {
-    console.log(target, steps)
-    const origin = $('#coin').parent('.ladderBlock').data('block')
-    const coinDirection = mySide ==='left' ? -1 : 1
-    const netto = target.hasClass('whiteTeam') && target.hasClass('smallCard') ? -1 : 1
-    $('#coin').detach().appendTo(`.block${origin+(steps * coinDirection * netto)}`)
-
+    const origin = $($('#coin').parent('.ladderBlock')).data('block')
+    let direction = 0
+    if( target.hasClass('blackTeam') && target.hasClass('smallCard') ){
+        direction = mySide === 'left' ? -1 : 1
+    } else if( target.hasClass('whiteTeam') && target.hasClass('smallCard') ){
+        direction = mySide === 'left' ? 1 : -1
+    } else if ( target.hasClass('claimedBanner') && target.hasClass('whiteTeam') ) {
+        direction = mySide === 'left' ? -1 : 1
+    } else if( target.hasClass('claimedBanner') && target.hasClass('blackTeam') ){
+        direction = mySide === 'left' ? 1 : -1
+    }        
+    const calculus = ((.79*window.innerWidth / 17.23 ) - .01*window.innerWidth)
+    const destination = $(`.block${ origin + steps * direction }`)
+    $('#coin').animate({
+        left: (steps * direction * calculus)
+    }, 950 * steps, ()=>{
+        $('#coin').removeAttr('style').finish().detach().appendTo(destination)
+    })
+}
+const extractBoons_Blights = (origin) => {
+    const baim = Number(origin.attr('data-baim'))
+    const bdamage = Number(origin.attr('data-bdamage'))
+    const bspeed = Number(origin.attr('data-bspeed'))
+    const bdodge = Number(origin.attr('data-bdodge'))
+    const bprotection = Number(origin.attr('data-bprotection'))
+    return { baim, bdamage, bspeed, bdodge, bprotection }
 }
 

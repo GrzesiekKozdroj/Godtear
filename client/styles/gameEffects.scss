@@ -98,6 +98,7 @@ $selectedByEnemyGlow:rgba(238, 65, 53, 1);
     border-radius: 50%;
     background-color: goldenrod;
     box-shadow: 0 0 1vh 2vh rgba(218, 165, 32, 1);
+    position:relative;
     animation: alternate infinite 4s coinPulse;
 }
 [data-glow="redGlow"]{

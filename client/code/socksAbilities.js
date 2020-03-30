@@ -1,4 +1,6 @@
 //{aim: [], hurt:[], hex, row, socksMethod}
-socket.on("kick", p=>{
-    m_[p.socksMethod](p)
-})
+for(let key in m_){
+    socket.on(key, p=>{
+        m_[p.socksMethod](p)
+    })
+}

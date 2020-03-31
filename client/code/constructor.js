@@ -51,7 +51,7 @@ const Blackjaw = new Character("maelstrom","champion","Blackjaw",1,'./img/Blackj
 const UnburntReavers = new Character("maelstrom","unit","UnburntReavers",5,"./img/Blackjaw.png",[3,2],3,2,1,m.unburntReavers,'./img/classMaelstrom.png',0);
 
 const Titus = new Character("maelstrom","champion","Titus",1,'./img/Titus.png',[2,2],3,3,5,m.Titus,'./img/classMaelstrom.png',1);
-const GlorySeekers = new Character("maelstrom","unit","GlorySeekers",5,"./img/Titus.png",2,3,3,1,m.glorySeekers,'./img/classMaelstrom.png',1);
+const GlorySeekers = new Character("maelstrom","unit","GlorySeekers",5,"./img/Titus.png",[2,2],3,3,1,m.glorySeekers,'./img/classMaelstrom.png',1);
 
 const Grimgut = new Character("maelstrom","champion","Grimgut",1,'./img/Grimgut.png',[1,1],2,2,9,m.grimgut,'./img/classMaelstrom.png',2);
 const Retchlings = new Character("maelstrom","unit","Retchlings",5,"./img/Grimgut.png",[0,1],2,1,1,m.retchlings,'./img/classMaelstrom.png',2);

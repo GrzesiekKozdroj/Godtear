@@ -33,7 +33,6 @@ function displayDeploymentInfo(scenario) {
     `
 }
 
-
 function displayAnimatedNews (message){
     const flashNews = msg => ` <h3 class='flashNews hinge-in-from-middle-y mui-enter'> ${msg} </h3> ` 
     $('#gameScreen').append( flashNews(message) )
@@ -118,5 +117,23 @@ function displayDamageRecieved(pain){
     const wound_colour = pain < 0 ? 'redPain' : 'noPain'
     return `
         <div class="displayDamageRecieved ${wound_colour}">${pain}</div>
+    `
+}
+
+const multi_choice_info_panel = ({name, count, color, klass, ability}) => {
+    //"greenFlame" || "redFlame" || "yellowFlame" || "blueFlame"
+    let partixles = [] 
+    for(let y = 0; y < 50; y++) 
+        partixles = [...partixles, `<div class="particle ${color}"></div>`]
+    let alreadyChosen = $(`.${klass}`).length
+    $('#multi_choice_info_panel').remove()
+    return `
+        <div id="multi_choice_info_panel">
+            <p class="multi_choice abil_name" data-callback="${ability}">${name}</p>
+            <p class="multi_choice abil_count" data-callback="${ability}">${alreadyChosen} / ${count}</p>
+            <div  class="fire">
+                ${partixles.join('')}
+            </div>
+        </div>
     `
 }

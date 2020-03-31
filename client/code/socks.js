@@ -71,3 +71,9 @@ socket.on('HH',p=>{
 socket.on('sC',p=>{
     m.universal.claim( $(`.hex_${p.hex}_in_row_${p.row}`), 'blackTeam' )
 })
+socket.on('markedMan',p=>{
+    const {hex, row, multiInfo} = p
+    const {name, count, color, klass, ability} = multiInfo
+    const target = $($(`.hex_${hex}_in_row_${row}`).children('.unitModel').not(`.${klass}`)[0])
+    placeMark({hex, row, multiInfo, target})
+})

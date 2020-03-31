@@ -9,6 +9,7 @@
             return champDATA.join(' ')
         }
 function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index},phase,side) {
+    console.log(speed)
     const skillList = (skills)=>{
         let skillzList = []
         for(let s in skills[phase]){
@@ -42,7 +43,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
                 `<div class='roster_abil_number'>${hurt}</div>` : '';
 
         return `
-                <div class="card_list_item_${phase} ${skill.legendaryUsed === false ? 'legendary' : ''}" ${makedata(skill)}>
+                <div class="card_list_item_${phase} ${skill.legendaryUsed === false ?'legendary':''} ${side}" ${makedata(skill)}>
 
                     <div class="img_${icon}_${phase}"></div>
 
@@ -96,7 +97,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
                 <div id='card_speed_${phase}' class='game_card-attrib offset-speed'>
                     <div class='top'></div>
-                    <p >${phase==='white'?speed[0]:speed[2]}</p>
+                    <p >${phase==='white'?speed[0]:speed[1]}</p>
                     <div class='bottom'></div>
                 </div> 
 
@@ -180,7 +181,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
                 `<div class='roster_abil_number'>${hurt}</div>` : '';
 
         return `
-                <div class="card_list_item_${phase} ${skill.legendaryUsed === false ? 'legendary' : ''}" ${makedata(skill)} >
+                <div class="card_list_item_${phase} ${skill.legendaryUsed ===false?'legendary':''} ${side}" ${makedata(skill)} >
 
                     <div class="roster_abil_stats">
 
@@ -232,7 +233,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
                 </div>
                 <div id='card_speed_${phase}' class='game_card-attrib offset-speed ${side}'>
                     <div class='top'></div>
-                    <p >${phase==='white' ? speed[0] : speed[2]}</p>
+                    <p >${phase==='white' ? speed[0] : speed[1]}</p>
                     <div class='bottom'></div>
                 </div> 
                 <div id='card_health_${phase}' class='game_card-attrib offset-health ${side}'>
@@ -282,7 +283,7 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
         }
         skillList = skillx.util.legendary ? [...skillList, skillx.util.legendary] : skillList;
         return skillList.map(skill=>`
-                <div class='smallCard img_${skill.icon}_${phase}' ${makedata(skill)} >
+                <div class='smallCard img_${skill.icon}_${phase} ${side}' ${makedata(skill)} >
                     <div class='top'></div>
                     <p>${/*skill.name*/''}</p>
                     <div class='bottom'></div>
@@ -315,7 +316,7 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
         <div class='smallCard speed ${phase}'>
             <div class='top'></div>
-            <p >${phase==='white' ? speed[0] : speed[2]}</p>
+            <p >${phase==='white' ? speed[0] : speed[1]}</p>
             <div class='bottom'></div>
         </div>
 

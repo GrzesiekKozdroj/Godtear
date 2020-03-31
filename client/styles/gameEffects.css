@@ -715,4 +715,417 @@
 .resurrecting {
   animation: reverse 1s deathGrip;
 }
+
+#multi_choice_info_panel {
+  position: relative;
+  z-index: 4;
+  width: 0;
+  height: 0;
+  bottom: 45.88vh;
+  left: -55vw;
+}
+
+.fire {
+  pointer-events: none;
+  font-size: 24px;
+  filter: blur(0.02em);
+  -webkit-filter: blur(0.02em);
+  margin: 3em auto 0 auto;
+  position: relative;
+  width: 10em;
+  height: 12em;
+  -webkit-transform: scale(0.55, 0.3);
+          transform: scale(0.55, 0.3);
+  -webkit-transform-origin: bottom;
+          transform-origin: bottom;
+}
+
+.particle {
+  -webkit-animation: rise 1s ease-in infinite;
+          animation: rise 1s ease-in infinite;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  width: 5em;
+  height: 5em;
+}
+
+.particle:nth-of-type(1) {
+  -webkit-animation-delay: 0.89596s;
+          animation-delay: 0.89596s;
+  left: calc((100% - 5em) * 0);
+}
+
+.particle:nth-of-type(2) {
+  -webkit-animation-delay: 0.4563s;
+          animation-delay: 0.4563s;
+  left: calc((100% - 5em) * 0.02);
+}
+
+.particle:nth-of-type(3) {
+  -webkit-animation-delay: 0.81098s;
+          animation-delay: 0.81098s;
+  left: calc((100% - 5em) * 0.04);
+}
+
+.particle:nth-of-type(4) {
+  -webkit-animation-delay: 0.99856s;
+          animation-delay: 0.99856s;
+  left: calc((100% - 5em) * 0.06);
+}
+
+.particle:nth-of-type(5) {
+  -webkit-animation-delay: 0.32525s;
+          animation-delay: 0.32525s;
+  left: calc((100% - 5em) * 0.08);
+}
+
+.particle:nth-of-type(6) {
+  -webkit-animation-delay: 0.75279s;
+          animation-delay: 0.75279s;
+  left: calc((100% - 5em) * 0.1);
+}
+
+.particle:nth-of-type(7) {
+  -webkit-animation-delay: 0.43239s;
+          animation-delay: 0.43239s;
+  left: calc((100% - 5em) * 0.12);
+}
+
+.particle:nth-of-type(8) {
+  -webkit-animation-delay: 0.38947s;
+          animation-delay: 0.38947s;
+  left: calc((100% - 5em) * 0.14);
+}
+
+.particle:nth-of-type(9) {
+  -webkit-animation-delay: 0.54137s;
+          animation-delay: 0.54137s;
+  left: calc((100% - 5em) * 0.16);
+}
+
+.particle:nth-of-type(10) {
+  -webkit-animation-delay: 0.15827s;
+          animation-delay: 0.15827s;
+  left: calc((100% - 5em) * 0.18);
+}
+
+.particle:nth-of-type(11) {
+  -webkit-animation-delay: 0.39638s;
+          animation-delay: 0.39638s;
+  left: calc((100% - 5em) * 0.2);
+}
+
+.particle:nth-of-type(12) {
+  -webkit-animation-delay: 0.69893s;
+          animation-delay: 0.69893s;
+  left: calc((100% - 5em) * 0.22);
+}
+
+.particle:nth-of-type(13) {
+  -webkit-animation-delay: 0.39511s;
+          animation-delay: 0.39511s;
+  left: calc((100% - 5em) * 0.24);
+}
+
+.particle:nth-of-type(14) {
+  -webkit-animation-delay: 0.38915s;
+          animation-delay: 0.38915s;
+  left: calc((100% - 5em) * 0.26);
+}
+
+.particle:nth-of-type(15) {
+  -webkit-animation-delay: 0.88348s;
+          animation-delay: 0.88348s;
+  left: calc((100% - 5em) * 0.28);
+}
+
+.particle:nth-of-type(16) {
+  -webkit-animation-delay: 0.77337s;
+          animation-delay: 0.77337s;
+  left: calc((100% - 5em) * 0.3);
+}
+
+.particle:nth-of-type(17) {
+  -webkit-animation-delay: 0.21603s;
+          animation-delay: 0.21603s;
+  left: calc((100% - 5em) * 0.32);
+}
+
+.particle:nth-of-type(18) {
+  -webkit-animation-delay: 0.49545s;
+          animation-delay: 0.49545s;
+  left: calc((100% - 5em) * 0.34);
+}
+
+.particle:nth-of-type(19) {
+  -webkit-animation-delay: 0.36287s;
+          animation-delay: 0.36287s;
+  left: calc((100% - 5em) * 0.36);
+}
+
+.particle:nth-of-type(20) {
+  -webkit-animation-delay: 0.46337s;
+          animation-delay: 0.46337s;
+  left: calc((100% - 5em) * 0.38);
+}
+
+.particle:nth-of-type(21) {
+  -webkit-animation-delay: 0.46171s;
+          animation-delay: 0.46171s;
+  left: calc((100% - 5em) * 0.4);
+}
+
+.particle:nth-of-type(22) {
+  -webkit-animation-delay: 0.28625s;
+          animation-delay: 0.28625s;
+  left: calc((100% - 5em) * 0.42);
+}
+
+.particle:nth-of-type(23) {
+  -webkit-animation-delay: 0.23239s;
+          animation-delay: 0.23239s;
+  left: calc((100% - 5em) * 0.44);
+}
+
+.particle:nth-of-type(24) {
+  -webkit-animation-delay: 0.15621s;
+          animation-delay: 0.15621s;
+  left: calc((100% - 5em) * 0.46);
+}
+
+.particle:nth-of-type(25) {
+  -webkit-animation-delay: 0.5912s;
+          animation-delay: 0.5912s;
+  left: calc((100% - 5em) * 0.48);
+}
+
+.particle:nth-of-type(26) {
+  -webkit-animation-delay: 0.84056s;
+          animation-delay: 0.84056s;
+  left: calc((100% - 5em) * 0.5);
+}
+
+.particle:nth-of-type(27) {
+  -webkit-animation-delay: 0.08497s;
+          animation-delay: 0.08497s;
+  left: calc((100% - 5em) * 0.52);
+}
+
+.particle:nth-of-type(28) {
+  -webkit-animation-delay: 0.57452s;
+          animation-delay: 0.57452s;
+  left: calc((100% - 5em) * 0.54);
+}
+
+.particle:nth-of-type(29) {
+  -webkit-animation-delay: 0.77586s;
+          animation-delay: 0.77586s;
+  left: calc((100% - 5em) * 0.56);
+}
+
+.particle:nth-of-type(30) {
+  -webkit-animation-delay: 0.58405s;
+          animation-delay: 0.58405s;
+  left: calc((100% - 5em) * 0.58);
+}
+
+.particle:nth-of-type(31) {
+  -webkit-animation-delay: 0.7892s;
+          animation-delay: 0.7892s;
+  left: calc((100% - 5em) * 0.6);
+}
+
+.particle:nth-of-type(32) {
+  -webkit-animation-delay: 0.52067s;
+          animation-delay: 0.52067s;
+  left: calc((100% - 5em) * 0.62);
+}
+
+.particle:nth-of-type(33) {
+  -webkit-animation-delay: 0.0361s;
+          animation-delay: 0.0361s;
+  left: calc((100% - 5em) * 0.64);
+}
+
+.particle:nth-of-type(34) {
+  -webkit-animation-delay: 0.10172s;
+          animation-delay: 0.10172s;
+  left: calc((100% - 5em) * 0.66);
+}
+
+.particle:nth-of-type(35) {
+  -webkit-animation-delay: 0.25279s;
+          animation-delay: 0.25279s;
+  left: calc((100% - 5em) * 0.68);
+}
+
+.particle:nth-of-type(36) {
+  -webkit-animation-delay: 0.04906s;
+          animation-delay: 0.04906s;
+  left: calc((100% - 5em) * 0.7);
+}
+
+.particle:nth-of-type(37) {
+  -webkit-animation-delay: 0.23761s;
+          animation-delay: 0.23761s;
+  left: calc((100% - 5em) * 0.72);
+}
+
+.particle:nth-of-type(38) {
+  -webkit-animation-delay: 0.05899s;
+          animation-delay: 0.05899s;
+  left: calc((100% - 5em) * 0.74);
+}
+
+.particle:nth-of-type(39) {
+  -webkit-animation-delay: 0.15472s;
+          animation-delay: 0.15472s;
+  left: calc((100% - 5em) * 0.76);
+}
+
+.particle:nth-of-type(40) {
+  -webkit-animation-delay: 0.67812s;
+          animation-delay: 0.67812s;
+  left: calc((100% - 5em) * 0.78);
+}
+
+.particle:nth-of-type(41) {
+  -webkit-animation-delay: 0.61477s;
+          animation-delay: 0.61477s;
+  left: calc((100% - 5em) * 0.8);
+}
+
+.particle:nth-of-type(42) {
+  -webkit-animation-delay: 0.84356s;
+          animation-delay: 0.84356s;
+  left: calc((100% - 5em) * 0.82);
+}
+
+.particle:nth-of-type(43) {
+  -webkit-animation-delay: 0.35013s;
+          animation-delay: 0.35013s;
+  left: calc((100% - 5em) * 0.84);
+}
+
+.particle:nth-of-type(44) {
+  -webkit-animation-delay: 0.55038s;
+          animation-delay: 0.55038s;
+  left: calc((100% - 5em) * 0.86);
+}
+
+.particle:nth-of-type(45) {
+  -webkit-animation-delay: 0.06461s;
+          animation-delay: 0.06461s;
+  left: calc((100% - 5em) * 0.88);
+}
+
+.particle:nth-of-type(46) {
+  -webkit-animation-delay: 0.68482s;
+          animation-delay: 0.68482s;
+  left: calc((100% - 5em) * 0.9);
+}
+
+.particle:nth-of-type(47) {
+  -webkit-animation-delay: 0.29543s;
+          animation-delay: 0.29543s;
+  left: calc((100% - 5em) * 0.92);
+}
+
+.particle:nth-of-type(48) {
+  -webkit-animation-delay: 0.14327s;
+          animation-delay: 0.14327s;
+  left: calc((100% - 5em) * 0.94);
+}
+
+.particle:nth-of-type(49) {
+  -webkit-animation-delay: 0.41709s;
+          animation-delay: 0.41709s;
+  left: calc((100% - 5em) * 0.96);
+}
+
+.particle:nth-of-type(50) {
+  -webkit-animation-delay: 0.95453s;
+          animation-delay: 0.95453s;
+  left: calc((100% - 5em) * 0.98);
+}
+
+.blueFlame {
+  background-image: radial-gradient(rgba(77, 247, 219, 0.363) 20%, rgba(3, 33, 117, 0.274) 70%);
+}
+
+.yellowFlame {
+  background-image: radial-gradient(rgba(247, 216, 77, 0.363) 20%, rgba(117, 106, 3, 0.274) 70%);
+}
+
+.greenFlame {
+  background-image: radial-gradient(rgba(125, 247, 77, 0.363) 20%, rgba(3, 117, 13, 0.274) 70%);
+}
+
+.redFlame {
+  background-image: radial-gradient(rgba(247, 77, 77, 0.363) 20%, rgba(117, 20, 3, 0.274) 70%);
+}
+
+@-webkit-keyframes rise {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(0) scale(1);
+            transform: translateY(0) scale(1);
+  }
+  25% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(-10em) scale(0);
+            transform: translateY(-10em) scale(0);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(0) scale(1);
+            transform: translateY(0) scale(1);
+  }
+  25% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(-10em) scale(0);
+            transform: translateY(-10em) scale(0);
+  }
+}
+
+.multi_choice {
+  pointer-events: all;
+  width: 20vw;
+  text-align: center;
+  margin: auto auto;
+  position: relative;
+  z-index: 6;
+  height: 0;
+  font-family: Shojumaru;
+  color: white;
+  text-shadow: 0 0 1vh black, 0 0 .5vh black, 0 0 .75vh black, 0 0 1.25vh black, 0 0 .25vh black;
+  font-size: 86%;
+  left: 10vh;
+}
+
+.multi_choice.abil_name {
+  top: 82vh;
+}
+
+.multi_choice.abil_count {
+  top: 89vh;
+  font-size: 90%;
+}
+
+.destined_for_DOOM img {
+  -webkit-filter: invert(90%) saturate(8);
+          filter: invert(90%) saturate(8);
+}
 /*# sourceMappingURL=gameEffects.css.map */

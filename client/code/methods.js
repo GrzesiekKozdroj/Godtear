@@ -52,6 +52,7 @@ const m =
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
+            displayAnimatedNews(`${ $('.selectedModel').data('name') }<br/>claims objective`)
         }
     },
     blackjaw:
@@ -89,7 +90,7 @@ const m =
                 aim: [5],
                 hurt: [4],
                 unused: true,
-                m: function () { }
+                m: "fireball"
             }
         },
         white:
@@ -101,7 +102,7 @@ const m =
                 icon: cogs,
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "hootfoot"
             },
             evilEye:
             {
@@ -111,7 +112,7 @@ const m =
                 dist: 2,
                 aim: [6],
                 unused: true,
-                m: function () { }
+                m: "evilEye"
             }
         },
         util:
@@ -126,7 +127,7 @@ const m =
                 hurt: [5],
                 unused: true,
                 legendaryUsed: false,
-                m: function () { }
+                m: "fireStorm"
             },
             wildfire:
             {
@@ -2017,18 +2018,97 @@ const _m = {
         if($target.hasClass(`blackTeam`) && $target.hasClass('unitModel') ) {
             let modelCount = $(`.hex_${hex}_in_row_${row}`).children('.smallCard').length
             let doneTimes = 0
-        const interval = setInterval(function() { 
+        const interval = setInterval(function() {
             if (doneTimes < modelCount) { 
                 doneTimes++
-                const multiAction = doneTimes === 1 ? false : true
-                socket.emit('rolloSkill',{ aim: (40 + baim), hurt:(50 + bdamage), socksMethod:"fieryAxe", hex, row, multiAction })
+                const multiAction = doneTimes === 1 ? true : false
+                socket.emit('rolloSkill',{ aim: (4 + baim), hurt:(5 + bdamage), socksMethod:"fieryAxe", hex, row, multiAction })
             } else { 
                 clearInterval(interval)
             }
         }, 1000);
         }
+    },
+    fireball:function(origin, target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) && $target.hasClass('unitModel') ) {
+            let modelCount = $(`.hex_${hex}_in_row_${row}`).children('.smallCard').length
+            let doneTimes = 0
+        const interval = setInterval(function() {
+            if (doneTimes < modelCount) { 
+                doneTimes++
+                const multiAction = doneTimes === 1 ? false : true
+                socket.emit('rolloSkill',{ aim: (4 + baim), hurt:(5 + bdamage), socksMethod:"fieryAxe", hex, row, multiAction })
+            } else { 
+                clearInterval(interval)
+            }
+        }, 1000);
+        }
+    },
+    hootfoot:function(origin,target){
+        const {hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass('whiteTeam'))
+            socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"hootfoot", hex, row})
+    },
+    evilEye:function(origin,target){
+        const {hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.unitModel.blackTeam')[0])
+        if($target){
+            socket.emit('rolloSkill',{aim:6, hurt:0, socksMethod:"evilEye", hex, row})
+        }
+    },
+    fireStorm:function(origin,taget){
+        const {hex, row } = taget
+        const target = $($(`.hex_${hex}_in_row_${row}`).children('.unitModel.blackTeam').not('.destined_for_DOOM')[0])
+        const doomed = $('.destined_for_DOOM')
+        const allAviable = $($('.hexagon[data-glow]').children(`.${opoSide}.unitModel`))
+        const key = doomed.length
+        const multiInfo = {
+            name:"Fire Storm",
+            count:allAviable.length,
+            color:"redFlame",
+            klass:"destined_for_DOOM",
+            ability:"fireStorm"
+        }
+        if( target.hasClass('blackTeam') && (doomed.length < 5 || doomed.length < allAviable.length) ) 
+            {
+                placeMark({hex, row, multiInfo, target, key})
+                socket.emit('markedMan',{hex, row, multiInfo})
+            } else displayAnimatedNews ("target enemy<br/>units")
+        if( doomed.length + 1 === 5 || doomed.length + 1 === allAviable.length ) 
+        {
+            const { baim, bdamage } = extractBoons_Blights(origin)
+            let doneTimes = 0
+            const interval = setInterval(function() {
+                const multiAction = doneTimes === 0 ? false : true
+                if (doneTimes <= key) {
+                    const {hex, row} = $(`[data-DOOMqueue="${doneTimes}"]`).parent('.hexagon').data()
+                    socket.emit('rolloSkill',
+                        { 
+                            aim: (6 + baim), 
+                            hurt:(5 + bdamage), 
+                            socksMethod:"firestorm", 
+                            hex, row, multiAction
+                        }
+                    )
+                    setBoons_Blights($('.selectedModel'),{baim:0,bdamage:0})
+                    $(`[data-DOOMqueue="${doneTimes}"]`).removeAttr('data-DOOMqueue')
+                } else { 
+                    clearInterval(interval)
+                }
+                doneTimes++
+            }, 1100);
+        }
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*                                                                                                                */
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const m_ = {
     kick: function (o) {
         const { aim, hurt, hex, row, key } = o
@@ -2042,12 +2122,15 @@ const m_ = {
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target,1 + target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
         }
+        current_ability_method = null
     },
     fieryAxe: function (o){
         const { aim, hurt, hex, row, key, multiAction } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
-            console.log('attacked!')
         if(targets.length){
             const target = $(targets[0])
             if_moved_end_it()
@@ -2057,6 +2140,72 @@ const m_ = {
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target,1 + target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews ('no damage!')
+            else displayAnimatedNews ('missed!')
         }
+        current_ability_method = null
+    },
+    fireball:function(o){
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken(multiAction)
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,1 + target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews ('no damage!')
+            else displayAnimatedNews ('missed')
+        }
+        current_ability_method = null
+    },
+    hootfoot:function(o){
+        const { hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        const target = $(targets[0])
+        setBoons_Blights(target,{bspeed:Number(target.attr('data-bspeed'))+1})
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        displayAnimatedNews(`${target.data('name')}<br/>+1 speed`)
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    evilEye:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        const target = $(targets[0])
+        if( onHit(aim, target) ){
+            displayAnimatedNews(`${target.data('name')}<br/>-1 protection`)
+            setBoons_Blights(target,{bprotection:Number(target.attr('data-bprotection'))-1})
+        } else 
+            displayAnimatedNews('missed!')
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    firestorm:function(o){
+        const { aim, hurt, hex, row, key, multiAction } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel.destined_for_DOOM`)
+        if(targets.length){
+            const target = $(targets[0])
+            target.removeClass('destined_for_DOOM')
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken(multiAction)
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,1 + target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews ('no damage!')
+            else displayAnimatedNews ('missed')
+        } 
+        if( !$(`.destined_for_DOOM`).length ) $('#multi_choice_info_panel').remove()
+        current_ability_method = null
     }
 }

@@ -56,22 +56,19 @@ function gameCard (name, roster, color) {
 }
 function makeGameBoard(o,coin){
     buildRosters(o,coin)
-        //      rightCard(Rhodri,'white','right')
         $('#gameScreen').empty().css('background-color','darkgreen')
-        //      leftCard(Lorsann,'black','left')
             .append(`
                 <div id='game_card' class='${opoSide} cardsContainer ${opoSide}_card'>
-                    ${/*miniCard(Morrigan,'black','left')*/ deeploy(opoRoster,opoSide)}
+                    ${deeploy(opoRoster,opoSide)}
                 </div>
                 <div id='board'>
                     <div id="app"></div>
                     <div id="ladder"></div>
                 </div>
                 <div id='game_card' class='${mySide} cardsContainer ${mySide}_card'>
-                    ${/*miniCard(Rhodri,'white','right')*/ deeploy(roster,mySide)}
+                    ${deeploy(roster,mySide)}
                 </div>
             `)
-    //createGameEvents()
     beginBattle()
 
     QUICK_DEEPLOY()
@@ -97,6 +94,7 @@ function deeploy (group,side){
                 let dataModel = `data-${D}=${data}`
                 champDATA = [...champDATA,dataModel]
             }
+            champDATA = [...champDATA,`data-side=${side}`]
             return champDATA.join(' ')
         }
         let teamColor = side === mySide ? 'whiteTeam' : 'blackTeam'
@@ -171,5 +169,7 @@ function QUICK_DEEPLOY() {
         roow += heex <15 ? 0 : 1;
         heex += heex < 15 ? 1 : -14;
     })
+
+    setTimeout(()=>$("#gameScreen").append(multi_choice_info_panel()),1000)
     socket.emit('beginBattle')
 }

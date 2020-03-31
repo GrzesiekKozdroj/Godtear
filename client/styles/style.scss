@@ -222,6 +222,7 @@ $colorFillHex: transparent;
     width:100vw;
     @include instaFlex;
     padding:0;
+    overflow: hidden;
 }
 body{
     display:flex;
@@ -456,6 +457,7 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     position:absolute;
     z-index:23;
     margin:auto auto;
+    text-align: center;
 }
 
 .whiteTeam{
@@ -500,6 +502,8 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     top: 0%;
     transform:scale(120%);
 }
+.claimedBanner.whiteTeam{box-shadow: 0 0 1vh white inset, 0 0 1.2vh white inset,  0 0 1vh white , 0 0 1.2vh white ;}
+.claimedBanner.blackTeam{box-shadow: 0 0 1vh black inset, 0 0 1.2vh black inset,  0 0 1vh black , 0 0 1.2vh black ;}
 .displayDamageRecieved{
     position: relative;
     top: -138%;

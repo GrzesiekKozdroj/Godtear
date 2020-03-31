@@ -170,6 +170,7 @@
       -ms-flex-align: center;
           align-items: center;
   padding: 0;
+  overflow: hidden;
 }
 
 body {
@@ -1911,6 +1912,7 @@ body {
   position: absolute;
   z-index: 23;
   margin: auto auto;
+  text-align: center;
 }
 
 .whiteTeam {
@@ -1985,6 +1987,16 @@ body {
   top: 0%;
   -webkit-transform: scale(120%);
           transform: scale(120%);
+}
+
+.claimedBanner.whiteTeam {
+  -webkit-box-shadow: 0 0 1vh white inset, 0 0 1.2vh white inset,  0 0 1vh white , 0 0 1.2vh white;
+          box-shadow: 0 0 1vh white inset, 0 0 1.2vh white inset,  0 0 1vh white , 0 0 1.2vh white;
+}
+
+.claimedBanner.blackTeam {
+  -webkit-box-shadow: 0 0 1vh black inset, 0 0 1.2vh black inset,  0 0 1vh black , 0 0 1.2vh black;
+          box-shadow: 0 0 1vh black inset, 0 0 1.2vh black inset,  0 0 1vh black , 0 0 1.2vh black;
 }
 
 .displayDamageRecieved {

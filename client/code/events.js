@@ -2,7 +2,7 @@ let bob = false;
 let zIndex = 1;
 
 $((e) => {
-   // $('#gameScreen').empty().append(firstStitch());
+  //  $('#gameScreen').empty().append(firstStitch());
 
     socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
 
@@ -152,7 +152,6 @@ $('body').on('click','.gameTip', function(e){
         .addClass('hinge-out-from-bottom mui-leave mui-leave-active')
     setTimeout(()=> $('.gameTip').remove(),750)
 })
-
 $('body').on('click','.hexagon[data-glow="yellowGlow"]', function(e){
     e.preventDefault()
     e.stopPropagation()
@@ -184,12 +183,20 @@ $('body').on('click','.hexagon',function(e){
 
     if( 
         $(this).children('.smallCard.whiteTeam').length && 
-        myTurn && phase !== 'deployment' 
-       ){
+        myTurn && phase !== 'deployment' && 
+        current_ability_method === null
+    ){
         //add "selectedModel" class for easier model picking
         addSelectedColor(thiz)
         //add movement aura
         displayMovementAura(thiz)
+    } else if (
+        !$(this).children('.smallCard').length &&
+        !$(this).attr('[data-glow]') && 
+        !$(this).hasClass('objectiveGlow')
+    ) {
+        current_ability_method === null
+        $('[data-glow]').removeAttr('data-glow')
     }
 
     //display appropriate card if needed
@@ -197,7 +204,6 @@ $('body').on('click','.hexagon',function(e){
         if   ( thiz.hasClass(opoSide) && checkCardContents(opoSide, thiz) ) animateCart(opoSide, thiz)
         else if( thiz.hasClass(mySide) && checkCardContents(mySide, thiz) ) animateCart(mySide, thiz)
 })
-
 
 for(let K in m){
     const character = m[K]
@@ -208,7 +214,7 @@ for(let K in m){
             $('body').on('click',`[data-name="${SKILL.name}"]`,function(){
                 const data = $(this).data()
                 let modo = ['white','black'].includes(P) ? P === phase ? true : false : true
-                    if(modo && myTurn && mySide){
+                    if(modo && myTurn && $(this).hasClass(mySide) ){
                         let glow = data.icon === "skull" ? 'redGlow' :
                                    data.icon === "cogs"  ? 'blueGlow' :
                                    data.icon === "self"  ? 'legedaryGlow' :
@@ -221,11 +227,14 @@ for(let K in m){
         }
     }
 }
-
 $('body').on('click','[data-glow]', function (){
     const thiz_target = $(this).data()
     const thiz_origin = $('.selectedModel')
     current_ability_method(thiz_origin, thiz_target)
+})
+
+$('body').on('click','.multi_choice', function(){
+    console.log( $(this).data() )
 })
 
 

@@ -152,3 +152,113 @@ $selectedByEnemyGlow:rgba(238, 65, 53, 1);
   .resurrecting{
       animation: reverse 1s deathGrip;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //---------------------FIRE---------------------------
+$dur: 1s;
+$blur: 0.02em;
+$fireRad: 3em;
+$parts: 50;
+$partSize: 5em;
+#multi_choice_info_panel{
+    position: relative;
+    z-index: 4;
+    width: 0;
+    height: 0;
+    bottom: 45.88vh;
+    left: -55vw;
+}
+.fire {
+    pointer-events: none;
+	font-size: 24px;
+	filter: blur($blur);
+	-webkit-filter: blur($blur);
+	margin: 3em auto 0 auto;
+	position: relative;
+	width: 10em;
+    height: 12em;
+    transform: scale(.55,.3);
+    transform-origin:bottom;
+}
+.particle {
+	animation: rise $dur ease-in infinite;
+	border-radius: 50%;
+	mix-blend-mode: screen;
+	opacity: 0;
+	position: absolute;
+	bottom: 0;
+	width: $partSize;
+	height: $partSize;
+	// spread particles out in time and x-position to get desired effect
+	@for $p from 1 through $parts {
+		&:nth-of-type(#{$p}) {
+			animation-delay: $dur * random();
+			left: calc((100% - #{$partSize}) * #{($p - 1)/$parts});
+		}
+	}
+}
+.blueFlame{background-image: radial-gradient(rgba(77, 247, 219, 0.363) 20%, rgba(3, 33, 117, 0.274) 70%);}
+.yellowFlame{background-image: radial-gradient(rgba(247, 216, 77, 0.363) 20%, rgba(117, 106, 3, 0.274) 70%);}
+.greenFlame{background-image: radial-gradient(rgba(125, 247, 77, 0.363) 20%, rgba(3, 117, 13, 0.274) 70%);}
+.redFlame{background-image: radial-gradient(rgba(247, 77, 77, 0.363) 20%, rgba(117, 20, 3, 0.274) 70%);}
+@keyframes rise {
+	from {
+		opacity: 0;
+		transform: translateY(0) scale(1);
+	}
+	25% {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-10em) scale(0);
+	}
+}
+.multi_choice{
+    pointer-events: all;
+    width: 20vw;
+    text-align: center;
+    margin: auto auto;
+    position: relative;
+    z-index: 6;
+    height: 0;
+    font-family: Shojumaru;
+    color: white;
+    text-shadow: 0 0 1vh black, 0 0 .5vh black, 0 0 .75vh black, 0 0 1.25vh black, 0 0 .25vh black;
+    font-size: 86%;
+    left:10vh;
+}
+.multi_choice.abil_name{
+    top:82vh;
+}
+.multi_choice.abil_count{
+    top:89vh;
+    font-size:90%;
+}
+.destined_for_DOOM{
+    img{
+        filter: invert(90%) saturate(8);
+    }
+}

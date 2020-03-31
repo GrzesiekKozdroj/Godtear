@@ -103,6 +103,7 @@ io.sockets.on('connection', (socket) => {
     socket.on('modelMoving',p=>loopRoom({socket:socket,pack:p,stringEmit:'mM',callback:o=>o,twoWay:false}))
     socket.on('HH',p=>loopRoom({socket:socket,pack:p,stringEmit:'HH',callback:o=>o,twoWay:false}))
     socket.on('stakeClaim',p=>loopRoom({socket:socket,pack:p,stringEmit:'sC',callback:o=>o,twoWay:false}))
+    socket.on('markedMan',p=>loopRoom({socket:socket,pack:p,stringEmit:'markedMan',callback:o=>o,twoWay:false}))
     socket.on('rolloSkill',p=>loopRoom({socket:socket,pack:p,stringEmit:p.socksMethod,callback:roll,twoWay:true}))
 
 
@@ -154,7 +155,7 @@ const DICE = () => {
     return r < 3 ? 0 : r < 6 ? 1 : 2
 }
 function roll(o){
-    const { aim, hurt, socksMethod, hex, row } = o
+    const { aim, hurt, socksMethod, hex, row, multiAction } = o
     let aim_rolls = [];
     let hurt_rolls = [];
     let die_hurt = 0;
@@ -169,6 +170,6 @@ function roll(o){
         hurt_rolls = [ ...hurt_rolls, DICE()];
         die_hurt++
     } while (die_hurt < hurt)
-
-    return {aim:aim_rolls, hurt:hurt_rolls, socksMethod, hex, row}
+    const vvdf = {aim:aim_rolls, hurt:hurt_rolls, socksMethod, hex, row, multiAction}
+    return vvdf
 }

@@ -12,8 +12,8 @@ const if_moved_end_it  = () => {
             $(this).attr('data-speedleft', left)
         })
 }
-const add_action_taken = (shallI = true) => {
-    if(shallI){
+const add_action_taken = (shallI = false) => {
+    if(!shallI){
         const actionstaken = Number($('.selectedModel').attr('data-actionstaken'))
         const name  = $('.selectedModel').attr('data-name')
         $(`[data-name=${name}]`).each(function(){
@@ -26,15 +26,15 @@ const check_actions_count = () => Number( $('.selectedModel').attr('data-actions
 const onHit = (aim, target) => { 
     const target_dodge = Number(target.attr('data-dodge')) + Number(target.attr('data-bdodge'))
     const aim_total = aim.reduce((a,b)=>a+b,0)
-    $('.selectedModel').attr('data-baim', 0)
-    target.attr('data-bdodge',0)
+    setBoons_Blights($('.selectedModel'),{baim:0})
+    setBoons_Blights(target,{bdodge:0})
     return aim_total >= target_dodge
 }
 const doDamage = (hurt, target) => {
     const target_protection = Number(target.attr('data-protection')) + Number(target.attr('data-bprotection'))
     const hurt_total = hurt.reduce((a,b)=>a+b,0)
-    $('.selectedModel').attr('data-bdamage', 0)
-    target.attr('data-bprotection',0)
+    setBoons_Blights($('.selectedModel'),{bdamage:0})
+    setBoons_Blights(target,{bprotection:0})
         if(hurt_total > target_protection){
             let target_health = target.attr('data-healthleft')
             let pain = target_health - (hurt_total - target_protection)
@@ -90,5 +90,19 @@ const extractBoons_Blights = (origin) => {
     const bdodge = Number(origin.attr('data-bdodge'))
     const bprotection = Number(origin.attr('data-bprotection'))
     return { baim, bdamage, bspeed, bdodge, bprotection }
+}
+const setBoons_Blights = (origin,props)=>{
+    for(let key in props){
+        let boon_blight = props[key]
+        $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"]`)
+            .each(function(){
+                $(this).attr(`data-${key}`,boon_blight) 
+            })
+    }
+}
+const placeMark = ({hex, row, multiInfo, target, key}) => {
+    target.addClass('destined_for_DOOM')
+    target.attr('data-DOOMqueue', key)
+    $('#gameScreen').append(multi_choice_info_panel(multiInfo))
 }
 

@@ -65,7 +65,7 @@ const checkIfStillAlive = (target) => {
 }
 const moveLadder = (target,steps) => {
     const origin = $($('#coin').parent('.ladderBlock')).data('block')
-    let direction = 0
+    let direction = 0 //1   <--> 22
     if( target.hasClass('blackTeam') && target.hasClass('smallCard') ){
         direction = mySide === 'left' ? -1 : 1
     } else if( target.hasClass('whiteTeam') && target.hasClass('smallCard') ){
@@ -79,7 +79,7 @@ const moveLadder = (target,steps) => {
     const destination = $(`.block${ origin + steps * direction }`)
     $('#coin').animate({
         left: (steps * direction * calculus)
-    }, 950 * steps, ()=>{
+    }, 500, ()=>{
         $('#coin').removeAttr('style').finish().detach().appendTo(destination)
     })
 }
@@ -91,12 +91,14 @@ const extractBoons_Blights = (origin) => {
     const bprotection = Number(origin.attr('data-bprotection'))
     return { baim, bdamage, bspeed, bdodge, bprotection }
 }
-const setBoons_Blights = (origin,props)=>{
+const setBoons_Blights = (origin,props)=>{//$(), {baim:-1}
     for(let key in props){
         let boon_blight = props[key]
         $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"]`)
             .each(function(){
-                $(this).attr(`data-${key}`,boon_blight) 
+                let attribute =Number( $(this).attr(`data-${key}`) )
+                if( attribute < 1 && attribute > -1 )
+                    $(this).attr(`data-${key}`,boon_blight) 
             })
     }
 }
@@ -105,4 +107,86 @@ const placeMark = ({hex, row, multiInfo, target, key}) => {
     target.attr('data-DOOMqueue', key)
     $('#gameScreen').append(multi_choice_info_panel(multiInfo))
 }
+const tellMeDistance = (origin,target) => {
+    //origin and taget expect two objects: {hex, row}
+    const oh = origin.hex, or = origin.row
+    const th = target.hex, tr = target.row
+    const hexes = Math.abs(oh - th)
+    const rows  = Math.abs(tr - or)
+    return hexes < rows ? Math.floor(hexes / 2) + rows : Math.floor(rows / 2) + hexes
+}
+const highlightDirectPaths = ( { origin, distance, colour } ) => {
+    //origin:$(this).parent('.hexagon).data(), number, i.e. 'greenGlow
+    const h = origin.hex
+    const r = origin.row
 
+    if(distance === 2){
+        $(`.hex_${h - 2}_in_row_${r}`).attr('data-glow',colour+1)
+        $(`.hex_${h + 2}_in_row_${r}`).attr('data-glow',colour+4)
+    } else if (distance === 3){
+        $(`.hex_${h - 3}_in_row_${r}`).attr('data-glow',colour+1)
+        $(`.hex_${h + 3}_in_row_${r}`).attr('data-glow',colour+4)
+    }
+    $(`.hex_${h - 1}_in_row_${r}`).attr('data-glow',colour+1)
+    $(`.hex_${h + 1}_in_row_${r}`).attr('data-glow',colour+4)
+    $(`.hex_${h + 1}_in_row_${r - 2}`).attr('data-glow',colour+3)
+    $(`.hex_${h - 1}_in_row_${r - 2}`).attr('data-glow',colour+2)
+    $(`.hex_${h - 1}_in_row_${r + 2}`).attr('data-glow',colour+6)
+    $(`.hex_${h + 1}_in_row_${r + 2}`).attr('data-glow',colour+5)
+    if(r%2!==0)
+    {
+        if (distance === 3 ){
+            $(`.hex_${h + 1}_in_row_${r + 3}`).attr('data-glow',colour+5)
+            $(`.hex_${h - 2}_in_row_${r + 3}`).attr('data-glow',colour+6)
+            $(`.hex_${h - 2}_in_row_${r - 3}`).attr('data-glow',colour+2)
+            $(`.hex_${h + 1}_in_row_${r - 3}`).attr('data-glow',colour+3)
+        }
+        $(`.hex_${h}_in_row_${r - 1}`).attr('data-glow',colour+3)
+        $(`.hex_${h - 1}_in_row_${r - 1}`).attr('data-glow',colour+2)
+        $(`.hex_${h - 1}_in_row_${r + 1}`).attr('data-glow',colour+6)
+        $(`.hex_${h}_in_row_${r + 1}`).attr('data-glow',colour+5)
+    }
+    if(r%2===0)
+    {
+        if(distance === 3 ){
+            $(`.hex_${h + 2}_in_row_${r + 3}`).attr('data-glow',colour+5)
+            $(`.hex_${h - 1}_in_row_${r + 3}`).attr('data-glow',colour+6)
+            $(`.hex_${h - 1}_in_row_${r - 3}`).attr('data-glow',colour+2)
+            $(`.hex_${h + 2}_in_row_${r - 3}`).attr('data-glow',colour+3)
+        }
+        $(`.hex_${h}_in_row_${r - 1}`).attr('data-glow',colour+2)
+        $(`.hex_${h}_in_row_${r + 1}`).attr('data-glow',colour+6)
+        $(`.hex_${h + 1}_in_row_${r - 1}`).attr('data-glow',colour+3)
+        $(`.hex_${h + 1}_in_row_${r + 1}`).attr('data-glow',colour+5)
+    }
+    $(`[data-glow^="${colour}"`).children('.top').attr('data-glow',colour)
+    $(`[data-glow^="${colour}"`).children('.bottom').attr('data-glow',colour)
+}
+
+function extraMover(methodName,thiz){
+    if($('.'+methodName+'_selected').length && myTurn){
+        const h = thiz.data('hex')
+        const r = thiz.data('row')
+        const klass = { 
+            h:$('.'+methodName+'_selected').parent('.hexagon').data('hex'), 
+            r:$('.'+methodName+'_selected').parent('.hexagon').data('row')
+        }
+        if(h !== klass.h || r !==klass.r){
+            makeAnim( $('.'+methodName+'_selected'), thiz, _m_[methodName] )
+            socket.emit('forceMove',{h:h, r:r, klass, callback:methodName})
+        }
+    }
+}
+function leave_only_selected_path(chosenGlows){
+    $('[data-glow].hexagon').each(function(){
+        if( $(this).attr('data-glow') === chosenGlows ){
+            $(this).attr('data-glow','straitPaths')
+            $(this).children('.top').attr('data-glow','straitPaths')
+            $(this).children('.bottom').attr('data-glow','straitPaths')
+        } else {
+            $(this).removeAttr('data-glow')
+            $(this).children('.top').removeAttr('data-glow')
+            $(this).children('.bottom').removeAttr('data-glow')
+        }
+    })
+}

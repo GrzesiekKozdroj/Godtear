@@ -78,14 +78,12 @@ function reduceSpeedLeft(){
     speed[p]-=1
     $('.selectedModel').attr('data-speedleft', speed)
 }
-function highlightHexes ({colour, dist}){
-
+function highlightHexes ({colour, dist},thiz = $('.selectedModel')){
     $('[data-glow]').removeAttr('data-glow')
     const applyClass = ({colour, row, hex}) => {
         if(row % 2 === 1) oddRowPosition(row, hex, colour) 
         else if (row % 2 === 0) evenRowPosition(row, hex, colour)
     }
-    const thiz = $('.selectedModel')
     const {hex, row} = thiz.parent('.hexagon').data()
     for(let m = 0; m < dist; m++ ){
         if(m === 0) 
@@ -133,6 +131,32 @@ const multi_choice_info_panel = ({name, count, color, klass, ability}) => {
             <p class="multi_choice abil_count" data-callback="${ability}">${alreadyChosen} / ${count}</p>
             <div  class="fire">
                 ${partixles.join('')}
+            </div>
+        </div>
+    `
+}
+const challengeOptions = (origin, target, socksMethod,curseCount,message) => {
+//$('.selectedModel'), {hex=Number(), row=Number(), sockMethod:"string"}
+    const { hex, row } = target
+    const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+    const { baim, bdamage, bspeed, bdodge, bprotection } = extractBoons_Blights( $target )
+    const decideOrnament = (bb) => bb > 0 ? 'booned' : bb < 0 ? 'blighted' : ''
+    return `
+        <div class="titusChallenge">
+            <div 
+                class="titusChallengeCrest" 
+                data-hex=${hex} 
+                data-row=${row} 
+                data-socksmethod=${socksMethod} 
+                data-cursecount=${curseCount}
+              >
+                <div class="message">${message}</div>
+                <div class="boon-blight challengeTitus walk ${decideOrnament(bspeed)}" data-abil="bwalk">  </div>
+                <div class="boon-blight challengeTitus dodge ${decideOrnament(bdodge)}" data-abil="bdodge">  </div>
+                <div class="boon-blight challengeTitus protection ${decideOrnament(bprotection)}" data-abil="bprotection">  </div>
+                <div class="boon-blight challengeTitus aim ${decideOrnament(bdamage)}" data-abil="baim">  </div>
+                <div class="boon-blight confirm " > done </div>
+                <div class="boon-blight challengeTitus damage ${decideOrnament(baim)}" data-abil="bdamage">  </div>
             </div>
         </div>
     `

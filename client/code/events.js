@@ -180,7 +180,6 @@ $('body').on('click','.objectiveGlow[data-glow="claimColor"]', function(){
 $('body').on('click','.hexagon',function(e){
     e.preventDefault()
     const thiz = $( $(this).children('.smallCard')[0] )
-
     if( 
         $(this).children('.smallCard.whiteTeam').length && 
         myTurn && phase !== 'deployment' && 
@@ -192,7 +191,7 @@ $('body').on('click','.hexagon',function(e){
         displayMovementAura(thiz)
     } else if (
         !$(this).children('.smallCard').length &&
-        !$(this).attr('[data-glow]') && 
+        !$(this).attr('data-glow') && 
         !$(this).hasClass('objectiveGlow')
     ) {
         current_ability_method === null
@@ -217,11 +216,13 @@ for(let K in m){
                     if(modo && myTurn && $(this).hasClass(mySide) ){
                         let glow = data.icon === "skull" ? 'redGlow' :
                                    data.icon === "cogs"  ? 'blueGlow' :
-                                   data.icon === "self"  ? 'legedaryGlow' :
+                                   data.icon === "self"  ? 'legendaryGlow' :
                                    data.icon === "star" ? 'greenGlow' : ''
                         highlightHexes({colour:glow,dist:data.dist})
                         socket.emit('HH', {color:glow,dist:data.dist})
                         current_ability_method = _m[data.m]
+                        if( !data.dist )//call ability upon itself
+                            current_ability_method($('.selectedModel'), $('.selectedModel').parent('.hexagon').data())
                     }
             })
         }
@@ -230,15 +231,52 @@ for(let K in m){
 $('body').on('click','[data-glow]', function (){
     const thiz_target = $(this).data()
     const thiz_origin = $('.selectedModel')
-    current_ability_method(thiz_origin, thiz_target)
+    if(current_ability_method)
+        current_ability_method(thiz_origin, thiz_target)
 })
 
 $('body').on('click','.multi_choice', function(){
-    console.log( $(this).data() )
+    console.log( $(this).data() )//what are you for??
 })
-
-
-
+$('body').on('click','.boon-blight.challengeTitus',function(e){
+    e.preventDefault()
+    const numberOfChoices = Number($(this).parent('.titusChallengeCrest').data('cursecount') ) 
+    if( !$(this).hasClass('blighted') )
+        if($('.selected').length < numberOfChoices)
+            $(this).toggleClass('selected') 
+        else $(this).removeClass('selected')
+})
+$('body').on('click','.boon-blight.confirm', function(e){
+    e.preventDefault()
+    const { socksmethod, hex, row, cursecount } = $(this).parent().data()
+    const cursePackage = $('.boon-blight.selected').map(function(){return $(this).data('abil')}).get()
+    socket.emit('rolloSkill',{ aim: 0, hurt: 0, socksMethod:socksmethod, hex, row, cursePackage })
+    $('.titusChallenge').remove()
+})
+$('body').on('click','[data-glow].hexagon',function(e){
+    e.preventDefault()
+    const thiz = $(this)
+    extraMover('illKillYouAll',thiz)
+    extraMover('outflank',thiz)
+})
+$('body').on('click','.illKillYouAll',function(e){
+    e.preventDefault()
+    $('.illKillYouAll_selected').removeClass('illKillYouAll_selected')
+    $(this).addClass('illKillYouAll_selected')
+    highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
+})
+$('body').on('click','.outflank',function(e){
+    e.preventDefault()
+    $('.outflank_selected').removeClass('outflank_selected')
+    $(this).addClass('outflank_selected')
+})
+$('body').on('click','[data-glow^="straitPaths"].hexagon',function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    const chosenGlows = $(this).attr('data-glow')
+    leave_only_selected_path(chosenGlows)
+    //it also needs to move into selected hex and send the instruction to opposing player, with deletion of hexes as well as movement
+})
  
 
 

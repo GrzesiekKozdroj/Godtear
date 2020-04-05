@@ -243,8 +243,8 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
     color:white;
     text-shadow: 0 0 .3vh black, 0 0 .2vh black, 0 0 .4vh black, 0 0 .5vh black, 0 0 .7vh black, 0 0 .6vh black;
 }
-#card_speed_white{background-image: url('../../img/walk_white.svg'); @include white_attrib;}
-#card_speed_black{background-image: url('../../img/walk_black.svg'); @include black_attrib;}
+#card_speed_white{background-image: url('../../img/walk_white.png'); @include white_attrib;}
+#card_speed_black{background-image: url('../../img/walk_black.png'); @include black_attrib;}
 
 #card_dodge_white{background-image: url('../../img/dodge_white.svg'); @include white_attrib;}
 #card_dodge_black{background-image: url('../../img/dodge_black.svg'); @include black_attrib;}

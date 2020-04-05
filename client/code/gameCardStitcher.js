@@ -9,7 +9,6 @@
             return champDATA.join(' ')
         }
 function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index},phase,side) {
-    console.log(speed)
     const skillList = (skills)=>{
         let skillzList = []
         for(let s in skills[phase]){

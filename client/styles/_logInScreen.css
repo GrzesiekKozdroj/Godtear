@@ -328,13 +328,13 @@
 }
 
 #card_speed_white {
-  background-image: url("../../img/walk_white.svg");
+  background-image: url("../../img/walk_white.png");
   color: black;
   text-shadow: 0 0 .3vh white, 0 0 .2vh white, 0 0 .4vh white, 0 0 .5vh white, 0 0 .7vh white, 0 0 .6vh white;
 }
 
 #card_speed_black {
-  background-image: url("../../img/walk_black.svg");
+  background-image: url("../../img/walk_black.png");
   color: white;
   text-shadow: 0 0 .3vh black, 0 0 .2vh black, 0 0 .4vh black, 0 0 .5vh black, 0 0 .7vh black, 0 0 .6vh black;
 }

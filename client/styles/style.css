@@ -91,6 +91,12 @@
   background-position: center bottom;
 }
 
+.hexagon p {
+  font-family: "Shojumaru", cursive;
+  text-shadow: 0 0 1px orangered, 0 0 2px orangered, 0 0 3px orangered;
+  font-size: 67%;
+}
+
 #app {
   height: 86vh;
   width: 79vw;
@@ -2019,5 +2025,116 @@ body {
 .displayDamageRecieved.noPain {
   color: #a89c9c;
   text-shadow: 0 0 1vh #121218, 0 0 0.5vh #121218, 0 0 0.75vh #121218, 0 0 1.5vh #121218;
+}
+
+.titusChallenge {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: rgba(0, 0, 0, 0.911);
+  text-shadow: 0 0 1vh darkorange, 0 0 1.5vh darkorange, 0 0 2vh darkorange, 0 0 2.5vh darkorange, 0 0 3vh darkorange;
+  font-size: 120%;
+  font-weight: 900;
+  position: absolute;
+  z-index: 10;
+  margin: auto auto;
+  text-align: center;
+}
+
+.titusChallenge .titusChallengeCrest {
+  width: 40vw;
+  height: 60vh;
+  font-family: "Shojumaru", cursive;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.titusChallenge .titusChallengeCrest .boon-blight {
+  width: 10vw;
+  height: 10vw;
+  border: 1vh solid rgba(109, 83, 17, 0.829);
+  background-size: cover;
+  background-position: center;
+  margin: 1vw;
+}
+
+.titusChallenge .titusChallengeCrest .walk {
+  background-image: url("../img/walk_white.png");
+  border-radius: 50% 50% 30% 50%;
+}
+
+.titusChallenge .titusChallengeCrest .dodge {
+  background-image: url("../img/dodge_black.svg");
+  border-radius: 50% 50% 30% 30%;
+}
+
+.titusChallenge .titusChallengeCrest .protection {
+  background-image: url("../img/shield_black.svg");
+  border-radius: 50% 50% 50% 30%;
+}
+
+.titusChallenge .titusChallengeCrest .aim {
+  background-image: url("../img/aim_black.png");
+  border-radius: 50% 30% 50% 50%;
+}
+
+.titusChallenge .titusChallengeCrest .damage {
+  background-image: url("../img/hurt_black.png");
+  border-radius: 30% 50% 50% 50%;
+}
+
+.titusChallenge .titusChallengeCrest .confirm {
+  background-color: goldenrod;
+  border-radius: 30% 30% 50% 50%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-family: "Shojumaru", cursive;
+  font-size: 119%;
+}
+
+.titusChallenge .titusChallengeCrest .booned {
+  -webkit-box-shadow: inset 0 0 3vh #ffd30f, 0 0 3vh #ffd30f, inset 0 0 4vh #ffd30f, 0 0 4vh #ffd30f;
+          box-shadow: inset 0 0 3vh #ffd30f, 0 0 3vh #ffd30f, inset 0 0 4vh #ffd30f, 0 0 4vh #ffd30f;
+}
+
+.titusChallenge .titusChallengeCrest .blighted {
+  opacity: .38;
+  -webkit-box-shadow: inset 0 0 3vh #0f0201, 0 0 3vh #353232, inset 0 0 4.3vh #222120, 0 0 4.3vh;
+          box-shadow: inset 0 0 3vh #0f0201, 0 0 3vh #353232, inset 0 0 4.3vh #222120, 0 0 4.3vh;
+}
+
+.titusChallenge .titusChallengeCrest .selected {
+  -webkit-box-shadow: inset 0 0 3vh #ff1f0f, 0 0 3vh #ff2b0f, inset 0 0 4.3vh #ff1f0f, 0 0 4.3vh #ff2b0f;
+          box-shadow: inset 0 0 3vh #ff1f0f, 0 0 3vh #ff2b0f, inset 0 0 4.3vh #ff1f0f, 0 0 4.3vh #ff2b0f;
+}
+
+.titusChallenge .titusChallengeCrest .message {
+  width: 100%;
+  font-family: "Shojumaru", cursive;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 /*# sourceMappingURL=style.css.map */

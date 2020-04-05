@@ -119,6 +119,9 @@ $selectedByEnemyGlow:rgba(238, 65, 53, 1);
 [data-glow="claimColor"]{
     @include makeGlow('white', rgb(245, 245, 245), rgb(194, 197, 194), rgb(243, 243, 243), rgb(238, 250, 231))
 }
+[data-glow="straitPaths"], [data-glow="straitPaths1"], [data-glow="straitPaths2"], [data-glow="straitPaths3"], [data-glow="straitPaths4"], [data-glow="straitPaths5"], [data-glow="straitPaths6"]{
+    @include makeGlow('white', rgb(239, 255, 95), rgb(166, 255, 166), rgb(255, 252, 45), rgb(152, 241, 101))
+}
 @keyframes shake {
     0% { transform: translate(1px, 1px) rotate(0deg); }
     10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -151,6 +154,9 @@ $selectedByEnemyGlow:rgba(238, 65, 53, 1);
 
   .resurrecting{
       animation: reverse 1s deathGrip;
+  }
+  .illKillYouAll, .outflank{
+    filter: invert(18%) saturate(141);
   }
 
 

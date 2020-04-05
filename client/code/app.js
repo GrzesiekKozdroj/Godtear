@@ -24,11 +24,13 @@ function beginBattle(){
         $('#app').append(shelf);
 
         for (let h = 1; h < 15; h++) {
+            const tester_paragraph = `<p>${h} | ${r}</p>`
             let hexClass = "hexagon hex_" + h + "_in_row_" + r;
             let hex = `
             <div class="${hexClass}" data-row=${r} data-hex=${h}>
                 <div class="top"></div>
                 <div class="bottom"></div>
+                ${''}
             </div>`;
             $(`.row${r}`).append(hex);
         }
@@ -39,16 +41,18 @@ function beginBattle(){
     `);
     }
 }
-const makeAnim = (that,thiz,callback) => {
+const makeAnim = (that,thiz,callback=false) => {
     let ofsetSize = that.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
     if(thiz)
         that.animate({
             left: thiz.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * window.innerHeight)- that.offset().left,
             top: thiz.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
         }, 420, ()=>{
-            that.removeAttr('style').finish().detach().appendTo(thiz);
-            thiz.removeAttr('data-glow')
-            if(callback)callback(that)
+            that.removeAttr('style').finish().detach().prependTo(thiz);
+            if(callback){
+                callback(that)
+                thiz.removeAttr('data-glow')
+            }
         });
 };//anim
 function gameCard (name, roster, color) {
@@ -169,7 +173,5 @@ function QUICK_DEEPLOY() {
         roow += heex <15 ? 0 : 1;
         heex += heex < 15 ? 1 : -14;
     })
-
-    setTimeout(()=>$("#gameScreen").append(multi_choice_info_panel()),1000)
     socket.emit('beginBattle')
 }

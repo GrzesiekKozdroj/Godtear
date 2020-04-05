@@ -105,6 +105,7 @@ io.sockets.on('connection', (socket) => {
     socket.on('stakeClaim',p=>loopRoom({socket:socket,pack:p,stringEmit:'sC',callback:o=>o,twoWay:false}))
     socket.on('markedMan',p=>loopRoom({socket:socket,pack:p,stringEmit:'markedMan',callback:o=>o,twoWay:false}))
     socket.on('rolloSkill',p=>loopRoom({socket:socket,pack:p,stringEmit:p.socksMethod,callback:roll,twoWay:true}))
+    socket.on('forceMove',p=>loopRoom({socket:socket,pack:p,stringEmit:'fM',callback:o=>o,twoWay:false}))
 
 
     //FOR QUICK SETUP GAME DEV PURPOSES ONLY:
@@ -155,7 +156,7 @@ const DICE = () => {
     return r < 3 ? 0 : r < 6 ? 1 : 2
 }
 function roll(o){
-    const { aim, hurt, socksMethod, hex, row, multiAction } = o
+    const { aim, hurt, socksMethod, hex, row, multiAction, cursePackage,  curseCount } = o
     let aim_rolls = [];
     let hurt_rolls = [];
     let die_hurt = 0;
@@ -170,6 +171,6 @@ function roll(o){
         hurt_rolls = [ ...hurt_rolls, DICE()];
         die_hurt++
     } while (die_hurt < hurt)
-    const vvdf = {aim:aim_rolls, hurt:hurt_rolls, socksMethod, hex, row, multiAction}
+    const vvdf = { aim:aim_rolls, hurt:hurt_rolls, socksMethod, hex, row, multiAction, cursePackage, curseCount }
     return vvdf
 }

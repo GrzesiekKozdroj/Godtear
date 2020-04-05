@@ -146,7 +146,7 @@ const m =
                 name: "War Cry",
                 desc: aimBoon,
                 icon: self,
-                m: function () { }
+                m: "warCry"
             },
             cleavingStrike:
             {
@@ -154,7 +154,8 @@ const m =
                 icon: skull,
                 dist: 1,
                 aim: [3, 4, 5],
-                hurt: [4, 5, 6]
+                hurt: [4, 5, 6],
+                m:"cleavingStrike"
             }
         },
         white:
@@ -162,9 +163,10 @@ const m =
             rush:
             {
                 name: "Rush",
-                desc: "Choose a hex. Each Unburnt Reaver in that hex may move up to 2 hexes.",
+                desc: "Each Unburnt Reaver in this hex may move up to 2 hexes.",
+                dist:2,
                 icon: self,
-                m: function () { }
+                m: "rush"
             },
             intimidation:
             {
@@ -173,7 +175,7 @@ const m =
                 icon:skull,
                 dist: 1,
                 aim: [2, 4, 6],
-                m: function () { }
+                m: "intimidation"
             }
         },
         util:
@@ -199,7 +201,7 @@ const m =
                 aim: [5],
                 hurt: [6],
                 unused: true,
-                m: function () { }
+                m: "piercingStrike"
             },
             sweepingSlash:
             {
@@ -210,7 +212,7 @@ const m =
                 aim: [6],
                 hurt: [5],
                 unused: true,
-                m: function () { }
+                m: "sweepingSlash"
             }
         },
         white:
@@ -222,7 +224,7 @@ const m =
                 icon: star,
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "challenge"
             },
             illKillYouAll:
             {
@@ -232,7 +234,7 @@ const m =
                 dist: 3,
                 aim: [6],
                 unused: true,
-                m: function () { }
+                m: "illKillYouAll"
             }
         },
         util:
@@ -244,7 +246,7 @@ const m =
                 icon: self,
                 unused: true,
                 legendaryUsed: false,
-                m: function () { }
+                m: "pathOfDestruction"
             },
             superiority:
             {
@@ -265,7 +267,7 @@ const m =
                 dist: 1,
                 aim: [5, 5, 6],
                 unused: true,
-                m: function () { }
+                m: "hack"
             },
             surroundPound:
             {
@@ -276,7 +278,7 @@ const m =
                 aim: [4, 4, 4],
                 hurt: [3, 4, 5],
                 unused: true,
-                m: function () { }
+                m: "surroundPound"
             }
         },
         white:
@@ -288,7 +290,7 @@ const m =
                 icon: cogs,
                 dist: 1,
                 unused: true,
-                m: function () { }
+                m: "roarOfBattle"
             },
             outflank:
             {
@@ -298,7 +300,7 @@ const m =
                 dist: 1,
                 aim: [6, 6, 6],
                 unused: true,
-                m: function () { }
+                m: "outflank"
             }
         },
         util:
@@ -321,7 +323,7 @@ const m =
                 desc: "Grimgut moves up to 3 hexes in a straight line.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "roll"
             },
             newSpew:
             {
@@ -2102,14 +2104,207 @@ const _m = {
                 doneTimes++
             }, 1100);
         }
-    }
+    },
+    warCry:function(origin,target){
+        const {hex, row} = target
+        const $target = origin
+        const { baim } = extractBoons_Blights( $(`[data-name="${$target.data('name')}"]`) )
+        if( baim < 1 )
+            socket.emit('rolloSkill',{aim:0, hurt: 0, socksMethod:"warCry", hex, row})
+    },
+    cleavingStrike: function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [3, 4, 5][unitSize]
+        const hurt = [4, 5, 6][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"cleavingStrike", hex, row })
+    },
+    rush:function(origin,target){
+        const { hex, row } = target
+        let destination = $(`.hex_${hex}_in_row_${row}`)
+        if( 
+            destination.children(`[data-name="${$('.selectedModel').data('name')}"]`).length ||
+            !destination.children('.smallCard').length &&
+            !destination.hasClass('objectiveGlow') 
+        )
+            socket.emit('rolloSkill',{hex,row,socksMethod:"rush",hurt:0,aim:0})
+    },
+    intimidation:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [2, 4, 6][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:0, socksMethod:"intimidation", hex, row })
+    },
+    piercingStrike:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) ) {
+            let modelCount = $(`.hex_${hex}_in_row_${row}`).children('.smallCard').length
+            let doneTimes = 0
+        const interval = setInterval(function() {
+            if (doneTimes < modelCount && doneTimes < 2) { 
+                doneTimes++
+                const multiAction = doneTimes === 1 ? false : true
+                socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(6 + bdamage), socksMethod:"piercingStrike", hex, row, multiAction })
+            } else { 
+                clearInterval(interval)
+            }
+        }, 1000);
+        }
+    },
+    sweepingSlash:function(origin,taget){
+        const {hex, row } = taget
+        const target = $($(`.hex_${hex}_in_row_${row}`).children('.blackTeam').not('.destined_for_DOOM')[0])
+        const doomed = $('.destined_for_DOOM')
+        const allAviable = $($('.hexagon[data-glow]').children(`.${opoSide}.smallCard.blackTeam`))
+        const key = doomed.length
+        const multiInfo = {
+            name:"Sweeping Slash",
+            count:allAviable.length,
+            color:"redFlame",
+            klass:"destined_for_DOOM",
+            ability:"sweepingSlash"
+        }
+        if( 
+            target.hasClass('blackTeam') && (doomed.length < 2 || doomed.length < allAviable.length) &&
+            !$(`.hex_${hex}_in_row_${row}`).children('.destined_for_DOOM').length
+        ) 
+            {
+                placeMark({hex, row, multiInfo, target, key})
+                socket.emit('markedMan',{hex, row, multiInfo})
+            }
+        if( doomed.length + 1 === 2 || doomed.length + 1 === allAviable.length ) 
+        {
+            const { baim, bdamage } = extractBoons_Blights(origin)
+            let doneTimes = 0
+            const interval = setInterval(function() {
+                const multiAction = doneTimes === 0 ? false : true
+                if (doneTimes <= key) {
+                    const {hex, row} = $(`[data-DOOMqueue="${doneTimes}"]`).parent('.hexagon').data() ?
+                    $(`[data-DOOMqueue="${doneTimes}"]`).parent('.hexagon').data() : clearInterval(interval)
+                    socket.emit('rolloSkill',
+                        { 
+                            aim: (6 + baim), 
+                            hurt:(5 + bdamage), 
+                            socksMethod:"sweepingSlash", 
+                            hex, row, multiAction
+                        }
+                    )
+                    setBoons_Blights($('.selectedModel'),{baim:0,bdamage:0})
+                    $(`[data-DOOMqueue="${doneTimes}"]`).removeAttr('data-DOOMqueue')
+                } else { 
+                    clearInterval(interval)
+                }
+                doneTimes++
+            }, 1100);
+        }
+    },
+    challenge:function(origin,target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) ){
+            $('#gameScreen').append(challengeOptions(origin, target, "challenge",2,`apply two blights to ${$target.data('name')}`))
+            socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"challenge", hex, row, curseCount:1 })
+        } else 
+            displayAnimatedNews('target enemy model')
+        // name: "Challenge",
+        // desc: "An enemy model within range gains two different blights of your choice. Titus gains a blight of your opponents choice.",
+        // icon: star,
+        // dist: 2,
+        // unused: true,
+        // m: "challenge"
+    },
+    illKillYouAll:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) && $target.hasClass('unitModel') )
+            socket.emit('rolloSkill',{ aim: (6 + baim), hurt:0, socksMethod:"illKillYouAll", hex, row })
+    },//NEEDS SKILL USE VALIDATION TO BE FINISHED!!!!!
+    pathOfDestruction:function(origin,target){
+        // desc: "Titus may make a skill action. Then he may move 1 hex. Then he may make another skill action",
+        // icon: self,
+        // unused: true,
+        // legendaryUsed: false,
+        // m: "pathOfDestruction"
+    },
+    hack:function(origin,target){
+            const { baim } = extractBoons_Blights(origin)
+            const { hex, row } = target
+            const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+            const unitSize = origin.siblings('.smallCard').length
+            const aim = [5, 5, 6][unitSize]
+            if($target.hasClass(`blackTeam`) )
+                socket.emit('rolloSkill',{ aim: (aim + baim), hurt:0, socksMethod:"hack", hex, row })
+    },
+    surroundPound:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        let skillBonus = 0
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes ({colour:'blueGlow', dist:1}, $target)
+        $('[data-glow="blueGlow"]')
+            .each(function(){
+                let thix = $(this)
+                if
+                ( 
+                    thix.children('[data-name="GlorySeekers"]').length &&
+                    ( thix.data('hex') !== origin.parent('.hexagon').data('hex') || 
+                    thix.data('row') !== origin.parent('.hexagon').data('row') )
+                )
+                    skillBonus ++
+            })
+        const aim = [4, 4, 4][unitSize] + skillBonus
+        const hurt = [3, 4, 5][unitSize] + skillBonus
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"cleavingStrike", hex, row })
+    },
+    roarOfBattle:function(origin,target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if( $target.hasClass(`champModel`) )
+            socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"roarOfBattle", hex, row })
+        // name: "Roar of Battle",
+        // desc: "One champion within range may move 1 hex.",
+        // icon: cogs,
+        // dist: 1,
+        // unused: true,
+        // m: "roarOfBattle"
+    },
+    outflank:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [6, 6, 6][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim+ baim), hurt:0, socksMethod:"outflank", hex, row })
+    },
+    roll:function(origin,target){
+        //$('.selectedModel'), $('.selectedModel').parent('.hexagon').data()
+        // name: "Roll",
+        // desc: "Grimgut moves up to 3 hexes in a straight line.",
+        // icon: self,
+        // unused: true,
+        // m: "roll"
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"roll"})
+    },
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*                                                                                                                */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const m_ = {
+var m_ = {
     kick: function (o) {
         const { aim, hurt, hex, row, key } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
@@ -2147,6 +2342,7 @@ const m_ = {
         current_ability_method = null
     },
     fireball:function(o){
+        const { aim, hurt, hex, row, key, multiAction } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
             const target = $(targets[0])
@@ -2207,5 +2403,256 @@ const m_ = {
         } 
         if( !$(`.destined_for_DOOM`).length ) $('#multi_choice_info_panel').remove()
         current_ability_method = null
+    },
+    warCry:function(o){
+        const { hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        const target = $(targets[0])
+        setBoons_Blights(target,{ baim: Number(target.attr('data-baim')) + 1 })
+        current_ability_method = null
+        if_moved_end_it()
+        add_action_taken()
+        displayAnimatedNews(`${target.data('name')}<br/>+1 aim`)
+    },
+    cleavingStrike: function (o) {
+        const { aim, hurt, hex, row, key } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    rush:function(o){
+        const { hex, row } = o
+        let friends = $('.selectedModel').siblings('.smallCard')
+        if(!friends.length){
+            current_ability_method = null
+            add_action_taken()
+            $('[data-glow]').removeAttr('data-glow')
+        }
+        if_moved_end_it()
+        displayAnimatedNews(`rushed`)
+        makeAnim( $('.selectedModel.whiteTeam'), $(`.hex_${hex}_in_row_${row}`) )
+        if (friends.length) {
+            $('.selectedModel').removeClass('selectedModel')
+            $(friends[0]).addClass('selectedModel')
+        }
+    },
+    intimidation:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+            {
+                displayAnimatedNews(`${target.data('name')}<br/>-1 dodge`)
+                setBoons_Blights(target,{bdodge:Number(target.attr('data-bdodge'))-1})
+            }
+            else displayAnimatedNews("missed!")
+        }
+        current_ability_method = null
+    },
+    piercingStrike:function(o){
+        const { aim, hurt, hex, row, key, multiAction } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken(multiAction)
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, (target.data('type') === 'unit' ? 1 : 0) + target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews ('no damage!')
+            else displayAnimatedNews ('missed')
+        }
+        current_ability_method = null
+    },
+    sweepingSlash:function(o){
+        const { aim, hurt, hex, row, key, multiAction } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.destined_for_DOOM`)
+        if(targets.length){
+            const target = $(targets[0])
+            target.removeClass('destined_for_DOOM')
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken(multiAction)
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,(target.data('type') === 'unit' ? 1 : 0) + target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews ('no damage!')
+            else displayAnimatedNews ('missed')
+        } 
+        if( !$(`.destined_for_DOOM`).length ) $('#multi_choice_info_panel').remove()
+            current_ability_method = null
+    },
+    challenge:function(o){
+        const { hex, row , cursePackage, curseCount } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        const target = $(targets[0])
+        if( curseCount && !cursePackage && target.hasClass('whiteTeam')){
+            let paybacked = $('.selectedModel').parent('.hexagon').data()
+            $('#gameScreen').append(challengeOptions(target, paybacked, "challenge",1,"apply one blight to Titus"))
+        }else if( !curseCount && cursePackage ){
+            let curses = {}
+            cursePackage.forEach( el=> curses[el]=-1 )
+            setBoons_Blights(target,curses)
+            if_moved_end_it()
+            add_action_taken()
+            current_ability_method = null
+            $('[data-glow]').removeAttr('data-glow')
+            displayAnimatedNews(`${target.data('name')}<br/>-1 ${cursePackage.join(', ')}`)
+        }
+    },
+    illKillYouAll:function(o){
+        const { aim, hex, row } = o
+        const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if( onHit(aim, singleSpecimen) && !$('.illKillYouAll').length ){
+            const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+            const allInRange = $('[data-glow]')
+                        .children(`[data-name="${singleSpecimen.data('name')}"].${team}`)
+            allInRange.addClass('illKillYouAll')
+            $('[data-glow]').removeAttr('data-glow')
+            displayAnimatedNews('Titus can<br/>reposition enemies')
+        } else if( !onHit(aim, singleSpecimen) )
+            displayAnimatedNews('Missed!')
+    },//NEEDS SKILL USE VALIDATION TO BE FINISHED!!!!!
+    pathOfDestruction:function(o){
+        // name: "Path of Destruction",
+        // desc: "Titus may make a skill action. Then he may move 1 hex. Then he may make another skill action",
+        // icon: self,
+        // unused: true,
+        // legendaryUsed: false,
+        // m: "pathOfDestruction"
+    },
+    hack:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                setBoons_Blights(target,{bprotection:-1})
+                displayAnimatedNews (`${target.data('name')} <br/>-1 protection`)
+            }
+            else 
+                displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    surroundPound:function(o){
+        const { aim, hurt, hex, row, key } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            add_action_taken()
+            $('[data-glow]').removeAttr('data-glow')
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    roarOfBattle:function(o){
+        const { hex, row } = o
+        const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.champModel')[0])
+        if_moved_end_it()
+        add_action_taken()
+        if( !$('.illKillYouAll').length ){
+            singleSpecimen.addClass('illKillYouAll')
+            $('[data-glow]').removeAttr('data-glow')
+            displayAnimatedNews('reposition champion')
+        }
+    },
+    outflank:function(o){
+        const { aim, hex, row } = o
+        const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if( onHit(aim, singleSpecimen) && !$('.outflank').length ){
+            const team = singleSpecimen.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
+            $('[data-glow]').removeAttr('data-glow')
+            $('.selectedModel').removeClass('selectedModel')
+            highlightHexes ({colour:'blueGlow', dist:1}, singleSpecimen)
+            $('[data-glow="blueGlow"]')
+                .each(function(){
+                    let thix = $(this)
+                    thix.children(`[data-name="GlorySeekers"].${team}`).addClass('outflank')
+                })
+            displayAnimatedNews('reposition<br/>Glory Seekers')
+        } else if( !onHit(aim, singleSpecimen) )
+            displayAnimatedNews('Missed!')
+        if_moved_end_it()
+        add_action_taken()
+    },
+    roll:function(o){
+        if( !$('[data-glow]').length )
+            highlightDirectPaths({origin: $('.selectedModel').parent('.hexagon').data(), distance:3, colour:'straitPaths'})
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _m_ = {
+    illKillYouAll: () => {
+        $('.illKillYouAll_selected').removeClass('illKillYouAll illKillYouAll_selected outflank')
+        if( !$('.illKillYouAll').length && !$('.outflank').length )
+            {current_ability_method = null
+                console.log('do null')}
+    },
+    outflank: () => {
+        $('.outflank_selected').removeClass('outflank_selected outflank')
+        if( !$('.outflank').length )
+            {
+                $('[data-glow]').removeAttr('data-glow')
+                current_ability_method = null
+            }
     }
 }

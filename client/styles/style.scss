@@ -175,6 +175,11 @@ $colorFillHex: transparent;
 .hexagon {
     @include hexagonomicron(15);
     @include instaFlex;
+    p{
+        font-family: $coinFont2;
+        text-shadow: 0 0 1px orangered, 0 0 2px orangered, 0 0 3px orangered;
+        font-size:67%;
+    }
 }
 #app{
     height:$appHeight;
@@ -522,4 +527,69 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
 .displayDamageRecieved.noPain{
     color:rgb(168, 156, 156);
     text-shadow: 0 0 1vh rgb(18, 18, 24), 0 0 .5vh rgb(18, 18, 24), 0 0 .75vh rgb(18, 18, 24), 0 0 1.5vh rgb(18, 18, 24);
+}
+.titusChallenge{
+    @include instaFlex;
+    color:rgba(0, 0, 0, 0.911);
+    text-shadow: 0 0 1vh darkorange, 0 0 1.5vh darkorange, 0 0 2vh darkorange, 0 0 2.5vh darkorange, 0 0 3vh darkorange;
+    font-size: 120%;
+    font-weight: 900;
+    position:absolute;
+    z-index:10;
+    margin:auto auto;
+    text-align: center;
+    .titusChallengeCrest{
+        width:40vw;
+        height:60vh;
+        font-family: $coinFont2;
+        display:flex;
+        flex-wrap:wrap;
+        .boon-blight{
+            width:10vw;
+            height:10vw;
+            border:1vh solid rgba(109, 83, 17, 0.829);
+            background-size:cover;
+            background-position: center;
+            margin:1vw;
+        }
+        .walk{background-image:url('../img/walk_white.png'); border-radius:50% 50% 30% 50%; }
+        .dodge{background-image:url('../img/dodge_black.svg'); border-radius:50% 50% 30% 30%; }
+        .protection{background-image:url('../img/shield_black.svg'); border-radius:50% 50% 50% 30%; }
+        .aim{background-image:url('../img/aim_black.png'); border-radius:50% 30% 50% 50%; }
+        .damage{background-image:url('../img/hurt_black.png');  border-radius:30% 50% 50% 50%; }
+        .confirm{
+            background-color:goldenrod; 
+            border-radius:30% 30% 50% 50%; 
+            justify-content: center; 
+            display:flex; 
+            align-items: center;
+            font-family: $coinFont2;
+            font-size:119%
+        }
+        .booned{
+            box-shadow: inset 0 0 3vh rgb(255, 211, 15), 
+                        0 0 3vh rgb(255, 211, 15),
+                        inset 0 0 4vh rgb(255, 211, 15), 
+                        0 0 4vh rgb(255, 211, 15);
+        }
+        .blighted{
+            opacity:.38;
+            box-shadow: inset 0 0 3vh rgb(15, 2, 1), 
+                        0 0 3vh rgb(53, 50, 50),  
+                        inset 0 0 4.3vh rgb(34, 33, 32), 0 0 4.3vh 
+        }
+        .selected{
+            box-shadow: inset 0 0 3vh rgb(255, 31, 15), 
+                        0 0 3vh rgb(255, 43, 15),  
+                        inset 0 0 4.3vh rgb(255, 31, 15), 
+                        0 0 4.3vh rgb(255, 43, 15);
+        }
+        .message{
+            width:100%; 
+            font-family:$coinFont2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
 }

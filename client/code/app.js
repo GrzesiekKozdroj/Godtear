@@ -30,7 +30,7 @@ function beginBattle(){
             <div class="${hexClass}" data-row=${r} data-hex=${h}>
                 <div class="top"></div>
                 <div class="bottom"></div>
-                ${''}
+                ${false ? tester_paragraph : ''}
             </div>`;
             $(`.row${r}`).append(hex);
         }
@@ -49,10 +49,10 @@ const makeAnim = (that,thiz,callback=false) => {
             top: thiz.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
         }, 420, ()=>{
             that.removeAttr('style').finish().detach().prependTo(thiz);
-            if(callback){
+            if(callback)
                 callback(that)
+            else
                 thiz.removeAttr('data-glow')
-            }
         });
 };//anim
 function gameCard (name, roster, color) {

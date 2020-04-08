@@ -64,9 +64,13 @@ socket.on('mM',p=>{
     reduceSpeedLeft()
     makeAnim(  $('.selectedModel'), thiz, displayMovementAura )
 })
-socket.on('HH',p=>{
-    $('[data-glow]').removeAttr('data-glow')
-    highlightHexes({colour:p.color,dist:p.dist})
+socket.on('HH',p=>{console.log(p)
+    river = p.river ? p.river : null
+    const h = p.hex ? p.hex : false
+    const r = p.row ? p.row : false
+    const specimen = r && h ? $($(`.hex_${h}_in_row_${r}`).children()[0]) : $('.selectedModel')
+    if(!river)$('[data-glow]').removeAttr('data-glow')
+    highlightHexes({colour:p.color,dist:p.dist}, specimen)
 })
 socket.on('sC',p=>{
     m.universal.claim( $(`.hex_${p.hex}_in_row_${p.row}`), 'blackTeam' )
@@ -77,7 +81,10 @@ socket.on('markedMan',p=>{
     const target = $($(`.hex_${hex}_in_row_${row}`).children('.unitModel').not(`.${klass}`)[0])
     placeMark({hex, row, multiInfo, target})
 })
-socket.on('fM',p=>{
-    const { h, r, klass, callback } = p
-    makeAnim( $($(`.hex_${klass.h}_in_row_${klass.r}`).children('.smallCard')[0]), $(`.hex_${h}_in_row_${r}`), _m_[callback] )
+socket.on('fM',p=>{console.log('server called')
+    const { h, r, klass, callback } = p//this shouldn't just be a small card, has to be smallcard by default though, unless i want to backtrack
+    const children = $(`.hex_${klass.h}_in_row_${klass.r}`).children('.smallCard').length ? 
+            $(`.hex_${klass.h}_in_row_${klass.r}`).children('.smallCard')[0] :
+            $(`.hex_${klass.h}_in_row_${klass.r}`).children('.claimedBanner')[0]
+    makeAnim( $(children), $(`.hex_${h}_in_row_${r}`), _m_[callback] )
 })

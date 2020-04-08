@@ -21,15 +21,17 @@ const m =
     universal:
     {
         walk: function (e, thiz) { 
+            const { type, name } = $('.selectedModel.whiteTeam').data()
             if( 
               (
                 !thiz.hasClass('objectiveGlow') || 
-                $('.selectedModel.whiteTeam').data('type') !== 'unit'
+                type !== 'unit' || 
+                name === 'Froglodytes'
               ) &&
               (
                   !thiz.children(`.smallCard`).length || 
                 ( 
-                  $(`.selectedModel.whiteTeam`).data('name') === thiz.children(`.smallCard.whiteTeam`).first().data('name') && 
+                  name === thiz.children(`.smallCard.whiteTeam`).first().data('name') && 
                   thiz.children(`.smallCard`).length < 3
                 )
               ) && onlyOneStep(thiz) &&  check_actions_count()
@@ -37,9 +39,9 @@ const m =
             {
                 const h = thiz.data('hex')
                 const r = thiz.data('row')
+                socket.emit('modelMoving',{h:h,r:r})
                 reduceSpeedLeft()
                 makeAnim( $('.selectedModel.whiteTeam'), thiz, displayMovementAura )
-                socket.emit('modelMoving',{h:h,r:r})
             }
         },
         recruit: function () { },
@@ -325,14 +327,14 @@ const m =
                 unused: true,
                 m: "roll"
             },
-            newSpew:
-            {
-                name: "New Spew",
-                desc: "Remove all Retchlings from the battlefield. Then they make five recruit actions.",
-                icon: cogs,
-                unused: true,
-                m: function () { }
-            },
+             newSpewBlack:
+             {
+                 name: "New Spew",
+                 desc: "Remove all Retchlings from the battlefield. Then they make five recruit actions.",
+                 icon: cogs,
+                 unused: true,
+                 m: "newSpewBlack"
+             },
             nomNomNom:
             {
                 name: "Nom Nom Nom",
@@ -342,19 +344,19 @@ const m =
                 aim: [7],
                 hurt: [7],
                 unused: true,
-                m: function () { }
+                m: "nomNomNom"
             }
         },
         white:
         {
 
-            newSpew:
+            newSpewWhite:
             {
                 name: "New Spew",
                 desc: "Remove all Retchlings from the battlefield. Then they make five recruit actions.",
                 icon: cogs,
                 unused: true,
-                m: function () { }
+                m: "newSpewWhite"
             },
             fluSpew:
             {
@@ -364,7 +366,7 @@ const m =
                 icon: skull,
                 aim: [4],
                 unused: true,
-                m: function () { }
+                m: "fluSpew"
             },
             gooSpew:
             {
@@ -374,7 +376,7 @@ const m =
                 icon: skull,
                 aim: [4],
                 unused: true,
-                m: function () { }
+                m: "gooSpew"
             }
         },
         util:
@@ -389,7 +391,7 @@ const m =
                 hurt: [7],
                 unused: true,
                 legendaryUsed: false,
-                m: function () { }
+                m: "buffet"
             },
             spew:
             {
@@ -412,19 +414,19 @@ const m =
                 aim: [3, 4, 5],
                 hurt: [5, 5, 5],
                 unused: true,
-                m: function () { }
+                m: "slimed"
             }
         },
         white:
         {
             slipAndSlide:
             {
-                name: "Slip andSlide",
+                name: "Slip and Slide",
                 desc: `${walkBoon}. Two Retchlings may use this skill in the same activation if they are on different hexes.`,
                 icon: cogs,
                 dist: 1,
                 unused: true,
-                m: function () { }
+                m: "slipAndSlide"
             }
         },
         util:
@@ -440,13 +442,13 @@ const m =
     {
         black:
         {
-            regenerate:
+            regenerateBlack:
             {
                 name: "Regenerate ",
                 desc: "Remove up to 2 of Halftusk's wounds.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "regenerateBlack"
             },
             onePunch:
             {
@@ -457,7 +459,7 @@ const m =
                 aim: [6],
                 hurt: [4],
                 unused: true,
-                m: function () { }
+                m: "onePunch"
             },
             twoPunch:
             {
@@ -468,18 +470,18 @@ const m =
                 aim: [4],
                 hurt: [5],
                 unused: true,
-                m: function () { }
+                m: "twoPunch"
             },
         },
         white:
         {
-            regenerate:
+            regenerateWhite:
             {
                 name: "Regenerate",
                 desc: "Remove up to 2 of Halftusk's wounds.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "regenerateWhite"
             },
             footwork:
             {
@@ -488,7 +490,7 @@ const m =
                 icon: cogs,
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "footwork"
             },
             feint:
             {
@@ -498,7 +500,7 @@ const m =
                 dist: 2,
                 aim: [5],
                 unused: true,
-                m: function () { }
+                m: "feint"
             }
         },
         util:
@@ -508,10 +510,9 @@ const m =
                 name: "the Great Tusk",
                 desc: `Plot Phase only. Halftusk may make a claim action. Then choose ${dodgeBoon} or ${shieldBoon}. Friendy models within range gain the boon you chose.`,
                 icon: star,
-                dist: 2,
                 unused: true,
                 legendaryUsed: false,
-                m: function () { }
+                m: "theGreatTusk"
             },
             fightingFit:
             {
@@ -531,7 +532,7 @@ const m =
                 icon: star,
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "tongueTow"
             },
             tongueLash:
             {
@@ -541,7 +542,7 @@ const m =
                 dist: 2,
                 aim: [5, 6, 7],
                 unused: true,
-                m: function () { }
+                m: "tongueLash"
             }
         },
         white:
@@ -552,7 +553,7 @@ const m =
                 desc: `This skill may be used only while on an objective hex. ${dodgeBoon} ${shieldBoon}.`,
                 icon: "self",
                 unused: true,
-                m: function () { }
+                m: "feelThePower"
             },
             hop:
             {
@@ -560,7 +561,8 @@ const m =
                 desc: "You may place each Froglodyte in a hex up to 2 hexes from its current hex.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                dist: 2,
+                m: "hop"
             }
         },
         util: {
@@ -2056,10 +2058,11 @@ const _m = {
             socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"hootfoot", hex, row})
     },
     evilEye:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
         const {hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.unitModel.blackTeam')[0])
         if($target){
-            socket.emit('rolloSkill',{aim:6, hurt:0, socksMethod:"evilEye", hex, row})
+            socket.emit('rolloSkill',{aim:6+baim, hurt:0, socksMethod:"evilEye", hex, row})
         }
     },
     fireStorm:function(origin,taget){
@@ -2273,12 +2276,6 @@ const _m = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         if( $target.hasClass(`champModel`) )
             socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"roarOfBattle", hex, row })
-        // name: "Roar of Battle",
-        // desc: "One champion within range may move 1 hex.",
-        // icon: cogs,
-        // dist: 1,
-        // unused: true,
-        // m: "roarOfBattle"
     },
     outflank:function(origin,target){
         const { baim } = extractBoons_Blights(origin)
@@ -2289,15 +2286,214 @@ const _m = {
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim+ baim), hurt:0, socksMethod:"outflank", hex, row })
     },
-    roll:function(origin,target){
-        //$('.selectedModel'), $('.selectedModel').parent('.hexagon').data()
-        // name: "Roll",
-        // desc: "Grimgut moves up to 3 hexes in a straight line.",
-        // icon: self,
-        // unused: true,
-        // m: "roll"
+    roll:function(origin,target){console.log('_m init')
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"roll"})
     },
+    newSpewWhite:function(origin,target){
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"newSpewWhite", multiAction:mySide})
+    },
+    fluSpew:function(origin,target){
+        blights_spew_declaration({origin, abilName:"fluSpew"})
+    },
+    gooSpew:function(origin,target){
+        blights_spew_declaration({origin, abilName:"gooSpew"})
+    },
+    newSpewBlack:function(origin,target){
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"newSpewBlack", multiAction:mySide})
+    },
+    nomNomNom:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) && $target.hasClass('unitModel') )
+            socket.emit('rolloSkill',{ aim: (7 + baim), hurt:(7 + bdamage), socksMethod:"nomNomNom", hex, row })
+    },
+    buffet:function(origin,taget){
+        const {hex, row } = taget
+        const target = $($(`.hex_${hex}_in_row_${row}`).children('.unitModel.blackTeam').not('.destined_for_DOOM')[0])
+        const doomed = $('.destined_for_DOOM')
+        const allAviable = $($('.hexagon[data-glow]').children(`.${opoSide}.unitModel`))
+        const key = doomed.length
+        const multiInfo = {
+            name:"Buffet",
+            count:allAviable.length,
+            color:"redFlame",
+            klass:"destined_for_DOOM",
+            ability:"buffet"
+        }
+        if( target.hasClass('blackTeam') && (doomed.length < 3 || doomed.length < allAviable.length) ) 
+            {
+                placeMark({hex, row, multiInfo, target, key})
+                socket.emit('markedMan',{hex, row, multiInfo})
+            } else displayAnimatedNews ("target enemy<br/>units")
+        if( doomed.length + 1 === 3 || doomed.length + 1 === allAviable.length ) 
+        {
+            const { baim, bdamage } = extractBoons_Blights(origin)
+            let doneTimes = 0
+            const interval = setInterval(function() {
+                const multiAction = doneTimes === 0 ? false : true
+                if (doneTimes <= key) {
+                    const {hex, row} = $(`[data-DOOMqueue="${doneTimes}"]`).parent('.hexagon').data()
+                    socket.emit('rolloSkill',
+                        { 
+                            aim: (7 + baim), 
+                            hurt:(7 + bdamage), 
+                            socksMethod:"buffet", 
+                            hex, row, multiAction
+                        }
+                    )
+                    setBoons_Blights($('.selectedModel'),{baim:0,bdamage:0})
+                    $(`[data-DOOMqueue="${doneTimes}"]`).removeAttr('data-DOOMqueue')
+                } else { 
+                    clearInterval(interval)
+                }
+                doneTimes++
+            }, 1100);
+        }
+            // name: "Buffet",
+            // desc: "Must target followers. This skill may target up to three followers on any hexes within range.",
+            // icon:skull,
+            // dist: 1,
+            // aim: [7],
+            // hurt: [7],
+            // unused: true,
+            // legendaryUsed: false,
+            // m: "buffet"
+    },
+    slimed:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) ) {
+            let modelCount = $(`.hex_${hex}_in_row_${row}`).children('.smallCard').length
+            let doneTimes = 0
+            const unitSize = origin.siblings('.smallCard').length
+            const aim = [3, 4, 5][unitSize]
+            const hurt = [5, 5, 5][unitSize]
+        const interval = setInterval(function() {
+            if (doneTimes < modelCount) { 
+                doneTimes++
+                const multiAction = doneTimes === 1 ? false : true
+                socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"slimed", hex, row, multiAction })
+            } else { 
+                clearInterval(interval)
+            }
+        }, 1000);
+        }
+    },
+    slipAndSlide:function(origin,target){
+        const {hex, row} = target
+        const $target = origin
+        const { bspeed } = extractBoons_Blights( $(`[data-name="${$target.data('name')}"]`) )
+        if( bspeed < 1 )
+            socket.emit('rolloSkill',{aim:0, hurt: 0, socksMethod:"slipAndSlide", hex, row})
+    },
+    regenerateWhite:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"regenerateWhite", hex, row })
+    },
+    regenerateBlack:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"regenerateBlack", hex, row })
+    },
+    onePunch:function(origin,target){
+        const { baim, bdamage, healthleft } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        let aim = 6 + baim + healthleft === 7 ? 2 : 0
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`))
+            socket.emit('rolloSkill',{ aim: aim, hurt:(4 + bdamage), socksMethod:"onePunch", hex, row })
+    },
+    twoPunch:function(origin,target){
+        const { baim, bdamage, healthleft } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        let aim = 4 + baim + healthleft === 7 ? 2 : 0
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`))
+            socket.emit('rolloSkill',{ aim: aim, hurt:(5 + bdamage), socksMethod:"twoPunch", hex, row })
+    },
+    footwork:function(origin,target){
+        const {hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass('whiteTeam'))
+            socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"footwork", hex, row})
+    },
+    feint:function(origin,target){
+        const { baim, healthleft } = extractBoons_Blights(origin)
+        const {hex, row } = target
+        let aim = 5 + baim + healthleft === 7 ? 2 : 0
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.blackTeam')[0])
+        if($target){
+            socket.emit('rolloSkill',{aim:aim, hurt:0, socksMethod:"feint", hex, row})
+        }
+    },
+    theGreatTusk:function(origin,target){
+        if(phase==='white'){
+            $('#gameScreen').append(greatTuskBoons(origin, "theGreatTusk",1,`apply one boon to friends within 2 hexes`))
+            highlightHexes({colour:'claimColor',dist:2},origin)
+            socket.emit('HH', {color:'claimColor',dist:2})
+        }
+    },
+    tongueTow:function(origin,target){
+        const { hex, row } = target
+        const $target = $(`.hex_${hex}_in_row_${row}`)
+        if( $target.children('.claimedBanner.whiteTeam').length ){
+            displayAnimatedNews('reposition your banner')
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'greenGlow',dist:1},$($target.children('.claimedBanner')[0]))
+            $target.children('.claimedBanner').addClass('tongueTow_selected')
+            highlight_closest_path(origin.parent('.hexagon').data(),target)
+            socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"tongueTow", hex, row})
+        } else displayAnimatedNews('must target friendly banner')
+    },
+    tongueLash:function(origin,target){        
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [5, 6, 7][unitSize]
+        const $target = $(`.hex_${hex}_in_row_${row}`)
+        if( $target.children('.smallCard.blackTeam').length ){
+            displayAnimatedNews('reposition model')
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'greenGlow',dist:1},$($target.children('.smallCard')[0]))
+            $target.children('.claimedBanner').addClass('tongueLash_selected')
+            socket.emit('rolloSkill',{aim:(baim+aim), hurt:0, socksMethod:"tongueLash", hex, row})
+        } else displayAnimatedNews('must target<br/>enemy model')
+    },
+    feelThePower:function(origin,target){
+        const { hex, row } = target ;
+        let destination = $(`.hex_${hex}_in_row_${row}`)
+        if( destination.hasClass('objectiveGlow') ){
+            socket.emit('rolloSkill',{hex,row,socksMethod:"feelThePower",hurt:0,aim:0})
+            setBoons_Blights(target,{
+                bdodge:Number(target.attr('data-bdodge'))+1,
+                bprotection:Number(target.attr('data-bprotection'))+1})
+            displayAnimatedNews('Froglodytes <br/>+1 dodge & shield')
+        } else
+            displayAnimatedNews('must stand on<br/>objective hex')
+    },
+    hop:function(origin,target){console.log('hop on declaring side')
+        const { hex, row } = target
+        const parentHex = origin.parent('.hexagon')
+        parentHex.children('.smallCard').addClass('hop')
+        // $(parentHex.children('.hop')[0])
+        //     .detach()
+        //     .appendTo(`.hex_${hex}_in_row_${row}`)
+        //     .removeClass('.hop')
+         socket.emit('rolloSkill',{hex,row,socksMethod:"hop",hurt:0,aim:0})
+        // if(!parentHex.children('.smallCard').length){
+        //     $('.hop').removeClass('hop')
+        //     $('[data-glow]').removeAttr('data-glow')
+        //     if_moved_end_it()
+        //     add_action_taken()
+        //     current_ability_method  = null
+        // }
+        // name: "Hop",
+        // desc: "You may place each Froglodyte in a hex up to 2 hexes from its current hex.",
+        // icon: self,
+        // unused: true,
+        // m: "hop"
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2607,9 +2803,287 @@ var m_ = {
         if_moved_end_it()
         add_action_taken()
     },
-    roll:function(o){
+    roll:function(o){console.log('m_ init')
         if( !$('[data-glow]').length )
             highlightDirectPaths({origin: $('.selectedModel').parent('.hexagon').data(), distance:3, colour:'straitPaths'})
+            $('.selectedModel').addClass('roll_selected')
+    },
+    newSpewWhite:function(o){//TRIGGERS TWICE
+        $(`[data-name="Retchlings"].${o.multiAction}`).each(function(){
+            forceKill ( $(this) )
+        })
+        setTimeout(
+            ()=>{rallyActionDeclaration({ 
+                unitname:"Grimgut", 
+                side:o.multiAction, 
+                type:"champion", 
+                name:"Retchlings" }, 'newSpewWhite')}
+        ,700)
+        current_ability_method = null
+    },
+    newSpewBlack:function(o){//TRIGGERS TWICE
+        $(`[data-name="Retchlings"].${o.multiAction}`).each(function(){
+            forceKill ( $(this) )
+        })
+        setTimeout(
+            ()=>{rallyActionDeclaration({ 
+                unitname:"Grimgut", 
+                side:o.multiAction, 
+                type:"champion", 
+                name:"Retchlings" }, 'newSpewWhite')}
+        ,700)
+        current_ability_method = null
+    },
+    raiseNewSpew:function(o){
+        const { hex, row, multiAction} = o
+        const thiz = $(`.hex_${hex}_in_row_${row}`)
+        $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
+        graveyard[river[1]][river[3]].splice(0,1)
+        if( $(`[data-name="Retchlings"].${multiAction}`).length < 5 ){
+            rallyActionDeclaration({ unitname:"Grimgut", side:multiAction, type:"champion", name:"Retchlings" }, `newSpewWhite`)
+        } else {
+            river = null
+            current_ability_method = null
+            $('[data-glow]').removeAttr('data-glow')
+        }
+    },
+    raiseDead:function(o){
+        const { hex, row} = o
+        const thiz = $(`.hex_${hex}_in_row_${row}`)
+        $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
+        $('[data-glow]').removeAttr('data-glow')
+        graveyard[river[1]][river[3]].splice(0,1)
+        river = null
+        current_ability_method = null
+    },
+    fluSpew:function(o){
+        blights_spew_recieved({o, blight:"bdamage"})
+    },
+    gooSpew:function(o){
+        blights_spew_recieved({o, blight:"bdodge"})
+    },
+    nomNomNom: function (o) {
+        const { aim, hurt, hex, row, key } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,1 + target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    buffet:function(o){
+        const { aim, hurt, hex, row, key, multiAction } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel.destined_for_DOOM`)
+        if(targets.length){
+            const target = $(targets[0])
+            target.removeClass('destined_for_DOOM')
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken(multiAction)
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,1 + target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews ('no damage!')
+            else displayAnimatedNews ('missed')
+        } 
+        if( !$(`.destined_for_DOOM`).length ) $('#multi_choice_info_panel').remove()
+        current_ability_method = null
+    },
+    slimed:function(o){
+        const { aim, hurt, hex, row, key, multiAction } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken(multiAction)
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews ('no damage!')
+            else displayAnimatedNews ('missed')
+        }
+        current_ability_method = null
+    },
+    slipAndSlide:function(o){
+        const { hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        const target = $(targets[0])
+        setBoons_Blights(target,{bspeed:Number(target.attr('data-bspeed'))+1})
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        displayAnimatedNews(`${target.data('name')}<br/>+1 speed`)
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    regenerateWhite:function(o){
+        const { hex, row } = o
+        const target = $(`.hex_${hex}_in_row_${row}`).children('.smallCard')
+        healLife(target)
+        current_ability_method = null
+        if_moved_end_it()
+        add_action_taken()
+        displayAnimatedNews(`${target.data('name')} heals<br/>2 wounds`)
+    },
+    regenerateBlack:function(o){
+        const { hex, row } = o
+        const target = $(`.hex_${hex}_in_row_${row}`).children('.smallCard')
+        healLife(target)
+        current_ability_method = null
+        if_moved_end_it()
+        add_action_taken()
+        displayAnimatedNews(`${target.data('name')} heals<br/>2 wounds`)
+    },
+    onePunch:function(o){//needs bonus action defined
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )//allow for bonus twoPunch action here
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    twoPunch:function(o){//needs bonus action defined
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )//allow for bonus one hex movement for Halftusk action here
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    footwork:function(o){
+        const { hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        const target = $(targets[0])
+        setBoons_Blights(target,{bdodge:Number(target.attr('data-bdodge'))+1})
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        displayAnimatedNews(`${target.data('name')}<br/>+1 dodge`)
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    feint:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        const target = $(targets[0])
+        if( onHit(aim, target) ){
+            displayAnimatedNews(`${target.data('name')}<br/>-1 aim`)
+            setBoons_Blights(target,{baim:Number(target.attr('data-baim'))-1})
+        } else 
+            displayAnimatedNews('missed!')
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    theGreatTusk:function(o){
+        const { hex, row, cursePackage} = o
+        const team = $(`.hex_${hex}_in_row_${row}`).children('.smallCard').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        $('[data-glow="claimColor"]').children('.'+team).each(function(){
+            setBoons_Blights( $(this),{[cursePackage[0]]:+1})
+        })
+        displayAnimatedNews(`${[...cursePackage[0]].slice(1).join('')} boon added`)
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+    },
+    tongueTow:function(o){
+        if( !$('.tongueTow_selected').length ){
+            const { hex, row } = o
+            const $target = $(`.hex_${hex}_in_row_${row}`)
+            $('[data-glow]').removeAttr('data-glow')
+            $target.children('.claimedBanner').addClass('tongueTow_selected')
+            highlightHexes({colour:'greenGlow',dist:1},$($target.children('.claimedBanner')[0]))
+            highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
+            if_moved_end_it()
+            add_action_taken()
+            current_ability_method = null
+            displayAnimatedNews(`tongue towing<br/>banner`)
+        }
+    },
+    tongueLash: function (o) {
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) && !$('.tongueLash_selected').length ){
+                    const { hex, row } = o
+                    target.addClass('tongueLash_selected')
+                    highlightHexes({colour:'greenGlow',dist:1},target)
+                    highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
+                    if_moved_end_it()
+                    add_action_taken()
+                    current_ability_method = null
+                    displayAnimatedNews(`tongue towing<br/>victim`)
+                }
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    feelThePower:function(o){
+        const { hex, row } = o
+        const target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        setBoons_Blights(target,{
+            bdodge:Number(target.attr('data-bdodge'))+1,
+            bprotection:Number(target.attr('data-bprotection'))+1})
+        displayAnimatedNews('Froglodytes <br/>+1 dodge & shield')
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    hop:function(o){
+        const { hex, row } = o
+        const parentHex = $('.selectedModel').parent('.hexagon')
+        parentHex.children('.smallCard').addClass('hop')
+        $('.selectedModel').removeClass('selectedModel')
+        $(parentHex.children('.hop')[0])
+            .detach()
+            .appendTo(`.hex_${hex}_in_row_${row}`)
+        $(parentHex.children('.hop')[0]).addClass('selectedModel')
+        $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')).removeClass('.hop')
+        if(!parentHex.children('.smallCard').length){
+            $('.hop').removeClass('hop')
+            $('[data-glow]').removeAttr('data-glow')
+           // if_moved_end_it()
+           // add_action_taken()
+            current_ability_method  = null
+        }
     }
 }
 
@@ -2641,11 +3115,13 @@ var m_ = {
 
 
 var _m_ = {
-    illKillYouAll: () => {
+    illKillYouAll: () => {//Utterlu brokenos, keeps glow and bad blood on the recieving end
         $('.illKillYouAll_selected').removeClass('illKillYouAll illKillYouAll_selected outflank')
         if( !$('.illKillYouAll').length && !$('.outflank').length )
-            {current_ability_method = null
-                console.log('do null')}
+        {
+            current_ability_method = null
+            $('[data-glow]').removeAttr('data-glow')
+        }
     },
     outflank: () => {
         $('.outflank_selected').removeClass('outflank_selected outflank')
@@ -2654,5 +3130,46 @@ var _m_ = {
                 $('[data-glow]').removeAttr('data-glow')
                 current_ability_method = null
             }
+    },
+    roll:(that)=>{
+       $('[data-glow^="str"].hexagon').each(function(){
+          if ( $(this).attr('data-glow') !== $('.selectedModel').parent('.hexagon').attr('data-glow') ) {
+              $(this).removeAttr('data-glow')
+              $(this).children('.top').removeAttr('data-glow')
+              $(this).children('.bottom').removeAttr('data-glow')
+          }
+        })
+        $('[data-glow].hexagon').each(function(){
+            $(this).attr('data-glow','straitPaths')
+            $(this).children('.top').attr('data-glow','straitPaths')
+            $(this).children('.bottom').attr('data-glow','straitPaths')
+        })
+        $('.selectedModel').parent('.hexagon').removeAttr('data-glow')
+        $('.selectedModel').siblings('.top').removeAttr('data-glow')
+        $('.selectedModel').siblings('.bottom').removeAttr('data-glow')
+        if( !$('[data-glow="straitPaths"]').length ){
+            current_ability_method = null
+            $('.roll_selected').removeClass('roll_selected')
+        }
+    },
+    tongueTow:()=>{
+        if( $('.tongueTow_selected').length ){
+            $('[data-glow]').removeAttr('data-glow')
+            $('.tongueTow_selected').removeClass('tongueTow_selected')
+            current_ability_method = null
+        }
+    },
+    tongueLash:()=>{
+        if( $('.tongueLash_selected').length ){
+            $('[data-glow]').removeAttr('data-glow')
+            $('.tongueLash_selected').removeClass('tongueLash_selected')
+            current_ability_method = null
+        }
+    }
+}
+
+var m__ = {
+    newSpew: function (o){
+        console.log('doubled ?')
     }
 }

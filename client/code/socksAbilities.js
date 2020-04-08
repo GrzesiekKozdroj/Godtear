@@ -4,3 +4,8 @@ for(let key in m_){
         m_[p.socksMethod](p)
     })
 }
+for(let key in m__){
+    socket.on(key, p=>{
+        m_[p.socksMethod](p)
+    })
+}

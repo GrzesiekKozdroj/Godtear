@@ -8,7 +8,24 @@
             }
             return champDATA.join(' ')
         }
-function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index},phase,side) {
+
+        const bloodedUnit = (unitName, side, unitSize,type, name) =>{
+            const gunit = $(`[data-name="${unitName}"].${mySide}`)
+            const onChamp = (gunit.length === 0 && type === 'champion')
+            if( (gunit.length < unitSize && gunit.length > 0 && side === mySide && type !== 'champion') || onChamp
+             )
+            return `
+            <div id='rallyAction' class='game_card-attrib card_base_action ${phase} unit rally'
+                data-unitname=${onChamp ? name : unitName} 
+                data-side=${mySide} 
+                data-type=${type} 
+                data-name=${onChamp ? unitName : name}
+            >
+                <div class='top'></div><div class='bottom'></div>
+            </div>`
+            else return ''
+        }
+function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side) {
     const skillList = (skills)=>{
         let skillzList = []
         for(let s in skills[phase]){
@@ -124,7 +141,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
         <div class='game_card-actions card_shadow-${side}'>
 
-            <div id='walkAction' class='game_card-attrib card_base_action walk ${type} ${phase}'>
+            <div id='endAction' class='game_card-attrib card_base_action endTask ${type} ${phase}'>
                 <div class='top'></div><div class='bottom'></div>
             </div>
 
@@ -132,9 +149,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
                 <div class='top'></div><div class='bottom'></div>
             </div>
 
-            <div id='rallyAction' class='game_card-attrib card_base_action ${phase} ${type} rally'>
-                <div class='top'></div><div class='bottom'></div>
-            </div>
+            ${bloodedUnit(unitName, side, unitSize,type,name)}
 
         </div>
 
@@ -146,7 +161,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
     `
 }
 
-function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index},phase,side){
+function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side){
     const skillList = (skills)=>{
         let skillzList = []
         for(let s in skills[phase]){
@@ -254,13 +269,11 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
             </div>
         </div>
         <div class='game_card-actions card_shadow-right'>
-            <div id='rallyAction' class='game_card-attrib card_base_action ${phase} ${type} rally'>
-                <div class='top'></div><div class='bottom'></div>
-            </div>
+            ${bloodedUnit(unitName, side, unitSize,type,name)}
             <div id='claimAction' class='game_card-attrib card_base_action ${phase} ${type} claim'>
                 <div class='top'></div><div class='bottom'></div>
             </div>
-            <div id='walkAction' class='game_card-attrib card_base_action walk ${type} ${phase}'>
+            <div id='endAction' class='game_card-attrib card_base_action endTask ${type} ${phase}'>
                 <div class='top'></div><div class='bottom'></div>
             </div>
         </div>

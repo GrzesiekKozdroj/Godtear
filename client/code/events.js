@@ -155,13 +155,14 @@ $('body').on('click','.gameTip', function(e){
 $('body').on('click','.hexagon[data-glow="yellowGlow"]', function(e){
     e.preventDefault()
     e.stopPropagation()
-    m.universal.walk(e,$(this))
+    if(myTurn)
+        m.universal.walk(e,$(this))
 })
 
 $('body').on('click','#claimAction',function(e){
     if( phase==='white' && myTurn && check_actions_count() ){
         e.preventDefault()
-        $('[data-glow="yellowGlow"]').removeClass('[data-glow="yellowGlow"]')
+        $('[data-glow]').removeAttr('data-glow')
         highlightHexes({colour:'claimColor',dist:1})
         socket.emit('HH', {color:'claimColor',dist:1})
     }
@@ -218,10 +219,12 @@ for(let K in m){
                                    data.icon === "cogs"  ? 'blueGlow' :
                                    data.icon === "self"  ? 'legendaryGlow' :
                                    data.icon === "star" ? 'greenGlow' : ''
+                        $('[data-glow]').removeAttr('data-glow')
                         highlightHexes({colour:glow,dist:data.dist})
-                        socket.emit('HH', {color:glow,dist:data.dist})
                         current_ability_method = _m[data.m]
-                        if( !data.dist )//call ability upon itself
+                        if(data.dist)
+                            socket.emit('HH', {color:glow,dist:data.dist})
+                        else
                             current_ability_method($('.selectedModel'), $('.selectedModel').parent('.hexagon').data())
                     }
             })
@@ -231,7 +234,7 @@ for(let K in m){
 $('body').on('click','[data-glow]', function (){
     const thiz_target = $(this).data()
     const thiz_origin = $('.selectedModel')
-    if(current_ability_method)
+    if(current_ability_method && myTurn)
         current_ability_method(thiz_origin, thiz_target)
 })
 
@@ -246,39 +249,71 @@ $('body').on('click','.boon-blight.challengeTitus',function(e){
             $(this).toggleClass('selected') 
         else $(this).removeClass('selected')
 })
-$('body').on('click','.boon-blight.confirm', function(e){
+$('body').on('click','.boon-blight.confirm.titus', function(e){
     e.preventDefault()
     const { socksmethod, hex, row, cursecount } = $(this).parent().data()
     const cursePackage = $('.boon-blight.selected').map(function(){return $(this).data('abil')}).get()
     socket.emit('rolloSkill',{ aim: 0, hurt: 0, socksMethod:socksmethod, hex, row, cursePackage })
     $('.titusChallenge').remove()
 })
+$('body').on('click','.boon-blight.theGreatTusk.confirm', function(e){
+    e.preventDefault()
+    const { hex, row } = $(this).parent().data()
+    const cursePackage = $('.boon-blight.selected').map(function(){return $(this).data('abil')}).get()
+    socket.emit('rolloSkill',{ aim: 0, hurt: 0, socksMethod:"theGreatTusk", hex, row, cursePackage })
+    $('.titusChallenge').remove()
+})
 $('body').on('click','[data-glow].hexagon',function(e){
     e.preventDefault()
     const thiz = $(this)
-    extraMover('illKillYouAll',thiz)
-    extraMover('outflank',thiz)
+    if(myTurn){
+        extraMover('illKillYouAll',thiz)
+        extraMover('outflank',thiz)
+        if( $('.tongueTow_selected').length )extraMover('tongueTow',thiz)
+        if( $('.tongueLash_selected').length )extraMover('tongueLash',thiz)
+        if( $('[data-glow^="strait"]') )extraMover('roll',thiz)
+    }
 })
 $('body').on('click','.illKillYouAll',function(e){
     e.preventDefault()
-    $('.illKillYouAll_selected').removeClass('illKillYouAll_selected')
-    $(this).addClass('illKillYouAll_selected')
-    highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
+    if(myTurn){
+        $('.illKillYouAll_selected').removeClass('illKillYouAll_selected')
+        $(this).addClass('illKillYouAll_selected')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
+    }
 })
 $('body').on('click','.outflank',function(e){
     e.preventDefault()
-    $('.outflank_selected').removeClass('outflank_selected')
-    $(this).addClass('outflank_selected')
+    if(myTurn){
+        $('.outflank_selected').removeClass('outflank_selected')
+        $(this).addClass('outflank_selected')
+    }
 })
-$('body').on('click','[data-glow^="straitPaths"].hexagon',function(e){
+$('body').on('click','#rallyAction',function(e){
+    e.preventDefault()
+    if(myTurn)
+    rallyActionDeclaration( $(this).data() )
+})
+$('body').on('click','[data-glow="recruitGlow"].hexagon',function(e){
     e.preventDefault()
     e.stopPropagation()
-    const chosenGlows = $(this).attr('data-glow')
-    leave_only_selected_path(chosenGlows)
-    //it also needs to move into selected hex and send the instruction to opposing player, with deletion of hexes as well as movement
+    const { hex, row } = $(this).data()
+    if(myTurn)
+    socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row})
 })
- 
+$('body').on('click','[data-glow="newSpewWhite"].hexagon',function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    const { hex, row } = $(this).data()
+    if(myTurn)
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseNewSpew", hex, row, multiAction:mySide})
+})
 
+// $('body').on('click','.hexagon',function(e){
+//     e.preventDefault()
+//     console.log(tellMeDistance($($('.selectedModel').parent('.hexagon')).data(),$(this).data()))
+// })
 
 
 

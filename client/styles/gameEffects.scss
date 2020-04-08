@@ -116,7 +116,7 @@ $selectedByEnemyGlow:rgba(238, 65, 53, 1);
 [data-glow="legendaryGlow"]{
     @include makeGlow('goldenrod', goldenrod, goldenrod, goldenrod, goldenrod)
 }
-[data-glow="claimColor"]{
+[data-glow="recruitGlow"],[data-glow="claimColor"],[data-glow="newSpewWhite"]{
     @include makeGlow('white', rgb(245, 245, 245), rgb(194, 197, 194), rgb(243, 243, 243), rgb(238, 250, 231))
 }
 [data-glow="straitPaths"], [data-glow="straitPaths1"], [data-glow="straitPaths2"], [data-glow="straitPaths3"], [data-glow="straitPaths4"], [data-glow="straitPaths5"], [data-glow="straitPaths6"]{

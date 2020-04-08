@@ -79,7 +79,6 @@ function reduceSpeedLeft(){
     $('.selectedModel').attr('data-speedleft', speed)
 }
 function highlightHexes ({colour, dist},thiz = $('.selectedModel')){
-    $('[data-glow]').removeAttr('data-glow')
     const applyClass = ({colour, row, hex}) => {
         if(row % 2 === 1) oddRowPosition(row, hex, colour) 
         else if (row % 2 === 0) evenRowPosition(row, hex, colour)
@@ -96,8 +95,11 @@ function highlightHexes ({colour, dist},thiz = $('.selectedModel')){
                     applyClass({row: rg, hex: hg, colour: colour})
                 })
     }
-    thiz.parent('.hexagon').removeAttr('data-glow')
-    thiz.parent('.hexagon').children().removeAttr('data-glow')
+    if(colour === 'yellowGlow'){
+        thiz.parent('.hexagon').removeAttr('data-glow')
+        thiz.parent('.hexagon').children().removeAttr('data-glow')
+    }
+
 }
 
 function placeBanner(teamColor){
@@ -108,7 +110,8 @@ function placeBanner(teamColor){
                   'red'
     let steps = color === 'green' ? 2 : 1
     return `
-        <img class="claimedBanner ${teamColor}" src='./img/${color}Flag.png' data-color=${steps} />
+        <img class="claimedBanner ${teamColor}"
+        src='./img/${color}Flag.png' data-color=${steps} />
     `
 }
 function displayDamageRecieved(pain){
@@ -155,9 +158,29 @@ const challengeOptions = (origin, target, socksMethod,curseCount,message) => {
                 <div class="boon-blight challengeTitus dodge ${decideOrnament(bdodge)}" data-abil="bdodge">  </div>
                 <div class="boon-blight challengeTitus protection ${decideOrnament(bprotection)}" data-abil="bprotection">  </div>
                 <div class="boon-blight challengeTitus aim ${decideOrnament(bdamage)}" data-abil="baim">  </div>
-                <div class="boon-blight confirm " > done </div>
+                <div class="boon-blight titus confirm " > done </div>
                 <div class="boon-blight challengeTitus damage ${decideOrnament(baim)}" data-abil="bdamage">  </div>
             </div>
         </div>
     `
 }
+const greatTuskBoons = (origin, socksMethod,curseCount,message) => {
+    //$('.selectedModel'), {hex=Number(), row=Number(), sockMethod:"string"}
+        const { hex, row } = $(origin.parent('.hexagon') ).data()
+        return `
+            <div class="titusChallenge">
+                <div 
+                    class="titusChallengeCrest" 
+                    data-hex=${hex} 
+                    data-row=${row} 
+                    data-socksmethod=${socksMethod} 
+                    data-cursecount=${curseCount}
+                  >
+                    <div class="message">${message}</div>
+                    <div class="boon-blight challengeTitus dodge" data-abil="bdodge">  </div>
+                    <div class="boon-blight challengeTitus protection" data-abil="bprotection">  </div>
+                    <div class="boon-blight theGreatTusk confirm " > done </div>
+                </div>
+            </div>
+        `
+    }

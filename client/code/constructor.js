@@ -29,7 +29,7 @@ class Character{
     this.bDamage = 0;
 
     //this.doing = 'not used';
-    this.stepsGiven = name !== "Mournblade" && role === "champion" ? 4 : 1;
+    this.stepsGiven = name !== "Mournblade" && role === "champion" ? 4 : name === "Retchlings" ? 0 : 1;
     }
 //methods
 }
@@ -111,16 +111,18 @@ const rosters =
     ]
 };
 roster = [
-    rosters.shaper[Math.floor( Math.random () * (2 - 0 + 1)) + 0].champ.name, 
-    rosters.maelstrom[Math.floor( Math.random () * (2 - 0 + 1)) + 0].champ.name, 
-    rosters.maelstrom[Math.floor( Math.random () * (2 - 0 + 1)) + 0].champ.name
+    rosters.maelstrom[2].champ.name, 
+    rosters.guardian[0].champ.name, 
+    rosters.maelstrom[1].champ.name
 ];
 
 for(let c in rosters){
     let group = rosters[c]
     for(let g = 0; g < group.length; g++){
         group[g].champ.index = g;
+        group[g].champ.unitName = group[g].grunt.name
         group[g].grunt.index = g;
+        group[g].grunt.unitName = group[g].champ.name
     }
 }
 const scenarios = [

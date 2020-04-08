@@ -169,9 +169,9 @@ function displayMovementAura (thiz) {
     thiz.parent('.hexagon').children().removeAttr('data-glow')
 }
 
-const onlyOneStep = thiz => {
-    const ph = Number ( $('.selectedModel').parent('.hexagon').data('hex') )
-    const pr = Number ( $('.selectedModel').parent('.hexagon').data('row') )
+const onlyOneStep = (thiz, origin = $('.selectedModel') ) => {
+    const ph = Number ( origin.parent('.hexagon').data('hex') )
+    const pr = Number ( origin.parent('.hexagon').data('row') )
     const h = Number ( thiz.data('hex') )
     const r = Number ( thiz.data('row') )
     const atEven = Boolean(

@@ -51,7 +51,7 @@ const m =
         claim: function (thiz, teamColor) {
             if_moved_end_it()
             thiz.append(placeBanner(teamColor))
-            $('[data-glow]').removeAttr('data-glow')
+            $('[data-glow]').removeAttr('data-glow');console.log('REMOVE GLOW')
             add_action_taken()
             moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
             displayAnimatedNews(`${ $('.selectedModel').data('name') }<br/>claims objective`)
@@ -577,13 +577,14 @@ const m =
     {
         black:
         {
-            march:
+            marchRhodriBlack:
             {
                 name: "March",
                 desc: "Move Rhodri up to 1 hex.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                dist:1,
+                m: "marchRhodriBlack"
             },
             shieldBash:
             {
@@ -593,7 +594,7 @@ const m =
                 dist: 1,
                 aim: [7],
                 unused: true,
-                m: function () { }
+                m: "shieldBash"
             },
             swordSlash:
             {
@@ -603,18 +604,19 @@ const m =
                 aim: [5],
                 hurt: [6],
                 unused: true,
-                m: function () { }
+                m: "swordSlash"
             },
         },
         white:
         {
-            march:
+            marchRhodriWhite:
             {
                 name: "March",
                 desc: "Move Rhodri up to 1 hex.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                dist:1,
+                m: "marchRhodriWhite"
             },
             answerTheCall:
             {
@@ -623,7 +625,7 @@ const m =
                 icon: cogs,
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "answerTheCall"
             },
             hold:
             {
@@ -632,7 +634,7 @@ const m =
                 icon: cogs,
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "hold"
             }
         },
         util:
@@ -644,7 +646,8 @@ const m =
                 unused: true,
                 legendaryUsed: false,
                 icon: self,
-                m: function () { }
+                dist:1,
+                m: "bannerfall"
             },
             unyielding:
             {
@@ -657,13 +660,13 @@ const m =
     {
         black:
         {
-            march:
+            marchGuardBlack:
             {
                 name: "March",
                 desc: "Move each Household Guard up to 1 hex.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "marchGuardBlack"
             },
             swordStrike:
             {
@@ -673,7 +676,7 @@ const m =
                 aim: [5, 5, 5],
                 hurt: [4, 5, 6],
                 unsed: true,
-                m: function () { }
+                m: "swordStrike"
             }
         },
         white:
@@ -684,15 +687,15 @@ const m =
                 desc: shieldBoon,
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "brace"
             },
-            march:
+            marchGuardWhite:
             {
                 name: "March",
                 desc: "Move each Household Guard up to 1 hex.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "marchGuardWhite"
             }
         },
         util:
@@ -715,16 +718,15 @@ const m =
                 icon: "star",
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "deathWind"
             },
-            raiseDead:
+            raiseDeadChamps:
             {
-                desc: "Raise Dead",
+                name: "Raise Dead",
                 desc: "All friendly champions within range may make a rally action.",
                 icon: cogs,
-                dist: 3,
                 unused: true,
-                m: function () { }
+                m: "raiseDeadChamps"
             },
             soulClave:
             {
@@ -735,7 +737,7 @@ const m =
                 aim: [5],
                 hurt: [5],
                 unused: true,
-                m: function () { }
+                m: "soulClave"
             }
         },
         white:
@@ -745,9 +747,9 @@ const m =
                 name: "Grave Summons",
                 desc: "Mournblade makes a claim action. You may place his banner on any objective hex within range.",
                 icon: star,
-                dist: 3,
                 unused: true,
-                m: function () { }
+                dist:3,
+                m: "graveSummons"
             },
             forwardMinions:
             {
@@ -756,18 +758,19 @@ const m =
                 icon: cogs,
                 dist: 4,
                 unused: true,
-                m: function () { }
+                m: "forwardMinions"
             }
         },
         util:
         {
             legendary:
             {
-                name: "Graspping Dead",
+                name: "Grasping Dead",
                 desc: "Remove all Knightshades from the battlefield. Then place all three Knightshades on hexes that are within 3 hexes of Mournblade.",
                 icon: "cogs",
                 unused: true,
-                legendaryUsed: false
+                legendaryUsed: false,
+                m:"graspingDead"
             },
             undying:
             {
@@ -2286,7 +2289,7 @@ const _m = {
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim+ baim), hurt:0, socksMethod:"outflank", hex, row })
     },
-    roll:function(origin,target){console.log('_m init')
+    roll:function(origin,target){
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"roll"})
     },
     newSpewWhite:function(origin,target){
@@ -2446,7 +2449,7 @@ const _m = {
             socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"tongueTow", hex, row})
         } else displayAnimatedNews('must target friendly banner')
     },
-    tongueLash:function(origin,target){        
+    tongueLash:function(origin,target){
         const { baim } = extractBoons_Blights(origin)
         const { hex, row } = target
         const unitSize = origin.siblings('.smallCard').length
@@ -2472,27 +2475,111 @@ const _m = {
         } else
             displayAnimatedNews('must stand on<br/>objective hex')
     },
-    hop:function(origin,target){console.log('hop on declaring side')
+    hop:function(origin,target){
         const { hex, row } = target
         const parentHex = origin.parent('.hexagon')
         parentHex.children('.smallCard').addClass('hop')
-        // $(parentHex.children('.hop')[0])
-        //     .detach()
-        //     .appendTo(`.hex_${hex}_in_row_${row}`)
-        //     .removeClass('.hop')
-         socket.emit('rolloSkill',{hex,row,socksMethod:"hop",hurt:0,aim:0})
-        // if(!parentHex.children('.smallCard').length){
-        //     $('.hop').removeClass('hop')
-        //     $('[data-glow]').removeAttr('data-glow')
-        //     if_moved_end_it()
-        //     add_action_taken()
-        //     current_ability_method  = null
-        // }
-        // name: "Hop",
-        // desc: "You may place each Froglodyte in a hex up to 2 hexes from its current hex.",
-        // icon: self,
-        // unused: true,
-        // m: "hop"
+        socket.emit('rolloSkill',{hex,row,socksMethod:"hop",hurt:0,aim:0})
+    },
+    marchRhodriBlack:function(origin,target){
+        march('RhodriBlack',target)
+    },
+    shieldBash:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (7 + baim), hurt:0, socksMethod:"shieldBash", hex, row })
+    },
+    swordSlash:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(6 + bdamage), socksMethod:"swordSlash", hex, row })
+    },
+    marchRhodriWhite:function(origin,target){
+        march('RhodriWhite',target)
+    },
+    answerTheCall:function(origin,target)
+    {
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.unitModel.whiteTeam')[0])
+        const { name, unitsize, side, type, unitname } = $target.data()
+        if( $(`[data-name="${name}"].whiteTeam`).length < unitsize ){
+            $('[data-glow]').removeAttr('data-glow')
+            rallyActionDeclaration({ unitname, side, type, name })
+            displayAnimatedNews(`${name} answers<br/>the call of Rhodri`)
+        } displayAnimatedNews(`${name} has<br/>maximum unit size`)
+        current_ability_method = null
+    },
+    hold:function(origin,target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.unitModel.whiteTeam')[0])
+        if($target){
+            socket.emit('rolloSkill',{hex,row,socksMethod:"hold",hurt:0,aim:0})
+        }
+    },
+    bannerfall:function(origin,target){
+        const { hex, row } = target
+        const $target = $(`.hex_${hex}_in_row_${row}.objectiveGlow`)
+        if(phase==="black" && target){
+            m.universal.claim( $target, 'whiteTeam' )
+            socket.emit('stakeClaim',{hex: hex, row: row})
+        }
+    },
+    marchGuardBlack:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"marchGuardBlack", hex, row })
+    },
+    swordStrike:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [5, 5, 5][unitSize]
+        const hurt = [4, 5, 6][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"swordStrike", hex, row })
+    },
+    brace:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"brace", hex, row })
+    },
+    marchGuardWhite:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"marchGuardWhite", hex, row })
+    },
+    deathWind:function(origin,target){
+        const { hex, row } = target
+        const $target = $(`.hex_${hex}_in_row_${row}`).children('.claimedBanner[data-name="Mournblade"].whiteTeam')
+        $target.addClass(`deathWind_selected`)
+        socket.emit('forceMove',{h:hex, r:row, klass:"champion", callback:`deathWind`})
+        displayAnimatedNews('click banner<br/>then move it')
+    },
+    raiseDeadChamps:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDeadChamps", hex, row })
+        displayAnimatedNews('choose champions<br/>to rally')
+    },
+    soulClave:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) && $target.hasClass('unitModel') )
+            socket.emit('rolloSkill',{ aim:(5+baim), hurt:(5+bdamage), socksMethod:"soulClave", hex, row, multiAction:mySide})
+    },
+    graveSummons:function(origin,target){
+        const {hex,row}=target
+        $('[data-glow]').removeAttr('data-glow')
+        socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"graveSummons", hex, row})
+    },
+    forwardMinions:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"forwardMinions", hex, row })
+    },
+    graspingDead:function(origin,target){
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"graspingDead", multiAction:mySide})
     }
 }
 
@@ -2501,7 +2588,7 @@ const _m = {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var m_ = {
-    kick: function (o) {
+    kick: function (o){
         const { aim, hurt, hex, row, key } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
@@ -2611,8 +2698,8 @@ var m_ = {
         displayAnimatedNews(`${target.data('name')}<br/>+1 aim`)
     },
     cleavingStrike: function (o) {
-        const { aim, hurt, hex, row, key } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
             if_moved_end_it()
@@ -2803,7 +2890,7 @@ var m_ = {
         if_moved_end_it()
         add_action_taken()
     },
-    roll:function(o){console.log('m_ init')
+    roll:function(o){
         if( !$('[data-glow]').length )
             highlightDirectPaths({origin: $('.selectedModel').parent('.hexagon').data(), distance:3, colour:'straitPaths'})
             $('.selectedModel').addClass('roll_selected')
@@ -2855,6 +2942,7 @@ var m_ = {
         graveyard[river[1]][river[3]].splice(0,1)
         river = null
         current_ability_method = null
+        displayAnimatedNews(`${river[3]}<br/>recruited`)
     },
     fluSpew:function(o){
         blights_spew_recieved({o, blight:"bdamage"})
@@ -3080,43 +3168,205 @@ var m_ = {
         if(!parentHex.children('.smallCard').length){
             $('.hop').removeClass('hop')
             $('[data-glow]').removeAttr('data-glow')
-           // if_moved_end_it()
-           // add_action_taken()
             current_ability_method  = null
+        }
+    },
+    marchRhodriBlack:function(o){
+        displayAnimatedNews('Rhodri<br/>marching')
+    },
+    shieldBash:function(o){//shows circle, not directly away, and allows insta move, without single stepping
+        const { aim, hurt, hex, row, key } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            $('[data-glow]').removeAttr('data-glow')
+            if( onHit(aim, target) ){
+                displayAnimatedNews(`Rhodri bashed<br/>${target.data('name')}`)
+                target.addClass('shieldBash_selected')
+                setBoons_Blights(target,{bdamage:Number(target.attr('data-bdamage'))-1})
+                highlightHexes ({colour:'legendaryGlow', dist:2},target)
+                highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o,'away')
+            }
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    swordSlash: function (o) {
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    marchRhodriWhite:function(o){
+        displayAnimatedNews('Rhodri<br/>marching')
+    },
+    answerTheCall:function(o){
+        current_ability_method = null
+        if_moved_end_it()
+        add_action_taken()
+    },
+    hold:function(o){
+        const { hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        const target = $(targets[0])
+        setBoons_Blights(target,{bprotection:Number(target.attr('data-bprotection'))+1})
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        displayAnimatedNews(`${target.data('name')}<br/>+1 protection`)
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    bannerfall:function(o){},
+    marchGuardBlack:function(o){
+        const {  hex, row } = o
+        const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        if(!$('.marchGuardBlack').length){
+            $(`[data-name="${singleSpecimen.data('name')}"].${team}`).addClass('marchGuardBlack')
+            $('[data-glow]').removeAttr('data-glow')
+            displayAnimatedNews('Guards<br/>march')
+        }
+    },
+    swordStrike:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    brace:function(o){
+        const { hex, row } = o
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.unitModel')[0])
+        const { bprotection } = extractBoons_Blights($target)
+        setBoons_Blights($target,{bprotection: bprotection + 1})
+        displayAnimatedNews("Household Guards<br/>+1 protection")
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+    },
+    marchGuardWhite:function(o){
+        const {  hex, row } = o
+        const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        if(!$('.marchGuardBlack').length){
+            $(`[data-name="${singleSpecimen.data('name')}"].${team}`).addClass('marchGuardWhite')
+            $('[data-glow]').removeAttr('data-glow')
+            displayAnimatedNews('Guards<br/>march')
+        }
+    },
+    deathwind:function(o){
+        displayAnimatedNews('Mournblade moves<br/>banner')
+    },
+    raiseDeadChamps:function(o){
+        console.log('look for all champions that are health === 0 ad are withi n data-glow')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes ({colour:'greenGlow', dist: 3})
+        const $Mournblade = $('.selectedModel')
+        const { hex, row } = o
+        const team = $Mournblade.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        $('[data-glow="greenGlow"]').children(`.champModel.${team}.death`).each(function(){
+            $(this).addClass('mournblade_raisins')
+        })
+        rallyChampion( $(`.hex_${hex}_in_row_${row}`).children('.champModel.mournblade_raisins') )
+    },
+    soulClave:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                //resurrection starts here
+                rallyActionDeclaration({ unitname:"Mournblade", side:o.multiAction, type:"champion", name:"Knightshades" })
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            }else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    graveSummons:function(o){
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes({colour:'claimColor',dist:3})
+        add_action_taken()
+        if_moved_end_it()
+        current_ability_method = null
+    },
+    forwardMinions:function(o){
+        const {  hex, row } = o
+        const boss = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const team = boss.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        if( !$('.forwardMinions').length ){
+            $('[data-glow]').children(`[data-name="Knightshades"].${team}`).addClass('forwardMinions')
+            $('[data-glow]').removeAttr('data-glow')
+            displayAnimatedNews('Knightshades<br/>shamble onwards')
+        }
+    },
+    graspingDead:function(o){
+        $(`[data-name="Knightshades"].${o.multiAction}`).each(function(){
+            forceKill ( $(this) )
+        })
+        $('[data-glow]').removeAttr('data-glow')
+        setTimeout(
+            ()=>{rallyActionDeclaration({ 
+                unitname:"Mournblade", 
+                side:o.multiAction, 
+                type:"champion", 
+                name:"Knightshades",
+                dist:2 }, 'graspingDead')}
+        ,700)
+        current_ability_method = null
+    },
+    raiseGraspingDead:function(o){
+        const { hex, row, multiAction} = o
+        const thiz = $(`.hex_${hex}_in_row_${row}`)
+        $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
+        graveyard[river[1]][river[3]].splice(0,1)
+        $('[data-glow]').removeAttr('data-glow')
+        if( $(`[data-name="Knightshades"].${multiAction}`).length < 3 ){
+            rallyActionDeclaration({ unitname:"Mournblade", side:multiAction, type:"champion", name:"Knightshades", dist:2 }, `graspingDead`);
+        } else {
+            river = null
+            current_ability_method = null
         }
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*                                                                                                                */
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var _m_ = {
-    illKillYouAll: () => {//Utterlu brokenos, keeps glow and bad blood on the recieving end
-        $('.illKillYouAll_selected').removeClass('illKillYouAll illKillYouAll_selected outflank')
+    illKillYouAll: (thiz) => {//Utterlu brokenos, keeps glow and bad blood on the recieving end
+        //$('.illKillYouAll_selected').removeClass('illKillYouAll illKillYouAll_selected outflank')<----WAS THIS, NOW ITS BELOW
+        thiz.removeClass('illKillYouAll illKillYouAll_selected outflank').removeAttr('style')
         if( !$('.illKillYouAll').length && !$('.outflank').length )
         {
             current_ability_method = null
@@ -3165,8 +3415,64 @@ var _m_ = {
             $('.tongueLash_selected').removeClass('tongueLash_selected')
             current_ability_method = null
         }
+    },
+    marchRhodriBlack:()=>{
+        marchExec('RhodriBlack')
+    },
+    marchRhodriWhite:()=>{
+        marchExec('RhodriWhite')
+    },
+    shieldBash:()=>{
+        current_ability_method = null
+        add_action_taken()
+        if_moved_end_it()
+        $('[data-glow]').removeAttr('data-glow')
+        $('.shieldBash_selected').removeClass('shieldBash_selected')
+    },
+    marchGuardBlack:($thiz)=>{
+            $('[data-glow]').removeAttr('data-glow')
+            $($thiz).removeClass('marchGuardBlack').removeClass(`marchGuardBlack_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+        if(!$('.marchGuardBlack').length ){
+            current_ability_method = null
+            add_action_taken()
+        }
+    },
+    marchGuardWhite:($thiz)=>{
+        $('[data-glow]').removeAttr('data-glow')
+        $($thiz).removeClass('marchGuardWhite').removeClass(`marchGuardWhite_selected`)
+        setTimeout(()=>$thiz.removeAttr('style'),100)
+    if(!$('.marchGuardWhite').length ){
+        current_ability_method = null
+        add_action_taken()
+    }
+    },
+    deathWind:($thiz)=>{
+        current_ability_method = null
+        add_action_taken()
+        if_moved_end_it()
+        $('[data-glow]').removeAttr('data-glow')
+        $(`.deathWind_selected`).removeClass(`deathWind_selected`)
+    },
+    forwardMinions:($thiz)=>{
+        if( $('[data-glow].hexagon').length > 6 ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
+        } else {
+            $('[data-glow]').removeAttr('data-glow')
+            $($thiz).removeClass('forwardMinions').removeClass(`forwardMinions_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            if(!$('.forwardMinions').length ){
+                current_ability_method = null
+                add_action_taken()
+            }
+        }
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*                                                                                                                */
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var m__ = {
     newSpew: function (o){

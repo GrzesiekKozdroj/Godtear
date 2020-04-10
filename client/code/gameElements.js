@@ -4,9 +4,6 @@ function makeCoin(){
     `
 }
 
-
-
-
 function displayDeploymentInfo(scenario) {
     const whoStarts = myTurn ? `IgoFirst` : `IgoSecond`
     const whoStartsText = myTurn ? `1<sup>st</sup>` : `2<sup>nd</sup>`
@@ -103,7 +100,7 @@ function highlightHexes ({colour, dist},thiz = $('.selectedModel')){
 }
 
 function placeBanner(teamColor){
-    const klass = $('.selectedModel').data('klass')
+    const { klass, name } = $('.selectedModel').data()
     const color = klass ==='guardian' ? 'blue' : 
                   klass === 'maelstrom' ? 'yellow' : 
                   klass === 'shaper' ? 'green' : 
@@ -111,7 +108,8 @@ function placeBanner(teamColor){
     let steps = color === 'green' ? 2 : 1
     return `
         <img class="claimedBanner ${teamColor}"
-        src='./img/${color}Flag.png' data-color=${steps} />
+        src='./img/${color}Flag.png' data-color=${steps} 
+        data-name="${name}"  />
     `
 }
 function displayDamageRecieved(pain){

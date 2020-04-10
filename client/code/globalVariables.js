@@ -11,6 +11,7 @@ var opoDeployment;
 var phase = 'white';
 var glow;
 var river;//used for resurrection
+var MOVINGNOW = false;//used to stop doublemove
 var graveyard = 
     {
         left:{},

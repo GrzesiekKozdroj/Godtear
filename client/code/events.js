@@ -155,16 +155,17 @@ $('body').on('click','.gameTip', function(e){
 $('body').on('click','.hexagon[data-glow="yellowGlow"]', function(e){
     e.preventDefault()
     e.stopPropagation()
-    if(myTurn)
+    if(myTurn && !MOVINGNOW)
         m.universal.walk(e,$(this))
 })
 
 $('body').on('click','#claimAction',function(e){
     if( phase==='white' && myTurn && check_actions_count() ){
         e.preventDefault()
+        let claimsize = $('.selectedModel').data('name') === 'Mournblade' ? 3 : 1
         $('[data-glow]').removeAttr('data-glow')
-        highlightHexes({colour:'claimColor',dist:1})
-        socket.emit('HH', {color:'claimColor',dist:1})
+        highlightHexes({colour:'claimColor',dist:claimsize})
+        socket.emit('HH', {color:'claimColor',dist:claimsize})
     }
 })
 $('body').on('click','.objectiveGlow[data-glow="claimColor"]', function(){
@@ -266,12 +267,26 @@ $('body').on('click','.boon-blight.theGreatTusk.confirm', function(e){
 $('body').on('click','[data-glow].hexagon',function(e){
     e.preventDefault()
     const thiz = $(this)
+    const { hex, row } = thiz.data()
     if(myTurn){
         extraMover('illKillYouAll',thiz)
         extraMover('outflank',thiz)
-        if( $('.tongueTow_selected').length )extraMover('tongueTow',thiz)
+        if( $('.tongueTow_selected').length && thiz.hasClass('objectiveGlow'))extraMover('tongueTow',thiz)
         if( $('.tongueLash_selected').length )extraMover('tongueLash',thiz)
-        if( $('[data-glow^="strait"]') )extraMover('roll',thiz)
+        if( $('.marchRhodriBlack_selected').length )extraMover('marchRhodriBlack',thiz)
+        if( $('.marchRhodriWhite_selected').length )extraMover('marchRhodriWhite',thiz)
+        if( $('.shieldBash_selected').length )extraMover('shieldBash',thiz)
+        if( $('[data-glow^="strait"]').length )extraMover('roll',thiz)
+        if( $('.marchGuardBlack').length )extraMover('marchGuardBlack',thiz)
+        if( $('.marchGuardWhite').length )extraMover('marchGuardWhite',thiz)
+        //if( $('.marchGuardWhite').length )extraMover('marchGuardWhite',thiz)
+        if( $('.deathWind_selected').length && thiz.hasClass('objectiveGlow') )extraMover('deathWind',thiz)
+        else if ( $('.deathWind_selected').length )displayAnimatedNews('must be placed<br/>on objective')
+        if( $('.mournblade_raisins').length )
+            socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDeadChamps", hex, row })
+        if( $('.forwardMinions_selected').length && onlyOneStep(thiz,$('.forwardMinions_selected')) )
+            extraMover('forwardMinions',thiz)
+        
     }
 })
 $('body').on('click','.illKillYouAll',function(e){
@@ -288,6 +303,36 @@ $('body').on('click','.outflank',function(e){
     if(myTurn){
         $('.outflank_selected').removeClass('outflank_selected')
         $(this).addClass('outflank_selected')
+    }
+})
+$('body').on('click','.marchGuardBlack',function(e){
+    e.preventDefault()
+    if(myTurn){
+        $('.selectedModel').removeClass('selectedModel')
+        $('.marchGuardBlack_selected').removeClass('marchGuardBlack_selected')
+        $(this).addClass('marchGuardBlack_selected')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
+    }
+})
+$('body').on('click','.marchGuardWhite',function(e){
+    e.preventDefault()
+    if(myTurn){
+        $('.selectedModel').removeClass('selectedModel')
+        $('.marchGuardWhite_selected').removeClass('marchGuardWhite_selected')
+        $(this).addClass('marchGuardWhite_selected')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
+    }
+})
+$('body').on('click','.forwardMinions',function(e){
+    e.preventDefault()
+    const thiz = $(this)
+    if(myTurn){
+        $('.forwardMinions_selected').removeClass('forwardMinions_selected')
+        thiz.addClass('forwardMinions_selected')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes ({colour:'legendaryGlow', dist:2},$(this))
     }
 })
 $('body').on('click','#rallyAction',function(e){
@@ -308,6 +353,13 @@ $('body').on('click','[data-glow="newSpewWhite"].hexagon',function(e){
     const { hex, row } = $(this).data()
     if(myTurn)
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseNewSpew", hex, row, multiAction:mySide})
+})
+$('body').on('click','[data-glow="graspingDead"].hexagon',function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    const { hex, row } = $(this).data()
+    if(myTurn)
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseGraspingDead", hex, row, multiAction:mySide})
 })
 
 // $('body').on('click','.hexagon',function(e){

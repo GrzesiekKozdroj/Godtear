@@ -60,14 +60,23 @@ const checkIfStillAlive = (target) => {
         return true
     }
 }
-const forceKill = (target) => {
+const forceKill = (target) => {//$()
     target.addClass('death')
     setTimeout(()=>{
-        if(graveyard[target.data('side')][target.data('name')] && graveyard[target.data('side')][target.data('name')].length)
-            graveyard[target.data('side')][target.data('name')] = 
-                [...graveyard[target.data('side')][target.data('name')], target.removeClass('.death').detach()]
-        else
-            graveyard[target.data('side')][target.data('name')] = [target.removeClass('.death').detach()]
+        if( target.data('type')==='unit' )
+            if(
+                graveyard[target.data('side')][target.data('name')] && 
+                graveyard[target.data('side')][target.data('name')].length
+            )
+                graveyard[target.data('side')][target.data('name')] = 
+                    [...graveyard[target.data('side')][target.data('name')], target.removeClass('.death').detach()]
+            else
+                graveyard[target.data('side')][target.data('name')] = [target.removeClass('.death').detach()]
+        else if( target.data('type')==='champion' ){
+            //gotta emit champ death
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'deathMove',dist:2},target)
+        }
     }, 700)
 }
 const moveLadder = (target,steps) => {
@@ -125,14 +134,14 @@ const tellMeDistance = (origin,target) => {//IT GIVES FALSE MEASUREMENTS OFTENTI
     const rfloored = Math.floor(rows/2)//   floor:  0  |  ceil: 1        ||floor on or odd
     return hexes < rows ? hfloored + rows : rfloored + hexes// 0 < 0 ? 1 OR 1 | 1 < 1 ? 2 OR 2
 }
-const highlight_closest_path = (a,b) => {//UTTER FAILURE, MOSTLY BECAUSE OF THE ABOVE FUNCTION
-    console.log(a,b)
+const highlight_closest_path = (a,b,way='towards') => {//UTTER FAILURE, MOSTLY BECAUSE OF THE ABOVE FUNCTION
+    console.log('pathed')
     const A_B = tellMeDistance(a,b)//expects data objects {hex, row}
     $('.hexagon[data-glow]').each(function(){
         const thiz = $(this).data()
         const A_T = tellMeDistance(a,thiz)
         const B_T = tellMeDistance(b, thiz)
-        if(A_T + B_T > A_B) {
+        if( way === 'towards' ? A_T + B_T > A_B : A_T + B_T <  A_B ) {
             $(this).removeAttr('data-glow')
             $(this).children().removeAttr('data-glow')
         }
@@ -186,7 +195,7 @@ const highlightDirectPaths = ( { origin, distance, colour } ) => {
     $(`[data-glow^="${colour}"`).children('.top').attr('data-glow',colour)
     $(`[data-glow^="${colour}"`).children('.bottom').attr('data-glow',colour)
 }
-function extraMover(methodName,thiz){console.log('extra mover')
+function extraMover(methodName,thiz){//<----needs another props: conditions to be considered
     if($('.'+methodName+'_selected').length && myTurn){//tioed to a bug with IllKillYouAll
         const h = thiz.data('hex')
         const r = thiz.data('row')
@@ -213,19 +222,20 @@ function leave_only_selected_path(){
         }
     })
 }
-function rallyActionDeclaration({ unitname, side, type, name },glowType = 'recruitGlow'){
+function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowType = 'recruitGlow'){
+    console.log(unitname,side,type,name,dist)
     const { hex, row } = $(`[data-name="${unitname}"].${side}`).parent('.hexagon').data()
     river = [unitname,side,type,name]
     if(name==="Retchlings"){
         $(`[data-name="${name}"].${side}`).each(function(){
             const h = $(this).parent('.hexagon').data('hex')
             const r = $(this).parent('.hexagon').data('row')
-            highlightHexes({colour:glowType,dist:1},$(this))
-            socket.emit('HH', {color:glowType,dist:1, hex:h, row:r, river})
+            highlightHexes({colour:glowType,dist},$(this))
+            socket.emit('HH', {color:glowType,dist, hex:h, row:r, river})
         })
     }
-    highlightHexes({colour:glowType,dist:1},$(`[data-name="${unitname}"].${side}`))
-    socket.emit('HH', {color:glowType,dist:1, hex, row, river})
+    highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
+    socket.emit('HH', {color:glowType,dist, hex, row, river})
 }
 function blights_spew_declaration ({origin, abilName}){
     const { baim } = extractBoons_Blights(origin)
@@ -266,4 +276,21 @@ function healLife(target){
             target.attr('data-healthleft', currentWounds)
         }
     }
+}
+function march (string, target){
+    const { hex, row } = target
+    $('.selectedModel').addClass(`march${string}_selected`)
+    socket.emit('forceMove',{h:hex, r:row, klass:"champion", callback:`march${string}`})
+}
+function marchExec(string){
+    current_ability_method = null
+    add_action_taken()
+    if_moved_end_it()
+    $('[data-glow]').removeAttr('data-glow')
+    $(`.march${string}_selected`).removeClass(`march${string}_selected`)
+}
+function rallyChampion(thiz){
+    console.log(thiz)
+    thiz.removeClass('death mournblade_raisins').attr('data-healthleft', thiz.data('health') )
+    displayAnimatedNews(`${thiz.data('name')}<br/>back in game`)
 }

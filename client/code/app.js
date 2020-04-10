@@ -43,16 +43,18 @@ function beginBattle(){
 }
 const makeAnim = (that,thiz,callback=false) => {
     let ofsetSize = that.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
+    MOVINGNOW = true
     if(thiz)
         that.animate({
             left: thiz.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * window.innerHeight)- that.offset().left,
             top: thiz.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
-        }, 420, ()=>{
+        }, 1000, ()=>{
             that.removeAttr('style').finish().detach().prependTo(thiz);
             if(callback)
                 callback(that)
             else
                 thiz.removeAttr('data-glow')
+        MOVINGNOW = false
         });
 };//anim
 function gameCard (name, roster, color) {

@@ -286,6 +286,9 @@ $('body').on('click','[data-glow].hexagon',function(e){
             socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDeadChamps", hex, row })
         if( $('.forwardMinions_selected').length && onlyOneStep(thiz,$('.forwardMinions_selected')) )
             extraMover('forwardMinions',thiz)
+        if( $('.wheresMaster_selected').length && onlyOneStep(thiz,$('.wheresMaster_selected')) )
+            extraMover('wheresMaster',thiz)
+        if( $('.shadowWard_selected').length )extraMover('shadowWard',thiz)
         
     }
 })

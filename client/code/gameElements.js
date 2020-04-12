@@ -43,9 +43,7 @@ function displayAnimatedNews (message){
     $('body').one('click',function(e){
         e.preventDefault()
         $('.flashNews')
-            .removeClass('hinge-in-from-middle-y mui-enter mui-enter-active')
-            .addClass('scale-out-up mui-leave mui-leave-active')
-        setTimeout(()=>$('.flashNews').off().remove(),550)
+            .remove()
     })
 }
 

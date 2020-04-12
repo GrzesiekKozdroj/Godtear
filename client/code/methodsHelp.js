@@ -29,7 +29,7 @@ const onHit = (aim, target) => {
     setBoons_Blights($('.selectedModel'),{baim:0})
     setBoons_Blights(target,{bdodge:0})
     return aim_total >= target_dodge
-}
+}//<--should take $(origin) and reset its baim and take target and reset its bdodge
 const doDamage = (hurt, target) => {
     const target_protection = Number(target.attr('data-protection')) + Number(target.attr('data-bprotection'))
     const hurt_total = hurt.reduce((a,b)=>a+b,0)
@@ -42,7 +42,7 @@ const doDamage = (hurt, target) => {
             animateDamage(target, (target_protection - hurt_total))
             return true
         } else { return false }
-}
+}//<--should take $(origin) and reset its bdamage and take target and it bprotection
 const animateDamage = (target, pain) => {
     target.addClass('shakeModel')
     target.parent('.hexagon').append(displayDamageRecieved(pain))
@@ -78,7 +78,7 @@ const forceKill = (target) => {//$()
             highlightHexes({colour:'deathMove',dist:2},target)
         }
     }, 700)
-}
+}//<---killed units and champs need to give up their boons and blights, what about resurrected units??
 const moveLadder = (target,steps) => {
     const origin = $($('#coin').parent('.ladderBlock')).data('block')
     let direction = 0 //1   <--> 22
@@ -269,13 +269,14 @@ function blights_spew_recieved({o, blight}){
     }
     current_ability_method = null
 }
-function healLife(target){
+function healLife(target, h = 2){
     for(let oi = 0; oi < 2; oi++){
         if(  Number( target.attr('data-healthleft') ) < Number( target.attr('data-health') )  ){
             const currentWounds = Number(target.attr('data-healthleft')) + 1
             target.attr('data-healthleft', currentWounds)
         }
     }
+    displayAnimatedNews(`${target.data('name')}<br/>heals ${h} wound${h>2?"s":''}`)
 }
 function march (string, target){
     const { hex, row } = target
@@ -293,4 +294,7 @@ function rallyChampion(thiz){
     console.log(thiz)
     thiz.removeClass('death mournblade_raisins').attr('data-healthleft', thiz.data('health') )
     displayAnimatedNews(`${thiz.data('name')}<br/>back in game`)
+}
+function _target({ hex, row }){//UNFINISHED, not annoyed enuff yet
+    return $(`.hex_`)
 }

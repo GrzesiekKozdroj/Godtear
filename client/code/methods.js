@@ -789,7 +789,7 @@ const m =
                 desc: aimBoon,
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "depthsOfSorrow"
             },
             deathsDoor:
             {
@@ -800,7 +800,7 @@ const m =
                 aim: [4, 5, 5],
                 hurt: [4, 4, 5],
                 unused: true,
-                m: function () { }
+                m: "deathsDoor"
             }
         },
         white:
@@ -808,20 +808,20 @@ const m =
             carefulMaster:
             {
                 name: "Careful, Master",
-                desc: `If Mournblade is within range, he gains ${dodgeBoon}.`,
+                desc: `Click Mournblade if in range, he gains ${dodgeBoon}.`,
                 icon: cogs,
                 dist: 3,
                 unused: true,
-                m: function () { }
+                m: "carefulMaster"
             },
             wheresMaster:
             {
                 name: "Where's Master?",
-                desc: "If Mournblade is within range, he may make a rally action or move up to 2 hexes.",
+                desc: "Click Mournblade if within range, he may make a rally action or move up to 2 hexes.",
                 icon: cogs,
                 dist: 3,
                 unused: true,
-                m: function () { }
+                m: "wheresMaster"
             }
         },
         util:
@@ -845,15 +845,15 @@ const m =
                 icon: star,
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "mirage"
             },
-            voidWeapon:
+            voidWeaponChamp:
             {
                 name: "Void Weapon",
                 desc: hurtBoon,
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "voidWeaponChamp"
             },
             lifeBlade:
             {
@@ -864,7 +864,7 @@ const m =
                 aim: [4],
                 hurt: [5],
                 unused: true,
-                m: function () { }
+                m: "lifeBlade"
             }
         },
         white:
@@ -875,7 +875,7 @@ const m =
                 desc: walkBoon,
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "poisedToStrike"
             },
             shadowWard:
             {
@@ -885,7 +885,7 @@ const m =
                 dist: 2,
                 aim: [5],
                 unused: true,
-                m: function () { }
+                m: "shadowWard"
             }
         },
         util:
@@ -893,12 +893,12 @@ const m =
             legendary:
             {
                 name: "Phantom Banners",
-                desc: "Choose any number of friendly banners within range. Place teh on objective hexes within range.",
+                desc: "Choose any number of friendly banners within range. Place them on objective hexes within range.",
                 dist: 4,
                 unused: true,
                 legendaryUsed: false,
                 icon: star,
-                m: function () { }
+                m: "phantomBanners"
             },
             bannerWarden:
             {
@@ -2580,7 +2580,76 @@ const _m = {
     },
     graspingDead:function(origin,target){
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"graspingDead", multiAction:mySide})
-    }
+    },
+    depthsOfSorrow:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{aim:0,hurt:0,socksMethod:"depthsOfSorrow", hex, row})
+    },
+    deathsDoor:function(origin,target){//NO BONUS ADDED YET
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [4, 5, 5][unitSize]
+        const hurt = [4, 4, 5][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"deathsDoor", hex, row })
+    },
+    carefulMaster:function(origin,target){
+        const { hex, row } = target
+        $target = $(`.hex_in_${hex}_row_in_${row}`).children('[data-name="Mournblade"].whiteTeam')
+        if( $target ){
+            socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"carefulMaster", hex, row })
+        } else if ( !$target ) displayAnimatedNews('Must target<br/>your Mournblade')
+    },
+    wheresMaster:function(origin,target){
+        const { hex, row } = target
+        const $mourn = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Mournblade"].whiteTeam')[0])
+        if ( $mourn.length )
+            socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"wheresMaster", hex, row })
+    },
+    mirage:function(origin,target){
+        const { hex, row } = target
+        const $target = $(`.hex_${hex}_in_row_${row}`)
+        if( $target.children('.claimedBanner.whiteTeam').length ){
+            displayAnimatedNews('reposition your banner')
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'greenGlow',dist:1},$($target.children('.claimedBanner')[0]))
+            $target.children('.claimedBanner').addClass('tongueTow_selected')
+            socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"tongueTow", hex, row})
+        } else displayAnimatedNews('must target friendly banner')
+    },
+    voidWeaponChamp:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"voidWeaponChamp", hex, row})
+    },
+    lifeBlade:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (4 + baim), hurt:(5 + bdamage), socksMethod:"lifeBlade", hex, row })
+    },
+    poisedToStrike:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"poisedToStrike", hex, row})
+    },
+    shadowWard:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:0, socksMethod:"shadowWard", hex, row })
+    },
+    phantomBanner:function(origin,target){
+            // name: "Phantom Banners",
+            // desc: "Choose any number of friendly banners within range. Place them on objective hexes within range.",
+            // dist: 4,
+            // unused: true,
+            // legendaryUsed: false,
+            // icon: star,
+            // m: "phantomBanners"
+        },
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3281,7 +3350,6 @@ var m_ = {
         displayAnimatedNews('Mournblade moves<br/>banner')
     },
     raiseDeadChamps:function(o){
-        console.log('look for all champions that are health === 0 ad are withi n data-glow')
         $('[data-glow]').removeAttr('data-glow')
         highlightHexes ({colour:'greenGlow', dist: 3})
         const $Mournblade = $('.selectedModel')
@@ -3355,6 +3423,134 @@ var m_ = {
         } else {
             river = null
             current_ability_method = null
+        }
+    },
+    depthsOfSorrow:function(o){
+        const { hex, row } = o
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const { baim } = extractBoons_Blights($target)
+        setBoons_Blights($target,{baim:baim+1})
+        displayAnimatedNews("Knightshades<br/>+1 aim")
+        current_ability_method = null
+        add_action_taken()
+        if_moved_end_it()
+    },
+    deathsDoor:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    carefulMaster:function(o){
+        const { hex, row } = o
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Mournblade"]')[0])
+        const { bdodge } = extractBoons_Blights($target)
+        setBoons_Blights($target,{bdodge:bdodge+1})
+        displayAnimatedNews("Mournblade<br/>+1 dodge")
+        current_ability_method = null
+        add_action_taken()
+        if_moved_end_it()
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    wheresMaster:function(o){
+        const { hex, row } = o
+        const $mourn = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Mournblade"]')[0])
+        $('[data-glow]').removeAttr('data-glow')
+        if ( Number($mourn.attr('data-healthleft')) < 1 ){
+            displayAnimatedNews('Mournblade<br/>rallies')
+            rallyChampion( $mourn )
+            current_ability_method = null
+        } else {
+            displayAnimatedNews('Mournblade<br/>moves')
+            $mourn.addClass('wheresMaster_selected')
+            highlightHexes({colour:'legendaryGlow',dist: 2}, $mourn)
+        }
+        if_moved_end_it()
+        add_action_taken()
+    },
+    mirage:function(o){
+        if( !$('.tongueTow_selected').length ){
+            const { hex, row } = o
+            const $target = $(`.hex_${hex}_in_row_${row}`)
+            $('[data-glow]').removeAttr('data-glow')
+            $target.children('.claimedBanner').addClass('tongueTow_selected')
+            highlightHexes({colour:'greenGlow',dist:1},$($target.children('.claimedBanner')[0]))
+            if_moved_end_it()
+            add_action_taken()
+            current_ability_method = null
+            displayAnimatedNews(`mirage<br/>banner moved`)
+        }
+    },
+    voidWeaponChamp:function(o){
+        const { hex, row } = o
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Finvarr"]')[0])
+        setBoons_Blights($target,{ bdamage: Number( $target.attr('data-bdamage') ) + 1 })
+        displayAnimatedNews("Finvarr<br/>+1 to damage")
+        add_action_taken()
+        if_moved_end_it()
+        $('[data-glow]').removeAttr('data-glow')
+        current_ability_method = null
+    },
+    lifeBlade:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                healLife( $('.selectedModel[data-name="Finvarr"]'), 1)
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,1 + target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    poisedToStrike:function(o){
+        const { hex, row } = o
+        console.log(o)
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Finvarr"]')[0])
+        setBoons_Blights($target,{ bspeed: Number( $target.attr('data-bspeed') ) + 1 })
+        displayAnimatedNews("Finvarr<br/>+1 to speed")
+        add_action_taken()
+        if_moved_end_it()
+        $('[data-glow]').removeAttr('data-glow')
+        current_ability_method = null
+    },
+    shadowWard:function(o){
+        const { aim, hurt, hex, row, key } = o
+        const targets = $($(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)[0])
+        if(targets.length && !$('.shadowWard_selected').length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                displayAnimatedNews(`reposition ${target.data('name')}`)
+                target.addClass('shadowWard_selected')
+                highlightHexes({colour:'legendaryGlow',dist: 1}, $('.shadowWard_selected'))
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,1 + target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            }else displayAnimatedNews ("missed!")
         }
     }
 }
@@ -3467,6 +3663,27 @@ var _m_ = {
                 add_action_taken()
             }
         }
+    },
+    wheresMaster:($thiz)=>{
+        if( $('[data-glow].hexagon').length > 6 ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
+        } else {
+            $('[data-glow]').removeAttr('data-glow')
+            $($thiz).removeClass(`wheresMaster_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            if(!$('.wheresMaster_selected').length ){
+                current_ability_method = null
+            }
+        }
+
+    },
+    shadowWard:($thiz)=>{
+        current_ability_method = null
+        add_action_taken()
+        if_moved_end_it()
+        $('[data-glow]').removeAttr('data-glow')
+        $(`.shadowWard_selected`).removeClass(`shadowWard_selected`)
     }
 }
 

@@ -493,7 +493,7 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     }
     animation: 2s alternate infinite pulseg;
 }
-.selectedModel.hexagrama-14.champModel{
+.selectedModel.hexagrama-14.champModel,.phantomBanners_selected{
     @include pulseChamp(90%,110%);
 }
 .selectedModel.hexagrama-30.unitModel{
@@ -567,22 +567,89 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
             font-size:119%
         }
         .booned{
-            box-shadow: inset 0 0 3vh rgb(255, 211, 15), 
-                        0 0 3vh rgb(255, 211, 15),
+            box-shadow: inset 0 0 3vh rgb(255, 143, 15), 
+                        0 0 3vh rgb(255, 191, 15),
                         inset 0 0 4vh rgb(255, 211, 15), 
                         0 0 4vh rgb(255, 211, 15);
         }
         .blighted{
             opacity:.38;
             box-shadow: inset 0 0 3vh rgb(15, 2, 1), 
-                        0 0 3vh rgb(53, 50, 50),  
-                        inset 0 0 4.3vh rgb(34, 33, 32), 0 0 4.3vh 
+                        0 0 3vh rgb(27, 26, 26),  
+                        inset 0 0 4.3vh rgb(17, 17, 16), 0 0 4.3vh 
         }
         .selected{
             box-shadow: inset 0 0 3vh rgb(255, 31, 15), 
                         0 0 3vh rgb(255, 43, 15),  
                         inset 0 0 4.3vh rgb(255, 31, 15), 
                         0 0 4.3vh rgb(255, 43, 15);
+        }
+        .message{
+            width:100%; 
+            font-family:$coinFont2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.niaChallenge{
+    @include instaFlex;
+    color:rgba(0, 0, 0, 0.911);
+    text-shadow: 0 0 1vh darkorange, 0 0 1.5vh darkorange, 0 0 2vh darkorange, 0 0 2.5vh darkorange, 0 0 3vh darkorange;
+    font-size: 120%;
+    font-weight: 900;
+    position:absolute;
+    z-index:10;
+    margin:auto auto;
+    text-align: center;
+    .niaChallengeCrest{
+        width:50vw;
+        height:60vh;
+        font-family: $coinFont2;
+        display:flex;
+        flex-wrap:wrap;
+        justify-content: center;
+        .boon-blight{
+            width:10vw;
+            height:10vw;
+            border:1vh solid rgba(109, 83, 17, 0.829);
+            background-size:cover;
+            background-position: center;
+            margin:1vw;
+        }
+        .walk{background-image:url('../img/walk_white.png'); border-radius:50% 50% 30% 50%; }
+        .dodge{background-image:url('../img/dodge_black.svg'); border-radius:50% 50% 30% 30%; }
+        .protection{background-image:url('../img/shield_black.svg'); border-radius:50% 50% 30% 30%; }
+        .aim{background-image:url('../img/aim_black.png'); border-radius:50% 50% 50% 30%; }
+        .damage{background-image:url('../img/hurt_black.png');  border-radius:30% 30% 50% 50%; }
+        .confirm{
+            background-color:goldenrod; 
+            border-radius:50% 30% 50% 50%; 
+            justify-content: center; 
+            display:flex; 
+            align-items: center;
+            font-family: $coinFont2;
+            font-size:119%
+        }
+        .cancel{border-radius:30% 50% 50% 50%; }
+        .booned{
+            box-shadow: inset 0 0 3vh rgb(255, 143, 15), 
+                        0 0 3vh rgb(255, 171, 15),
+                        inset 0 0 4vh rgb(255, 211, 15), 
+                        0 0 4vh rgb(255, 211, 15);
+        }
+        .blighted{
+            box-shadow: inset 0 0 3vh rgb(15, 2, 1), 
+                        0 0 3vh rgb(27, 26, 26),  
+                        inset 0 0 4.3vh rgb(17, 17, 16), 0 0 4.3vh 
+        }
+        .selected{
+            box-shadow: inset 0 0 3vh rgb(203, 255, 15), 
+                        0 0 3vh rgb(163, 255, 15),  
+                        inset 0 0 4.3vh rgb(171, 255, 15), 
+                        0 0 4.3vh rgb(163, 255, 15);
         }
         .message{
             width:100%; 

@@ -904,7 +904,7 @@ const m =
             {
                 name: "Banner Warden",
                 desc: `If Finvarr is on an objective hex, his skills have +2${aim}.`,
-                m: function () { }
+                m: "null"
             }
         }
     },
@@ -918,7 +918,7 @@ const m =
                 desc: aimBoon,
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "voidWeapon"
             },
             lifeTrade:
             {
@@ -929,7 +929,7 @@ const m =
                 aim: [4, 5, 5],
                 hurt: [4, 5, 5],
                 unused: true,
-                m: function () { }
+                m: "lifeTrade"
             }
         },
         white: {
@@ -940,7 +940,7 @@ const m =
                 icon: cogs,
                 dist: 1,
                 unused: true,
-                m: function () { }
+                m: "protect"
             },
             shadowSnare:
             {
@@ -950,10 +950,10 @@ const m =
                 dist: 1,
                 aim: [4, 5, 5],
                 unused: true,
-                m: function () { }
+                m: "shadowSnare"
             }
         },
-        util:
+        util://waits until proper action validation
         {
             shadowStep:
             {
@@ -974,7 +974,7 @@ const m =
                 icon: star,
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "crystalGlare"
             },
             erosion:
             {
@@ -984,7 +984,7 @@ const m =
                 dist: 2,
                 aim: [5],
                 unused: true,
-                m: function () { }
+                m: "erosion"
             },
             blindingLight:
             {
@@ -995,7 +995,7 @@ const m =
                 aim: [4],
                 hurt: [5],
                 unused: true,
-                m: function () { }
+                m: "blindingLight"
             }
         },
         white:
@@ -1007,7 +1007,7 @@ const m =
                 dist: 2,
                 icon: star,
                 unused: true,
-                m: function () { }
+                m: "crystalMirror"
             },
             meditation:
             {
@@ -1015,29 +1015,30 @@ const m =
                 desc: aimBoon,
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "meditation"
             },
-            march:
+            marchNia:
             {
                 name: "March",
                 desc: "Move Nia up to 1 hex.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "marchNia"
             }
         },
         util:
         {
-            legendary:
+            legendary://SUPER DUPER MEGA SLOW 4 seconds wait to load all glows
             {
                 name: "Geode",
                 desc: "Plot Phase only. Choose a Quartzling that is the only model in its hex and is adjacent to an objective hex, and replace it with an objective hex. If it is within 2 hexes of Nia, she may make a claim action on that hex.",
                 icon:star,
                 unused: true,
+                dist:13,
                 legendaryUsed: false,
-                m: function () { }
+                m: "geode"
             },
-            rockConcert:
+            rockConcert://not yet madeable, no activation validation structure to give such a boon
             {
                 name: "Rock Concert",
                 desc: "If all 3 Quartzlings are on the battlefield when Nia activates, she may make a bonus action that activation.",
@@ -1055,7 +1056,7 @@ const m =
                 desc: "Each Quartzling may move up to 3 hexes in a straight line.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "rollingStones"
             },
             stoneThrow:
             {
@@ -2220,12 +2221,6 @@ const _m = {
             socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"challenge", hex, row, curseCount:1 })
         } else 
             displayAnimatedNews('target enemy model')
-        // name: "Challenge",
-        // desc: "An enemy model within range gains two different blights of your choice. Titus gains a blight of your opponents choice.",
-        // icon: star,
-        // dist: 2,
-        // unused: true,
-        // m: "challenge"
     },
     illKillYouAll:function(origin,target){
         const { baim } = extractBoons_Blights(origin)
@@ -2627,8 +2622,9 @@ const _m = {
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const bannerWarden = $(`.hex_${hex}_in_row_${row}`).hasClass('objectiveGlow') ? 2 : 0
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (4 + baim), hurt:(5 + bdamage), socksMethod:"lifeBlade", hex, row })
+            socket.emit('rolloSkill',{ aim: (4 + baim + bannerWarden), hurt:(5 + bdamage), socksMethod:"lifeBlade", hex, row })
     },
     poisedToStrike:function(origin,target){
         const { hex, row } = origin.parent('.hexagon').data()
@@ -2638,26 +2634,113 @@ const _m = {
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const bannerWarden = $(`.hex_${hex}_in_row_${row}`).hasClass('objectiveGlow') ? 2 : 0
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:0, socksMethod:"shadowWard", hex, row })
+            socket.emit('rolloSkill',{ aim: (5 + baim + bannerWarden), hurt:0, socksMethod:"shadowWard", hex, row })
     },
-    phantomBanner:function(origin,target){
-            // name: "Phantom Banners",
-            // desc: "Choose any number of friendly banners within range. Place them on objective hexes within range.",
-            // dist: 4,
-            // unused: true,
-            // legendaryUsed: false,
-            // icon: star,
-            // m: "phantomBanners"
-        },
+    phantomBanners:function(origin,target){
+        const { hex, row } = target
+        if( $( $(`.hex_${hex}_in_row_${row}`).children(`.claimedBanner.whiteTeam`)[0] ).length )
+            socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"phantomBanners", hex, row })
+    },
+    voidWeapon:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"voidWeapon", hex, row })
+    },
+    lifeTrade:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [4, 5, 5][unitSize]
+        const hurt = [4, 5, 6][unitSize]
+        if($target.hasClass(`blackTeam`) )
+        socket.emit('rolloSkill',{ aim:(aim+baim),hurt:(hurt+bdamage),multiAction:mySide,socksMethod:"lifeTrade",hex,row})
+    },
+    protect:function(origin,target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass('whiteTeam'))
+            socket.emit('rolloSkill',{ aim:0,hurt:0,socksMethod:"protect",hex,row})
+    },
+    shadowSnare:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [4, 5, 5][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:0, socksMethod:"shadowSnare", hex, row })
+    },
+    crystalGlare:function(origin,target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if ( !crystalGlare_bb ){
+            $('#gameScreen').append(crystalGlareOptions(origin, target, "crystalGlare",1,`choose one blight`))
+        } else if ( crystalGlare_bb && $target.hasClass('blackTeam') )
+            socket.emit('rolloSkill',{ aim: 0, hurt: 0, socksMethod:"crystalGlare", hex, row, cursePackage:crystalGlare_bb })
+    },
+    erosion:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:0, socksMethod:"erosion", hex, row })
+    },
+    blindingLight:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (4 + baim), hurt: (5 + bdamage), socksMethod:"blindingLight", hex, row })
+    },
+    crystalMirror:function(origin,target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.whiteTeam')[0])
+        if ( !crystalGlare_bb ){
+            $('#gameScreen').append(crystalGlareOptions(origin, target, "crystalMirror",1,`choose one boon`))
+        } else if ( crystalGlare_bb )
+            socket.emit('rolloSkill',{ aim: 0, hurt: 0, socksMethod:"crystalMirror", hex, row, cursePackage:crystalGlare_bb })
+    },
+    meditation:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"meditation", hex, row})
+    },
+    marchNia:function(origin,target){
+        march('Nia',target)
+    },
+    geode:function(origin,target){
+        if( phase === "white" ){
+            const { hex, row } = target
+            const thizQuartz = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.whiteTeam')[0])
+            if( !thizQuartz.siblings(`[data-name="Quartzlings"].${mySide}`).length ){
+                highlightHexes({colour:'ob',dist:1},thizQuartz)
+                $('[data-glow].hexagon').each(function(){
+                    const thisObj = $(this)
+                    if(thisObj.hasClass('objectiveGlow')){
+                        socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"geode", hex, row})
+                        return false
+                    }
+                })
+            }
+        }
+    },
+    rollingStones:function(origin,target){
+        // name: "Rolling Stones",
+        // desc: "Each Quartzling may move up to 3 hexes in a straight line.",
+        // icon: self,
+        // unused: true,
+        // m: "rollingStones"
+    },
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*                                                                                                                */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var m_ = {
-    kick: function (o){
+    kick:function (o){
         const { aim, hurt, hex, row, key } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
@@ -2675,7 +2758,7 @@ var m_ = {
         }
         current_ability_method = null
     },
-    fieryAxe: function (o){
+    fieryAxe:function (o){
         const { aim, hurt, hex, row, key, multiAction } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
@@ -3386,6 +3469,7 @@ var m_ = {
         add_action_taken()
         if_moved_end_it()
         current_ability_method = null
+        displayAnimatedNews('double click<br/>to claim')
     },
     forwardMinions:function(o){
         const {  hex, row } = o
@@ -3552,7 +3636,180 @@ var m_ = {
                 else displayAnimatedNews("no damage!")
             }else displayAnimatedNews ("missed!")
         }
-    }
+    },
+    phantomBanners:function(o){ // current_ability_methodDOESN"T GET NULL!!!!
+        const { hex, row } = o
+        const $banner = $($(`.hex_${hex}_in_row_${row}`).children(`.claimedBanner`)[0])
+        const team = !$banner.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
+            console.log(!$('.phantomBanners_selected').length,team, $banner.hasClass(team))
+        if( !$('.phantomBanners_selected').length && $banner.hasClass(team))
+            $banner.addClass('phantomBanners_selected')
+    },
+    voidWeapon:function(o){
+        const { hex, row } = o
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)[0])
+        setBoons_Blights($target,{baim:Number($target.attr('data-baim'))+1})
+        displayAnimatedNews('Shadow Sentinels<br/>+1 aim')
+        add_action_taken()
+        if_moved_end_it()
+        $('[data-glow]').removeAttr('data-glow')
+        current_ability_method = null
+    },
+    lifeTrade:function(o){
+        const { aim, hurt, hex, row, multiAction } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) ){
+                        if( $('.selectedModel').siblings('.smallCard').length < 2 )
+                        rallyActionDeclaration({ 
+                            unitname:"Finvarr", 
+                            side:multiAction, 
+                            type:"champion", 
+                            name:"ShadowSentinels" })
+                        displayAnimatedNews(`dead raise<br/>again`)
+                        moveLadder(target, target.data('stepsgiven'))
+                    }else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    protect:function(o){
+        const { hex, row } = o
+        const targets = $($(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)[0])
+        setBoons_Blights(targets,{bprotection:Number( targets.attr('data-bprotection') )+1})
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        displayAnimatedNews(`${targets.data('name')}<br/>+1 protection`)
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    shadowSnare:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                setBoons_Blights(target,{ bspeed:Number( target.attr('data-bspeed') )-1 })
+                displayAnimatedNews(`${target.data('name')}<br/>-1 speed`)
+            }else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    crystalGlare:function(o){
+        const { hex, row, cursePackage } = o
+        const { curseType } = cursePackage
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) - 1 })
+        displayAnimatedNews(`${$target.data('name')}<br/>-1 ${[...curseType].slice(1).join('')}`)
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        $('[data-glow').removeAttr('data-glow')
+        crystalGlare_bb = null
+    },
+    erosion:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if( onHit(aim, target) ){
+                setBoons_Blights(target,{ bprotection:Number( target.attr('data-bprotection') )-1 })
+                displayAnimatedNews(`${target.data('name')}<br/>-1 protection`)
+            }else displayAnimatedNews ("missed!")
+        }
+        if_moved_end_it()
+        $('[data-glow]').removeAttr('data-glow')
+        add_action_taken()
+        current_ability_method = null
+    },
+    blindingLight:function (o){
+        const { aim, hurt, hex, row, key } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                setBoons_Blights(target,{ baim:Number( target.attr('data-baim') )-1 })
+                displayAnimatedNews(`${target.data('name')}<br/>-1 aim`)
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,1 + target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    crystalMirror:function(o){
+        const { hex, row, cursePackage } = o
+        const { curseType } = cursePackage
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) + 1 })
+        displayAnimatedNews(`${$target.data('name')}<br/>+1 ${[...curseType].slice(1).join('')}`)
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        $('[data-glow').removeAttr('data-glow')
+        crystalGlare_bb = null
+    },
+    meditation:function(o){
+        const { hex, row } = o
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)[0])
+        setBoons_Blights($target,{baim:Number($target.attr('data-baim'))+1})
+        displayAnimatedNews('Nia<br/>+1 aim')
+        add_action_taken()
+        if_moved_end_it()
+        $('[data-glow]').removeAttr('data-glow')
+        current_ability_method = null
+    },
+    marchNia:function(o){
+        displayAnimatedNews('Nia<br/>marching')
+    },
+    geode:function(o){
+        const { hex, row } = o
+        const thizQuartz = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const team = thizQuartz.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        makeObjectiveHex(row,hex)
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes({colour:'greenGlow',dist:2},thizQuartz)
+        forceKill(thizQuartz)
+        $('[data-glow].hexagon').each(function(){
+            const niahere = $(this)
+            if ( niahere.children(`[data-name="Nia"].${team}`).length ){
+                $('[data-glow]').removeAttr('data-glow')
+                highlightHexes({colour:'claimColor',dist:2},$(niahere.children(`[data-name="Nia"].${team}`)[0]))
+                $('[data-glow]').each(function(){
+                    const notThat = $(this)
+                    if( notThat.data('hex') !== hex || notThat.data('row')!==row )
+                        notThat.removeAttr('data-glow')
+                })
+                return false
+            }
+        })
+        add_action_taken()
+        if_moved_end_it()
+        current_ability_method=null
+        displayAnimatedNews('Geode')
+    },
+    rollingStones:function(o){
+        // name: "Rolling Stones",
+        // desc: "Each Quartzling may move up to 3 hexes in a straight line.",
+        // icon: self,
+        // unused: true,
+        // m: "rollingStones"
+    },
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3684,6 +3941,12 @@ var _m_ = {
         if_moved_end_it()
         $('[data-glow]').removeAttr('data-glow')
         $(`.shadowWard_selected`).removeClass(`shadowWard_selected`)
+    },
+    phantomBanners:()=>{
+        $('.phantomBanners_selected').removeClass('phantomBanners_selected')
+    },
+    marchNia:()=>{
+        marchExec('Nia')
     }
 }
 

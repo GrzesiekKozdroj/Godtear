@@ -180,3 +180,30 @@ const greatTuskBoons = (origin, socksMethod,curseCount,message) => {
             </div>
         `
     }
+const crystalGlareOptions = (origin, target, socksMethod,curseCount,message) => {
+//$('.selectedModel'), {hex=Number(), row=Number(), sockMethod:"string"}
+    const { hex, row } = target
+    const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+    const { baim, bdamage, bspeed, bdodge, bprotection } = extractBoons_Blights( $target )
+    const decideOrnament = (bb) => bb > 0 ? 'booned' : bb < 0 ? 'blighted' : ''
+    return `
+        <div class="niaChallenge">
+            <div 
+                class="niaChallengeCrest" 
+                data-hex=${hex} 
+                data-row=${row} 
+                data-socksmethod=${socksMethod} 
+                data-cursecount=${curseCount}
+              >
+                <div class="message">${message}</div>
+                <div class="boon-blight ${socksMethod} walk ${decideOrnament(bspeed)}" data-abil="bwalk">  </div>
+                <div class="boon-blight ${socksMethod} dodge ${decideOrnament(bdodge)}" data-abil="bdodge">  </div>
+                <div class="boon-blight ${socksMethod} protection ${decideOrnament(bprotection)}" data-abil="bprotection">  </div>
+                <div class="boon-blight ${socksMethod} aim ${decideOrnament(bdamage)}" data-abil="baim">  </div>
+                <div class="boon-blight nia confirm" > done </div>
+                <div class="boon-blight ${socksMethod} damage ${decideOrnament(baim)}" data-abil="bdamage">  </div>
+                <div class="boon-blight nia confirm cancel" > cancel </div>
+            </div>
+        </div>
+    `
+}

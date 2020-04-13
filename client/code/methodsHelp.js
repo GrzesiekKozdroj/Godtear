@@ -281,6 +281,7 @@ function healLife(target, h = 2){
 function march (string, target){
     const { hex, row } = target
     $('.selectedModel').addClass(`march${string}_selected`)
+    highlightHexes({colour:'legendaryGlow',dist:1},$(`.march${string}_selected`))
     socket.emit('forceMove',{h:hex, r:row, klass:"champion", callback:`march${string}`})
 }
 function marchExec(string){
@@ -289,6 +290,7 @@ function marchExec(string){
     if_moved_end_it()
     $('[data-glow]').removeAttr('data-glow')
     $(`.march${string}_selected`).removeClass(`march${string}_selected`)
+    displayAnimatedNews('marching')
 }
 function rallyChampion(thiz){
     console.log(thiz)

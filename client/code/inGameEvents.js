@@ -2,8 +2,11 @@ const makeObjectiveHex =  (row,hex) => {
     let random = Math.floor( Math.random () * (3 - 1 + 1)) + 1
     $(`[data-row=${row}][data-hex=${hex}]`)
         .addClass(`objectiveGlow obj${random}`)
-            .children()
+            .children('.top')
                 .addClass(`objectiveGlow obj${random}`)
+    $(`[data-row=${row}][data-hex=${hex}]`)
+        .children('.bottom')
+            .addClass(`objectiveGlow obj${random}`)
 }
 const removeObjectiveHex = (row,hex) => {
     $(`[data-row=${row}][data-hex=${hex}]`)

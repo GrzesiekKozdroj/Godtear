@@ -242,6 +242,33 @@ $('body').on('click','[data-glow]', function (){
 $('body').on('click','.multi_choice', function(){
     console.log( $(this).data() )//what are you for??
 })
+$('body').on('click','.boon-blight.crystalGlare',function(e){
+    e.preventDefault()
+    if( $(this).hasClass('blighted') ){
+        $('.selected').removeClass('selected')
+        $(this).addClass('selected') 
+    } else $('.selected').removeClass('selected')//<----BUG??       <<--==
+})
+$('body').on('click','.boon-blight.crystalMirror',function(e){
+    e.preventDefault()
+    if( $(this).hasClass('booned') ){
+        $('.selected').removeClass('selected')
+        $(this).addClass('selected') 
+    } else $('.selected').removeClass('selected')//<----BUG??       <<--==
+})
+$('body').on('click','.boon-blight.confirm.nia', function(e){
+    e.preventDefault()
+    if( $(this).hasClass('cancel') ) 
+        $('.niaChallenge').remove()
+    else {
+        const { hex, row } = $(this).parent().data()
+        const bbname = $('.boon-blight.selected').data('abil')
+        const specimen = extractBoons_Blights( $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0]) )
+        crystalGlare_bb = { [bbname]: specimen[bbname], curseType:bbname}
+        $('.niaChallenge').remove()
+    }
+})
+
 $('body').on('click','.boon-blight.challengeTitus',function(e){
     e.preventDefault()
     const numberOfChoices = Number($(this).parent('.titusChallengeCrest').data('cursecount') ) 
@@ -275,6 +302,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.tongueLash_selected').length )extraMover('tongueLash',thiz)
         if( $('.marchRhodriBlack_selected').length )extraMover('marchRhodriBlack',thiz)
         if( $('.marchRhodriWhite_selected').length )extraMover('marchRhodriWhite',thiz)
+        if( $('.marchNia_selected').length )extraMover('marchNia',thiz)
         if( $('.shieldBash_selected').length )extraMover('shieldBash',thiz)
         if( $('[data-glow^="strait"]').length )extraMover('roll',thiz)
         if( $('.marchGuardBlack').length )extraMover('marchGuardBlack',thiz)
@@ -289,7 +317,8 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.wheresMaster_selected').length && onlyOneStep(thiz,$('.wheresMaster_selected')) )
             extraMover('wheresMaster',thiz)
         if( $('.shadowWard_selected').length )extraMover('shadowWard',thiz)
-        
+        if( $('.phantomBanners_selected').length && thiz.hasClass('objectiveGlow') )
+            extraMover('phantomBanners',thiz)
     }
 })
 $('body').on('click','.illKillYouAll',function(e){

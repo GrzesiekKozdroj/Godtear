@@ -264,9 +264,17 @@ $('body').on('click','.boon-blight.confirm.nia', function(e){
         const { hex, row } = $(this).parent().data()
         const bbname = $('.boon-blight.selected').data('abil')
         const specimen = extractBoons_Blights( $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0]) )
-        crystalGlare_bb = { [bbname]: specimen[bbname], curseType:bbname}
+        crystalGlare_bb = { [bbname]: specimen[bbname], curseType:bbname, origin:{ hex, row } }
         $('.niaChallenge').remove()
     }
+})
+
+$('body').on('click','.boon-blight.runeweaving2',function(e){
+    e.preventDefault()
+    if( $(this).hasClass('booned') ){
+        $('.selected').removeClass('selected')
+        $(this).addClass('selected') 
+    } else $('.selected').removeClass('selected')//<----BUG??       <<--==
 })
 
 $('body').on('click','.boon-blight.challengeTitus',function(e){
@@ -304,7 +312,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.marchRhodriWhite_selected').length )extraMover('marchRhodriWhite',thiz)
         if( $('.marchNia_selected').length )extraMover('marchNia',thiz)
         if( $('.shieldBash_selected').length )extraMover('shieldBash',thiz)
-        if( $('[data-glow^="strait"]').length )extraMover('roll',thiz)
+        if( $('[data-glow^="strait"]').length && onlyOneStep(thiz) )extraMover('roll',thiz)
         if( $('.marchGuardBlack').length )extraMover('marchGuardBlack',thiz)
         if( $('.marchGuardWhite').length )extraMover('marchGuardWhite',thiz)
         //if( $('.marchGuardWhite').length )extraMover('marchGuardWhite',thiz)
@@ -319,7 +327,22 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.shadowWard_selected').length )extraMover('shadowWard',thiz)
         if( $('.phantomBanners_selected').length && thiz.hasClass('objectiveGlow') )
             extraMover('phantomBanners',thiz)
+        if( $('.headbutt_selected').length )extraMover('headbutt',thiz)
+        if( $('.marchlungingStrikeMove_selected').length )extraMover('marchlungingStrikeMove',thiz)
+        if( $('.marchjet_selected').length && onlyOneStep(thiz,$('.marchjet_selected')) )extraMover('marchjet',thiz)
+        if( $('.current_selected').length )extraMover('current',thiz)
+        if( $('.tide_selected').length )extraMover('tide',thiz)
+        if( $('.avalanche_selected').length )moveContentsOfHex('avalanche3',thiz)
+        if( $('.earthquake_selected').length && onlyOneStep(thiz,$('.earthquake_selected')))extraMover('earthquake',thiz)
     }
+})
+$('body').on('click','.avalanche_moveable',function(e){
+    console.log('step3')
+    e.preventDefault()
+    e.stopPropagation()
+    const { hex, row } = $(this).data()
+    socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"avalanche2", hex, row})
+
 })
 $('body').on('click','.illKillYouAll',function(e){
     e.preventDefault()
@@ -367,6 +390,16 @@ $('body').on('click','.forwardMinions',function(e){
         highlightHexes ({colour:'legendaryGlow', dist:2},$(this))
     }
 })
+$('body').on('click','.earthquake_moveable',function(e){
+    e.preventDefault()
+    const thiz = $(this)
+    if(myTurn){
+        $('.earthquake_selected').removeClass('earthquake_selected')
+        thiz.addClass('earthquake_selected')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes ({colour:'legendaryGlow', dist:2},$(this))
+    }
+})
 $('body').on('click','#rallyAction',function(e){
     e.preventDefault()
     if(myTurn)
@@ -393,11 +426,34 @@ $('body').on('click','[data-glow="graspingDead"].hexagon',function(e){
     if(myTurn)
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseGraspingDead", hex, row, multiAction:mySide})
 })
+$('body').on('click','.tsunami-moveable',function(e){
+    const { hex, row } = $(this).parent('.hexagon').data()
+    socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"tsunamiMoveDeclaration", hex, row})
+})
+$('body').on('click','.current',function(e){
+    e.preventDefault()
+    if(myTurn){
+        $('.selectedModel').removeClass('selectedModel')
+        $('.current_selected').removeClass('current_selected')
+        $(this).addClass('current_selected')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes ({colour:'blueGlow', dist:3},$(this))
+    }
+})
+
+
+
+
 
 // $('body').on('click','.hexagon',function(e){
 //     e.preventDefault()
-//     console.log(tellMeDistance($($('.selectedModel').parent('.hexagon')).data(),$(this).data()))
+//     const epicenter = $($('.hex_5_in_row_7').children('.top')[0])
+//     epicenter.parent('.hexagon').addClass('objectiveGlow obj1')
+//     highlightHexes({colour:'deathMove',dist:1},epicenter)
+//     highlight_closest_path(epicenter.parent('.hexagon').data(),$(this).data())
+//     console.log(tellMeDistance(epicenter.parent('.hexagon').data(),$(this).data()))
 // })
+
 
 
 

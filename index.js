@@ -156,7 +156,7 @@ const DICE = () => {
     return r < 3 ? 0 : r < 6 ? 1 : 2
 }
 function roll(o){
-    const { aim, hurt, socksMethod, hex, row, multiAction, cursePackage,  curseCount } = o
+    const { aim, hurt, socksMethod, hex, row, multiAction, cursePackage, curseCount } = o
     let aim_rolls = [];
     let hurt_rolls = [];
     let die_hurt = 0;

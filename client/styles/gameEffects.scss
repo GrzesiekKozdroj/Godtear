@@ -156,34 +156,12 @@ $selectedByEnemyGlow:rgba(238, 65, 53, 1);
   .resurrecting{
       animation: reverse 1s deathGrip;
   }
-  .illKillYouAll, .outflank, .marchGuardBlack, .marchGuardWhite{
+  .illKillYouAll, .outflank, .marchGuardBlack, .marchGuardWhite, .tsunami-moveable, .tsunami-selected, .earthquake_moveable{
     filter: invert(18%) saturate(141);
   }
   .mournblade_raisins{
     filter: drop-shadow(0 0 2vh rgb(72, 255, 0)) grayscale(53%)!important;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   //---------------------FIRE---------------------------
@@ -271,4 +249,8 @@ $partSize: 5em;
     img{
         filter: invert(90%) saturate(8);
     }
+}
+.avalanche_moveable {
+    transform: scale(1.4);
+    filter: contrast(1.25) brightness(1.5) saturate(1.5);
 }

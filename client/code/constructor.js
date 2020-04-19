@@ -112,8 +112,8 @@ const rosters =
 };
 roster = [
     rosters.shaper[1].champ.name, 
-    rosters.guardian[2].champ.name, 
-    rosters.guardian[1].champ.name
+    rosters.shaper[3].champ.name, 
+    rosters.guardian[0].champ.name
 ];
 
 for(let c in rosters){

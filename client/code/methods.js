@@ -51,7 +51,7 @@ const m =
         claim: function (thiz, teamColor) {
             if_moved_end_it()
             thiz.append(placeBanner(teamColor))
-            $('[data-glow]').removeAttr('data-glow');console.log('REMOVE GLOW')
+            $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
             displayAnimatedNews(`${ $('.selectedModel').data('name') }<br/>claims objective`)
@@ -1066,7 +1066,7 @@ const m =
                 aim: [4, 5, 5],
                 hurt: [4, 4, 5],
                 unused: true,
-                m: function () { }
+                m: "stoneThrow"
             }
         },
         white:
@@ -1077,7 +1077,7 @@ const m =
                 desc: "If this Quartzling is the only model in its hex and is adjacent to an objective hex, replace it with an objective hex.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "calcify"
             },
             shimmer:
             {
@@ -1087,7 +1087,7 @@ const m =
                 aim: [4, 5, 5],
                 icon: skull,
                 unused: true,
-                m: function () { }
+                m: "shimmer"
             }
         },
         util:
@@ -1111,7 +1111,7 @@ const m =
                 icon: self,
                 dist: 3,
                 unused: true,
-                m: function () { }
+                m: "kerSplash"
             },
             headbutt:
             {
@@ -1122,7 +1122,7 @@ const m =
                 aim: [5],
                 hurt: [5],
                 unused: true,
-                M: function () { }
+                m: "headbutt"
             },
             lungingStrike:
             {
@@ -1133,7 +1133,7 @@ const m =
                 aim: [6],
                 hurt: [4],
                 unused: true,
-                m: function () { }
+                m: "lungingStrike"
             }
         },
         white:
@@ -1145,16 +1145,16 @@ const m =
                 dist: 1,
                 icon: star,
                 unused: true,
-                m: function () { }
+                m: "underthrow"
             },
-            kerSplash:
+            kerSplashWhite:
             {
                 name: "Ker-Splash",
                 desc: "Choose a hex within range containing one Splashling. Remove the Splashling and place Raith'Marid in that hex.",
                 icon: self,
                 dist: 3,
                 unused: true,
-                m: function () { }
+                m: "kerSplash"
             },
             jet:
             {
@@ -1163,7 +1163,7 @@ const m =
                 icon: cogs,
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "jet"
             }
         },
         util:
@@ -1176,7 +1176,7 @@ const m =
                 dist: 3,
                 unused: true,
                 legendaryUsed: false,
-                m: function () { }
+                m: "tsunami"
             },
             ripplingScales:
             {
@@ -1190,15 +1190,15 @@ const m =
     {
         black:
         {
-            current:
+            currentBlack:
             {
                 name: "Current",
                 desc: "You may place each Splashling in a hex up to 3 hexes from its current hex.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "current"
             },
-            tide:
+            tideBlack:
             {
                 name: "Tide",
                 desc: "Hit Effect: Move target up to 1 hex.",
@@ -1206,20 +1206,20 @@ const m =
                 aim: [5, 6, 7],
                 icon: skull,
                 unused: true,
-                m: function () { }
+                m: "tide"
             }
         },
         white:
         {
-            current:
+            currentWhite:
             {
                 name: "Current",
                 desc: "You may place each Splashling in a hex up to 3 hexes from its current hex.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "current"
             },
-            tide:
+            tideWhite:
             {
                 name: "Tide",
                 desc: "Hit Effect: Move target up to 1 hex.",
@@ -1227,7 +1227,7 @@ const m =
                 aim: [5, 6, 7],
                 icon: skull,
                 unused: true,
-                m: function () { }
+                m: "tide"
             }
         },
         util:
@@ -1251,17 +1251,17 @@ const m =
                 icon: star,
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "tremor"
             },
             stoneSpikes:
             {
                 name: "Stone Spikes",
                 desc: walkBlight,
                 icon: skull,
-                dist: [3],
+                dist: 3,
                 aim: [5],
                 unused: true,
-                m: function () { }
+                m: "stoneSpikes"
             }
         },
         white:
@@ -1273,17 +1273,17 @@ const m =
                 icon: cogs,
                 dist: 3,
                 unused: true,
-                m: function () { }
+                m: "stoneStrenght"
             },
             runeweaving:
             {
                 name: "Runeweaving",
                 desc: "Hit Effect: Move a boon from the target to any model within range.",
                 icon: skull,
-                dist:[3],
+                dist:3,
                 aim: [6],
                 unused: true,
-                m: function () { }
+                m: "runeweaving"
             }
         },
         util:
@@ -1295,7 +1295,7 @@ const m =
                 icon: star,
                 unused: true,
                 legendaryUsed: false,
-                m: function () { }
+                m: "avalanche"
             },
             runecaller:
             {
@@ -1309,15 +1309,15 @@ const m =
     {
         black:
         {
-            earthquake:
+            earthquakeWhite:
             {
                 name: "Earthquake",
                 desc: "Hit Effect: Move target champion or all followers in target's unit up to 2 hexes.",
                 icon: skull,
-                dist:[2],
+                dist: 2,
                 aim: [4],
                 unused: true,
-                m: function () { }
+                m: "earthquake"
             },
             boulderBash:
             {
@@ -1328,7 +1328,7 @@ const m =
                 aim: [6],
                 hurt: [6],
                 unused: true,
-                m: function () { }
+                m: "boulderBash"
             }
         },
         white:
@@ -1340,9 +1340,9 @@ const m =
                 icon: star,
                 dist: 1,
                 unused: true,
-                m: function () { }
+                m: "eruption"
             },
-            earthquake:
+            earthquakeBlack:
             {
                 name: "Earthquake",
                 desc: "Hit Effect: Move target champion or all folowers in target's unit up to 2 hexes.",
@@ -1350,7 +1350,7 @@ const m =
                 dist: 2,
                 aim: [4],
                 unused: true,
-                m: function () { }
+                m: "earthquake"
             }
         },
         util:
@@ -2726,12 +2726,133 @@ const _m = {
         }
     },
     rollingStones:function(origin,target){
-        // name: "Rolling Stones",
-        // desc: "Each Quartzling may move up to 3 hexes in a straight line.",
-        // icon: self,
-        // unused: true,
-        // m: "rollingStones"
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"rollingStones"})
     },
+    stoneThrow:function(origin,target){//endpoint is cleaving strike
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [4, 5, 5][unitSize]
+        const hurt = [4, 4, 5][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"cleavingStrike", hex, row })
+    },
+    calcify:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"calcify", hex, row })
+    },
+    shimmer:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [4, 5, 5][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:0, socksMethod:"shimmer", hex, row })
+    },
+    kerSplash:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"kerSplash", hex, row, multiAction:mySide })
+    },
+    headbutt:function (origin, target) {
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(5 + bdamage), socksMethod:"headbutt", hex, row })
+    },
+    lungingStrike:function (origin, target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if( !$target.length ) march('lungingStrikeMove',target)
+        if(  $target.hasClass(`blackTeam`)  ){
+            pocketBox = { hex, row }
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1})
+            highlight_closest_path(origin.parent('.hexagon').data(),target)
+        }
+    },
+    underthrow:function (origin, target){
+        const { hex, row} = target
+        if( !pocketBox )
+            socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"underthrowR", hex, row })
+        if ( pocketBox )
+            socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"underthrowM", hex, row })
+    },
+    jet:function (origin, target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if( $target.length ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:3},$target)
+            pocketBox = $target
+        }
+        if( !$target.length )
+            march('jet',target,pocketBox)
+    },
+    tsunami:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"tsunami", hex, row })
+    },
+    current:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"current", hex, row})
+    },
+    tide:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [5, 6, 7][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:0, socksMethod:"tide", hex, row })
+    },
+    tremor:function(origin,target){
+        socket.emit('rolloSkill',{aim:0,hurt:0,socksMethod:'tremor'})
+    },
+    stoneSpikes:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:0, socksMethod:"stoneSpikes", hex, row })
+    },
+    stoneStrenght:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill',{aim:0,hurt:0,hex,row,socksMethod:"stoneStrenght"})
+    },
+    runeweaving:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) && !crystalGlare_bb)
+            socket.emit('rolloSkill',{ aim: (6 + baim), hurt:0, socksMethod:"runeweaving", hex, row })
+        else if ( crystalGlare_bb && $target.length )
+            socket.emit('rolloSkill',{ aim:0,hurt:0,socksMethod:"runeweaving2", hex, row, cursePackage:crystalGlare_bb })
+    },
+    avalanche:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"avalanche", hex, row})
+    },
+    earthquake:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim:(4 + baim), socksMethod:"earthquake", hex, row })
+    },
+    boulderBash:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (6 + baim), hurt:(6 + bdamage), socksMethod:"boulderBash", hex, row })
+    },
+    eruption:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{ socksMethod:"eruption", hex, row })
+    }
 }
 
 
@@ -3608,7 +3729,6 @@ var m_ = {
     },
     poisedToStrike:function(o){
         const { hex, row } = o
-        console.log(o)
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Finvarr"]')[0])
         setBoons_Blights($target,{ bspeed: Number( $target.attr('data-bspeed') ) + 1 })
         displayAnimatedNews("Finvarr<br/>+1 to speed")
@@ -3641,7 +3761,6 @@ var m_ = {
         const { hex, row } = o
         const $banner = $($(`.hex_${hex}_in_row_${row}`).children(`.claimedBanner`)[0])
         const team = !$banner.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
-            console.log(!$('.phantomBanners_selected').length,team, $banner.hasClass(team))
         if( !$('.phantomBanners_selected').length && $banner.hasClass(team))
             $banner.addClass('phantomBanners_selected')
     },
@@ -3804,12 +3923,352 @@ var m_ = {
         displayAnimatedNews('Geode')
     },
     rollingStones:function(o){
-        // name: "Rolling Stones",
-        // desc: "Each Quartzling may move up to 3 hexes in a straight line.",
-        // icon: self,
-        // unused: true,
-        // m: "rollingStones"
+        displayAnimatedNews('rolling<br/>stones')
+        if( !$('[data-glow]').length )
+            highlightDirectPaths({origin: $('.selectedModel').parent('.hexagon').data(), distance:3, colour:'straitPaths'})
+            $('.selectedModel').addClass('roll_selected')
     },
+    calcify:function(o){
+        const { hex, row } = o
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Quartzlings"]')[0])
+        if ( $target.length && !$target.siblings('.smallCard').length ){
+            highlightHexes({colour:'greenGlow',dist:1},$target)
+            $('[data-glow].hexagon').each(function(){
+                const thiz = $(this)
+                if( thiz.hasClass('objectiveGlow') ){
+                    makeObjectiveHex(row,hex)
+                    forceKill($target)
+                    displayAnimatedNews('calcify')
+                    return false
+                }
+            })
+            add_action_taken()
+            if_moved_end_it()
+        }
+        current_ability_method=null
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    shimmer: function (o) {
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                displayAnimatedNews(`${target.data('name')}<br/>-1 speed`)
+                setBoons_Blights(target,{bspeed:Number(target.attr('data-bspeed'))-1})
+            }else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    kerSplash:function(o){
+        const { hex, row, multiAction } = o
+        const team = multiAction === mySide ? 'whiteTeam' : 'blackTeam'
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children(`[data-name="Splashlings"].${team}`)[0])
+        if( $target.length && !$target.siblings('.smallCard').length ){
+            displayAnimatedNews("Ker-splash!")
+            forceKill($target)
+            makeAnim($(`[data-name="RaithMarid"].${team}`),$(`.hex_${hex}_in_row_${row}`))
+            add_action_taken()
+            if_moved_end_it()
+        }
+        current_ability_method=null
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    headbutt:function(o){//if champ killed he should be able to push 3 inches instead
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            const hedbut = (n='')=>{
+                $('[data-glow]').removeAttr('data-glow')
+                highlightHexes({colour:'legendaryGlow',dist:1},target)
+                target.addClass('headbutt_selected')
+                displayAnimatedNews(`${n}headbutt<br/>${target.data('name')}`)
+            }
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else hedbut()
+                else hedbut("no damage!<br/>")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    marchlungingStrikeMove:function (o){
+        displayAnimatedNews(`Raith'Maid<br/>marching`)
+    },
+    lungingStrikeHit:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+        pocketBox = null
+    },
+    underthrowR:function (o){ 
+        const { hex, row } = o
+        if ( !pocketBox ){
+            removeObjectiveHex(row,hex)
+            pocketBox = true
+        }
+    },
+    underthrowM:function(o){
+        const { hex, row } = o
+        if ( pocketBox ){
+            makeObjectiveHex(row,hex)
+            $('[data-glow]').removeAttr('data-glow')
+            pocketBox = null
+            add_action_taken()
+            if_moved_end_it()
+            current_ability_method = null
+            displayAnimatedNews('underthrow')
+        }
+    },
+    marchjet:function (o){
+        const { hex, row } = o
+        const $mourn = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Splashlings"]')[0])
+        $('[data-glow]').removeAttr('data-glow')
+        displayAnimatedNews('Splashling<br/>jet')
+        $mourn.addClass('marchjet_selected')
+        highlightHexes({colour:'legendaryGlow',dist: 3}, $mourn)
+        current_ability_method = null
+        if_moved_end_it()
+        add_action_taken()
+    },
+    tsunami:function(o){
+        const { hex, row } = o
+        const $targetHex = $(`.hex_${hex}_in_row_${row}`)
+        if ( $targetHex.attr('data-glow') === 'greenGlow' )
+            makeAnim($('.selectedModel'),$targetHex,_m_.tsunami)
+        if ( 
+            $('.tsunami-selected').length && 
+            $targetHex.attr('data-glow') === 'legendaryGlow' && 
+            onlyOneStep($targetHex, $('.tsunami-selected') )
+        )
+            makeAnim($('.tsunami-selected'),$targetHex,_m_.tsunamiMove)
+    },
+    tsunamiMoveDeclaration:function(o){
+        const { hex, row } = o
+        $('.tsunami-selected').removeClass('tsunami-selected')
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.tsunami-moveable')[0])
+        $target.removeClass('tsunami-moveable').addClass('tsunami-selected')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes({colour:'legendaryGlow',dist:2},$target)
+    },
+    current:function(o){
+        const {  hex, row } = o
+        const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        if(!$('.current').length){
+            $(`[data-name="${singleSpecimen.data('name')}"].${team}`).addClass('current')
+            $('[data-glow]').removeAttr('data-glow')
+            displayAnimatedNews('current')
+        }
+    },
+    tide:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                displayAnimatedNews('tide')
+                $('[data-glow]').removeAttr('data-glow')
+                target.addClass('tide_selected')
+                highlightHexes({colour:"legendaryGlow",dist:1},target)
+                //movement of a victim herree
+            }else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    tremor:function(o){
+        team = $('.selectedModel').hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
+        $('[data-glow]').children('.'+team).each(function(){
+            const thiz = $(this)
+            const { baim, bdamage, bspeed, bdodge, bprotection } = extractBoons_Blights(thiz)
+            const setUp = {}
+            if(baim>0)setUp.baim=0
+            if(bdamage>0)setUp.bdamage=0
+            if(bspeed>0)setUp.bspeed=0
+            if(bdodge>0)setUp.bdodge=0
+            if(bprotection>0)setUp.brpotection=0
+            setBoons_Blights(thiz,setUp)
+        })
+        $('[data-glow]').removeAttr('data-glow')
+        add_action_taken()
+        if_moved_end_it()
+        current_ability_method = null
+        displayAnimatedNews('tremor<br/>boons removed')
+    },
+    stoneSpikes:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                setBoons_Blights(target, { bspeed: Number(target.attr('data-bspeed')) - 1 })
+                displayAnimatedNews('stone spikes<br/>-1 speed')
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    stoneStrenght:function(o){
+        const { hex, row } = o
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Landslide"]')[0])
+        const { bprotection, bdamage } = extractBoons_Blights($target)
+        setBoons_Blights($target,{bprotection:bprotection+1,bdamage:bdamage+1})
+        displayAnimatedNews('stone strength<br/>+1 shield and damage')
+        $('[data-glow]').removeAttr('data-glow')
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+    },
+    runeweaving:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            add_action_taken()
+            if( onHit(aim, target) ){
+                displayAnimatedNews('runeweaving')
+                if ( myTurn )
+                    $('#gameScreen').append(crystalGlareOptions(origin, { hex, row }, "runeweaving2",1,`choose one boon`))
+            } else displayAnimatedNews ("missed!")
+        }
+    },
+    runeweaving2:function(o){
+        const { hex, row, cursePackage } = o
+        const { curseType, origin } = cursePackage
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const $origin = $($(`.hex${origin.hex}_in_row_${origin.row}`).children('.smallCard')[0])
+        setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) + 1 })
+        setBoons_Blights($origin,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) - 1 })
+        displayAnimatedNews(`${$target.data('name')}<br/>+1 ${[...curseType].slice(1).join('')}`)
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        $('[data-glow').removeAttr('data-glow')
+        crystalGlare_bb = null
+    },
+    avalanche:function(o){
+        if( !$('.avalanche_moveable').length ){
+            displayAnimatedNews(`avalanche<br/>hexes moving`)
+            const { hex, row } = o
+            const $shayle = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Shayle"]')[0])
+            const team = $shayle.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
+            highlightHexes({colour:'greenGlow',dist:3},$(`[data-name="Landslide"]${team}`))
+            $('[data-glow].objectiveGlow').addClass('avalanche_moveable')
+            $('[data-glow]').removeAttr('data-glow')
+            current_ability_method = null
+        }
+    },
+    avalanche2:function(o){
+        const { hex, row } = o
+        const thiz = $(`.hex_${hex}_in_row_${row}.objectiveGlow`)
+        $('[data-glow]').removeAttr('data-glow')
+        $('.avalanche_selected').removeClass('avalanche_moveable').removeClass('avalanche_selected')
+        thiz.addClass('avalanche_selected')
+        highlightHexes({colour:'legendaryGlow',dist:1}, $(thiz.children('.top')[0]) )
+    },
+    avalanche3:function(o){
+        const { hex, row } = o
+        const origin = $('.avalanche_selected')
+        const destination = $(`.hex_${hex}_in_row_${row}`)
+        if(!destination.children('.smallCard').length && !destination.hasClass('objectiveGlow') ){
+            origin.children('.whiteTeam').detach().appendTo(destination)
+            origin.children('.blackTeam').detach().appendTo(destination)
+            removeObjectiveHex( origin.data('row'), origin.data('hex') )
+            makeObjectiveHex(row, hex)
+            $('[data-glow]').removeAttr('data-glow')
+            displayAnimatedNews(`objextive<br/>moved`)
+            origin.removeClass('avalanche_moveable avalanche_selected')
+        } 
+        else 
+            displayAnimatedNews(`must target<br/>empty hex`)
+
+        if( !$('.avalanche_selected').length ){
+            current_ability_method = null
+            if_moved_end_it()
+            add_action_taken()
+        }
+    },
+    earthquake:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            const team = target.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) && !$('.earthquake_selected').length ){
+                displayAnimatedNews(`earthquake<br/>${target.data('name')} moving`)
+                $(`[data-name="${target.data('name')}"]${team}`).addClass('earthquake_moveable')
+                target.addClass('earthquake_selected')
+                highlightHexes({colour:'legendaryGlow',dist:2},target)
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    boulderBash:function(o){
+        const { aim, hurt, hex, row, key } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                setBoons_Blights(target,{bdodge:Number(target.attr('data-bdodge'))-1})
+                let completeness = false
+                if( doDamage(hurt, target) ){
+                    completeness = true
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,1 + target.data('stepsgiven'))
+                    else null
+                    displayAnimatedNews(`${target.data('name')}<br/>-1 dodge`)
+                } else displayAnimatedNews(`no damage!<br/>-1 dodge`)
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    eruption:function(o){//each loop such as this one executes for each model, b_B'ing teams more than once
+        const coin = Math.random()
+        displayAnimatedNews(`eruption<br/>${coin<.5?'-':'+'}1 protection`)
+        $(`[data-glow]`).children('.smallCard').each(function(){
+            const thiz = $(this)
+            let plu = 1, minu = -1
+            setBoons_Blights(thiz,{ bprotection: Number(thiz.attr('data-bprotection')) + (coin<.5 ? minu: plu) })
+        })
+        $(`[data-glow]`).removeAttr('data-glow')
+        add_action_taken()
+        if_moved_end_it()
+        current_ability_method = null
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3933,7 +4392,6 @@ var _m_ = {
                 current_ability_method = null
             }
         }
-
     },
     shadowWard:($thiz)=>{
         current_ability_method = null
@@ -3947,7 +4405,92 @@ var _m_ = {
     },
     marchNia:()=>{
         marchExec('Nia')
-    }
+    },
+    headbutt:()=>{
+        current_ability_method = null
+        $('[data-glow]').removeAttr('data-glow')
+        $('.headbutt_selected').removeClass('headbutt_selected')
+    },
+    marchlungingStrikeMove:(o)=>{
+        if(pocketBox){
+            marchExec('lungingStrikeMove')
+            const { baim, bdamage } = extractBoons_Blights($('.selectedModel'))
+            const { hex, row } = pocketBox
+            $('[data-glow]').removeAttr('data-glow')
+            socket.emit('rolloSkill',{ aim: (6 + baim), hurt:(4 + bdamage), socksMethod:"lungingStrikeHit", hex, row })
+        }
+    },
+    marchjet:($thiz)=>{
+        if ( $('[data-glow].hexagon').length > 19 ) {
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:2},$thiz)
+        } else if( $('[data-glow].hexagon').length > 6 ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
+        } else {
+            $('[data-glow]').removeAttr('data-glow')
+            $($thiz).removeClass(`marchjet_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            if(!$('.marchjet_selected').length ){
+                current_ability_method = null
+                pocketBox = null
+            }
+        }
+    },
+    tsunami:()=>{
+        displayAnimatedNews('tsunami<br/>move models')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes({colour:'blueGlow', dist: 2})
+        const team = $('.selectedModel').hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
+        $('[data-glow]').children(`.${team}`).each(function(){
+            $(this).addClass('tsunami-moveable')
+        })
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    tsunamiMove:($thiz)=>{
+        if( $('[data-glow].hexagon').length > 6 ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
+        } else {
+            $('[data-glow]').removeAttr('data-glow')
+            $($thiz).removeClass(`tsunami-selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            if(!$('.tsunami-moveable').length ){
+                current_ability_method = null
+                pocketBox = null
+            }
+        }
+    },
+    current:($thiz)=>{
+            $('[data-glow]').removeAttr('data-glow')
+            $($thiz).removeClass('current').removeClass(`current_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+        if(!$('.current').length ){
+            current_ability_method = null
+            add_action_taken()
+        }
+    },
+    tide:($thiz)=>{
+        $('[data-glow]').removeAttr('data-glow')
+        $('.tide_selected').removeClass('tide_selected')
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+    },
+    earthquake:($thiz)=>{
+        if( $('[data-glow].hexagon').length > 6 ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
+        } else {
+            $('[data-glow]').removeAttr('data-glow')
+            $($thiz).removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            if(!$('.earthquake_moveable').length ){
+                current_ability_method = null
+                add_action_taken()
+            }
+        }
+    },
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -59,7 +59,7 @@ socket.on('sM',p=>{
     displayMovementAura(thiz)
 })
 
-socket.on('mM',p=>{
+socket.on('mM',p=>{console.log('mM',p.r,p.h)
     let thiz = $(`.hex_${p.h}_in_row_${p.r}`)
     reduceSpeedLeft()
     makeAnim(  $('.selectedModel'), thiz, displayMovementAura )
@@ -81,7 +81,7 @@ socket.on('markedMan',p=>{
     const target = $($(`.hex_${hex}_in_row_${row}`).children('.unitModel').not(`.${klass}`)[0])
     placeMark({hex, row, multiInfo, target})
 })
-socket.on('fM',p=>{
+socket.on('fM',p=>{console.log('fM',p.h,p.r)
     const { h, r, klass, callback } = p
     //this shouldn't just be a small card, has to be smallcard by default though, unless i want to backtrack
     const children = $(`.hex_${klass.h}_in_row_${klass.r}`).children('.smallCard').length ? 

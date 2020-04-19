@@ -41,20 +41,24 @@ function beginBattle(){
     `);
     }
 }
-const makeAnim = (that,thiz,callback=false) => {
+const makeAnim = (that,thiz,callback=false) => {console.log(thiz.data('row'),thiz.data('hex'))
     let ofsetSize = that.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
     MOVINGNOW = true
     if(thiz)
         that.animate({
             left: thiz.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * window.innerHeight)- that.offset().left,
             top: thiz.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
-        }, 1000, ()=>{
-            that.removeAttr('style').finish().detach().prependTo(thiz);
+        }, 220, ()=>{
+            const name = that.data('name')
+            const team = that.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
+            that.removeAttr('style').detach().appendTo(thiz)
+            document.querySelector(`[data-name="${name}"]${team}`).removeAttribute('style')
             if(callback)
                 callback(that)
             else
                 thiz.removeAttr('data-glow')
-        MOVINGNOW = false
+            MOVINGNOW = false
+            console.log('done',thiz.data('row'),thiz.data('hex'))
         });
 };//anim
 function gameCard (name, roster, color) {
@@ -172,8 +176,8 @@ function QUICK_DEEPLOY() {
             .removeClass( `hexagrama-${ className === 30 ? 14 : 7}`)
             .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : 'champModel'}`)
             .appendTo(`.hex_${heex}_in_row_${roow}`)
-        roow += heex <15 ? 0 : 1;
-        heex += heex < 15 ? 1 : -14;
+        roow += heex <14 ? 0 : 1;
+        heex += heex < 14 ? 1 : -13;
     })
     socket.emit('beginBattle')
 }

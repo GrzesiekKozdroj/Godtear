@@ -1880,7 +1880,7 @@ body {
   box-shadow: 0 0 1vh black, 0 0 1.2vh black;
 }
 
-.selectedModel.hexagrama-14.champModel, .phantomBanners_selected {
+.selectedModel.hexagrama-14.champModel, .phantomBanners_selected, .tsunami-selected {
   animation: 2s alternate infinite pulsec;
 }
 

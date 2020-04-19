@@ -113,8 +113,7 @@ const setBoons_Blights = (origin,props)=>{//$(), {baim:-1}
         let boon_blight = props[key]
         $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"]`)
             .each(function(){
-                let attribute =Number( $(this).attr(`data-${key}`) )
-                if( attribute < 1 && attribute > -1 )
+                if( boon_blight <= 1 && boon_blight >= -1 )
                     $(this).attr(`data-${key}`,boon_blight) 
             })
     }
@@ -132,10 +131,12 @@ const tellMeDistance = (origin,target) => {//IT GIVES FALSE MEASUREMENTS OFTENTI
     const rows  = Math.abs(tr - or)//1
     const hfloored = Math.floor(hexes/2)// floor:  1  |  ceil: 1
     const rfloored = Math.floor(rows/2)//   floor:  0  |  ceil: 1        ||floor on or odd
-    return hexes < rows ? hfloored + rows : rfloored + hexes// 0 < 0 ? 1 OR 1 | 1 < 1 ? 2 OR 2
+    const plusOne = or%2===0 && tr%2!==0 && oh>th && or!==tr ? 1 : 
+                    or%2!==0 && tr%2==0 && oh<th && or!==tr ? 1 : 
+                    0
+    return hexes < rows ? hfloored + rows + plusOne : rfloored + hexes + plusOne// 0 < 0 ? 1 OR 1 | 1 < 1 ? 2 OR 2
 }
 const highlight_closest_path = (a,b,way='towards') => {//UTTER FAILURE, MOSTLY BECAUSE OF THE ABOVE FUNCTION
-    console.log('pathed')
     const A_B = tellMeDistance(a,b)//expects data objects {hex, row}
     $('.hexagon[data-glow]').each(function(){
         const thiz = $(this).data()
@@ -278,9 +279,9 @@ function healLife(target, h = 2){
     }
     displayAnimatedNews(`${target.data('name')}<br/>heals ${h} wound${h>2?"s":''}`)
 }
-function march (string, target){
-    const { hex, row } = target
-    $('.selectedModel').addClass(`march${string}_selected`)
+function march (string, targetHex, thizModel = $('.selectedModel') ){
+    const { hex, row } = targetHex
+    thizModel.addClass(`march${string}_selected`)
     highlightHexes({colour:'legendaryGlow',dist:1},$(`.march${string}_selected`))
     socket.emit('forceMove',{h:hex, r:row, klass:"champion", callback:`march${string}`})
 }
@@ -299,4 +300,10 @@ function rallyChampion(thiz){
 }
 function _target({ hex, row }){//UNFINISHED, not annoyed enuff yet
     return $(`.hex_`)
+}
+
+function moveContentsOfHex(stringz,thiz){//"string for callback name" and $(thestinationHex)
+    const { hex, row } = thiz.data()
+    socket.emit('rolloSkill',{ hex, row, socksMethod:stringz })
+    console.log('step4')
 }

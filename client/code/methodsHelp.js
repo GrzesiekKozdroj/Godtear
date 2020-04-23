@@ -121,7 +121,7 @@ const setBoons_Blights = (origin,props)=>{//$(), {baim:-1}
 const placeMark = ({hex, row, multiInfo, target, key}) => {
     target.addClass('destined_for_DOOM')
     target.attr('data-DOOMqueue', key)
-    $('#gameScreen').append(multi_choice_info_panel(multiInfo))
+    $('body').append(multi_choice_info_panel(multiInfo))
 }
 const tellMeDistance = (origin,target) => {//IT GIVES FALSE MEASUREMENTS OFTENTIMES
     //origin and taget expect two objects: {hex, row}{hex:7,row:8},{hex:6,row:9}=1
@@ -235,8 +235,9 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
             socket.emit('HH', {color:glowType,dist, hex:h, row:r, river})
         })
     }
-    highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
-    socket.emit('HH', {color:glowType,dist, hex, row, river})
+    //highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
+    if ( !$('[data-glow="recruitGlow"]').length )
+        socket.emit('HH', {color:glowType,dist, hex, row, river})
 }
 function blights_spew_declaration ({origin, abilName}){
     const { baim } = extractBoons_Blights(origin)

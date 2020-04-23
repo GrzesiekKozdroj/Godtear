@@ -111,8 +111,8 @@ const rosters =
     ]
 };
 roster = [
-    rosters.shaper[1].champ.name, 
-    rosters.shaper[3].champ.name, 
+    rosters.maelstrom[1].champ.name, 
+    rosters.shaper[0].champ.name, 
     rosters.guardian[0].champ.name
 ];
 

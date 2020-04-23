@@ -277,6 +277,35 @@ $('body').on('click','.boon-blight.runeweaving2',function(e){
     } else $('.selected').removeClass('selected')//<----BUG??       <<--==
 })
 
+
+$('body').on('click','.boon-blight.blighted.deadlyCurse',function(e){
+    e.preventDefault()
+    $('.selected').removeClass('selected')
+    $(this).addClass('selected')
+})
+$('body').on('click','.boon-blight.confirm.deadlyCurse', function(e){
+    e.preventDefault()
+    const { side, name } = $(this).parent().data()
+    const bbname = $('.boon-blight.selected').data('abil')
+    crystalGlare_bb = { side, name, curseType:bbname }
+    socket.emit('rolloSkill',{ socksMethod:"deadlyCurse2", cursePackage:crystalGlare_bb })
+    $('.deadlyCursePanel').remove()
+})
+
+$('body').on('click','.boon-blight.blighted.graspingCurse',function(e){
+    e.preventDefault()
+    $('.selected').removeClass('selected')
+    $(this).addClass('selected')
+})
+$('body').on('click','.boon-blight.confirm.graspingCurse', function(e){
+    e.preventDefault()
+    const { side, name } = $(this).parent().data()
+    const bbname = $('.boon-blight.selected').data('abil')
+    crystalGlare_bb = { side, name, curseType:bbname }
+    socket.emit('rolloSkill',{ socksMethod:"deadlyCurse2", cursePackage:crystalGlare_bb })
+    $('.deadlyCursePanel').remove()
+})
+
 $('body').on('click','.boon-blight.challengeTitus',function(e){
     e.preventDefault()
     const numberOfChoices = Number($(this).parent('.titusChallengeCrest').data('cursecount') ) 
@@ -438,6 +467,19 @@ $('body').on('click','.current',function(e){
         $(this).addClass('current_selected')
         $('[data-glow]').removeAttr('data-glow')
         highlightHexes ({colour:'blueGlow', dist:3},$(this))
+    }
+})
+$('body').on('click','.fire[data-socksmethod="callTotems"]',function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    if( myTurn && graveyard[mySide].Hexlings.length > 1 )
+        socket.emit('rolloSkill',{socksMethod:'callTotems1'})
+    else {
+        socket.emit('rolloSkill',{socksMethod:'callTotems1'})
+        if_moved_end_it()
+        current_ability_method = null
+        add_action_taken()
+        $('#multi_choice_info_panel').remove()
     }
 })
 

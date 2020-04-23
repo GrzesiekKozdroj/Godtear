@@ -156,7 +156,7 @@ const DICE = () => {
     return r < 3 ? 0 : r < 6 ? 1 : 2
 }
 function roll(o){
-    const { aim, hurt, socksMethod, hex, row, multiAction, cursePackage, curseCount } = o
+    const { aim, hurt, socksMethod, hex, row, multiAction, cursePackage, curseCount, key } = o
     let aim_rolls = [];
     let hurt_rolls = [];
     let die_hurt = 0;
@@ -171,6 +171,6 @@ function roll(o){
         hurt_rolls = [ ...hurt_rolls, DICE()];
         die_hurt++
     } while (die_hurt < hurt)
-    const vvdf = { aim:aim_rolls, hurt:hurt_rolls, socksMethod, hex, row, multiAction, cursePackage, curseCount }
+    const vvdf = { aim:aim_rolls, hurt:hurt_rolls, socksMethod, hex, row, multiAction, cursePackage, curseCount, key }
     return vvdf
 }

@@ -171,15 +171,16 @@ $fireRad: 3em;
 $parts: 50;
 $partSize: 5em;
 #multi_choice_info_panel{
-    position: relative;
+    position: absolute;
     z-index: 4;
     width: 0;
     height: 0;
-    bottom: 45.88vh;
-    left: -55vw;
+    bottom: 24vh;
+    left: 42vw;
+    transform: scale(.55,.3);
 }
 .fire {
-    pointer-events: none;
+    //pointer-events: none;
 	font-size: 24px;
 	filter: blur($blur);
 	-webkit-filter: blur($blur);
@@ -187,7 +188,6 @@ $partSize: 5em;
 	position: relative;
 	width: 10em;
     height: 12em;
-    transform: scale(.55,.3);
     transform-origin:bottom;
 }
 .particle {
@@ -231,19 +231,19 @@ $partSize: 5em;
     margin: auto auto;
     position: relative;
     z-index: 6;
-    height: 0;
+    height: 6vh;
     font-family: Shojumaru;
     color: white;
     text-shadow: 0 0 1vh black, 0 0 .5vh black, 0 0 .75vh black, 0 0 1.25vh black, 0 0 .25vh black;
-    font-size: 86%;
+    font-size: 166%;
     left:10vh;
 }
 .multi_choice.abil_name{
-    top:82vh;
+    top:37vh;
 }
 .multi_choice.abil_count{
-    top:89vh;
-    font-size:90%;
+    top:54vh;
+    font-size:151%;
 }
 .destined_for_DOOM{
     img{

@@ -117,18 +117,18 @@ function displayDamageRecieved(pain){
     `
 }
 
-const multi_choice_info_panel = ({name, count, color, klass, ability}) => {
+const multi_choice_info_panel = ({name, count, color, klass, ability, dedcount}) => {
     //"greenFlame" || "redFlame" || "yellowFlame" || "blueFlame"
     let partixles = [] 
     for(let y = 0; y < 50; y++) 
         partixles = [...partixles, `<div class="particle ${color}"></div>`]
-    let alreadyChosen = $(`.${klass}`).length
+    let alreadyChosen = $(`.${klass}`).length || dedcount
     $('#multi_choice_info_panel').remove()
     return `
         <div id="multi_choice_info_panel">
             <p class="multi_choice abil_name" data-callback="${ability}">${name}</p>
             <p class="multi_choice abil_count" data-callback="${ability}">${alreadyChosen} / ${count}</p>
-            <div  class="fire">
+            <div  class="fire" data-socksMethod="${ability}" >
                 ${partixles.join('')}
             </div>
         </div>
@@ -203,6 +203,41 @@ const crystalGlareOptions = (origin, target, socksMethod,curseCount,message) => 
                 <div class="boon-blight nia confirm" > done </div>
                 <div class="boon-blight ${socksMethod} damage ${decideOrnament(baim)}" data-abil="bdamage">  </div>
                 <div class="boon-blight nia confirm cancel" > cancel </div>
+            </div>
+        </div>
+    `
+}
+function dedlyCursePanel({side, name,socksMethod,message}){
+    return socksMethod === "deadlyCurse" ?
+        `
+            <div class="deadlyCursePanel">
+                <div 
+                    class="deadlyCursePanelCrest" 
+                    data-side=${side} 
+                    data-name=${name} 
+                    data-socksmethod=${socksMethod}
+                  >
+                    <div class="message">${message}</div>
+                    <div class="boon-blight ${socksMethod} aim blighted" data-abil="baim">  </div>
+                    <div class="boon-blight ${socksMethod} confirm" > done </div>
+                    <div class="boon-blight ${socksMethod} damage blighted" data-abil="bdamage">  </div>
+                </div>
+            </div>
+        `
+         :
+
+        `
+        <div class="deadlyCursePanel">
+            <div 
+                class="deadlyCursePanelCrest" 
+                data-side=${side} 
+                data-name=${name} 
+                data-socksmethod=${socksMethod}
+              >
+                <div class="message">${message}</div>
+                <div class="boon-blight ${socksMethod} dodge blighted" data-abil="bdodge">  </div>
+                <div class="boon-blight ${socksMethod} confirm" > done </div>
+                <div class="boon-blight ${socksMethod} walk blighted" data-abil="bspeed">  </div>
             </div>
         </div>
     `

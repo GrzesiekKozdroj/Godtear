@@ -1309,7 +1309,7 @@ const m =
     {
         black:
         {
-            earthquakeWhite:
+            earthquakeBlack:
             {
                 name: "Earthquake",
                 desc: "Hit Effect: Move target champion or all followers in target's unit up to 2 hexes.",
@@ -1342,7 +1342,7 @@ const m =
                 unused: true,
                 m: "eruption"
             },
-            earthquakeBlack:
+            earthquakeWhite:
             {
                 name: "Earthquake",
                 desc: "Hit Effect: Move target champion or all folowers in target's unit up to 2 hexes.",
@@ -1367,14 +1367,14 @@ const m =
     {
         black:
         {
-            cursedGround:
+            cursedGround://no endphase yet
             {
                 name: "Cursed Ground",
                 desc: "Place up to two objective hexes on empty non-objective hexes withing range. Remove them at the end of the clash phase.",
                 dist: 2,
                 icon: star,
                 unused: true,
-                m: function () { }
+                m: "cursedGround"
             },
             deadlyCurse:
             {
@@ -1385,7 +1385,7 @@ const m =
                 aim: [4],
                 hurt: [6],
                 unused: true,
-                m: function () { }
+                m: "deadlyCurse"
             }
         },
         white:
@@ -1396,7 +1396,7 @@ const m =
                 desc: "Remove any number of Hexlings from the battlefield, then place them on hexes within 2 hexes of Rattlebone.",
                 icon: cogs,
                 unused: true,
-                m: function () { }
+                m: "callTotems"
             },
             graspingCurse:
             {
@@ -1406,7 +1406,7 @@ const m =
                 aim: [6],
                 icon:skull,
                 unused: true,
-                m: function () { }
+                m: "graspingCurse"
             }
         },
         util:
@@ -1414,17 +1414,17 @@ const m =
             legendary:
             {
                 name: "Power Hex",
-                desc: "Chooxe on blight for each Hexling within range. Each enemy champion within range gains those blights.",
+                desc: "Chooxe one blight for each Hexling within range. Each enemy champion within range gains those blights.",
                 icon: star,
                 dist: 2,
                 unused: true,
                 legendaryUsed: false,
-                m: function () { }
+                m: "powerHex"
             },
             rollTheBones:
             {
                 name: "Roll the Bones",
-                desc: "At the end of Rattlebone's activation, roll one die. If you roll a 1 o 2, you may remove a boon or blight from a odel within that many exes of Rattlebone and place it on a different model within that many hexes.",
+                desc: "At the end of Rattlebone's activation, roll one die. If you roll a 1 or 2, you may remove a boon or blight from a model within that many exes of Rattlebone and place it on a different model within that many hexes.",
                 m: function () { }
             }
         }
@@ -1440,7 +1440,7 @@ const m =
                 icon: cogs,
                 dist: 2,
                 unused: true,
-                m: function () { }
+                m: "purgeMagic"
             },
             hexBolt:
             {
@@ -2852,6 +2852,73 @@ const _m = {
     eruption:function(origin,target){
         const { hex, row } = origin.parent('.hexagon').data()
         socket.emit('rolloSkill',{ socksMethod:"eruption", hex, row })
+    },
+    cursedGround:function(origin,target){//no endphase yet
+        const { hex, row } = target
+        socket.emit('rolloSkill',{ socksMethod:"cursedGround", hex, row })
+    },
+    deadlyCurse:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (4 + baim), hurt:(6 + bdamage), socksMethod:"deadlyCurse", hex, row })
+    },
+    callTotems:function(origin,target){
+        $('[data-glow="greenGlow"]').removeAttr('data-glow');console.log('glow removed totmes1')
+        const { hex, row } = target
+        const $targets = $(`[data-name="Hexlings"][data-tenmodel].${mySide}`)
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children(`[data-name="Hexlings"][data-tenmodel].${mySide}`)[0])
+
+        if( $target.length ) 
+            socket.emit('rolloSkill',{hex, row, socksMethod:'callTotems'})
+
+        $(`[data-name="Hexlings"][data-tenmodel].${mySide}`)
+            .parent('.hexagon').each(function(){
+                $(this).attr('data-glow','greenGlow')
+                $(this).children('.top').attr('data-glow','greenGlow')
+                $(this).children('.bottom').attr('data-glow','greenGlow')
+            })
+
+        const multiInfo = {
+            name:"Call Totems",
+            count: $targets.length,
+            color:"greenFlame",
+            klass:"callTotems",
+            ability:"callTotems",
+            dedcount: 0
+        }
+        if( !$target.length ) 
+            $('body').append(multi_choice_info_panel(multiInfo))
+    },
+    graspingCurse:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (6+baim), socksMethod:"graspingCurse", hex, row })
+    },
+    powerHex:function(origin,target){
+        const curseCount = $('[data-glow].hexagon').children(`[data-name="Hexlings"].whiteTeam`).length
+        $('#gameScreen')
+            .append(
+                challengeOptions(
+                    origin, target, 
+                    "powerHex",
+                    curseCount,
+                    `apply ${curseCount} blight${curseCount>1?'s':''} to enemy champions`))
+    },
+    purgeMagic:function(origin,target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.whiteTeam')[0])
+        if( $target.length )
+            socket.emit('rolloSkill',{ socksMethod:"purgeMagic", hex, row, key:mySide })
+        // name: "Purge Magic",
+        // desc: "Move all boons and blights from the Hexlings, to a friendly model within range.",
+        // icon: cogs,
+        // dist: 2,
+        // unused: true,
+        // m: "purgeMagic"
     }
 }
 
@@ -3213,9 +3280,9 @@ var m_ = {
         $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
         $('[data-glow]').removeAttr('data-glow')
         graveyard[river[1]][river[3]].splice(0,1)
+        displayAnimatedNews(`${river[3]}<br/>recruited`)
         river = null
         current_ability_method = null
-        displayAnimatedNews(`${river[3]}<br/>recruited`)
     },
     fluSpew:function(o){
         blights_spew_recieved({o, blight:"bdamage"})
@@ -4256,18 +4323,147 @@ var m_ = {
         }
         current_ability_method = null
     },
-    eruption:function(o){//each loop such as this one executes for each model, b_B'ing teams more than once
+    eruption:function(o){//each loop such as this one executes for each model, b_B'ing teams more than once SOLVED!!! :]
         const coin = Math.random()
-        displayAnimatedNews(`eruption<br/>${coin<.5?'-':'+'}1 protection`)
-        $(`[data-glow]`).children('.smallCard').each(function(){
-            const thiz = $(this)
-            let plu = 1, minu = -1
-            setBoons_Blights(thiz,{ bprotection: Number(thiz.attr('data-bprotection')) + (coin<.5 ? minu: plu) })
+        const plus = 1, minus = -1
+        const addo = coin > .5 ? plus : minus
+        const team = $('.selectedModel').hasClass('whiteTeam') ? '.blackTeam' : '.whiteTeam'
+        displayAnimatedNews(`eruption<br/>${addo} protection`)
+        const ARR = [...$($(`[data-glow].hexagon`).children('.smallCard')) ].map(el=>$(el).data('name'))
+        const uniqSet = [...new Set(ARR)]
+        uniqSet.forEach(el=>{
+            const thiz = $(`[data-name="${el}"]${team}`)
+            setBoons_Blights(thiz,{ bprotection: (Number(thiz.attr('data-bprotection')) + addo) })
         })
         $(`[data-glow]`).removeAttr('data-glow')
         add_action_taken()
         if_moved_end_it()
         current_ability_method = null
+    },
+    cursedGround:function(o){//no endphase yet
+        const { hex, row } = o
+        const target = $(`.hex_${hex}_in_row_${row}.hexagon`)
+        if( 
+            $(`[data-kill="${ $('.selectedModel').data('side') }"]`).length < 2 && 
+            target.children().length < 3 && 
+            !target.hasClass('objectiveGlow') 
+        ){
+            makeObjectiveHex(row,hex)
+            target.attr( 'data-kill', $('.selectedModel').data('side') )
+            displayAnimatedNews('cursed<br/>ground')
+        } else displayAnimatedNews('target<br/>empty hex')
+
+        if ( $('[data-kill]').length > 1 ){
+            add_action_taken()
+            if_moved_end_it()
+            current_ability_method = null
+            $('[data-glow]').removeAttr('data-glow')
+        }
+    },
+    deadlyCurse:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            const { side, name } = target.data()
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){ 
+                if( myTurn )
+                    $('#gameScreen').append(  dedlyCursePanel( {side,name,socksMethod:'deadlyCurse',message:'choose one'} )  )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    deadlyCurse2:function(o){
+        const { side, name, curseType } = o.cursePackage
+        const $target = $($(`[data-name="${name}"][data-tenmodel].${side}`)[0])
+        setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) - 1 })
+        displayAnimatedNews(`${$target.data('name')}<br/>-1 ${[...curseType].slice(1).join('')}`)
+        current_ability_method = null
+        $('[data-glow').removeAttr('data-glow')
+        crystalGlare_bb = null
+    },
+    callTotems:function(o){
+        $('[data-glow]').removeAttr('data-glow')
+        const { hex, row } = o
+        const side = $('.selectedModel').hasClass(mySide) ? mySide : opoSide
+        const $targets = $(`[data-name="Hexlings"][data-tenmodel].${side}`)
+        const target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard[data-name="Hexlings"]')[0])
+        forceKill(target)
+        setTimeout(function(){
+        const multiInfo = {
+            name:"Call Totems",
+            count: $targets.length - 1,
+            color:"greenFlame",
+            klass:"callTotems",
+            ability:"callTotems",
+            dedcount: graveyard[side].Hexlings.length
+        }
+        $('body').append(multi_choice_info_panel(multiInfo))
+        $(`[data-name="Hexlings"][data-tenmodel].${side}`)
+            .parent('.hexagon').each(function(){
+                $(this).attr('data-glow','greenGlow')
+                $(this).children('.top').attr('data-glow','greenGlow')
+                $(this).children('.bottom').attr('data-glow','greenGlow')
+            })
+        },900)
+    },
+    callTotems1:function(){
+        const side = $('.selectedModel').hasClass(mySide) ? mySide : opoSide
+        $('[data-glow="greenGlow"]').removeAttr('data-glow')
+        rallyActionDeclaration( { unitname:'Rattlebone', side, type:'unit', name:'Hexlings', dist:2 } )
+    },
+    graspingCurse:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            const { side, name } = target.data()
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){ 
+                if( myTurn )
+                    $('#gameScreen').append( dedlyCursePanel( {side,name,socksMethod:'graspingCurse',message:'choose one'} ) )
+                else
+                    displayAnimatedNews('opponent<br/>choosing blight')
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    powerHex:function(o){
+        const team = $('.selectedModel').hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
+        const { cursePackage } = o
+        let curses = {}
+        cursePackage.forEach( el=> curses[el]=-1 )
+        $('[data-glow].hexagon').children(`.champModel.${team}`).each(function(){
+            setBoons_Blights($(this),curses)
+        })
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        $('[data-glow]').removeAttr('data-glow')
+        displayAnimatedNews(`champions get<br/>-1 ${cursePackage.join(', ')}`)
+    },
+    purgeMagic:function(o){
+        const { hex, row, key } = o
+        const hexlings = extractBoons_Blights($($(`[data-name="Hexlings"][data-tenmodel].${key}`)[0]) )
+        const recepient = $( $(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0] )
+        console.log(o,hexlings,$($(`[data-name="Hexlings"][data-tenmodel].${key}`)[0]),key)
+        //I need to set two bbs here, based on two blight extractions
+        // name: "Purge Magic",
+        // desc: "Move all boons and blights from the Hexlings, to a friendly model within range.",
+        // icon: cogs,
+        // dist: 2,
+        // unused: true,
+        // m: "purgeMagic"
     }
 }
 

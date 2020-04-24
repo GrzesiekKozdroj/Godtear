@@ -81,7 +81,7 @@ socket.on('markedMan',p=>{
     const target = $($(`.hex_${hex}_in_row_${row}`).children('.unitModel').not(`.${klass}`)[0])
     placeMark({hex, row, multiInfo, target})
 })
-socket.on('fM',p=>{console.log('fM',p.h,p.r)
+socket.on('fM',p=>{console.log('fM',p)
     const { h, r, klass, callback } = p
     //this shouldn't just be a small card, has to be smallcard by default though, unless i want to backtrack
     const children = $(`.hex_${klass.h}_in_row_${klass.r}`).children('.smallCard').length ? 

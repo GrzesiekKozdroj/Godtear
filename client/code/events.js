@@ -367,6 +367,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.tide_selected').length )extraMover('tide',thiz)
         if( $('.avalanche_selected').length )moveContentsOfHex('avalanche3',thiz)
         if( $('.earthquake_selected').length && onlyOneStep(thiz,$('.earthquake_selected')))extraMover('earthquake',thiz)
+        if( $('[data-glow="shootAndScoot"]').length )extraMover('shootAndScoot',thiz)
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
@@ -485,13 +486,6 @@ $('body').on('click','.fire[data-socksmethod="callTotems"]',function(e){
         add_action_taken()
         $('#multi_choice_info_panel').remove()
     }
-})
-$('body').on('click','[data-glow="shootAndScoot"].hexagon',function(e){
-    e.preventDefault()
-    e.stopPropagation()
-    const { hex, row } = $(this).data()
-    if(myTurn)
-        socket.emit('forceMove',{h:hex, r:row, klass:{h:$('selectedModel').parent('.hexagon').data('hex'),r:$('selectedModel').parent('.hexagon').data('row')}, callback:`shootAndScoot`})
 })
 
 

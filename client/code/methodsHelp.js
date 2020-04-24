@@ -316,3 +316,7 @@ function propagate_BB_s($origin,$target){
     const { baim, bdamage, bspeed, bdodge, bprotection } = origin
     setBoons_Blights( $target, { baim, bdamage, bspeed, bdodge, bprotection } )
 }
+function shootAndScoot(){
+    highlightHexes({colour:'shootAndScoot',dist:1})
+    $('.selectedModel').addClass('shootAndScoot_selected')
+}

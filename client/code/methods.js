@@ -1572,7 +1572,7 @@ const m =
                 desc:aimBoon,
                 icon:self,
                 unused:true,
-                m:function(){}
+                m:"aim"
             },
             fire:
             {
@@ -1582,7 +1582,7 @@ const m =
                 aim:[3,4,5],
                 hurt:[3,4,5],
                 unused:true,
-                m:function(){}
+                m:"fire"
             }
         },
         white:
@@ -1593,7 +1593,7 @@ const m =
                 desc:dodgeBoon,
                 icon:self,
                 unused:true,
-                m:function(){}
+                m:"blur"
             },
             faryFire:
             {
@@ -1601,9 +1601,9 @@ const m =
                 desc:`Hit Effect: ${shieldBlight}.`,
                 icon:skull,
                 dist:3,
-                aim:[5],
+                aim:[3,4,5],
                 unused:true,
-                m:function(){}
+                m:"faryFire_MR"
             }
         },
         util:
@@ -1627,7 +1627,7 @@ const m =
                 icon:cogs,
                 dist:2,
                 unused:true,
-                m:function(){}
+                m:"plotRevenge"
             },
             annoy:
             {
@@ -1637,7 +1637,7 @@ const m =
                 dist:3,
                 aim:[5],
                 unused:true,
-                m:function(){}
+                m:"annoy"
             },
             backstab:
             {
@@ -2968,7 +2968,50 @@ const _m = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (6 + baim), socksMethod:"deathblow", hex, row })
-    }
+    },
+    aim:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{ socksMethod:"aim", hex, row })
+    },
+    fire:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.blackTeam')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [3, 4, 5][unitSize]
+        const hurt = [3, 4, 5][unitSize]
+        const killShot = $target.hasClass('champModel') ? 1 : 0
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt+bdamage+killShot), socksMethod:"fire", hex, row })
+    },
+    blur:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{ socksMethod:"blur", hex, row })
+    },
+    faryFire_MR:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [3, 4, 5][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), socksMethod:"faryFire_MR", hex, row })
+    },
+    plotRevenge:function(origin,target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`whiteTeam`) )
+            socket.emit('rolloSkill',{ socksMethod:"plotRevenge", hex, row })
+    },
+    annoy:function(origin,target){
+        // name:"annoy",
+        // desc:"Hit Effect: Move target up to 2 hexes toward Sneaky Peet.",
+        // icon:skull,
+        // dist:3,
+        // aim:[5],
+        // unused:true,
+        // m:"annoy"
+    },
 }
 
 
@@ -4566,7 +4609,7 @@ var m_ = {
             if( onHit(aim, target) ){
                 target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
                 animateDamage(target, -1)
-                highlightHexes({colour:'shootAndScoot',dist:1})
+                shootAndScoot()
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
                     else null
@@ -4587,7 +4630,7 @@ var m_ = {
                 const stPunch = hurt.slice(0, p)
                 const ndPunch = hurt.slice(p)
                 if( doDamage(stPunch, target) ){
-                    highlightHexes({colour:'shootAndScoot',dist:1})
+                    shootAndScoot()
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
                     else {
@@ -4613,7 +4656,7 @@ var m_ = {
             add_action_taken()
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) ){
-                    highlightHexes({colour:'shootAndScoot',dist:1})
+                    shootAndScoot()
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
                     else null
@@ -4658,14 +4701,84 @@ var m_ = {
             if( onHit(aim, target) ){
                 target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-2) )
                 animateDamage(target, -2)
-                highlightHexes({colour:'shootAndScoot',dist:1})
+                shootAndScoot()
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
                     else null
             } else displayAnimatedNews ("missed!")
         }
         current_ability_method = null
-    }
+    },
+    aim:function(o){
+        const { hex, row } = o
+        target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        displayAnimatedNews('Mistwood Rangers<br/>+1 aim')
+        setBoons_Blights(target,{baim:Number(target.attr('data-baim'))+1})
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+    },
+    fire: function (o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    blur:function(o){
+        const { hex, row } = o
+        target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        displayAnimatedNews('Mistwood Rangers<br/>+1 dodge')
+        setBoons_Blights(target,{bdodge:Number(target.attr('data-bdodge'))+1})
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+    },
+    faryFire_MR:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                displayAnimatedNews(`${target.data('name')}<br/>-1 protection`)
+                setBoons_Blights(target,{bprotection:Number(target.attr('data-bprotection'))-1})
+            }else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    plotRevenge:function(o){
+        const { hex, row } = o
+        target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        displayAnimatedNews(`${target.data('name')}<br/>+1 aim`)
+        setBoons_Blights(target,{baim:Number(target.attr('data-baim'))+1})
+        if_moved_end_it()
+        add_action_taken()
+        $('[data-glow]').removeAttr('data-glow')
+        current_ability_method = null
+    },
+    annoy:function(o){
+        // name:"annoy",
+        // desc:"Hit Effect: Move target up to 2 hexes toward Sneaky Peet.",
+        // icon:skull,
+        // dist:3,
+        // aim:[5],
+        // unused:true,
+        // m:"annoy"
+    },
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4888,8 +5001,9 @@ var _m_ = {
             }
         }
     },
-    shootAndScoot:()=>{
+    shootAndScoot:($thiz)=>{
         $('[data-glow]').removeAttr('data-glow')
+        $('.shootAndScoot_selected').removeClass('shootAndScoot_selected')
         displayAnimatedNews('Lorsann<br/>Shoot & Scoot')
     }
 }

@@ -150,12 +150,12 @@ const challengeOptions = (origin, target, socksMethod,curseCount,message) => {
                 data-cursecount=${curseCount}
               >
                 <div class="message">${message}</div>
-                <div class="boon-blight challengeTitus walk ${decideOrnament(bspeed)}" data-abil="bwalk">  </div>
+                <div class="boon-blight challengeTitus walk ${decideOrnament(bspeed)}" data-abil="bspeed">  </div>
                 <div class="boon-blight challengeTitus dodge ${decideOrnament(bdodge)}" data-abil="bdodge">  </div>
                 <div class="boon-blight challengeTitus protection ${decideOrnament(bprotection)}" data-abil="bprotection">  </div>
-                <div class="boon-blight challengeTitus aim ${decideOrnament(bdamage)}" data-abil="baim">  </div>
+                <div class="boon-blight challengeTitus aim ${decideOrnament(baim)}" data-abil="baim">  </div>
                 <div class="boon-blight titus confirm " > done </div>
-                <div class="boon-blight challengeTitus damage ${decideOrnament(baim)}" data-abil="bdamage">  </div>
+                <div class="boon-blight challengeTitus damage ${decideOrnament(bdamage)}" data-abil="bdamage">  </div>
             </div>
         </div>
     `
@@ -179,7 +179,7 @@ const greatTuskBoons = (origin, socksMethod,curseCount,message) => {
                 </div>
             </div>
         `
-    }
+}
 const crystalGlareOptions = (origin, target, socksMethod,curseCount,message) => {
 //$('.selectedModel'), {hex=Number(), row=Number(), sockMethod:"string"}
     const { hex, row } = target

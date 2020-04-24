@@ -1442,15 +1442,15 @@ const m =
                 unused: true,
                 m: "purgeMagic"
             },
-            hexBolt:
+            hexBoltBlack:
             {
                 name: "Hex Bolt",
-                desc: "Hit Effect: The target gains the blights of your choice.",
+                desc: "Hit Effect: The target gains blight of your choice.",
                 icon: skull,
                 dist: 2,
                 aim: [2, 4, 6],
                 unused: true,
-                m: function () { }
+                m: "hexBolt"
             }
         },
         white:
@@ -1461,9 +1461,9 @@ const m =
                 desc: "Gain the boon of your choice.",
                 icon: self,
                 unused: true,
-                m: function () { }
+                m: "attuneMagic"
             },
-            hexBolt:
+            hexBoltWhite:
             {
                 name: "Hex Bolt",
                 desc: "Hit effect: The target gains the blight of your choice.",
@@ -1471,7 +1471,7 @@ const m =
                 dist: 2,
                 aim: [2, 4, 6],
                 unused: true,
-                m: function () { }
+                m: "hexBolt"
             }
         },
         util:
@@ -1495,7 +1495,7 @@ const m =
                 dist:3,
                 aim:[5],
                 unused:true,
-                m:function(){}
+                m:"piercingShot"
             },
             mysticArrow:
             {
@@ -1506,7 +1506,7 @@ const m =
                 aim:[3],
                 hurt:[5],
                 unused:true,
-                m:function(){}
+                m:"mysticArrow"
             },
             snipe:
             {
@@ -1516,7 +1516,7 @@ const m =
                 aim:[8],
                 hurt:[4],
                 unused:true,
-                m:function(){}
+                m:"snipe"
             }
         },
         white:
@@ -1528,7 +1528,7 @@ const m =
                 icon:cogs,
                 dist:2,
                 unused:true,
-                m:function(){}
+                m:"fieldInstruction"
             },
             faryFire:
             {
@@ -1538,7 +1538,7 @@ const m =
                 dist:3,
                 aim:[5],
                 unused:true,
-                m:function(){}
+                m:"faryFire"
             }
         },
         util:
@@ -1552,7 +1552,7 @@ const m =
                 aim:[6],
                 unused:true,
                 legendaryUsed:false,
-                m:function(){}
+                m:"deathblow"
             },
             shootAndScoot:
             {
@@ -2913,12 +2913,61 @@ const _m = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.whiteTeam')[0])
         if( $target.length )
             socket.emit('rolloSkill',{ socksMethod:"purgeMagic", hex, row, key:mySide })
-        // name: "Purge Magic",
-        // desc: "Move all boons and blights from the Hexlings, to a friendly model within range.",
-        // icon: cogs,
-        // dist: 2,
-        // unused: true,
-        // m: "purgeMagic"
+    },
+    hexBolt:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [2, 4, 6][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), socksMethod:"hexBolt", hex, row })
+    },
+    attuneMagic:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        $('#gameScreen')
+            .append(  challengeOptions(origin, {hex, row}, "attuneMagic",1,`give 1 boon to ${origin.data('name')}`)  )
+    },
+    piercingShot:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + baim), socksMethod:"piercingShot", hex, row })
+    },
+    mysticArrow:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (3 + baim), hurt: (10 + bdamage), socksMethod:"mysticArrow", hex, row })
+    },
+    snipe:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (8 + baim), hurt: (4 + bdamage), socksMethod:"snipe", hex, row })
+    },
+    fieldInstruction:function(origin,target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`whiteTeam`) )
+            socket.emit('rolloSkill',{ socksMethod:"fieldInstruction", hex, row })
+    },
+    faryFire:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + baim), socksMethod:"faryFire", hex, row })
+    },
+    deathblow:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (6 + baim), socksMethod:"deathblow", hex, row })
     }
 }
 
@@ -3274,13 +3323,22 @@ var m_ = {
             $('[data-glow]').removeAttr('data-glow')
         }
     },
-    raiseDead:function(o){
+    raiseDead:function(o){//conntains untestedo code: make bb's visible first and stat killin then recruitin
         const { hex, row} = o
         const thiz = $(`.hex_${hex}_in_row_${row}`)
         $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
         $('[data-glow]').removeAttr('data-glow')
-        graveyard[river[1]][river[3]].splice(0,1)
         displayAnimatedNews(`${river[3]}<br/>recruited`)
+        graveyard[river[1]][river[3]].splice(0,1)
+        //untestedo starts here
+        const $thiz = $(thiz.children('.smallCard')[0])
+        const $brothers = $(`
+            [data-name="${$thiz.data('name')}"]
+            [data-side=${$thiz.data('side')}]
+            [data-tenmodel]:not([data-tenmodel=${$thiz.data('tenmodel')}])
+        `)
+        propagate_BB_s($brothers,$thiz)
+        //untestedo ends here
         river = null
         current_ability_method = null
     },
@@ -4454,16 +4512,159 @@ var m_ = {
     },
     purgeMagic:function(o){
         const { hex, row, key } = o
-        const hexlings = extractBoons_Blights($($(`[data-name="Hexlings"][data-tenmodel].${key}`)[0]) )
-        const recepient = $( $(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0] )
-        console.log(o,hexlings,$($(`[data-name="Hexlings"][data-tenmodel].${key}`)[0]),key)
-        //I need to set two bbs here, based on two blight extractions
-        // name: "Purge Magic",
-        // desc: "Move all boons and blights from the Hexlings, to a friendly model within range.",
-        // icon: cogs,
-        // dist: 2,
-        // unused: true,
-        // m: "purgeMagic"
+        const $hexlings = $($(`[data-name="Hexlings"][data-tenmodel].${key}`)[0])
+        const $recepient = $( $(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0] )
+        const hexlings = extractBoons_Blights( $hexlings )
+        const { baim, bdamage, bspeed, bdodge, bprotection } = hexlings
+        setBoons_Blights( $recepient, { baim, bdamage, bspeed, bdodge, bprotection } )
+        setBoons_Blights( $hexlings, { baim:0, bdamage:0, bspeed:0, bdodge:0, bprotection:0})
+        $('[data-glow]').removeAttr('data-glow')
+        displayAnimatedNews(`Hexlings<br/>pure magic`)
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+    },
+    hexBolt:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            const { side, name } = target.data()
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){ 
+                if( myTurn )
+                    $('#gameScreen').append(  challengeOptions(target, {hex, row}, "hexBolt2",1,`give 1 blight to ${target.data('name')}`)  )
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    hexBolt2:function(o){
+        const { hex, row, cursePackage } = o
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        setBoons_Blights($target,{[cursePackage[0]]:Number($target.attr(`data-${cursePackage[0]}`))-1})
+        displayAnimatedNews(`${$target.data('name')}<br/>-1 ${[...cursePackage[0]].slice(1).join('')}`)
+    },
+    attuneMagic:function(o){
+        const { hex, row, cursePackage } = o
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Hexlings"]')[0])
+        setBoons_Blights($target,{[cursePackage[0]]:Number($target.attr(`data-${cursePackage[0]}`))+1})
+        displayAnimatedNews(`Hexlings<br/>+1 ${[...cursePackage[0]].slice(1).join('')}`)
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+    },
+    piercingShot:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
+                animateDamage(target, -1)
+                highlightHexes({colour:'shootAndScoot',dist:1})
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    mysticArrow:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                const p = hurt.length > 10 ? 6 : 5
+                const stPunch = hurt.slice(0, p)
+                const ndPunch = hurt.slice(p)
+                if( doDamage(stPunch, target) ){
+                    highlightHexes({colour:'shootAndScoot',dist:1})
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else {
+                        setTimeout(()=>{
+                            if ( doDamage(ndPunch, target) )
+                                if( checkIfStillAlive(target) )
+                                    moveLadder(target, target.data('stepsgiven'))
+                                else null
+                        },1550)
+                    }
+                } else displayAnimatedNews("no damage!")
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    snipe:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) ){
+                    highlightHexes({colour:'shootAndScoot',dist:1})
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                }else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    fieldInstruction:function(o){
+        const { hex, row } = o
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        setBoons_Blights($target,{bdamage:Number($target.attr('data-bdamage'))+1})
+        displayAnimatedNews(`${$target.data('name')}<br/>+1 damage`)
+        if_moved_end_it()
+        add_action_taken()
+        current_ability_method = null
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    faryFire:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                setBoons_Blights(target,{bprotection:Number(target.attr('data-bprotection'))-1})
+                displayAnimatedNews(`${target.data('name')}<br/>-1 protection`)
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    deathblow:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-2) )
+                animateDamage(target, -2)
+                highlightHexes({colour:'shootAndScoot',dist:1})
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
     }
 }
 
@@ -4687,6 +4888,10 @@ var _m_ = {
             }
         }
     },
+    shootAndScoot:()=>{
+        $('[data-glow]').removeAttr('data-glow')
+        displayAnimatedNews('Lorsann<br/>Shoot & Scoot')
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

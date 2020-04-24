@@ -299,17 +299,21 @@ $('body').on('click','.boon-blight.blighted.graspingCurse',function(e){
 })
 $('body').on('click','.boon-blight.confirm.graspingCurse', function(e){
     e.preventDefault()
-    const { side, name } = $(this).parent().data()
+    const { side, name, socksmethod } = $(this).parent().data()
     const bbname = $('.boon-blight.selected').data('abil')
     crystalGlare_bb = { side, name, curseType:bbname }
-    socket.emit('rolloSkill',{ socksMethod:"deadlyCurse2", cursePackage:crystalGlare_bb })
+    socket.emit('rolloSkill',{ socksMethod:'deadlyCurse2', cursePackage:crystalGlare_bb })
     $('.deadlyCursePanel').remove()
 })
 
 $('body').on('click','.boon-blight.challengeTitus',function(e){
     e.preventDefault()
     const numberOfChoices = Number($(this).parent('.titusChallengeCrest').data('cursecount') ) 
-    if( !$(this).hasClass('blighted') )
+    const socksmethod = $(this).parent('.titusChallengeCrest').data('socksmethod')
+    if( 
+        (!$(this).hasClass('blighted') && socksmethod !== 'attuneMagic' ) || 
+        (socksmethod === 'attuneMagic' && !$(this).hasClass('booned') ) 
+    )
         if($('.selected').length < numberOfChoices)
             $(this).toggleClass('selected') 
         else $(this).removeClass('selected')
@@ -481,6 +485,13 @@ $('body').on('click','.fire[data-socksmethod="callTotems"]',function(e){
         add_action_taken()
         $('#multi_choice_info_panel').remove()
     }
+})
+$('body').on('click','[data-glow="shootAndScoot"].hexagon',function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    const { hex, row } = $(this).data()
+    if(myTurn)
+        socket.emit('forceMove',{h:hex, r:row, klass:{h:$('selectedModel').parent('.hexagon').data('hex'),r:$('selectedModel').parent('.hexagon').data('row')}, callback:`shootAndScoot`})
 })
 
 

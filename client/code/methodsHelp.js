@@ -62,6 +62,8 @@ const checkIfStillAlive = (target) => {
 }
 const forceKill = (target) => {//$()
     target.addClass('death')
+    setBoons_Blights( target, { baim:0, bdamage:0, bspeed:0, bdodge:0, bprotection:0})
+    target.attr('data-healthleft',target.data('health'))
     setTimeout(()=>{
         if( target.data('type')==='unit' )
             if(
@@ -307,4 +309,10 @@ function moveContentsOfHex(stringz,thiz){//"string for callback name" and $(thes
     const { hex, row } = thiz.data()
     socket.emit('rolloSkill',{ hex, row, socksMethod:stringz })
     console.log('step4')
+}
+
+function propagate_BB_s($origin,$target){
+    const origin = extractBoons_Blights( $origin )
+    const { baim, bdamage, bspeed, bdodge, bprotection } = origin
+    setBoons_Blights( $target, { baim, bdamage, bspeed, bdodge, bprotection } )
 }

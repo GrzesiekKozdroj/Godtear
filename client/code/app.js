@@ -41,24 +41,24 @@ function beginBattle(){
     `);
     }
 }
-const makeAnim = (that,thiz,callback=false) => {console.log(thiz.data('row'),thiz.data('hex'))
-    let ofsetSize = that.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
+const makeAnim = (model,whereTo,callback=false) => {console.log(whereTo.data('row'),whereTo.data('hex'))//model, destination
+    let ofsetSize = model.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
     MOVINGNOW = true
-    if(thiz)
-        that.animate({
-            left: thiz.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * window.innerHeight)- that.offset().left,
-            top: thiz.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * window.innerHeight) - that.offset().top
+    if(whereTo)
+        model.animate({
+            left: whereTo.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * window.innerHeight)- model.offset().left,
+            top: whereTo.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * window.innerHeight) - model.offset().top
         }, 220, ()=>{
-            const name = that.data('name')
-            const team = that.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
-            that.removeAttr('style').detach().appendTo(thiz)
+            const name = model.data('name')
+            const team = model.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
+            model.removeAttr('style').detach().appendTo(whereTo)
             document.querySelector(`[data-name="${name}"]${team}`).removeAttribute('style')
             if(callback)
-                callback(that)
+                callback(model)
             else
-                thiz.removeAttr('data-glow')
+                whereTo.removeAttr('data-glow')
             MOVINGNOW = false
-            console.log('done',thiz.data('row'),thiz.data('hex'))
+            console.log('done',whereTo.data('row'),whereTo.data('hex'))
         });
 };//anim
 function gameCard (name, roster, color) {

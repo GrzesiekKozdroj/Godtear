@@ -33,41 +33,64 @@
 }
 
 @mixin makeGlow ($name, $color1, $color2, $color3, $color4){
+    $w:1vh;
+    $h:1vh;
     @keyframes glow#{$name} {
         0%{
-            box-shadow: 0 0 .5vw .4vw $color1, 0 0 .5vw .4vw inset $color1;
+            box-shadow: 0 0 $w $h $color1, 0 0 $w $h inset $color1;
         }
         33%{
-            box-shadow: 0 0 .5vw .42vw $color2, 0 0 .5vw .4vw inset $color2;
+            box-shadow: 0 0 $w $h $color2, 0 0 $w $h inset $color2;
         }
         66%{
-            box-shadow: 0 0 .5vw .44vw $color3, 0 0 .5vw .4vw inset $color3;
+            box-shadow: 0 0 $w $h $color3, 0 0 $w $h inset $color3;
         }
         100%{
-            box-shadow: 0 0 .5vw .48vw $color4, 0 0 .5vw .4vw inset $color4;
+            box-shadow: 0 0 $w $h $color4, 0 0 $w $h inset $color4;
         }
     };
     animation: 30s infinite alternate glow#{$name};
 }
 
 .redGlow{
-    @include makeGlow('red', rgb(255, 0, 0), rgb(175, 0, 0), rgb(187, 0, 93), rgb(201, 44, 109))
+    @include makeGlow('red',
+     rgba(255, 0, 0, 0.562), 
+     rgba(175, 0, 0, 0.575), 
+     rgba(187, 0, 93, 0.623), 
+     rgba(201, 44, 109, 0.555)
+     )
 }
 .blueGlow{
-    @include makeGlow('blue', rgb(0, 38, 255), rgb(0, 175, 152), rgb(0, 187, 156), rgb(110, 78, 196))
+    @include makeGlow('blue', 
+    rgba(0, 38, 255, 0.534), 
+    rgba(0, 175, 152, 0.582), 
+    rgba(0, 187, 156, 0.575), 
+    rgba(110, 78, 196, 0.514)
+    )
 }
 .yellowGlow{
-    @include makeGlow('yellow', rgb(238, 255, 0), rgb(236, 240, 0), rgb(252, 238, 119), rgb(255, 251, 42))
+    @include makeGlow('yellow', 
+    rgba(230, 255, 10, 0.4), 
+    rgba(236, 240, 0, 0.562), 
+    rgba(252, 239, 119, 0.541), 
+    rgba(255, 251, 42, 0.541)
+    )
 }
 .greenGlow{
-    @include makeGlow('green', rgb(81, 255, 0), rgb(0, 240, 12), rgb(84, 155, 67), rgb(73, 187, 8))
+    @include makeGlow('green', 
+    rgba(81, 255, 0, 0.548), 
+    rgba(0, 240, 12, 0.555), 
+    rgba(85, 155, 67, 0.568), 
+    rgba(74, 187, 8, 0.521)
+    )
 }
 .legendaryGlow{
-    @include makeGlow('goldenrod', goldenrod, goldenrod, goldenrod, goldenrod)
+    @include makeGlow('goldenrod', rgba(218, 165, 32, 0.555), rgba(218, 165, 32, 0.568), rgba(218, 165, 32, 0.568), rgba(218, 165, 32, 0.562))
 }
 .claimColor{
-    @include makeGlow('white', rgb(245, 245, 245), rgb(194, 197, 194), rgb(243, 243, 243), rgb(238, 250, 231))
+    @include makeGlow('white', rgba(245, 245, 245, 0.589), rgba(194, 197, 194, 0.541), rgba(243, 243, 243, 0.568), rgba(238, 250, 231, 0.541))
 }
+
 @keyframes popbigAndSmall{
     10%{transform:scale(.7)}
     26%{transform:scale(1.3)}

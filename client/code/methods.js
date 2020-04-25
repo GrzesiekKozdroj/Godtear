@@ -1639,7 +1639,7 @@ const m =
                 unused:true,
                 m:"annoy"
             },
-            backstab:
+            backstabBlack:
             {
                 name:"Backstab",
                 desc:"If this attack hits a champion, the champion gains 1 wound.",
@@ -1648,7 +1648,7 @@ const m =
                 aim:[5],
                 hurt:[5],
                 unused:true,
-                m:function(){}
+                m:"backstab"
             }
         },
         white:
@@ -1659,9 +1659,10 @@ const m =
                 desc:"You may place Sneaky Peet on a hex up to 2 hexes away from his current hex.",
                 icon:self,
                 unused:true,
-                m:function(){}
+                dist:2,
+                m:"leap"
             },
-            backstab:
+            backstabWhite:
             {
                 name:"Backstab",
                 desc:"If this attack hits a champion, the champion gains 1 wound.",
@@ -1670,8 +1671,8 @@ const m =
                 aim:[5],
                 hurt:[5],
                 unused:true,
-                m:function(){}
-            }            
+                m:"backstab"
+            }
         },
         util:
         {
@@ -1685,7 +1686,7 @@ const m =
                 hurt:[6],
                 unused:true,
                 legendaryUsed:false,
-                m:function(){}
+                m:"pounce"
             },
             gangBoss:
             {
@@ -1705,7 +1706,7 @@ const m =
                 desc:"Remove one sneaky Stabber from the battlefield. Then make a recruit action.",
                 icon:self,
                 unused:true,
-                m:function(){}
+                m:"sneak"
             },
             irritate:
             {
@@ -2980,7 +2981,9 @@ const _m = {
         const unitSize = origin.siblings('.smallCard').length
         const aim = [3, 4, 5][unitSize]
         const hurt = [3, 4, 5][unitSize]
-        const killShot = $target.hasClass('champModel') ? 1 : 0
+        const hp = Number(target.attr('data-health'))
+        const hpl = Number(target.attr('data-healthleft'))
+        const killShot = $target.hasClass('champModel') && hp > hpl ? 1 : 0
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt+bdamage+killShot), socksMethod:"fire", hex, row })
     },
@@ -3004,14 +3007,42 @@ const _m = {
             socket.emit('rolloSkill',{ socksMethod:"plotRevenge", hex, row })
     },
     annoy:function(origin,target){
-        // name:"annoy",
-        // desc:"Hit Effect: Move target up to 2 hexes toward Sneaky Peet.",
-        // icon:skull,
-        // dist:3,
-        // aim:[5],
-        // unused:true,
-        // m:"annoy"
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + baim), socksMethod:"annoy", hex, row })
     },
+    backstab:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(5+bdamage), socksMethod:"backstab", hex, row })
+    },
+    leap:function(origin,target){
+        const { hex, row } = target
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes({colour:'legendaryGlow',dist:2})
+        socket.emit('rolloSkill',{ socksMethod:"leap", hex, row })
+    },
+    pounce:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const daddy = $(`.hex_${hex}_in_row_${row}`)
+        const $target = $(daddy.children('.smallCard')[0])
+        if( $target.hasClass('blackTeam') && daddy.attr('data-glow') === 'redGlow' )
+            socket.emit('rolloSkill',{ socksMethod:"pounce1", hex, row })
+        if( !target.length && daddy.attr('data-glow') === 'legendaryGlow' )
+            socket.emit('rolloSkill',{ socksMethod:"pounce2", hex, row, hurt:(6+bdamage), aim:(6+baim) })
+    },
+    sneak:{
+        // name:"sneak",
+        // desc:"Remove one sneaky Stabber from the battlefield. Then make a recruit action.",
+        // icon:self,
+        // unused:true,
+        // m:"sneak"
+    }
 }
 
 
@@ -4770,15 +4801,87 @@ var m_ = {
         $('[data-glow]').removeAttr('data-glow')
         current_ability_method = null
     },
-    annoy:function(o){
-        // name:"annoy",
-        // desc:"Hit Effect: Move target up to 2 hexes toward Sneaky Peet.",
-        // icon:skull,
-        // dist:3,
-        // aim:[5],
-        // unused:true,
-        // m:"annoy"
+    annoy:function(o){//acccepts only one step. plugged to froglodytes tongue lash
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                //enemy pushing here
+                target.addClass('tongueLash_selected')
+                highlightHexes({colour:'legendaryGlow',dist:2},target)
+                highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
+                displayAnimatedNews(`${target.data('name')}<br/>annoyed`)
+                //push ends here
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
     },
+    backstab:function(o){
+        const { aim, hex, row, hurt } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
+                animateDamage(target, -1)
+                displayAnimatedNews(`${target.data('name')}<br/>backstabbed`)
+                if( checkIfStillAlive(target) )
+                    moveLadder(target, target.data('stepsgiven'))
+                else {
+                    setTimeout(()=>{
+                        if ( doDamage(hurt, target) )
+                            if( checkIfStillAlive(target) )
+                                moveLadder(target, target.data('stepsgiven'))
+                            else null
+                    },1550)
+                }
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    leap:function(o){
+        const { hex, row } = o
+        const thiz = $(`[data-name="SneakyPeet"].selectedModel`)
+        const that = $(`.hex_${hex}_in_row_${row}`)
+        makeAnim(thiz,that,_m_.leap)
+    },
+    pounce1:function(o){
+        const { hex, row } = o
+        const targes = $($(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)[0])
+        targes.addClass('pounced')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes({colour:'legendaryGlow',dist:1},targes)
+        displayAnimatedNews('sneaky leap<br/>first')
+    },
+    pounce2:function(o){
+        const { hex, row, aim, hurt } = o
+        const thiz = $(`[data-name="SneakyPeet"].selectedModel`)
+        const that = $(`.hex_${hex}_in_row_${row}`)
+        makeAnim(thiz,that)
+        $('[data-glow]').removeAttr('data-glow')
+        setTimeout(()=>{
+            const target = $('.pounced')
+            target.removeClass('pounced')
+            if_moved_end_it()
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        current_ability_method = null
+        displayAnimatedNews('pounced')
+        },1000)
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5005,6 +5108,13 @@ var _m_ = {
         $('[data-glow]').removeAttr('data-glow')
         $('.shootAndScoot_selected').removeClass('shootAndScoot_selected')
         displayAnimatedNews('Lorsann<br/>Shoot & Scoot')
+    },
+    leap:$thiz=>{
+        $('[data-glow]').removeAttr('data-glow')
+        displayAnimatedNews('sneaky<br/>leap')
+        add_action_taken()
+        if_moved_end_it()
+        current_ability_method = null
     }
 }
 

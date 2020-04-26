@@ -1716,7 +1716,7 @@ const m =
                 dist:3,
                 aim:[3,5,7],
                 unused:true,
-                m:function(){}
+                m:"irritate"
             }
         },
         white:
@@ -1727,7 +1727,7 @@ const m =
                 desc:"One Sneaky Stabber may move up to 3 hexes.",
                 icon:self,
                 unused:true,
-                m:function(){}
+                m:"sprint"
             },
             letMeDoIt:
             {
@@ -1737,7 +1737,7 @@ const m =
                 aim:[7,5,3],
                 hurt:[4,5,6],
                 unused:true,
-                m:function(){}
+                m:"letMeDoIt"
             }
         },
         util:
@@ -3036,12 +3036,37 @@ const _m = {
         if( !target.length && daddy.attr('data-glow') === 'legendaryGlow' )
             socket.emit('rolloSkill',{ socksMethod:"pounce2", hex, row, hurt:(6+bdamage), aim:(6+baim) })
     },
-    sneak:{
-        // name:"sneak",
-        // desc:"Remove one sneaky Stabber from the battlefield. Then make a recruit action.",
-        // icon:self,
-        // unused:true,
-        // m:"sneak"
+    sneak:function(origin,target){
+        const { hex, row } = target
+        const sneaker = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="SneakyStabbers"].whiteTeam')[0])
+        if( sneaker.length )
+            socket.emit('rolloSkill',{ socksMethod:"sneak", hex, row })
+        else displayAnimatedNews('choose<br/>stabber')
+    },
+    irritate:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [3, 5, 7][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), socksMethod:"irritate", hex, row })
+    },
+    sprint:function(origin,target){
+        const { hex, row } = target
+        const $mourn = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="SneakyStabbers"].whiteTeam')[0])
+        if ( $mourn.length )
+            socket.emit('rolloSkill',{ socksMethod:"sprint", hex, row })
+    },
+    letMeDoIt:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.blackTeam')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [7,5,3][unitSize]
+        const hurt = [4,5,6][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt+bdamage), socksMethod:"letMeDoIt", hex, row })
     }
 }
 
@@ -4435,7 +4460,7 @@ var m_ = {
     },
     boulderBash:function(o){
         const { aim, hurt, hex, row, key } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
             if_moved_end_it()
@@ -4811,7 +4836,7 @@ var m_ = {
             add_action_taken()
             if( onHit(aim, target) ){
                 //enemy pushing here
-                target.addClass('tongueLash_selected')
+                target.addClass('annoyed_selected')
                 highlightHexes({colour:'legendaryGlow',dist:2},target)
                 highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
                 displayAnimatedNews(`${target.data('name')}<br/>annoyed`)
@@ -4881,6 +4906,61 @@ var m_ = {
         current_ability_method = null
         displayAnimatedNews('pounced')
         },1000)
+    },
+    sneak:function(o){
+        $('[data-glow]').removeAttr('data-glow')
+        const { hex, row } = o
+        const sneaker = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="SneakyStabbers"]')[0])
+        const side = sneaker.data('side') === mySide ? mySide : opoSide
+        const sneakyPreet = $(`[data-name="SneakyPeet"].${side}`)
+        forceKill(sneaker)
+        displayAnimatedNews('sneaky<br/>sneak')
+        current_ability_method = null
+        add_action_taken()
+        if_moved_end_it()
+        highlightHexes({colour:'recruitGlow',dist:1},sneakyPreet)
+        setTimeout(()=>rallyActionDeclaration({ unitname:"SneakyPeet", side, type:'unit', name:'SneakyStabbers'}),1000)
+    },
+    irritate:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                displayAnimatedNews(`${target.data('name')}<br/>-1 aim`)
+                setBoons_Blights(target,{baim:Number(target.attr('data-baim'))-1})
+            }else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    sprint:function(o){
+        const { hex, row } = o
+        const $mourn = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="SneakyStabbers"]')[0])
+        $('[data-glow]').removeAttr('data-glow')
+        displayAnimatedNews('Sneaky<br/>sprint')
+        $mourn.addClass('sprint_selected')
+        highlightHexes({colour:'legendaryGlow',dist: 3}, $mourn)
+    },
+    letMeDoIt:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
     }
 }
 
@@ -5115,6 +5195,41 @@ var _m_ = {
         add_action_taken()
         if_moved_end_it()
         current_ability_method = null
+    },
+    annoyed:($thiz)=>{
+        if( $('[data-glow].hexagon').length > 2 ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
+            let o = {}
+            o.hex = $thiz.parent('.hexagon').data('hex')
+            o.row = $thiz.parent('.hexagon').data('row')
+            highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
+        } else {
+            $('[data-glow]').removeAttr('data-glow')
+            $($thiz).removeClass(`annoyed_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            current_ability_method = null
+            add_action_taken()
+        }
+    },
+    sprint:$thiz=>{
+        if ( $('[data-glow].hexagon').length > 19 ) {
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:2},$thiz)
+        } else if( $('[data-glow].hexagon').length > 6 ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
+        } else {
+            $('[data-glow]').removeAttr('data-glow')
+            $($thiz).removeClass(`sprint_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            if(!$('.sprint_selected').length ){
+                current_ability_method = null
+                pocketBox = null
+                if_moved_end_it()
+                add_action_taken()
+            }
+        }
     }
 }
 

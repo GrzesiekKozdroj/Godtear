@@ -368,6 +368,10 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.avalanche_selected').length )moveContentsOfHex('avalanche3',thiz)
         if( $('.earthquake_selected').length && onlyOneStep(thiz,$('.earthquake_selected')))extraMover('earthquake',thiz)
         if( $('[data-glow="shootAndScoot"]').length )extraMover('shootAndScoot',thiz)
+        if( $('.annoyed_selected').length && onlyOneStep(thiz,$('.annoyed_selected')) )
+            extraMover('annoyed',thiz)
+        if( $('.sprint_selected').length && onlyOneStep(thiz,$('.sprint_selected')) )
+            extraMover('sprint',thiz)
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){

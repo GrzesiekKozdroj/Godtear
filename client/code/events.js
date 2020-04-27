@@ -224,8 +224,8 @@ for(let K in m){
                         highlightHexes({colour:glow,dist:data.dist})
                         current_ability_method = _m[data.m]
                         if(data.dist)
-                            socket.emit('HH', {color:glow,dist:data.dist})
-                        else
+                            socket.emit('HH', {color:glow,dist:data.dist,m:SKILL.preface})//r way also pre init function
+                        else//for things like initiating message to other player, highlighting uttons active, pre setting skills
                             current_ability_method($('.selectedModel'), $('.selectedModel').parent('.hexagon').data())
                     }
             })
@@ -370,8 +370,10 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('[data-glow="shootAndScoot"]').length )extraMover('shootAndScoot',thiz)
         if( $('.annoyed_selected').length && onlyOneStep(thiz,$('.annoyed_selected')) )
             extraMover('annoyed',thiz)
-        if( $('.sprint_selected').length && onlyOneStep(thiz,$('.sprint_selected')) )
-            extraMover('sprint',thiz)
+        if( $('.sprint_selected').length && onlyOneStep(thiz,$('.sprint_selected')) )extraMover('sprint',thiz)
+        if( $('.brokenJaw_selected').length )extraMover('brokenJaw',thiz)
+        if( $('.whiplash_selected').length )extraMover('whiplash',thiz)
+        if( $('.beastlyCharge_selected').length && !thiz.children('.smallCard').length )extraMover('beastlyCharge',thiz)
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){

@@ -1763,7 +1763,7 @@ const m =
                 aim:[3],
                 hurt:[7],
                 unused:true,
-                m:function(){}
+                m:"jawbreaker"
             },
             whiplash:
             {
@@ -1774,7 +1774,7 @@ const m =
                 aim:[5],
                 hurt:[5],
                 unused:true,
-                m:function(){}
+                m:"whiplash"
             }
         },
         white:
@@ -1785,7 +1785,7 @@ const m =
                 desc:hurtBoon,
                 icon:self,
                 unused:true,
-                m:function(){}
+                m:"channelRage"
             },
             breakSpirit:
             {
@@ -1795,7 +1795,7 @@ const m =
                 dist:2,
                 aim:[6],
                 unused:true,
-                m:function(){}
+                m:"breakSpirit"
             }
         },
         util:
@@ -1808,7 +1808,8 @@ const m =
                 dist:1,
                 unused:true,
                 legendaryUsed:false,
-                m:function(){}
+                m:"beastlyCharge",
+                preface:"beastlyCharge"
             },
             brutalMaster:
             {
@@ -1830,7 +1831,7 @@ const m =
                 dist:1,
                 aim:[3,4,5],
                 unused:true,
-                m:function(){}
+                m:"ambush"
             },
             shoot:
             {
@@ -1840,7 +1841,7 @@ const m =
                 aim:[3,4,5],
                 hurt:[4,4,4],
                 unused:true,
-                m:function(){}
+                m:"shoot"
             }
         },
         white:
@@ -1851,7 +1852,7 @@ const m =
                 desc:"If the Red Bandits are below their maximum unit size, add one to a hex containing at least one Red Bandit.",
                 icon:self,
                 unused:true,
-                m:function(){}
+                m:"induct"
             },
             ambush:
             {
@@ -3067,6 +3068,66 @@ const _m = {
         const hurt = [4,5,6][unitSize]
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt+bdamage), socksMethod:"letMeDoIt", hex, row })
+    },
+    jawbreaker:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (3 + baim), hurt:(7+bdamage), socksMethod:"jawbreaker", hex, row })
+    },
+    whiplash:function(origin,target){//damage happens before moving, that should not be the case
+        const { baim, bhurt } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(5+bhurt), socksMethod:"whiplash", hex, row })
+    },
+    channelRage:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{ socksMethod:"channelRage", hex, row })
+    },
+    breakSpirit:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (6 + baim), socksMethod:"breakSpirit", hex, row })
+    },
+    beastlyCharge:function(origin,target){
+        const { hex, row } = target
+        origin.addClass('beastlyCharge_selected')
+        if( $('[data-glow="greenGlow"]').length ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:2})
+        }
+        socket.emit('rolloSkill',{ socksMethod:"beastlyCharge", hex, row })
+    },
+    ambush:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [3, 4, 5][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), socksMethod:"ambush", hex, row })
+    },
+    shoot:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.blackTeam')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [3, 4, 5][unitSize]
+        const hurt = [4, 4, 4][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt+bdamage), socksMethod:"shoot", hex, row })
+    },
+    induct:function(origin,target){
+        // name:"Induct",
+        // desc:"If the Red Bandits are below their maximum unit size, add one to a hex containing at least one Red Bandit.",
+        // icon:self,
+        // unused:true,
+        // m:"induct"
     }
 }
 
@@ -4826,7 +4887,7 @@ var m_ = {
         $('[data-glow]').removeAttr('data-glow')
         current_ability_method = null
     },
-    annoy:function(o){//acccepts only one step. plugged to froglodytes tongue lash
+    annoy:function(o){//acccepts only one step. plugged to froglodytes tongue lash//fixed
         const { aim, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
@@ -4961,6 +5022,138 @@ var m_ = {
             else displayAnimatedNews ("missed!")
         }
         current_ability_method = null
+    },
+    jawbreaker:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else {
+                        target.addClass('brokenJaw_selected')
+                        highlightHexes({colour:'legendaryGlow',dist:1},target)
+                    }
+                else {
+                    displayAnimatedNews("no damage!")
+                    target.addClass('brokenJaw_selected')
+                    highlightHexes({colour:'legendaryGlow',dist:1},target)
+                }
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method=null
+    },
+    whiplash:function(o){
+        const { aim, hex, row } = o
+        const dAD = $(`.hex_${hex}_in_row_${row}`)
+        const targets = dAD.children(`.smallCard`)
+        if( targets.length ){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                //enemy pushing here
+                target.addClass('whiplash_selected')
+                highlightHexes({colour:'legendaryGlow',dist:2},target)
+                highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
+                displayAnimatedNews(`${target.data('name')}<br/>whiplashed`)
+                //push ends here
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    channelRage:function(o){
+        const { hex, row } = o
+        target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        displayAnimatedNews(`${target.data('name')}<br/>+1 damage`)
+        setBoons_Blights(target,{bdamage:Number(target.attr('data-bdamage'))+1})
+        if_moved_end_it()
+        add_action_taken()
+        $('[data-glow]').removeAttr('data-glow')
+        current_ability_method = null
+    },
+    breakSpirit:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                displayAnimatedNews(`${target.data('name')}<br/>-1 dodge`)
+                setBoons_Blights(target,{bdodge:Number(target.attr('data-bdodge'))-1})
+            }else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    beastlyCharge:function(o){//enters the hex with victim
+        const { hex, row} = o
+        const dad = $(`.hex_${hex}_in_row_${row}`)
+        const team = !$('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        const target = $(dad.children(`.smallCard.${team}`)[0])
+        if( target.length ){
+            $('.beastlyCharge_selected').removeClass(`beastlyCharge_selected`)
+            target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-2) )
+            animateDamage(target, -2)
+                if( checkIfStillAlive(target) )
+                    moveLadder(target, target.data('stepsgiven'))
+                else null
+            if_moved_end_it()
+            add_action_taken()
+            current_ability_method = null
+            $('[data-glow]').removeAttr('data-glow')
+        }
+    },
+    ambush:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
+                animateDamage(target, -1)
+                displayAnimatedNews(`${target.data('name')}<br/>ambushed`)
+                if( checkIfStillAlive(target) )
+                    moveLadder(target, target.data('stepsgiven'))
+                else null
+                } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    shoot:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    induct:function(o){
+        // name:"Induct",
+        // desc:"If the Red Bandits are below their maximum unit size, add one to a hex containing at least one Red Bandit.",
+        // icon:self,
+        // unused:true,
+        // m:"induct"
     }
 }
 
@@ -5230,6 +5423,28 @@ var _m_ = {
                 add_action_taken()
             }
         }
+    },
+    brokenJaw:$thiz=>{
+        $(`[data-glow]`).removeAttr('data-glow')
+        displayAnimatedNews(`${$thiz.data('name')}<br/>broken jaw`)
+    },
+    whiplash:thiz=>{
+        $('[data-glow]').removeAttr('data-glow')
+        $(thiz).removeClass(`whiplash_selected`)
+        setTimeout(()=>thiz.removeAttr('style'),100)
+    },
+    beastlyCharge:thiz=>{
+        if( $('[data-glow="legendaryGlow"].hexagon').length > 6 ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1},thiz)
+        } else {
+            $('[data-glow]').removeAttr('data-glow')
+            $(thiz).removeClass(`beastlyCharge_selected`)
+            setTimeout(()=>thiz.removeAttr('style'),100)
+            if(!$('.beastlyCharge_selected').length ){
+                highlightHexes({colour:'redGlow',dist:1},thiz)
+            }
+        }
     }
 }
 
@@ -5240,5 +5455,14 @@ var _m_ = {
 var m__ = {
     newSpew: function (o){
         console.log('doubled ?')
+    }
+}
+
+var __m = {//only on da otha sajd
+    beastlyCharge:function(){
+        displayAnimatedNews('beastly<br/>charge')
+        $(`[data-name="Rangosh"].${opoSide}`).addClass('beastlyCharge_selected')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes({colour:'legendaryGlow',dist:2})
     }
 }

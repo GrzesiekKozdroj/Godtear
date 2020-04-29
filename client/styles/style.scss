@@ -595,7 +595,7 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     }
 }
 
-.niaChallenge, .deadlyCursePanel{
+.niaChallenge, .deadlyCursePanel,.soCoolMistressPanel{
     @include instaFlex;
     color:rgba(0, 0, 0, 0.911);
     text-shadow: 0 0 1vh darkorange, 0 0 1.5vh darkorange, 0 0 2vh darkorange, 0 0 2.5vh darkorange, 0 0 3vh darkorange;
@@ -605,7 +605,7 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     z-index:10;
     margin:auto auto;
     text-align: center;
-    .niaChallengeCrest, .deadlyCursePanelCrest{
+    .niaChallengeCrest, .deadlyCursePanelCrest, .soCoolMistressPanelCrest{
         width:50vw;
         height:60vh;
         font-family: $coinFont2;
@@ -661,14 +661,14 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
         }
     }
 }
-.deadlyCursePanelCrest{
-    .deadlyCurse.aim,.graspingCurse.dodge{
+.deadlyCursePanelCrest,.soCoolMistressPanelCrest{
+    .deadlyCurse.aim,.graspingCurse.dodge,.soCoolMistress.aim{
         border-radius: 50% 30% 30% 50%;
     }
-    .deadlyCurse.damage,.graspingCurse.walk{
+    .deadlyCurse.damage,.graspingCurse.walk,.soCoolMistress.walk{
         border-radius: 30% 50% 50% 30%;
     }
-    .deadlyCurse.confirm,.graspingCurse.confirm{
+    .deadlyCurse.confirm,.graspingCurse.confirm,.soCoolMistress.confirm{
         border-radius: 47% 47% 47% 47%;
     }
 }

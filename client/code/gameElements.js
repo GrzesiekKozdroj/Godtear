@@ -242,3 +242,20 @@ function dedlyCursePanel({side, name,socksMethod,message}){
         </div>
     `
 }
+function soCoolMistress({side, name, socksMethod,message}){
+        return `
+        <div class="soCoolMistressPanel">
+            <div 
+                class="soCoolMistressPanelCrest" 
+                data-side=${side} 
+                data-name=${name} 
+                data-socksmethod=${socksMethod}
+              >
+                <div class="message">${message}</div>
+                <div class="boon-blight ${socksMethod} aim booned" data-abil="baim">  </div>
+                <div class="boon-blight ${socksMethod} confirm" > done </div>
+                <div class="boon-blight ${socksMethod} walk booned" data-abil="bspeed">  </div>
+            </div>
+        </div>
+    `
+}

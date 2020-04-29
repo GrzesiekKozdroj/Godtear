@@ -1823,7 +1823,7 @@ const m =
     {
         black:
         {
-            ambush:
+            ambushBlack:
             {
                 name:"Ambush",
                 desc:"Hit Effect: The target gains 1 wound.",
@@ -1852,9 +1852,9 @@ const m =
                 desc:"If the Red Bandits are below their maximum unit size, add one to a hex containing at least one Red Bandit.",
                 icon:self,
                 unused:true,
-                m:"induct"
+                m:"induct",
             },
-            ambush:
+            ambushWhite:
             {
                 name:"Ambush",
                 desc:"Hit Effect: The target gains 1 wound.",
@@ -1862,7 +1862,7 @@ const m =
                 dist:1,
                 aim:[3,4,5],
                 unused:true,
-                m:function(){}
+                m:"ambush"
             }
         },
         util:
@@ -1882,13 +1882,13 @@ const m =
             snowballsChance:
             {
                 name:"Snowball's Chance",
-                desc:"If this skill wounds the targe, they gain wounds untill they are knocked out.",
+                desc:"If this skill wounds the target, they gain wounds untill they are knocked out.",
                 icon:skull,
                 dist:1,
                 aim:[1],
                 hurt:[2],
                 unused:true,
-                m:function(){}
+                m:"snowballsChance"
             },
             iceblade:
             {
@@ -1899,7 +1899,7 @@ const m =
                 aim:[5],
                 hurt:[5],
                 unused:true,
-                m:function(){}
+                m:"iceblade"
             },
             icebolt:
             {
@@ -1910,7 +1910,7 @@ const m =
                 aim:[7],
                 hurt:[3],
                 unused:true,
-                m:function(){}
+                m:"icebolt"
             }
         },
         white:
@@ -1922,7 +1922,7 @@ const m =
                 icon:cogs,
                 dist:4,
                 unused:true,
-                m:function(){}
+                m:"forwardMinionsMorrigan"
             },
             frostyGlance:
             {
@@ -1932,7 +1932,7 @@ const m =
                 dist:3,
                 aim:[5],
                 unused:true,
-                m:function(){}
+                m:"frostyGlance"
             }
         },
         util:
@@ -1945,13 +1945,13 @@ const m =
                 dist:3,
                 unused:true,
                 legendaryUsed:false,
-                m:function(){}
+                m:"flashFreeze"
             },
             frostForged:
             {
                 name:"Frost Forged",
                 desc:"Morrigan gains a +2 bonus for boons instead of a +1 bonus.",
-                m:function(){}
+                m:"frostForged"
             }
         }
     },
@@ -1965,7 +1965,7 @@ const m =
                 desc:hurtBoon,
                 icon:self,
                 unused:true,
-                m:function(){}
+                m:"intenseCold"
             },
             snowbladefight:
             {
@@ -1976,7 +1976,7 @@ const m =
                 aim:[1,1,1],
                 hurt:[3,4,5],
                 unused:true,
-                m:function(){}
+                m:"snowbladefight"
             }
         },
         white:
@@ -1984,11 +1984,11 @@ const m =
             soCoolMistress:
             {
                 name:"So Cool, Mistress!",
-                desc:`If Morrigan is within rnage, she gains ${aimBoon} or ${walkBoon}.`,
+                desc:`If Morrigan is within ranage, she gains ${aimBoon} or ${walkBoon}.`,
                 icon:cogs,
                 dist:3,
                 unused:true,
-                m:function(){}
+                m:"soCoolMistress"
             },
             chillOut:
             {
@@ -1998,7 +1998,7 @@ const m =
                 aim:[1,1,1],
                 icon:skull,
                 unused:true,
-                m:function(){}
+                m:"chillOut"
             }
         },
         util:
@@ -3122,12 +3122,111 @@ const _m = {
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt+bdamage), socksMethod:"shoot", hex, row })
     },
-    induct:function(origin,target){
-        // name:"Induct",
-        // desc:"If the Red Bandits are below their maximum unit size, add one to a hex containing at least one Red Bandit.",
-        // icon:self,
-        // unused:true,
-        // m:"induct"
+    induct:function(origin,target){console.log('_m')
+        const { hex, row } = target
+        if ( !$('[data-glow]').length && $(`[data-name="RedBandits"][data-tenmodel].whiteTeam`).length < 5 )
+            $(`[data-name="RedBandits"][data-tenmodel].whiteTeam`).parent('.hexagon').each(function(){
+                const dad = $(this)
+                if( dad.children(`[data-name="RedBandits"][data-tenmodel].whiteTeam`).length < 3 ){
+                    dad.attr('data-glow','recruitGlow')
+                    dad.children('.top').attr('data-glow','recruitGlow')
+                    dad.children('.bottom').attr('data-glow','recruitGlow')
+                    river = [ "Rangosh", mySide, "unit", "RedBandits" ]
+                }
+            })
+        socket.emit( 'rolloSkill', { socksMethod:"induct", hex, row })
+    },
+    ambush:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        const aim = [3, 4, 5][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim), socksMethod:"ambush", hex, row })
+    },
+    snowballsChance:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const dbaim = baim === 1 ? baim * 2 : baim
+        const dbdamage = bdamage === 1 ? bdamage * 2 : bdamage
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (1+dbaim), hurt:(2+dbdamage), socksMethod:"snowballsChance", hex, row })
+    },
+    iceblade:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.blackTeam')[0])
+        const dbaim = baim === 1 ? baim * 2 : baim
+        const dbdamage = bdamage === 1 ? bdamage * 2 : bdamage
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + dbaim), hurt:(5 + dbdamage), socksMethod:"iceblade", hex, row })
+    },
+    icebolt:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.blackTeam')[0])
+        const dbaim = baim === 1 ? baim * 2 : baim
+        const dbdamage = bdamage === 1 ? bdamage * 2 : bdamage
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (7 + dbaim), hurt:(3 + dbdamage), socksMethod:"icebolt", hex, row })
+    },
+    forwardMinionsMorrigan:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"forwardMinionsMorrigan", hex, row })
+    },
+    frostyGlance:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const dbaim = baim === 1 ? baim * 2 : baim
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`))
+            socket.emit('rolloSkill',{ aim: (5+dbaim), socksMethod:"frostyGlance", hex, row })
+    },
+    flashFreeze:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{ socksMethod:"flashFreeze", hex, row })
+    },
+    intenseCold:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{ socksMethod:"intenseCold", hex, row })
+    },
+    snowbladefight:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        $(`[data-glow]`).removeAttr('data-glow')
+        highlightHexes({colour:'blueGlow',dist:1},$target)
+        let AIIM = 0
+        $(`[data-glow="blueGlow"].hexagon`).children(`[data-name="ColdBones"].whiteTeam`).each(()=>AIIM++)
+        $(`[data-glow]`).removeAttr('data-glow')
+        const aim = [1, 1, 1][unitSize]
+        const hurt = [3, 4, 5][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim + AIIM), hurt:(hurt+bdamage), socksMethod:"snowbladefight", hex, row })
+    },
+    soCoolMistress:function(origin,target){
+        const { hex, row } = target
+        const taget = $($(`.hex_${hex}_in_row_${row}`).children(`[data-name="Morrigan"].whiteTeam`)[0])
+        const { name, side } = taget.data()
+        if( name==="Morrigan" && side === mySide )
+            $('#gameScreen').append( soCoolMistress( {side,name,socksMethod:'soCoolMistress',message:'choose one'} ) )
+    },
+    chillOut:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const unitSize = origin.siblings('.smallCard').length
+        $(`[data-glow]`).removeAttr('data-glow')
+        highlightHexes({colour:'blueGlow',dist:1},$target)
+        let AIIM = 0
+        $(`[data-glow="blueGlow"].hexagon`).children(`[data-name="ColdBones"].whiteTeam`).each(()=>AIIM++)
+        $(`[data-glow]`).removeAttr('data-glow')
+        const aim = [1, 1, 1][unitSize]
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (aim + baim + AIIM), socksMethod:"chillOut", hex, row })
     }
 }
 
@@ -3908,7 +4007,7 @@ var m_ = {
         $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
         graveyard[river[1]][river[3]].splice(0,1)
         $('[data-glow]').removeAttr('data-glow')
-        if( $(`[data-name="Knightshades"].${multiAction}`).length < 3 ){
+        if( $(`[data-name="Knightshades"].${multiAction}`).length < 3 ){//[unitname,side,type,name]
             rallyActionDeclaration({ unitname:"Mournblade", side:multiAction, type:"champion", name:"Knightshades", dist:2 }, `graspingDead`);
         } else {
             river = null
@@ -5148,12 +5247,180 @@ var m_ = {
         }
         current_ability_method = null
     },
-    induct:function(o){
-        // name:"Induct",
-        // desc:"If the Red Bandits are below their maximum unit size, add one to a hex containing at least one Red Bandit.",
-        // icon:self,
-        // unused:true,
-        // m:"induct"
+    induct:function(o){console.log('m_')
+        const { hex, row } = o
+        const side = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0]).hasClass(mySide) ? mySide : opoSide
+        if ( !$('[data-glow]').length && $(`[data-name="RedBandits"][data-tenmodel].${side}`).length < 5 ){
+            $(`[data-name="RedBandits"][data-tenmodel].${side}`).parent('.hexagon').each(function(){
+                const dad = $(this)
+                if( dad.children(`[data-name="RedBandits"][data-tenmodel].${side}`).length < 3 ){
+                    dad.attr('data-glow','recruitGlow')
+                    dad.children('.top').attr('data-glow','recruitGlow')
+                    dad.children('.bottom').attr('data-glow','recruitGlow')
+                }
+            })
+            river = [ "Rangosh", side, "unit", "RedBandits" ]
+        }
+    },
+    snowballsChance:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) ){
+                    target.attr('data-healthleft', 0 )
+                    animateDamage(target, 0-target.data('health'))
+                    displayAnimatedNews("snowball's chance<br/>succesful")
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                } else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    iceblade:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                const { bspeed, baim, bdamage } = extractBoons_Blights(target)
+                const extraWound = bspeed === -1 || baim === -1 || bdamage === -1 ? -1 : 0
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else if (extraWound===-1){
+                        setTimeout(()=>{
+                            target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
+                            animateDamage(target, -1)
+                            displayAnimatedNews(`${target.data('name')}<br/>iceblade`)
+                            if( checkIfStillAlive(target) )
+                                moveLadder(target, target.data('stepsgiven'))
+                            else null
+                        },1000)
+                    }
+                else displayAnimatedNews("no damage!")
+            }else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    icebolt:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                setBoons_Blights(target,{baim:Number(target.attr('data-baim'))-1})
+                displayAnimatedNews(`${target.data('name')}<br/>-1 aim`)
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            }else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    forwardMinionsMorrigan:function(o){
+        const {  hex, row } = o
+        const boss = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const team = boss.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        if( !$('.forwardMinionsMorrigan').length ){
+            $('[data-glow]').children(`[data-name="ColdBones"].${team}`).addClass('forwardMinionsMorrigan')
+            $('[data-glow]').removeAttr('data-glow')
+            displayAnimatedNews('Cold Bones<br/>shamble onwards')
+        }
+    },
+    frostyGlance:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){//allow for bonus one hex movement for Halftusk action here
+                highlightHexes({colour:'legendaryGlow',dist:1},$('.selectedModel'))
+                highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
+                $('.selectedModel').addClass('frostyGlance_selected')
+                displayAnimatedNews('Morrigan<br/>shambles onward')
+                //as above mentions by doing this skill I need to finish Halftusks tooo
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    flashFreeze:function(o){
+        const { hex, row } = o
+        const team = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard[data-name="Morrigan"]')[0]).hasClass(mySide) ? opoSide : mySide
+        displayAnimatedNews("flash freeze<br/>-1 dodge & speed")
+        const ARR = [...$($(`[data-glow].hexagon`).children(`.smallCard.${team}`)) ].map(el=>$(el).data('name'))
+        const uniqSet = [...new Set(ARR)]
+        uniqSet.forEach(el=>{
+            const x = $(`[data-name="${el}"].${team}`)
+            setBoons_Blights(x,{bdodge:Number(x.attr('data-bdodge'))-1,bspeed:Number(x.attr('data-bspeed'))-1})
+        })
+        $('[data-glow]').removeAttr('data-glow')
+    },
+    intenseCold:function(o){
+        console.log('triggered intense cold ONCE')
+        const { hex, row } = o
+        const target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        setBoons_Blights(target,{bdamage:Number(target.attr('data-bdamage'))+1})
+        displayAnimatedNews(`Cold Bones<br/>+1 damage`)
+    },
+    snowbladefight:function(o){
+        const { aim, hurt, hex, row } = o
+        console.log(aim)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
+    },
+    soCoolMistress:function(o){
+        const { side, name, curseType } = o.cursePackage
+        const $target = $($(`[data-name="${name}"][data-tenmodel].${side}`)[0])
+        setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) + 1 })
+        displayAnimatedNews(`${$target.data('name')}<br/>+1 ${[...curseType].slice(1).join('')}`)
+        current_ability_method = null
+        $('[data-glow').removeAttr('data-glow')
+        crystalGlare_bb = null
+    },
+    chillOut:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            if_moved_end_it()
+            $('[data-glow]').removeAttr('data-glow')
+            add_action_taken()
+            if( onHit(aim, target) ){
+                setBoons_Blights(target,{bdamage:Number(target.attr('data-bdamage'))-1})
+                displayAnimatedNews(`${target.data('name')}<br/>-1 damage`)
+            } else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
     }
 }
 
@@ -5445,6 +5712,25 @@ var _m_ = {
                 highlightHexes({colour:'redGlow',dist:1},thiz)
             }
         }
+    },
+    forwardMinionsMorrigan:($thiz)=>{
+        if( $('[data-glow].hexagon').length > 6 ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
+        } else {
+            $('[data-glow]').removeAttr('data-glow')
+            $($thiz).removeClass('forwardMinionsMorrigan').removeClass(`forwardMinionsMorrigan_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            if(!$('.forwardMinionsMorrigan').length ){
+                current_ability_method = null
+                add_action_taken()
+            }
+        }
+    },
+    frostyGlance:thiz=>{
+        $('.frostyGlance_selected').removeClass('frostyGlance')
+        current_ability_method = null
+        $(`[data-glow]`).removeAttr('data-glow')
     }
 }
 

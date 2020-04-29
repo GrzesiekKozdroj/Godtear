@@ -306,6 +306,20 @@ $('body').on('click','.boon-blight.confirm.graspingCurse', function(e){
     $('.deadlyCursePanel').remove()
 })
 
+$('body').on('click','.boon-blight.booned.soCoolMistress',function(e){
+    e.preventDefault()
+    $('.selected').removeClass('selected')
+    $(this).addClass('selected')
+})
+$('body').on('click','.boon-blight.confirm.soCoolMistress', function(e){
+    e.preventDefault()
+    const { side, name, socksmethod } = $(this).parent().data()
+    const bbname = $('.boon-blight.selected').data('abil')
+    crystalGlare_bb = { side, name, curseType:bbname }
+    socket.emit('rolloSkill',{ socksMethod:'soCoolMistress', cursePackage:crystalGlare_bb })
+    $('.soCoolMistressPanel').remove()
+})
+
 $('body').on('click','.boon-blight.challengeTitus',function(e){
     e.preventDefault()
     const numberOfChoices = Number($(this).parent('.titusChallengeCrest').data('cursecount') ) 
@@ -355,6 +369,8 @@ $('body').on('click','[data-glow].hexagon',function(e){
             socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDeadChamps", hex, row })
         if( $('.forwardMinions_selected').length && onlyOneStep(thiz,$('.forwardMinions_selected')) )
             extraMover('forwardMinions',thiz)
+        if( $('.forwardMinionsMorrigan_selected').length && onlyOneStep(thiz,$('.forwardMinionsMorrigan_selected')) )
+            extraMover('forwardMinionsMorrigan',thiz)
         if( $('.wheresMaster_selected').length && onlyOneStep(thiz,$('.wheresMaster_selected')) )
             extraMover('wheresMaster',thiz)
         if( $('.shadowWard_selected').length )extraMover('shadowWard',thiz)
@@ -374,6 +390,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.brokenJaw_selected').length )extraMover('brokenJaw',thiz)
         if( $('.whiplash_selected').length )extraMover('whiplash',thiz)
         if( $('.beastlyCharge_selected').length && !thiz.children('.smallCard').length )extraMover('beastlyCharge',thiz)
+        if( $('.frostyGlance_selected').length )extraMover('frostyGlance',thiz)
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
@@ -425,7 +442,17 @@ $('body').on('click','.forwardMinions',function(e){
     const thiz = $(this)
     if(myTurn){
         $('.forwardMinions_selected').removeClass('forwardMinions_selected')
-        thiz.addClass('forwardMinions_selected')
+        thiz.addClass('forwardMinions_selected')//.removeClass('forwardMinions')
+        $('[data-glow]').removeAttr('data-glow')
+        highlightHexes ({colour:'legendaryGlow', dist:2},$(this))
+    }
+})
+$('body').on('click','.forwardMinionsMorrigan',function(e){
+    e.preventDefault()
+    const thiz = $(this)
+    if(myTurn){
+        $('.forwardMinionsMorrigan_selected').removeClass('forwardMinionsMorrigan_selected')
+        thiz.addClass('forwardMinionsMorrigan_selected')//.removeClass('forwardMinionsMorrigan')
         $('[data-glow]').removeAttr('data-glow')
         highlightHexes ({colour:'legendaryGlow', dist:2},$(this))
     }

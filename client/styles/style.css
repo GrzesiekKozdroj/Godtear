@@ -2139,7 +2139,7 @@ body {
           align-items: center;
 }
 
-.niaChallenge, .deadlyCursePanel {
+.niaChallenge, .deadlyCursePanel, .soCoolMistressPanel {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2159,7 +2159,7 @@ body {
   text-align: center;
 }
 
-.niaChallenge .niaChallengeCrest, .niaChallenge .deadlyCursePanelCrest, .deadlyCursePanel .niaChallengeCrest, .deadlyCursePanel .deadlyCursePanelCrest {
+.niaChallenge .niaChallengeCrest, .niaChallenge .deadlyCursePanelCrest, .niaChallenge .soCoolMistressPanelCrest, .deadlyCursePanel .niaChallengeCrest, .deadlyCursePanel .deadlyCursePanelCrest, .deadlyCursePanel .soCoolMistressPanelCrest, .soCoolMistressPanel .niaChallengeCrest, .soCoolMistressPanel .deadlyCursePanelCrest, .soCoolMistressPanel .soCoolMistressPanelCrest {
   width: 50vw;
   height: 60vh;
   font-family: "Shojumaru", cursive;
@@ -2173,7 +2173,7 @@ body {
           justify-content: center;
 }
 
-.niaChallenge .niaChallengeCrest .boon-blight, .niaChallenge .deadlyCursePanelCrest .boon-blight, .deadlyCursePanel .niaChallengeCrest .boon-blight, .deadlyCursePanel .deadlyCursePanelCrest .boon-blight {
+.niaChallenge .niaChallengeCrest .boon-blight, .niaChallenge .deadlyCursePanelCrest .boon-blight, .niaChallenge .soCoolMistressPanelCrest .boon-blight, .deadlyCursePanel .niaChallengeCrest .boon-blight, .deadlyCursePanel .deadlyCursePanelCrest .boon-blight, .deadlyCursePanel .soCoolMistressPanelCrest .boon-blight, .soCoolMistressPanel .niaChallengeCrest .boon-blight, .soCoolMistressPanel .deadlyCursePanelCrest .boon-blight, .soCoolMistressPanel .soCoolMistressPanelCrest .boon-blight {
   width: 10vw;
   height: 10vw;
   border: 1vh solid rgba(109, 83, 17, 0.829);
@@ -2182,32 +2182,32 @@ body {
   margin: 1vw;
 }
 
-.niaChallenge .niaChallengeCrest .walk, .niaChallenge .deadlyCursePanelCrest .walk, .deadlyCursePanel .niaChallengeCrest .walk, .deadlyCursePanel .deadlyCursePanelCrest .walk {
+.niaChallenge .niaChallengeCrest .walk, .niaChallenge .deadlyCursePanelCrest .walk, .niaChallenge .soCoolMistressPanelCrest .walk, .deadlyCursePanel .niaChallengeCrest .walk, .deadlyCursePanel .deadlyCursePanelCrest .walk, .deadlyCursePanel .soCoolMistressPanelCrest .walk, .soCoolMistressPanel .niaChallengeCrest .walk, .soCoolMistressPanel .deadlyCursePanelCrest .walk, .soCoolMistressPanel .soCoolMistressPanelCrest .walk {
   background-image: url("../img/walk_white.png");
   border-radius: 50% 50% 30% 50%;
 }
 
-.niaChallenge .niaChallengeCrest .dodge, .niaChallenge .deadlyCursePanelCrest .dodge, .deadlyCursePanel .niaChallengeCrest .dodge, .deadlyCursePanel .deadlyCursePanelCrest .dodge {
+.niaChallenge .niaChallengeCrest .dodge, .niaChallenge .deadlyCursePanelCrest .dodge, .niaChallenge .soCoolMistressPanelCrest .dodge, .deadlyCursePanel .niaChallengeCrest .dodge, .deadlyCursePanel .deadlyCursePanelCrest .dodge, .deadlyCursePanel .soCoolMistressPanelCrest .dodge, .soCoolMistressPanel .niaChallengeCrest .dodge, .soCoolMistressPanel .deadlyCursePanelCrest .dodge, .soCoolMistressPanel .soCoolMistressPanelCrest .dodge {
   background-image: url("../img/dodge_black.svg");
   border-radius: 50% 50% 30% 30%;
 }
 
-.niaChallenge .niaChallengeCrest .protection, .niaChallenge .deadlyCursePanelCrest .protection, .deadlyCursePanel .niaChallengeCrest .protection, .deadlyCursePanel .deadlyCursePanelCrest .protection {
+.niaChallenge .niaChallengeCrest .protection, .niaChallenge .deadlyCursePanelCrest .protection, .niaChallenge .soCoolMistressPanelCrest .protection, .deadlyCursePanel .niaChallengeCrest .protection, .deadlyCursePanel .deadlyCursePanelCrest .protection, .deadlyCursePanel .soCoolMistressPanelCrest .protection, .soCoolMistressPanel .niaChallengeCrest .protection, .soCoolMistressPanel .deadlyCursePanelCrest .protection, .soCoolMistressPanel .soCoolMistressPanelCrest .protection {
   background-image: url("../img/shield_black.svg");
   border-radius: 50% 50% 30% 30%;
 }
 
-.niaChallenge .niaChallengeCrest .aim, .niaChallenge .deadlyCursePanelCrest .aim, .deadlyCursePanel .niaChallengeCrest .aim, .deadlyCursePanel .deadlyCursePanelCrest .aim {
+.niaChallenge .niaChallengeCrest .aim, .niaChallenge .deadlyCursePanelCrest .aim, .niaChallenge .soCoolMistressPanelCrest .aim, .deadlyCursePanel .niaChallengeCrest .aim, .deadlyCursePanel .deadlyCursePanelCrest .aim, .deadlyCursePanel .soCoolMistressPanelCrest .aim, .soCoolMistressPanel .niaChallengeCrest .aim, .soCoolMistressPanel .deadlyCursePanelCrest .aim, .soCoolMistressPanel .soCoolMistressPanelCrest .aim {
   background-image: url("../img/aim_black.png");
   border-radius: 50% 50% 50% 30%;
 }
 
-.niaChallenge .niaChallengeCrest .damage, .niaChallenge .deadlyCursePanelCrest .damage, .deadlyCursePanel .niaChallengeCrest .damage, .deadlyCursePanel .deadlyCursePanelCrest .damage {
+.niaChallenge .niaChallengeCrest .damage, .niaChallenge .deadlyCursePanelCrest .damage, .niaChallenge .soCoolMistressPanelCrest .damage, .deadlyCursePanel .niaChallengeCrest .damage, .deadlyCursePanel .deadlyCursePanelCrest .damage, .deadlyCursePanel .soCoolMistressPanelCrest .damage, .soCoolMistressPanel .niaChallengeCrest .damage, .soCoolMistressPanel .deadlyCursePanelCrest .damage, .soCoolMistressPanel .soCoolMistressPanelCrest .damage {
   background-image: url("../img/hurt_black.png");
   border-radius: 30% 30% 50% 50%;
 }
 
-.niaChallenge .niaChallengeCrest .confirm, .niaChallenge .deadlyCursePanelCrest .confirm, .deadlyCursePanel .niaChallengeCrest .confirm, .deadlyCursePanel .deadlyCursePanelCrest .confirm {
+.niaChallenge .niaChallengeCrest .confirm, .niaChallenge .deadlyCursePanelCrest .confirm, .niaChallenge .soCoolMistressPanelCrest .confirm, .deadlyCursePanel .niaChallengeCrest .confirm, .deadlyCursePanel .deadlyCursePanelCrest .confirm, .deadlyCursePanel .soCoolMistressPanelCrest .confirm, .soCoolMistressPanel .niaChallengeCrest .confirm, .soCoolMistressPanel .deadlyCursePanelCrest .confirm, .soCoolMistressPanel .soCoolMistressPanelCrest .confirm {
   background-color: goldenrod;
   border-radius: 50% 30% 50% 50%;
   -webkit-box-pack: center;
@@ -2223,26 +2223,26 @@ body {
   font-size: 119%;
 }
 
-.niaChallenge .niaChallengeCrest .cancel, .niaChallenge .deadlyCursePanelCrest .cancel, .deadlyCursePanel .niaChallengeCrest .cancel, .deadlyCursePanel .deadlyCursePanelCrest .cancel {
+.niaChallenge .niaChallengeCrest .cancel, .niaChallenge .deadlyCursePanelCrest .cancel, .niaChallenge .soCoolMistressPanelCrest .cancel, .deadlyCursePanel .niaChallengeCrest .cancel, .deadlyCursePanel .deadlyCursePanelCrest .cancel, .deadlyCursePanel .soCoolMistressPanelCrest .cancel, .soCoolMistressPanel .niaChallengeCrest .cancel, .soCoolMistressPanel .deadlyCursePanelCrest .cancel, .soCoolMistressPanel .soCoolMistressPanelCrest .cancel {
   border-radius: 30% 50% 50% 50%;
 }
 
-.niaChallenge .niaChallengeCrest .booned, .niaChallenge .deadlyCursePanelCrest .booned, .deadlyCursePanel .niaChallengeCrest .booned, .deadlyCursePanel .deadlyCursePanelCrest .booned {
+.niaChallenge .niaChallengeCrest .booned, .niaChallenge .deadlyCursePanelCrest .booned, .niaChallenge .soCoolMistressPanelCrest .booned, .deadlyCursePanel .niaChallengeCrest .booned, .deadlyCursePanel .deadlyCursePanelCrest .booned, .deadlyCursePanel .soCoolMistressPanelCrest .booned, .soCoolMistressPanel .niaChallengeCrest .booned, .soCoolMistressPanel .deadlyCursePanelCrest .booned, .soCoolMistressPanel .soCoolMistressPanelCrest .booned {
   -webkit-box-shadow: inset 0 0 3vh #ff8f0f, 0 0 3vh #ffab0f, inset 0 0 4vh #ffd30f, 0 0 4vh #ffd30f;
           box-shadow: inset 0 0 3vh #ff8f0f, 0 0 3vh #ffab0f, inset 0 0 4vh #ffd30f, 0 0 4vh #ffd30f;
 }
 
-.niaChallenge .niaChallengeCrest .blighted, .niaChallenge .deadlyCursePanelCrest .blighted, .deadlyCursePanel .niaChallengeCrest .blighted, .deadlyCursePanel .deadlyCursePanelCrest .blighted {
+.niaChallenge .niaChallengeCrest .blighted, .niaChallenge .deadlyCursePanelCrest .blighted, .niaChallenge .soCoolMistressPanelCrest .blighted, .deadlyCursePanel .niaChallengeCrest .blighted, .deadlyCursePanel .deadlyCursePanelCrest .blighted, .deadlyCursePanel .soCoolMistressPanelCrest .blighted, .soCoolMistressPanel .niaChallengeCrest .blighted, .soCoolMistressPanel .deadlyCursePanelCrest .blighted, .soCoolMistressPanel .soCoolMistressPanelCrest .blighted {
   -webkit-box-shadow: inset 0 0 3vh #0f0201, 0 0 3vh #1b1a1a, inset 0 0 4.3vh #111110, 0 0 4.3vh;
           box-shadow: inset 0 0 3vh #0f0201, 0 0 3vh #1b1a1a, inset 0 0 4.3vh #111110, 0 0 4.3vh;
 }
 
-.niaChallenge .niaChallengeCrest .selected, .niaChallenge .deadlyCursePanelCrest .selected, .deadlyCursePanel .niaChallengeCrest .selected, .deadlyCursePanel .deadlyCursePanelCrest .selected {
+.niaChallenge .niaChallengeCrest .selected, .niaChallenge .deadlyCursePanelCrest .selected, .niaChallenge .soCoolMistressPanelCrest .selected, .deadlyCursePanel .niaChallengeCrest .selected, .deadlyCursePanel .deadlyCursePanelCrest .selected, .deadlyCursePanel .soCoolMistressPanelCrest .selected, .soCoolMistressPanel .niaChallengeCrest .selected, .soCoolMistressPanel .deadlyCursePanelCrest .selected, .soCoolMistressPanel .soCoolMistressPanelCrest .selected {
   -webkit-box-shadow: inset 0 0 3vh #cbff0f, 0 0 3vh #a3ff0f, inset 0 0 4.3vh #abff0f, 0 0 4.3vh #a3ff0f;
           box-shadow: inset 0 0 3vh #cbff0f, 0 0 3vh #a3ff0f, inset 0 0 4.3vh #abff0f, 0 0 4.3vh #a3ff0f;
 }
 
-.niaChallenge .niaChallengeCrest .message, .niaChallenge .deadlyCursePanelCrest .message, .deadlyCursePanel .niaChallengeCrest .message, .deadlyCursePanel .deadlyCursePanelCrest .message {
+.niaChallenge .niaChallengeCrest .message, .niaChallenge .deadlyCursePanelCrest .message, .niaChallenge .soCoolMistressPanelCrest .message, .deadlyCursePanel .niaChallengeCrest .message, .deadlyCursePanel .deadlyCursePanelCrest .message, .deadlyCursePanel .soCoolMistressPanelCrest .message, .soCoolMistressPanel .niaChallengeCrest .message, .soCoolMistressPanel .deadlyCursePanelCrest .message, .soCoolMistressPanel .soCoolMistressPanelCrest .message {
   width: 100%;
   font-family: "Shojumaru", cursive;
   display: -webkit-box;
@@ -2256,15 +2256,15 @@ body {
           align-items: center;
 }
 
-.deadlyCursePanelCrest .deadlyCurse.aim, .deadlyCursePanelCrest .graspingCurse.dodge {
+.deadlyCursePanelCrest .deadlyCurse.aim, .deadlyCursePanelCrest .graspingCurse.dodge, .deadlyCursePanelCrest .soCoolMistress.aim, .soCoolMistressPanelCrest .deadlyCurse.aim, .soCoolMistressPanelCrest .graspingCurse.dodge, .soCoolMistressPanelCrest .soCoolMistress.aim {
   border-radius: 50% 30% 30% 50%;
 }
 
-.deadlyCursePanelCrest .deadlyCurse.damage, .deadlyCursePanelCrest .graspingCurse.walk {
+.deadlyCursePanelCrest .deadlyCurse.damage, .deadlyCursePanelCrest .graspingCurse.walk, .deadlyCursePanelCrest .soCoolMistress.walk, .soCoolMistressPanelCrest .deadlyCurse.damage, .soCoolMistressPanelCrest .graspingCurse.walk, .soCoolMistressPanelCrest .soCoolMistress.walk {
   border-radius: 30% 50% 50% 30%;
 }
 
-.deadlyCursePanelCrest .deadlyCurse.confirm, .deadlyCursePanelCrest .graspingCurse.confirm {
+.deadlyCursePanelCrest .deadlyCurse.confirm, .deadlyCursePanelCrest .graspingCurse.confirm, .deadlyCursePanelCrest .soCoolMistress.confirm, .soCoolMistressPanelCrest .deadlyCurse.confirm, .soCoolMistressPanelCrest .graspingCurse.confirm, .soCoolMistressPanelCrest .soCoolMistress.confirm {
   border-radius: 47% 47% 47% 47%;
 }
 /*# sourceMappingURL=style.css.map */

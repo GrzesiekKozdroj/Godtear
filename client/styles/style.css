@@ -2267,4 +2267,57 @@ body {
 .deadlyCursePanelCrest .deadlyCurse.confirm, .deadlyCursePanelCrest .graspingCurse.confirm, .deadlyCursePanelCrest .soCoolMistress.confirm, .soCoolMistressPanelCrest .deadlyCurse.confirm, .soCoolMistressPanelCrest .graspingCurse.confirm, .soCoolMistressPanelCrest .soCoolMistress.confirm {
   border-radius: 47% 47% 47% 47%;
 }
+
+.bb_HUD {
+  width: 0.1%;
+  height: 0.1%;
+}
+
+.onBoard {
+  width: 26000%;
+  height: 38000%;
+  z-index: 10;
+  position: relative;
+  border-radius: 50%;
+}
+
+.baim.onBoard {
+  top: 89000%;
+  left: -17000%;
+  background-color: goldenrod;
+}
+
+.bdamage.onBoard {
+  top: 80000%;
+  left: 7000%;
+  background-color: red;
+}
+
+.bdodge.onBoard {
+  top: 60000%;
+  left: 37000%;
+  background-color: blue;
+}
+
+.bprotection.onBoard {
+  top: 4000%;
+  left: 67000%;
+  background-color: grey;
+}
+
+.bspeed.onBoard {
+  top: -63000%;
+  left: 94000%;
+  background-color: green;
+}
+
+.onBoard.blighted {
+  -webkit-box-shadow: 0 0 1vw #290000, 0 0 1.25vw #290000, 0 0 1.5vw #290000, 0 0 1.75vw #290000, 0 0 1vw rgba(59, 54, 54, 0.4) inset;
+          box-shadow: 0 0 1vw #290000, 0 0 1.25vw #290000, 0 0 1.5vw #290000, 0 0 1.75vw #290000, 0 0 1vw rgba(59, 54, 54, 0.4) inset;
+}
+
+.onBoard.booned {
+  -webkit-box-shadow: 0 0 1vw #a0f126, 0 0 1.25vw #a0f126, 0 0 1.5vw #a0f126, 0 0 1.75vw #a0f126, 0 0 1vw rgba(246, 250, 241, 0.4) inset;
+          box-shadow: 0 0 1vw #a0f126, 0 0 1.25vw #a0f126, 0 0 1.5vw #a0f126, 0 0 1.75vw #a0f126, 0 0 1vw rgba(246, 250, 241, 0.4) inset;
+}
 /*# sourceMappingURL=style.css.map */

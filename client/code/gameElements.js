@@ -68,10 +68,20 @@ function beginFirstPlotPhase(){
     },600)
 }
 function reduceSpeedLeft(){
-    const speed = [...$('.selectedModel').attr('data-speedleft')].filter(el=>el!==',')
-    const p = phase === 'white' ? 0 : 1
-    speed[p]-=1
-    $('.selectedModel').attr('data-speedleft', speed)
+    let bsped = Number($('.selectedModel').attr('data-bspeed'))
+    const spedred = (n=0) =>{
+        const speed = [...$('.selectedModel').attr('data-speedleft')].filter(el=>el!==',')
+        const p = phase === 'white' ? 0 : 1
+        speed[p]=speed[p]-1+n
+        $('.selectedModel').attr('data-speedleft', speed)
+    }
+    if( bsped > 0 && $('.selectedModel') ){
+        setBoons_Blights( $('.selectedModel'), { bspeed:0 }, 'local' )
+    } else if ( bsped < 0 && $('.selectedModel') ){
+        setBoons_Blights( $('.selectedModel'), { bspeed:0 }, 'local' )
+        spedred(-1)
+    } else 
+        spedred()
 }
 function highlightHexes ({colour, dist},thiz = $('.selectedModel')){
     const applyClass = ({colour, row, hex}) => {

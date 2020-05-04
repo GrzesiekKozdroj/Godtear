@@ -160,7 +160,7 @@ $('body').on('click','.hexagon[data-glow="yellowGlow"]', function(e){
 })
 
 $('body').on('click','#claimAction',function(e){
-    if( phase==='white' && myTurn && check_actions_count() ){
+    if( phase==='white' && myTurn && check_actions_count("claimed") ){
         e.preventDefault()
         let claimsize = $('.selectedModel').data('name') === 'Mournblade' ? 3 : 1
         $('[data-glow]').removeAttr('data-glow')
@@ -215,7 +215,8 @@ for(let K in m){
             $('body').on('click',`[data-name="${SKILL.name}"]`,function(){
                 const data = $(this).data()
                 let modo = ['white','black'].includes(P) ? P === phase ? true : false : true
-                    if(modo && myTurn && $(this).hasClass(mySide) ){
+                    if(modo && myTurn && $(this).hasClass(mySide) && check_actions_count(S)){
+                        $(this).children('#smallCardParagraph').addClass('skilling_declaration')
                         let glow = data.icon === "skull" ? 'redGlow' :
                                    data.icon === "cogs"  ? 'blueGlow' :
                                    data.icon === "self"  ? 'legendaryGlow' :
@@ -358,7 +359,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.marchRhodriBlack_selected').length )extraMover('marchRhodriBlack',thiz)
         if( $('.marchRhodriWhite_selected').length )extraMover('marchRhodriWhite',thiz)
         if( $('.marchNia_selected').length )extraMover('marchNia',thiz)
-        if( $('.shieldBash_selected').length )extraMover('shieldBash',thiz)
+        if( $('.shieldBash_selected').length && onlyOneStep(thiz,$('.shieldBash_selected')) )extraMover('shieldBash',thiz)
         if( $('[data-glow^="strait"]').length && onlyOneStep(thiz) )extraMover('roll',thiz)
         if( $('.marchGuardBlack').length )extraMover('marchGuardBlack',thiz)
         if( $('.marchGuardWhite').length )extraMover('marchGuardWhite',thiz)

@@ -1,4 +1,5 @@
 function buildRosters(o,coin){
+    console.log(o)
     //console.log(o)
     //o={nickName:{roster,nickName,opoName,gamePlace,socket.id,side},opoName:{roster,nickName,opoName,gamePlace,socket.id}}
     if(o) for (let key in o){
@@ -7,6 +8,7 @@ function buildRosters(o,coin){
             opoName = key
             opoRoster = plajer.roster
             opoSide = plajer.side
+            //here and below i need function making object
         } else if(plajer.nickName === nickName){
             nickName = plajer.nickName;
             roster = plajer.roster;
@@ -41,7 +43,7 @@ function beginBattle(){
     `);
     }
 }
-const makeAnim = (model,whereTo,callback=false) => {console.log(whereTo.data('row'),whereTo.data('hex'))//model, destination
+const makeAnim = (model,whereTo,callback=false) => {//console.log(whereTo.data('row'),whereTo.data('hex'))//model, destination
     let ofsetSize = model.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
     MOVINGNOW = true
     if(whereTo)
@@ -82,6 +84,8 @@ function makeGameBoard(o,coin){
     beginBattle()
 
     QUICK_DEEPLOY()
+    opoSkillTrack = buildSkillTrack(opoRoster)
+    mySkillTrack = buildSkillTrack(roster)
 }
 
 function deeploy (group,side){
@@ -111,6 +115,13 @@ function deeploy (group,side){
          team = [...team,
             `<div class='${side} smallCard hexagrama-7 ${teamColor}' data-tenmodel=${model.champ.name} ${makedata('champ')}>
                 <div class='top ${teamColor}'></div>
+                <div class="bb_HUD">
+                    <div class="baim-dum onBoard" /> 
+                    <div class="bdamage-dum onBoard" /> 
+                    <div class="bdodge-dum onBoard" /> 
+                    <div class="bprotection-dum onBoard" />
+                    <div class="bspeed-dum onBoard" />
+                </div>
                 <img src='${model.champ.icon}'/>
                 <div class='bottom ${teamColor}'></div>
             </div>`];

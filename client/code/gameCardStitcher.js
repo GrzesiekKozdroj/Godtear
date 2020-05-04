@@ -26,6 +26,7 @@
             else return ''
         }
 function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side) {
+    const { baim, bdamage,bdodge,bprotection,bspeed } = $(`[data-name="${name}"].${side}`).data()
     const skillList = (skills)=>{
         let skillzList = []
         for(let s in skills[phase]){
@@ -99,6 +100,11 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             data-index='${index}'
             data-side='${side}'
             data-phase='${phase}'
+            data-baim='${baim}' 
+            data-bdamage='${bdamage}' 
+            data-bdodge='${bdodge}' 
+            data-bprotection='${bprotection}' 
+            data-bspeed='${bspeed}' 
             >
 
         <div class='game_card-portrait card_shadow-${side}'>
@@ -162,6 +168,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 }
 
 function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side){
+    const { baim, bdamage,bdodge,bprotection,bspeed } = $(`[data-name="${name}"].${side}`).data()
     const skillList = (skills)=>{
         let skillzList = []
         for(let s in skills[phase]){
@@ -236,6 +243,11 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
         data-index='${index}'
         data-side='${side}'
         data-phase='${phase}'
+        data-baim='${baim}' 
+        data-bdamage='${bdamage}' 
+        data-bdodge='${bdodge}' 
+        data-bprotection='${bprotection}' 
+        data-bspeed='${bspeed}' 
         >
 
         <div class='game_card-portrait card_shadow-${side}'>
@@ -284,8 +296,9 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
     `
 }
 
-function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index},phase,side){
+function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side){
     let skillx = rosters[klass][index][type==='champion'?'champ':'grunt'].skills// JSON.parse(decodeURIComponent(skills));
+    const { baim, bdamage, bdodge, bprotection, bspeed } = extractBoons_Blights( $($(`[data-name="${name}"].${side}`)[0]) )
     feedSkillstheData (skillx)
     const skillzBlack = (skillx,phase)=>{
         let skillList = []
@@ -294,23 +307,32 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             skillList = [...skillList, skill]
         }
         skillList = skillx.util.legendary ? [...skillList, skillx.util.legendary] : skillList;
-        return skillList.map(skill=>`
-                <div class='smallCard img_${skill.icon}_${phase} ${side}' ${makedata(skill)} >
-                    <div class='top'></div>
-                    <p>${/*skill.name*/''}</p>
-                    <div class='bottom'></div>
+        return skillList.map(skill=>{
+            let jinput = skill.legendaryUsed === false ? 'legendary' : skill.m && typeof skill.m === 'string' ? skill.m : null
+            let stajtus = abilTruthRead(jinput,name) ? 'glow_unused' : 'usedSkill'
+            return `
+                <div class='smallCard img_${skill.icon}_${phase} ${side} ${stajtus}' ${makedata(skill)} >
+                    <div class='top ${stajtus}'></div>
+                    <p id="smallCardParagraph">${/*skill.name*/''}</p>
+                    <div class='bottom ${stajtus}'></div>
                 </div>
-            `).join('')
+            `}).join('')
     }
+    const BB_HUD = (c)=>c>0? 'glow_BB_card booned' : c<0? 'glow_BB_card blighted' : ''
 
     return `
     <div class='miniGameCard ${side}' 
         data-klass='${klass}' 
         data-type='${type}' 
         data-name='${name}' 
-        data-index='${index}'
-        data-side='${side}'
-        data-phase='${phase}'
+        data-index='${index}' 
+        data-side='${side}' 
+        data-phase='${phase}' 
+        data-baim='${baim}' 
+        data-bdamage='${bdamage}' 
+        data-bdodge='${bdodge}' 
+        data-bprotection='${bprotection}' 
+        data-bspeed='${bspeed}' 
         >
 
     <div class='puller ${side}'>
@@ -326,19 +348,19 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             <div class='bottom'></div>
         </div>
 
-        <div class='smallCard speed ${phase}'>
+        <div class='smallCard speed ${phase} ${BB_HUD(bspeed)}'>
             <div class='top'></div>
             <p >${phase==='white' ? speed[0] : speed[1]}</p>
             <div class='bottom'></div>
         </div>
 
-        <div class='smallCard dodge ${phase}'>
+        <div class='smallCard dodge ${phase}  ${BB_HUD(bdodge)}'>
             <div class='top'></div>
             <p >${dodge}</p>
             <div class='bottom'></div>
         </div>
 
-        <div class='smallCard protection ${phase}'>
+        <div class='smallCard protection ${phase}  ${BB_HUD(bprotection)}'>
             <div class='top'></div>
             <p >${protection}</p>
             <div class='bottom'></div>

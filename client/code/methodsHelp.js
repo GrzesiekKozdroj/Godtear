@@ -1,27 +1,70 @@
 const if_moved_end_it  = () => {
-    const speed = $('.selectedModel').attr('data-speed')
-    const speedleft = $('.selectedModel').attr('data-speedleft')
-    const bspeed = $('.selectedModel').attr('data-bspeed')
     const name = $('.selectedModel').attr('data-name')
+    const side = $('.selectedModel').attr('data-side')
     const actionstaken = $('.selectedModel').attr('data-actionstaken')
     const w = phase === 'white' ? 0 : 2
-    if(Number(speedleft[w]) + Number(bspeed) < Number(speed[w]) )
-        $(`[data-name=${name}]`).each(function(){
-            $(this).attr('data-actionstaken', Number(actionstaken) + 1 )
-            let left = phase === 'white' ? [0,speedleft[2]] : [speedleft[0],0]
-            $(this).attr('data-speedleft', left)
-        })
+    $(`[data-name=${name}][data-tenmodel].${side}`).each(function(){
+        const speed = $(this).attr('data-speed')
+        const speedleft = $(this).attr('data-speedleft')
+        const bspeed = $(this).attr('data-bspeed')
+        if(Number(speedleft[w]) + Number(bspeed) < Number(speed[w]) ){
+            $(`[data-name=${name}][data-tenmodel].${side}`).each(function(){
+                $(this).attr('data-actionstaken', Number(actionstaken) + 1 )
+                let left = phase === 'white' ? [0,speedleft[2]] : [speedleft[0],0]
+                $(this).attr('data-speedleft', left)
+            })
+            setBoons_Blights($(`[data-name=${name}][data-tenmodel].${side}`),{bspeed:0})
+            return false
+        }
+    })
 }
-const add_action_taken = (shallI = false) => {
-    if(!shallI){
+const abilTruthChange = (abilName = null) => {
+    let name = $('.selectedModel').data('name')
+    const targetos = (abilName, p = phase) => 
+        $('.selectedModel').hasClass('whiteTeam') ? 
+        mySkillTrack[name][p][abilName].used = true
+        : 
+        opoSkillTrack[name][p][abilName].used = true
+
+    if(abilName === "legendary")
+        targetos("legendary","util")
+    else if (abilName)
+        targetos(abilName)
+
+    $('.skilling_declaration').removeClass('skilling_declaration')
+    $(`[data-m="${abilName}"]`).removeClass('glow_unused').addClass('usedSkill')
+}
+
+const abilTruthRead = (abilName = null, name = $('.selectedModel').data('name') ) => {
+    const targetos = (abilName, p = phase) => 
+        $('.selectedModel').hasClass('whiteTeam') ? 
+        mySkillTrack[name][p][abilName].used
+        : 
+        opoSkillTrack[name][p][abilName].used
+
+    if (abilName === "legendary")
+        return !targetos("legendary","util")
+    else if (typeof abilName === 'string')
+        return !targetos(abilName)
+    else
+        return true
+}
+
+const add_action_taken = (abilName = false,shallI = false) => {
         const actionstaken = Number($('.selectedModel').attr('data-actionstaken'))
         const name  = $('.selectedModel').attr('data-name')
+    if(!shallI){
         $(`[data-name=${name}]`).each(function(){
             $(this).attr('data-actionstaken', (Number(actionstaken) + 1) )
         })
     }
+    abilTruthChange(abilName)
 }
-const check_actions_count = () => Number( $('.selectedModel').attr('data-actionstaken') ) < 2 ? true : false
+const check_actions_count = (abilName = false) => {
+    return Number( $('.selectedModel').attr('data-actionstaken') ) < 2 && 
+    abilTruthRead(abilName)
+    ? true : false
+}
 
 const onHit = (aim, target) => { 
     const target_dodge = Number(target.attr('data-dodge')) + Number(target.attr('data-bdodge'))
@@ -110,13 +153,25 @@ const extractBoons_Blights = (origin) => {
     const healthleft = Number(origin.attr('data-healthleft'))
     return { baim, bdamage, bspeed, bdodge, bprotection, healthleft }
 }
-const setBoons_Blights = (origin,props)=>{//$(), {baim:-1}
+const setBoons_Blights = (origin,props,local = false)=>{//$(), {baim:-1}
     for(let key in props){
         let boon_blight = props[key]
-        $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"]`)
-            .each(function(){
-                if( boon_blight <= 1 && boon_blight >= -1 )
+        let subject = local !== 'local' ? $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"]`) : origin
+            subject.each(function(){
+                if( boon_blight <= 1 && boon_blight >= -1 ){
                     $(this).attr(`data-${key}`,boon_blight) 
+                    if(boon_blight!==0){
+                        $(this).find(`.${key}-dum`).addClass(`${key} ${boon_blight>0?'booned':'blighted'}`)
+                        $(`.miniGameCard.${$(this).data('side')}`)
+                            .find('.'+[...key].slice(1).join(''))
+                            .addClass('glow_BB_card booned')
+                    }else{
+                        $(this).find(`.${key}-dum`).removeClass(`${key} booned blighted`)
+                        $(`.miniGameCard.${$(this).data('side')}`)
+                            .find('.'+[...key].slice(1).join(''))
+                            .removeClass('glow_BB_card booned blighted')
+                    }
+                }
             })
     }
 }
@@ -198,8 +253,8 @@ const highlightDirectPaths = ( { origin, distance, colour } ) => {
     $(`[data-glow^="${colour}"`).children('.top').attr('data-glow',colour)
     $(`[data-glow^="${colour}"`).children('.bottom').attr('data-glow',colour)
 }
-function extraMover(methodName,thiz){//<----needs another props: conditions to be considered
-    if($('.'+methodName+'_selected').length && myTurn){//tioed to a bug with IllKillYouAll
+function extraMover(methodName,thiz,conditions=true){//<----needs another props: conditions to be considered
+    if($('.'+methodName+'_selected').length && myTurn && conditions){//tioed to a bug with IllKillYouAll
         const h = thiz.data('hex')
         const r = thiz.data('row')
         const klass = { 
@@ -319,4 +374,39 @@ function propagate_BB_s($origin,$target){
 function shootAndScoot(){
     highlightHexes({colour:'shootAndScoot',dist:1})
     $('.selectedModel').addClass('shootAndScoot_selected')
+}
+function buildSkillTrack(roster){//['name','name','name']
+    let premadeproduct = {}
+    const restructureSkills = skillpack => {
+        let prepskills = {}
+        for(let phasename in skillpack){
+            let phejs = skillpack[phasename]
+            prepskills[phasename] = {}
+            for(let sname in phejs){
+                let skjil = phejs[sname]
+                prepskills[phasename][sname] = { 
+                                            used:false 
+                                        }
+            }
+        }
+        return prepskills
+    }
+    roster.forEach(nejm=>{
+        for(klazz in rosters){
+            let K = rosters[klazz]
+            K.forEach(obj=>{
+                if(obj.champ.name===nejm){
+                    //to jestem we właściwym obiekcie typu {champ:Rattlebone, grunt:Hexlings}
+                    let champsk = obj.champ.skills
+                    let gruntsk = obj.grunt.skills
+                    premadeproduct[obj.champ.name] = restructureSkills(champsk)
+                    premadeproduct[obj.grunt.name] = restructureSkills(gruntsk)
+                    premadeproduct[obj.champ.name].white.claimed = {used : false}
+                    premadeproduct[obj.grunt.name].white.rallied = {used : false}
+                    premadeproduct[obj.grunt.name].black.rallied = {used : false}
+                }
+            })
+        }
+    })
+    return premadeproduct
 }

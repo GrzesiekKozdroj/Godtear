@@ -145,7 +145,7 @@ $selectedByEnemyGlow:rgba(238, 65, 53, 1);
 [data-glow="straitPaths"], [data-glow="straitPaths1"], [data-glow="straitPaths2"], [data-glow="straitPaths3"], [data-glow="straitPaths4"], [data-glow="straitPaths5"], [data-glow="straitPaths6"]{
     @include makeGlow('white', rgb(239, 255, 95), rgb(166, 255, 166), rgb(255, 252, 45), rgb(152, 241, 101))
 }
-[data-glow="deathMove"]{ @include makeGlow('black',rgb(29, 28, 28) ,rgb(36, 32, 32) ,rgb(49, 6, 6) ,rgb(41, 39, 39) )}
+[data-glow="deathMove"],.usedSkill{ @include makeGlow('black',rgb(29, 28, 28) ,rgb(36, 32, 32) ,rgb(49, 6, 6) ,rgb(41, 39, 39) )}
 @keyframes shake {
     0% { transform: translate(1px, 1px) rotate(0deg); }
     10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -276,4 +276,127 @@ $partSize: 5em;
 .avalanche_moveable {
     transform: scale(1.4);
     filter: contrast(1.25) brightness(1.5) saturate(1.5);
+}
+@mixin gameCard_BB_glow ($c1,$c2,$c3,$c4,$c5,$c6,$c7,$c8,$c9){
+    background: linear-gradient(45deg, $c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8, $c9);
+}
+
+.glow_unused {
+    z-index: 0;
+}
+
+.glow_unused:before {
+    content: '';
+    @include gameCard_BB_glow (rgb(255, 115, 0),
+                               rgb(255, 238, 0), 
+                               rgb(187, 255, 0), 
+                               rgb(255, 238, 0), 
+                               rgb(217, 255, 0), 
+                               rgb(255, 153, 0), 
+                               rgb(229, 255, 0), 
+                               rgb(255, 208, 0), 
+                               rgb(255, 187, 0)
+                               );
+    position: absolute;
+    background-size: 400%;
+    z-index: -1;
+    animation: glowing 20s linear infinite;
+    transition: opacity .3s ease-in-out;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(161% + 4px);
+    border-radius: 10%;
+    top:-41%;
+}
+
+.glow_unused {
+    color: #000
+}
+
+.glow_unused:before {
+    opacity: 1;
+}
+
+.glow_unused:after {
+    z-index: 0;
+    content: '';
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+@keyframes glowingbig {
+    0% { background-position: 0 0; }
+    50% { background-position: 700% 0; }
+    100% { background-position: 0 0; }
+}
+#smallCardParagraph.skilling_declaration{//looks bad
+    width: 120%;
+    height: 187%;
+    top: -42%;
+    border-radius: 50%;
+    background-image: radial-gradient(circle at center, rgba(170, 253, 230, 0.75) 0%, rgba(40, 223, 206, 0.31) 50%, rgba(39, 176, 157, 0) 100%);
+    left: -12%;
+    box-shadow: 0 0 2vw;
+}
+
+
+.glow_BB_card {
+    z-index: 0;
+}
+@mixin b_b {
+    content: '';
+    position: absolute;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(120% + 4px);
+    height: calc(190% + 4px);
+    border-radius: 50%;
+    top:-54%;
+    left:-20%;
+    animation: glowingbig 20s linear infinite;
+    transition: opacity .3s ease-in-out;
+}
+.glow_BB_card.booned:before{
+    @include gameCard_BB_glow (rgb(0, 183, 255),
+                               rgb(119, 0, 255), 
+                               rgb(0, 255, 191), 
+                               rgb(145, 255, 0), 
+                               rgb(0, 255, 242), 
+                               rgb(0, 174, 255), 
+                               rgb(0, 47, 255), 
+                               rgb(0, 255, 13), 
+                               rgb(0, 255, 76)
+                               );
+    @include b_b;
+}
+.glow_BB_card.blighted:before{
+    @include gameCard_BB_glow (rgb(255, 115, 0),
+                               rgb(67, 2, 87), 
+                               rgb(17, 94, 2), 
+                               rgb(94, 3, 3), 
+                               rgb(217, 255, 0), 
+                               rgb(255, 94, 0), 
+                               rgb(255, 0, 0), 
+                               rgb(140, 0, 255), 
+                               rgb(136, 23, 61)
+                               );
+    @include b_b;
+}
+
+
+.glow_BB_card {
+    color: #000
+}
+
+.glow_BB_card:before {
+    opacity: 1;
+}
+
+.glow_BB_card:after {
+    z-index: 0;
+    content: '';
 }

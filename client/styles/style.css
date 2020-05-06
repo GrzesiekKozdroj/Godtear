@@ -325,7 +325,15 @@ body {
   margin-left: 1.5vw;
 }
 
+.smallCard:nth-child(odd) p {
+  margin-left: 1.5vw;
+}
+
 .smallCard:nth-child(even) {
+  margin-left: -1.39vw;
+}
+
+.smallCard:nth-child(even) p {
   margin-left: -1.39vw;
 }
 
@@ -2269,45 +2277,52 @@ body {
 }
 
 .bb_HUD {
-  width: 0.1%;
-  height: 0.1%;
+  width: 133%;
+  height: 1%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  left: -17%;
+  top: 91%;
 }
 
 .onBoard {
-  width: 26000%;
-  height: 38000%;
+  width: 37%;
+  height: 4500%;
   z-index: 10;
   position: relative;
   border-radius: 50%;
+  left: -1%;
 }
 
 .baim.onBoard {
-  top: 89000%;
-  left: -17000%;
+  top: 0%;
+  left: 0%;
   background-color: goldenrod;
 }
 
 .bdamage.onBoard {
-  top: 80000%;
-  left: 7000%;
+  top: 2000%;
+  left: 0%;
   background-color: red;
 }
 
 .bdodge.onBoard {
-  top: 60000%;
-  left: 37000%;
+  top: 2500%;
+  left: 0%;
   background-color: blue;
 }
 
 .bprotection.onBoard {
-  top: 4000%;
-  left: 67000%;
+  top: 2000%;
+  left: 0%;
   background-color: grey;
 }
 
 .bspeed.onBoard {
-  top: -63000%;
-  left: 94000%;
+  top: 0%;
+  left: 0%;
   background-color: green;
 }
 
@@ -2319,5 +2334,124 @@ body {
 .onBoard.booned {
   -webkit-box-shadow: 0 0 1vw #a0f126, 0 0 1.25vw #a0f126, 0 0 1.5vw #a0f126, 0 0 1.75vw #a0f126, 0 0 1vw rgba(246, 250, 241, 0.4) inset;
           box-shadow: 0 0 1vw #a0f126, 0 0 1.25vw #a0f126, 0 0 1.5vw #a0f126, 0 0 1.75vw #a0f126, 0 0 1vw rgba(246, 250, 241, 0.4) inset;
+}
+
+.baim.onBoard.booned {
+  background-image: url("../img/aimBoon.svg");
+  background-size: contain;
+}
+
+.bdamage.onBoard.booned {
+  background-image: url("../img/damageBoon.svg");
+  background-size: contain;
+}
+
+.bdodge.onBoard.booned {
+  background-image: url("../img/dodgeBoon.svg");
+  background-size: contain;
+}
+
+.bprotection.onBoard.booned {
+  background-image: url("../img/protectionBoon.svg");
+  background-size: contain;
+}
+
+.bspeed.onBoard.booned {
+  background-image: url("../img/speedBoon.svg");
+  background-size: contain;
+}
+
+.baim.onBoard.blighted {
+  background-image: url("../img/aimBlight.svg");
+  background-size: contain;
+}
+
+.bdamage.onBoard.blighted {
+  background-image: url("../img/damageBlight.svg");
+  background-size: contain;
+}
+
+.bdodge.onBoard.blighted {
+  background-image: url("../img/dodgeBlight.svg");
+  background-size: contain;
+}
+
+.bprotection.onBoard.blighted {
+  background-image: url("../img/protectionBlight.svg");
+  background-size: contain;
+}
+
+.bspeed.onBoard.blighted {
+  background-image: url("../img/speedBlight.svg");
+  background-size: contain;
+}
+
+.gameCard_num {
+  font-family: "Shojumaru", cursive;
+  font-size: 212% !important;
+  position: relative;
+  top: -21%;
+  width: 100%;
+  height: 161%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.gameCard_num.normal {
+  text-shadow: 0 0 1px #696462, 0 0 2px #837c7a, 0 0 3px #75716f;
+}
+
+.gameCard_num.booned {
+  text-shadow: 0 0 1px #00ccff, 0 0 2px #00ffbf, 0 0 3px #00ffb3;
+  color: #00001f;
+}
+
+.gameCard_num.blighted {
+  text-shadow: 0 0 1px #722101, 0 0 2px #752201, 0 0 3px #9b0186;
+  color: #270202;
+}
+
+.roster_abil_desc .small_icon {
+  width: 11%;
+  margin-top: -7%;
+}
+
+.right .smallCard:nth-child(odd) .BB_s {
+  left: -31%;
+  width: 97%;
+  position: relative;
+  top: -24%;
+  margin: -72% 0;
+}
+
+.right .smallCard:nth-child(even) .BB_s {
+  width: 62%;
+  position: relative;
+  top: -16%;
+  margin: -50% 0;
+  left: 70%;
+}
+
+.left .smallCard:nth-child(odd) .BB_s {
+  width: 97%;
+  position: relative;
+  top: -24%;
+  margin: -72% 0;
+  left: -31%;
+}
+
+.left .smallCard:nth-child(even) .BB_s {
+  width: 62%;
+  position: relative;
+  top: -16%;
+  margin: -50% 0;
+  left: 70%;
 }
 /*# sourceMappingURL=style.css.map */

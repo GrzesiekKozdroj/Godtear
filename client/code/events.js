@@ -132,7 +132,26 @@ $('body').on('click','.puller',function(e){
 $('body').on('click','#game_card-big',function(e){
     e.preventDefault()
     const data = $(this).data()
-    const selectedChar = rosters[ data.klass ][ data.index ][ data.type === 'champion' ? 'champ' : 'grunt' ]
+    //below is no good, it needs to start extracting attribue(data) from board and return it in form of object
+    const h = rosters[ data.klass ][ data.index ][ data.type === 'champion' ? 'champ' : 'grunt' ]
+    const l = $($(`[data-tenmodel][data-name="${data.name}"].${data.side}`)[0])
+    console.log(l, data)
+    const selectedChar = {
+            klass: h.klass,
+            type: l.attr('data-type') || h.type,
+            name: l.attr('data-name') || h.name,
+            unitSize: l.attr('data-unitsize') || h.unitSize,
+            icon: l.attr('data-icon') || h.icon,
+            speed: l.attr('data-speed') || h.speed,
+            dodge: l.attr('data-dodge') || h.dodge,
+            protection: l.attr('data-protection') || h.protection,
+            health: l.attr('data-health') || h.health,
+            healthleft: l.attr('data-healthleft') || h.healthLeft,
+            skills: l.attr('data-skills') || h.skills,
+            banner: l.attr('data-banner') || h.banner,
+            index: h.index || h.index,
+            unitName: l.attr('data-unitname') || h.unitName
+    }
     $(this).closest('#game_card')
         .removeClass(`hinge-in-from-${data.side} mui-enter mui-enter-active`)
         .addClass(`hinge-out-from-${data.side} mui-leave mui-leave-active`)

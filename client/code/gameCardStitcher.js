@@ -4,9 +4,26 @@
             for(let D in skill){
                 let data = /*D === 'm' ? encodeURIComponent(JSON.stringify(skill[D])) :*/ `"${skill[D]}"`
                 let dataModel = `data-${D}=${data} `
-                champDATA = [...champDATA, dataModel]
+                if(D!=='desc')
+                    champDATA = [...champDATA, dataModel]
             }
             return champDATA.join(' ')
+        }
+
+
+        const dis_min_BBs = (skill,baim,bdamage) => {
+            let produce = []
+            if ( skill.aim )
+                if ( baim > 0 )
+                    produce = [ ...produce, aimBoon ]
+                else if ( baim < 0 )
+                    produce = [ ...produce, aimBlight ]
+            if( skill.hurt )
+                if ( bdamage > 0 )
+                    produce = [ ...produce, damageBoon ]
+                else if ( bdamage < 0 )
+                produce = [ ...produce, damageBlight ]
+            return produce.join('')
         }
 
         const bloodedUnit = (unitName, side, unitSize,type, name) =>{
@@ -26,7 +43,7 @@
             else return ''
         }
 function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side) {
-    const { baim, bdamage,bdodge,bprotection,bspeed } = $(`[data-name="${name}"].${side}`).data()
+    const { baim, bdamage,bdodge,bprotection,bspeed,healthleft } = extractBoons_Blights( $(`[data-name="${name}"].${side}`) )
     const skillList = (skills)=>{
         let skillzList = []
         for(let s in skills[phase]){
@@ -119,25 +136,25 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
                 <div id='card_speed_${phase}' class='game_card-attrib offset-speed'>
                     <div class='top'></div>
-                    <p >${phase==='white'?speed[0]:speed[1]}</p>
+                    ${phase==='white'?styled_attribute_number(speed[0],bspeed):styled_attribute_number(speed[1],bspeed)}
                     <div class='bottom'></div>
                 </div> 
 
                 <div id='card_dodge_${phase}' class='game_card-attrib offset-dodge'>
                     <div class='top'></div>
-                    <p >${dodge}</p>
+                    ${styled_attribute_number(dodge,bdodge)}
                     <div class='bottom'></div>
                 </div>
 
                 <div id='card_protection_${phase}' class='game_card-attrib offset-protection'>
                     <div class='top'></div>
-                    <p >${protection}</p>
+                    ${styled_attribute_number(protection,bprotection)}
                     <div class='bottom'></div>
                 </div>
 
                 <div id='card_health_${phase}' class='game_card-attrib offset-health'>
                     <div class='top'></div>
-                    <p >${health}</p>
+                    ${styled_attribute_number(health,-1*(health-healthleft) )}
                     <div class='bottom'></div>
                 </div>
 
@@ -168,7 +185,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 }
 
 function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side){
-    const { baim, bdamage,bdodge,bprotection,bspeed } = $(`[data-name="${name}"].${side}`).data()
+    const { baim, bdamage,bdodge,bprotection,bspeed,healthleft } = extractBoons_Blights( $(`[data-name="${name}"].${side}`) )
     const skillList = (skills)=>{
         let skillzList = []
         for(let s in skills[phase]){
@@ -254,23 +271,23 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
             <div class='game_card-attribs'>
                 <div id='card_dodge_${phase}' class='game_card-attrib offset-dodge ${side}'>
                     <div class='top'></div>
-                    <p>${dodge}</p>
+                    ${styled_attribute_number(dodge,bdodge)}
                     <div class='bottom'></div>
                 </div>
                 <div id='card_speed_${phase}' class='game_card-attrib offset-speed ${side}'>
                     <div class='top'></div>
-                    <p >${phase==='white' ? speed[0] : speed[1]}</p>
+                    ${phase==='white' ? styled_attribute_number(speed[0],bspeed) : styled_attribute_number(speed[1],bspeed)}
                     <div class='bottom'></div>
                 </div> 
                 <div id='card_health_${phase}' class='game_card-attrib offset-health ${side}'>
                     <div class='top'></div>
-                    <p >${health}</p>
+                    ${styled_attribute_number(health,-1*(health-healthleft))}
                     <div class='bottom'></div>
                 </div>
 
                 <div id='card_protection_${phase}' class='game_card-attrib offset-protection ${side}'>
                     <div class='top'></div>
-                    <p >${protection}</p>
+                    ${styled_attribute_number(protection,bprotection)}
                     <div class='bottom'></div>
                 </div>
             </div>
@@ -296,7 +313,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
     `
 }
 
-function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side){
+function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,healthleft,skills,banner,index,unitName},phase,side){
     let skillx = rosters[klass][index][type==='champion'?'champ':'grunt'].skills// JSON.parse(decodeURIComponent(skills));
     const { baim, bdamage, bdodge, bprotection, bspeed } = extractBoons_Blights( $($(`[data-name="${name}"].${side}`)[0]) )
     feedSkillstheData (skillx)
@@ -311,8 +328,9 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             let jinput = skill.legendaryUsed === false ? 'legendary' : skill.m && typeof skill.m === 'string' ? skill.m : null
             let stajtus = abilTruthRead(jinput,name) ? 'glow_unused' : 'usedSkill'
             return `
-                <div class='smallCard img_${skill.icon}_${phase} ${side} ${stajtus}' ${makedata(skill)} >
+                <div class='smallCard img_${skill.icon}_${phase} ${side} ${stajtus} skill' ${makedata(skill)} >
                     <div class='top ${stajtus}'></div>
+                    ${dis_min_BBs(skill,baim,bdamage)}
                     <p id="smallCardParagraph">${/*skill.name*/''}</p>
                     <div class='bottom ${stajtus}'></div>
                 </div>
@@ -333,6 +351,7 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
         data-bdodge='${bdodge}' 
         data-bprotection='${bprotection}' 
         data-bspeed='${bspeed}' 
+        data-healthleft='${healthleft}'
         >
 
     <div class='puller ${side}'>
@@ -350,25 +369,25 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
         <div class='smallCard speed ${phase} ${BB_HUD(bspeed)}'>
             <div class='top'></div>
-            <p >${phase==='white' ? speed[0] : speed[1]}</p>
+            ${phase==='white' ? styled_attribute_number(speed[0],bspeed) : styled_attribute_number(speed[2],bspeed)}
             <div class='bottom'></div>
         </div>
 
         <div class='smallCard dodge ${phase}  ${BB_HUD(bdodge)}'>
             <div class='top'></div>
-            <p >${dodge}</p>
+            ${styled_attribute_number(dodge,bdodge)}
             <div class='bottom'></div>
         </div>
 
         <div class='smallCard protection ${phase}  ${BB_HUD(bprotection)}'>
             <div class='top'></div>
-            <p >${protection}</p>
+            ${styled_attribute_number(protection,bprotection)}
             <div class='bottom'></div>
         </div>
 
         <div class='smallCard health ${phase}'>
             <div class='top'></div>
-            <p >${health}</p>
+            ${   styled_attribute_number(health,-1*(health-healthleft) )    }
             <div class='bottom'></div>
         </div>
         ${skillzBlack(skillx,phase,false)}
@@ -378,4 +397,11 @@ function miniCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 }
 
 const feedSkillstheData = (s) => {
+}
+
+function styled_attribute_number(num, bb){
+    const colour = bb === 1 ? 'booned' : bb === 0 ? 'normal' : 'blighted'
+    return `
+        <p class="${colour} gameCard_num" >${Number(num)+bb}</p>
+    `
 }

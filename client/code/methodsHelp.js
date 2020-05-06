@@ -6,8 +6,8 @@ const if_moved_end_it  = () => {
     $(`[data-name=${name}][data-tenmodel].${side}`).each(function(){
         const speed = $(this).attr('data-speed')
         const speedleft = $(this).attr('data-speedleft')
-        const bspeed = $(this).attr('data-bspeed')
-        if(Number(speedleft[w]) + Number(bspeed) < Number(speed[w]) ){
+        const bspeed = Number($(this).attr('data-bspeed'))
+        if(Number(speedleft[w]) + bspeed < Number(speed[w])+bspeed ){
             $(`[data-name=${name}][data-tenmodel].${side}`).each(function(){
                 $(this).attr('data-actionstaken', Number(actionstaken) + 1 )
                 let left = phase === 'white' ? [0,speedleft[2]] : [speedleft[0],0]
@@ -53,7 +53,7 @@ const abilTruthRead = (abilName = null, name = $('.selectedModel').data('name') 
 const add_action_taken = (abilName = false,shallI = false) => {
         const actionstaken = Number($('.selectedModel').attr('data-actionstaken'))
         const name  = $('.selectedModel').attr('data-name')
-    if(!shallI){
+    if( !shallI && abilTruthRead(abilName) ){
         $(`[data-name=${name}]`).each(function(){
             $(this).attr('data-actionstaken', (Number(actionstaken) + 1) )
         })
@@ -156,25 +156,83 @@ const extractBoons_Blights = (origin) => {
 const setBoons_Blights = (origin,props,local = false)=>{//$(), {baim:-1}
     for(let key in props){
         let boon_blight = props[key]
-        let subject = local !== 'local' ? $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"]`) : origin
+        let subject = local !== 'local' ? 
+        $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"][data-tenmodel]`) : origin
             subject.each(function(){
                 if( boon_blight <= 1 && boon_blight >= -1 ){
                     $(this).attr(`data-${key}`,boon_blight) 
-                    if(boon_blight!==0){
-                        $(this).find(`.${key}-dum`).addClass(`${key} ${boon_blight>0?'booned':'blighted'}`)
-                        $(`.miniGameCard.${$(this).data('side')}`)
-                            .find('.'+[...key].slice(1).join(''))
-                            .addClass('glow_BB_card booned')
-                    }else{
-                        $(this).find(`.${key}-dum`).removeClass(`${key} booned blighted`)
-                        $(`.miniGameCard.${$(this).data('side')}`)
-                            .find('.'+[...key].slice(1).join(''))
-                            .removeClass('glow_BB_card booned blighted')
-                    }
+                    let val = $(this).attr(`data-${[...key].slice(1).join('')}`)
+                   // if(val){
+                        if (key === 'bspeed'){
+                            const v = [...val]
+                            val = phase === 'white' ? Number(v[0]) : Number(v[2])
+                        } else val = Number(val)
+                        styleStats(val,boon_blight,key,$(this))
+                  //  }
                 }
             })
     }
 }
+function styleStats(a,b,key,thiz){
+    if(b===1||b===-1){
+        let tyjp = b>0?'booned':'blighted'
+        $(`#game_card-big[data-name="${thiz.data('name')}"].${thiz.data('side')}`)
+            .find('.offset-'+[...key].slice(1).join(''))
+            .removeClass('normal blighted booned')
+            .addClass(tyjp)
+            .find('.gameCard_num')
+            .text(a+b)
+
+        thiz.find(`.${key}-dum`).addClass(`${key} ${tyjp}`)
+
+        $(`[data-name="${thiz.data('name')}"].miniGameCard.${thiz.data('side')}`)
+            .find('.'+[...key].slice(1).join(''))
+            .addClass(`glow_BB_card ${tyjp}`)
+            .find('.gameCard_num')
+            .addClass(tyjp)
+            .text(a+b)
+
+        if(key==='baim')
+            $(`[data-name="${thiz.data('name')}"].miniGameCard.${thiz.data('side')}`)
+                .find('.skill[data-aim]')
+                .each(function(){
+                 //   if( !$(this).children('.aimBoon').length && !$(this).children('.aimBlight').length)
+                    $(this).prepend(b>0?aimBoon:aimBlight)
+                })
+        if(key==='bdamage')
+        $(`[data-name="${thiz.data('name')}"].miniGameCard.${thiz.data('side')}`)
+            .find('.skill[data-hurt]')
+            .each(function(){
+            //    if( !$(this).children('.hurtBoon').length && !$(this).children('.hurtBlight').length)
+                $(this).prepend(b>0?damageBoon:damageBlight)
+            })
+
+    }else if(b==0){
+        thiz.find(`.${key}-dum`).removeClass(`${key} booned blighted`)
+        $(`.miniGameCard.${thiz.data('side')}[data-name="${thiz.data('name')}"]`)
+            .find('.'+[...key].slice(1).join(''))
+            .removeClass('glow_BB_card booned blighted')
+            .find('.gameCard_num')
+            .removeClass('booned blighted')
+            .text(a)
+        
+        $(`#game_card-big[data-name="${thiz.data('name')}"].${thiz.data('side')}`)
+            .find('.offset-'+[...key].slice(1).join(''))
+            .removeClass('normal blighted booned')
+            .find('.gameCard_num')
+            .removeClass('booned blighted')
+            .text(a)
+
+        $(`[data-name="${thiz.data('name')}"].miniGameCard.${thiz.data('side')}`)
+        .find('.skill')
+        .each(function(){
+            $(this).children(`.${[...key].slice(1).join('')}Boon`).remove()
+            $(this).children(`.${[...key].slice(1).join('')}Blight`).remove()
+        })
+    }
+}
+
+
 const placeMark = ({hex, row, multiInfo, target, key}) => {
     target.addClass('destined_for_DOOM')
     target.attr('data-DOOMqueue', key)
@@ -312,14 +370,14 @@ function blights_spew_declaration ({origin, abilName}){
     add_action_taken()
     if_moved_end_it()
 }
-function blights_spew_recieved({o, blight}){
+function blights_spew_recieved({o, blight, m}){
     const { aim, hex, row } = o
     const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
     if(targets.length){
         const target = $(targets[0])
         if_moved_end_it()
         $('[data-glow]').removeAttr('data-glow')
-        add_action_taken()
+        add_action_taken(m)
         if( onHit(aim, target) ){
             setBoons_Blights(target,{[blight]:-1})
             displayAnimatedNews (`${target.data('name')} <br/> -1 ${blight.splice(0,1)}`)
@@ -343,9 +401,9 @@ function march (string, targetHex, thizModel = $('.selectedModel') ){
     highlightHexes({colour:'legendaryGlow',dist:1},$(`.march${string}_selected`))
     socket.emit('forceMove',{h:hex, r:row, klass:"champion", callback:`march${string}`})
 }
-function marchExec(string){
+function marchExec(string, aktion){
     current_ability_method = null
-    add_action_taken()
+    add_action_taken(aktion)
     if_moved_end_it()
     $('[data-glow]').removeAttr('data-glow')
     $(`.march${string}_selected`).removeClass(`march${string}_selected`)

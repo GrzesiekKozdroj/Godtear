@@ -5,7 +5,7 @@ var _m_ = {
         thiz.removeClass('illKillYouAll illKillYouAll_selected outflank').removeAttr('style')
         if( !$('.illKillYouAll').length && !$('.outflank').length )
         {
-            if_moved_end_it()
+             
             add_action_taken(`illKillYouAll`)
             current_ability_method = null
             $('[data-glow]').removeAttr('data-glow')
@@ -77,14 +77,14 @@ var _m_ = {
         $('[data-glow]').removeAttr('data-glow')
         $($thiz).removeClass('marchGuardWhite').removeClass(`marchGuardWhite_selected`)
         setTimeout(()=>$thiz.removeAttr('style'),100)
-    if(!$('.marchGuardWhite').length ){
-        current_ability_method = null
-    }
+        if(!$('.marchGuardWhite').length ){
+            current_ability_method = null
+        }
     },
     deathWind:($thiz)=>{
         current_ability_method = null
         add_action_taken('deathWind')
-        if_moved_end_it()
+         
         $('[data-glow]').removeAttr('data-glow')
         $(`.deathWind_selected`).removeClass(`deathWind_selected`)
     },
@@ -158,7 +158,7 @@ var _m_ = {
     },
     tsunami:()=>{
         add_action_taken('tsunami')
-        if_moved_end_it()
+         
         displayAnimatedNews('tsunami<br/>move models')
         $('[data-glow]').removeAttr('data-glow')
         highlightHexes({colour:'blueGlow', dist: 2})
@@ -194,7 +194,7 @@ var _m_ = {
     tide:($thiz)=>{
         $('[data-glow]').removeAttr('data-glow')
         $('.tide_selected').removeClass('tide_selected')
-        if_moved_end_it()
+         
         add_action_taken()
         current_ability_method = null
     },
@@ -221,7 +221,7 @@ var _m_ = {
         $('[data-glow]').removeAttr('data-glow')
         displayAnimatedNews('sneaky<br/>leap')
         add_action_taken('leap')
-        if_moved_end_it()
+         
         current_ability_method = null
     },
     annoyed:($thiz)=>{
@@ -254,7 +254,7 @@ var _m_ = {
             if(!$('.sprint_selected').length ){
                 current_ability_method = null
                 pocketBox = null
-                if_moved_end_it()
+                 
                 add_action_taken('sprint')
             }
         }

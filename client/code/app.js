@@ -68,7 +68,7 @@ function gameCard (name, roster, color) {
 }
 function makeGameBoard(o,coin){
     buildRosters(o,coin)
-        $('#gameScreen').empty().css('background-color','darkgreen')
+        $('#gameScreen').empty()//.css('background-color','darkgreen')
             .append(`
                 <div id='game_card' class='${opoSide} cardsContainer ${opoSide}_card'>
                     ${deeploy(opoRoster,opoSide)}
@@ -84,6 +84,7 @@ function makeGameBoard(o,coin){
     beginBattle()
 
     QUICK_DEEPLOY()
+    setTimeout(()=>phase='black',1900)
     opoSkillTrack = buildSkillTrack(opoRoster)
     mySkillTrack = buildSkillTrack(roster)
 }
@@ -130,6 +131,13 @@ function deeploy (group,side){
             let grunt = 
                 `<div class='${side} smallCard hexagrama-14 ${teamColor}' ${makedata('grunt') + ` data-tenmodel=${model.grunt.name + i}` }>
                     <div class='top ${teamColor}'></div>
+                    <div class="bb_HUD grunt">
+                        <div class="baim-dum onBoard" /> 
+                        <div class="bdamage-dum onBoard" /> 
+                        <div class="bdodge-dum onBoard" /> 
+                        <div class="bprotection-dum onBoard" />
+                        <div class="bspeed-dum onBoard" />
+                    </div>
                     <img src='${model.grunt.icon}'/>
                     <div class='bottom ${teamColor}'></div>
                 </div>`
@@ -155,7 +163,7 @@ function deeploy (group,side){
         })
         $('#gameScreen').on('click',`.smallCard.${mySide} `,function(e){
             e.preventDefault()
-            if(phase==='deployment')deployEvent($(this))
+            if(phase==='deployment' && $(this).parents().hasClass('teamBox'))deployEvent($(this))
         })
         $('#gameScreen').on('click',`.${myDeployment}.hexagon`,function(e){
             e.preventDefault()
@@ -178,9 +186,9 @@ function deeploy (group,side){
 
 function QUICK_DEEPLOY() {
     console.log('HI -_-')
-    let roow = 1;
+    let roow = 4;
     let heex = 1;
-    $(`.teamBox`).children(`.smallCard`).each(function(){
+    $(`.teamBox.left`).children(`.smallCard`).each(function(){
         let className = $(this).data('type') === 'unit' ? 30 : 14 
         $(this)
             .detach()
@@ -189,6 +197,18 @@ function QUICK_DEEPLOY() {
             .appendTo(`.hex_${heex}_in_row_${roow}`)
         roow += heex <14 ? 0 : 1;
         heex += heex < 14 ? 1 : -13;
+    })
+    roow = 9 
+    heex = 14
+    $(`.teamBox.right`).children(`.smallCard`).each(function(){
+        let className = $(this).data('type') === 'unit' ? 30 : 14 
+        $(this)
+            .detach()
+            .removeClass( `hexagrama-${ className === 30 ? 14 : 7}`)
+            .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : 'champModel'}`)
+            .appendTo(`.hex_${heex}_in_row_${roow}`)
+        roow -= heex > 0 ? 0 : 1;
+        heex -= heex > 0 ? 1 : -14;
     })
     socket.emit('beginBattle')
 }

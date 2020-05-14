@@ -406,7 +406,8 @@ const _m = {
     feint:function(origin,target){
         const { baim, healthleft } = extractBoons_Blights(origin)
         const {hex, row } = target
-        let aim = 5 + baim + healthleft === 7 ? 2 : 0
+        let aim = 5 + baim + (healthleft === 7 ? 2 : 0)
+        console.log(aim)
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.blackTeam')[0])
         if($target){
             socket.emit('rolloSkill',{aim:aim, hurt:0, socksMethod:"feint", hex, row})
@@ -450,17 +451,16 @@ const _m = {
         let destination = $(`.hex_${hex}_in_row_${row}`)
         if( destination.hasClass('objectiveGlow') ){
             socket.emit('rolloSkill',{hex,row,socksMethod:"feelThePower",hurt:0,aim:0})
-            setBoons_Blights(target,{
-                bdodge:Number(target.attr('data-bdodge'))+1,
-                bprotection:Number(target.attr('data-bprotection'))+1})
-            displayAnimatedNews('Froglodytes <br/>+1 dodge & shield')
+            // setBoons_Blights(target,{
+            //     bdodge:Number(target.attr('data-bdodge'))+1,
+            //     bprotection:Number(target.attr('data-bprotection'))+1})
         } else
             displayAnimatedNews('must stand on<br/>objective hex')
     },
     hop:function(origin,target){
         const { hex, row } = target
-        const parentHex = origin.parent('.hexagon')
-        parentHex.children('.smallCard').addClass('hop')
+        // const parentHex = origin.parent('.hexagon')
+        // parentHex.children('.smallCard').addClass('hop')
         socket.emit('rolloSkill',{hex,row,socksMethod:"hop",hurt:0,aim:0})
     },
     marchRhodriBlack:function(origin,target){
@@ -490,9 +490,10 @@ const _m = {
         const { name, unitsize, side, type, unitname } = $target.data()
         if( $(`[data-name="${name}"].whiteTeam`).length < unitsize ){
             $('[data-glow]').removeAttr('data-glow')
-            rallyActionDeclaration({ unitname, side, type, name })
+            setTimeout(()=>rallyActionDeclaration({ unitname, side, type, name }, 'answerTheCall'),800)
             displayAnimatedNews(`${name} answers<br/>the call of Rhodri`)
-        } displayAnimatedNews(`${name} has<br/>maximum unit size`)
+        } else 
+            displayAnimatedNews(`${name} has<br/>maximum unit size`)
         current_ability_method = null
     },
     hold:function(origin,target){
@@ -507,7 +508,7 @@ const _m = {
         const $target = $(`.hex_${hex}_in_row_${row}.objectiveGlow`)
         if(phase==="black" && target){
             m.universal.claim( $target, 'whiteTeam' )
-            socket.emit('stakeClaim',{hex: hex, row: row})
+            socket.emit('stakeClaim',{hex: hex, row: row, key:"bannerfall"})
         }
     },
     marchGuardBlack:function(origin,target){

@@ -139,7 +139,7 @@ $selectedByEnemyGlow:rgba(238, 65, 53, 1);
 [data-glow="legendaryGlow"],[data-glow="shootAndScoot"]{
     @include makeGlow('goldenrod', goldenrod, goldenrod, goldenrod, goldenrod)
 }
-[data-glow="recruitGlow"],[data-glow="claimColor"],[data-glow="newSpewWhite"],[data-glow="graspingDead"]{
+[data-glow="recruitGlow"],[data-glow="claimColor"],[data-glow="newSpewWhite"],[data-glow="graspingDead"],[data-glow="answerTheCall"]{
     @include makeGlow('white', rgb(245, 245, 245), rgb(194, 197, 194), rgb(243, 243, 243), rgb(238, 250, 231))
 }
 [data-glow="straitPaths"], [data-glow="straitPaths1"], [data-glow="straitPaths2"], [data-glow="straitPaths3"], [data-glow="straitPaths4"], [data-glow="straitPaths5"], [data-glow="straitPaths6"]{
@@ -399,4 +399,56 @@ $partSize: 5em;
 .glow_BB_card:after {
     z-index: 0;
     content: '';
+}
+.activated{
+    filter:grayscale(.55) opacity(.95);
+}
+
+@mixin barwyZespolu ($a,$b,$c,$d,$e,$f,$g,$h,$i){
+    color: #000;
+    &:before{
+        content: '';
+        @include gameCard_BB_glow ($a,$b,$c,$d,$e,$f,$g,$h,$i);
+        position: absolute;
+        background-size: 400%;
+        animation: glowing 15s linear infinite;
+        transition: opacity .3s ease-in-out;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(161% + 4px);
+        border-radius: 15%;
+        top:-41%;
+        opacity: 1;
+    }
+    &:after{
+        content: '';
+    }
+}
+
+
+.whiteTeam,.whiteTem{
+    @include barwyZespolu(
+        rgb(139, 251, 255),
+        rgb(130, 255, 238), 
+        rgb(149, 204, 255), 
+        rgb(131, 154, 255), 
+        rgb(155, 243, 255), 
+        rgb(188, 242, 255), 
+        rgb(118, 255, 248), 
+        rgb(148, 212, 255), 
+        rgb(133, 141, 255)
+    )
+}
+.blackTeam,.blackTem{
+    @include barwyZespolu(
+        rgb(194, 69, 6),
+        rgb(209, 29, 16), 
+        rgb(182, 8, 75), 
+        rgb(218, 37, 91), 
+        rgb(194, 14, 125), 
+        rgb(206, 43, 18), 
+        rgb(224, 91, 8), 
+        rgb(189, 5, 176), 
+        rgb(190, 10, 142)
+    )
 }

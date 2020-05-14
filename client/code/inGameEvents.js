@@ -96,13 +96,26 @@ const animateCart = (site, thiz) =>
     $(`.${site}.cardsContainer.${site}_card.hinge-in-from-${site}.mui-enter.mui-enter-active`)
         .removeClass(`hinge-in-from-${site} mui-enter mui-enter-active`)
         .addClass(`hinge-out-from-${site} mui-leave mui-leave-active`)
-    setTimeout(()=>
+    let data = {}
+    data.klass = thiz.attr('data-klass')
+    data.type = thiz.attr('data-type')
+    data.name = thiz.attr('data-name')
+    data.icon = thiz.attr('data-icon')
+    data.unitname = thiz.attr('data-unitname')
+    data.unitSize = thiz.attr('data-unitsize')
+    data.healthleft = Number( thiz.attr('data-healthleft') )
+    data.skills = JSON.parse(decodeURIComponent(thiz.attr('data-skills')));
+    data.speed = [...thiz.attr('data-speed')].filter(o=>o!==',').map(el=>Number(el));
+    ['dodge','protection','health','index','baim','bdamage','bdodge','bspeed','bprotection'].forEach(
+        el=>data[el] = Number(thiz.attr(`data-${el}`) )
+    )
+    setTimeout(()=>{
         $(`.${site}.cardsContainer`)
             .empty()
-            .append( miniCard(thiz.data(), phase, site) )
+            .append( miniCard(data, phase, site) )//gotta take attributes not data, and update damage seen on card when caused
             .removeClass(`hinge-out-from-${site} mui-leave mui-leave-active`)
             .addClass(`hinge-in-from-${site} mui-enter mui-enter-active`)
-        ,550)
+    },550)
 }
 const checkCardContents = (site, chosenModel) => 
     $(`.miniGameCard.${site}`).data('name') !== chosenModel.data('name')
@@ -122,6 +135,7 @@ const addSelectedColor = (thiz = false) =>
     }
 
 const oddRowPosition = (r,h, colour = 'yellowGlow') => {
+    $(`.hex_${h}_in_row_${r}`).attr('data-glow',colour)
     $(`.hex_${h - 1}_in_row_${r - 1}`).attr('data-glow',colour)
     $(`.hex_${h}_in_row_${r - 1}`).attr('data-glow',colour)
     $(`.hex_${h - 1}_in_row_${r}`).attr('data-glow',colour)
@@ -133,6 +147,7 @@ const oddRowPosition = (r,h, colour = 'yellowGlow') => {
 }
 
 const evenRowPosition = (r,h, colour = 'yellowGlow') => {
+    $(`.hex_${h}_in_row_${r}`).attr('data-glow',colour)
     $(`.hex_${h}_in_row_${r - 1}`).attr('data-glow',colour)
     $(`.hex_${h + 1}_in_row_${r - 1}`).attr('data-glow',colour)
     $(`.hex_${h - 1}_in_row_${r}`).attr('data-glow',colour)
@@ -161,7 +176,20 @@ function displayMovementAura (thiz) {
     let h = Number(thiz.parent('.hexagon').data('hex'))
     let r = Number(thiz.parent('.hexagon').data('row'))
     let numbeOfSteps = Number( [...thiz.attr('data-speedleft')][phase === 'white' ? 0 : 2] ) + Number(bspeed)
-    if( numbeOfSteps )
+    const noKnightshades = ()=>{
+        let produce = true
+        highlightHexes({colour:'trans',dist:1},thiz)
+        console.log($('[data-glow]').children(`[data-name="Knightshades"][data-tenmodel].blackTeam`).length)
+        $(`[data-glow].hexagon`).each(function(){
+            if( $(this).children(`[data-name="Knightshades"][data-tenmodel].blackTeam`).length ){
+                produce = false
+                return false
+            }
+        })
+        $(`data-glow`).removeAttr(`data-glow`)
+        return produce
+    }
+    if( numbeOfSteps && noKnightshades() )
         for(let m = 0; m < numbeOfSteps; m++ ){
             m === 0 ?
                 infectMovementHexesWithYellow(r,h)

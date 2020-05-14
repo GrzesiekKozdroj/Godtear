@@ -10,7 +10,7 @@
             return champDATA.join(' ')
         }
 
-
+const bigCard_bb = (a,b)=>`<span class="${b>0?'booned':b<0?'blighted':'normal'} big_card__BB_skill">${a+b}</span>`
         const dis_min_BBs = (skill,baim,bdamage) => {
             let produce = []
             if ( skill.aim )
@@ -54,7 +54,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             let util = skills.util[d]
             skillzList = [...skillzList, util]
         }
-    return skillzList.map((skill)=>{
+        return skillzList.map((skill)=>{
             //let {name,desc,icon,dist,aim,hurt,unused,legendary,m} = skill;
             let name = skill.name? skill.name : false;
             let desc = skill.desc? skill.desc : false;
@@ -66,15 +66,15 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             let legendary = skill.legendary ? skill.legendary : 0;
             let m = skill.m ? skill.m : false;
             let aimshow = Array.isArray(aim) ? 
-                aim.map(a=>`<div class='roster_abil_number smaller_num'>${a}</div>`).join('') : 
+                aim.map(a=>`<div class='roster_abil_number smaller_num'>${bigCard_bb(a,baim)}</div>`).join('') : 
                 aim ?
-                `<div class='roster_abil_number'>${aim}</div>` :
+                `<div class='roster_abil_number'>${bigCard_bb(aim,baim)}</div>` :
                 '';
 
             let hurtshow = Array.isArray(hurt) ? 
-                hurt.map(a=>`<div class='roster_abil_number smaller_num'>${a}</div>`).join('') : 
+                hurt.map(a=>`<div class='roster_abil_number smaller_num'>${bigCard_bb(a,bdamage)}</div>`).join('') : 
                 hurt ?
-                `<div class='roster_abil_number'>${hurt}</div>` : '';
+                `<div class='roster_abil_number'>${bigCard_bb(hurt,bdamage)}</div>` : '';
 
         return `
                 <div class="card_list_item_${phase} ${skill.legendaryUsed === false ?'legendary':''} ${side}" ${makedata(skill)}>
@@ -126,7 +126,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
         <div class='game_card-portrait card_shadow-${side}'>
 
-            <div class='game_card-picture'>
+            <div class='game_card-picture ${side===mySide?'whiteTem':'blackTem'}'>
                 <div class='top'></div>
                 <img class='heroImg' src='${icon}'/>
                 <div class='bottom'></div>
@@ -164,7 +164,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
         <div class='game_card-actions card_shadow-${side}'>
 
-            <div id='endAction' class='game_card-attrib card_base_action endTask ${type} ${phase}'>
+            <div id='endAction' class='game_card-attrib card_base_action endTask ${type} ${phase} left'>
                 <div class='top'></div><div class='bottom'></div>
             </div>
 
@@ -173,6 +173,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             </div>
 
             ${bloodedUnit(unitName, side, unitSize,type,name)}
+            ${treasureBox(side)}
 
         </div>
 
@@ -208,15 +209,15 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
             let legendary = skill.legendary ? skill.legendary : 0;
             let m = skill.m ? skill.m : false;
             let aimshow = Array.isArray(aim) ? 
-                aim.map(a=>`<div class='roster_abil_number smaller_num'>${a}</div>`).join('') : 
+                aim.map(a=>`<div class='roster_abil_number smaller_num'>${bigCard_bb(a,baim)}</div>`).join('') : 
                 aim ?
-                `<div class='roster_abil_number'>${aim}</div>` :
+                `<div class='roster_abil_number'>${bigCard_bb(aim,baim)}</div>` :
                 '';
 
             let hurtshow = Array.isArray(hurt) ? 
-                hurt.map(a=>`<div class='roster_abil_number smaller_num'>${a}</div>`).join('') : 
+                hurt.map(a=>`<div class='roster_abil_number smaller_num'>${bigCard_bb(a,bdamage)}</div>`).join('') : 
                 hurt ?
-                `<div class='roster_abil_number'>${hurt}</div>` : '';
+                `<div class='roster_abil_number'>${bigCard_bb(hurt,bdamage)}</div>` : '';
 
         return `
                 <div class="card_list_item_${phase} ${skill.legendaryUsed ===false?'legendary':''} ${side}" ${makedata(skill)} >
@@ -291,7 +292,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
                     <div class='bottom'></div>
                 </div>
             </div>
-            <div class='game_card-picture'>
+            <div class='game_card-picture ${side===mySide?'whiteTem':'blackTem'}'>
                 <div class='top'></div>
                 <img class='heroImg' src='${icon}'/>
                 <div class='bottom'></div>
@@ -299,10 +300,11 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
         </div>
         <div class='game_card-actions card_shadow-right'>
             ${bloodedUnit(unitName, side, unitSize,type,name)}
+            ${treasureBox(side)}
             <div id='claimAction' class='game_card-attrib card_base_action ${phase} ${type} claim'>
                 <div class='top'></div><div class='bottom'></div>
             </div>
-            <div id='endAction' class='game_card-attrib card_base_action endTask ${type} ${phase}'>
+            <div id='endAction' class='game_card-attrib card_base_action endTask ${type} ${phase} right'>
                 <div class='top'></div><div class='bottom'></div>
             </div>
         </div>
@@ -317,7 +319,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
     let skillx = rosters[klass][index][type==='champion'?'champ':'grunt'].skills// JSON.parse(decodeURIComponent(skills));
     const { baim, bdamage, bdodge, bprotection, bspeed } = extractBoons_Blights( $($(`[data-name="${name}"].${side}`)[0]) )
     feedSkillstheData (skillx)
-    const skillzBlack = (skillx,phase)=>{
+    const skillzBlack = (skillx,phase,side)=>{
         let skillList = []
         for(let s in skillx[phase]){
             let skill = skillx[phase][s]
@@ -326,7 +328,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
         skillList = skillx.util.legendary ? [...skillList, skillx.util.legendary] : skillList;
         return skillList.map(skill=>{
             let jinput = skill.legendaryUsed === false ? 'legendary' : skill.m && typeof skill.m === 'string' ? skill.m : null
-            let stajtus = abilTruthRead(jinput,name) ? 'glow_unused' : 'usedSkill'
+            let stajtus = abilTruthRead(jinput,side,name) ? 'glow_unused' : 'usedSkill'
             return `
                 <div class='smallCard img_${skill.icon}_${phase} ${side} ${stajtus} skill' ${makedata(skill)} >
                     <div class='top ${stajtus}'></div>
@@ -336,10 +338,10 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
                 </div>
             `}).join('')
     }
-    const BB_HUD = (c)=>c>0? 'glow_BB_card booned' : c<0? 'glow_BB_card blighted' : ''
+    const BB_HUD = (c)=>c>0? 'glow_BB_card booned' : c < 0 ? 'glow_BB_card blighted' : ''
 
     return `
-    <div class='miniGameCard ${side}' 
+    <div class='miniGameCard ${side} ${phase}' 
         data-klass='${klass}' 
         data-type='${type}' 
         data-name='${name}' 
@@ -361,7 +363,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
     </div>
     <div class='list ${side}'>
 
-        <div class='smallCard'>
+        <div class='smallCard ${side===mySide?'whiteTem':'blackTem'}'>
             <div class='top'></div>
             <img class='heroImg' src='${icon}'/>
             <div class='bottom'></div>
@@ -390,7 +392,10 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
             ${   styled_attribute_number(health,-1*(health-healthleft) )    }
             <div class='bottom'></div>
         </div>
-        ${skillzBlack(skillx,phase,false)}
+        ${skillzBlack(skillx,phase,side)}
+        <div id='endAction' class='smallCard endTask ${type} ${phase} ${side}'>
+            <div class='top'></div><div class='bottom'></div>
+        </div>
     </div>
 </div>
     `
@@ -402,6 +407,18 @@ const feedSkillstheData = (s) => {
 function styled_attribute_number(num, bb){
     const colour = bb === 1 ? 'booned' : bb === 0 ? 'normal' : 'blighted'
     return `
-        <p class="${colour} gameCard_num" >${Number(num)+bb}</p>
+        <p class="${colour} gameCard_num ${phase}" >${Number(num)+bb}</p>
+    `
+}
+function treasureBox(side){
+    let s = side === mySide ? 'my' : 'opo'
+    return `
+        <div class="treasureBox ${side}">
+            <img class="gem1 nope" src="../img/tear-${s}-1.svg" />
+            <img class="gem2 nope" src="../img/tear-${s}-2.svg" />
+            <img class="gem3 nope" src="../img/tear-${s}-3.svg" />
+            <img class="gem4 nope" src="../img/tear-${s}-4.svg" />
+            <img class="gem5 nope" src="../img/tear-${s}-2.svg" />
+        </div>
     `
 }

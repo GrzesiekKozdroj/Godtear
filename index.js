@@ -106,6 +106,7 @@ io.sockets.on('connection', (socket) => {
     socket.on('markedMan',p=>loopRoom({socket:socket,pack:p,stringEmit:'markedMan',callback:o=>o,twoWay:false}))
     socket.on('rolloSkill',p=>loopRoom({socket:socket,pack:p,stringEmit:p.socksMethod,callback:roll,twoWay:true}))
     socket.on('forceMove',p=>loopRoom({socket:socket,pack:p,stringEmit:'fM',callback:o=>o,twoWay:false}))
+    socket.on('turnEnd',p=>loopRoom({socket:socket,pack:p,stringEmit:'tt',callback:o=>o,twoWay:true}))
 
 
     //FOR QUICK SETUP GAME DEV PURPOSES ONLY:

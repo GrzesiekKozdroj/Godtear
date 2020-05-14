@@ -75,7 +75,7 @@ socket.on('HH',p=>{
     if( m )__m[m]()
 })
 socket.on('sC',p=>{
-    m.universal.claim( $(`.hex_${p.hex}_in_row_${p.row}`), 'blackTeam' )
+    m.universal.claim( $(`.hex_${p.hex}_in_row_${p.row}`), 'blackTeam',p.key )
 })
 socket.on('markedMan',p=>{
     const {hex, row, multiInfo} = p
@@ -90,4 +90,29 @@ socket.on('fM',p=>{console.log('fM',p)
             $(`.hex_${klass.h}_in_row_${klass.r}`).children('.smallCard')[0] :
             $(`.hex_${klass.h}_in_row_${klass.r}`).children('.claimedBanner')[0]
     makeAnim( $(children), $(`.hex_${h}_in_row_${r}`), _m_[callback] )
+})
+socket.on('tt',p=>{
+    myTurn = myTurn ? false : true
+    if( myTurn && p.phase === 'white' && phase === p.phase && !$('.whiteTeam.activated').length ){
+        //turn_resetter(mySkillTrack,'white','whiteTeam')
+        displayAnimatedNews('Your<br/>plots')
+    } else if ( !myTurn && p.phase==='white' && phase === 'white' ){
+        displayAnimatedNews('plots<br/>ended')
+        //turn_resetter(mySkillTrack,'white','blackTeam')
+    }
+    if( myTurn && phase==='white' && $('.whiteTeam.activated').length ){
+        phase='black'
+        turn_resetter(mySkillTrack,'black','whiteTeam')
+        displayAnimatedNews('begin<br/>clash phase')
+    } else if ( !myTurn && phase === 'white' && $('.blackTeam.activated').length ){
+        phase='black'
+        turn_resetter(mySkillTrack,'black','blackTeam')
+        displayAnimatedNews('enemy<br/>clash phase')
+    }
+    if( myTurn && phase==='black' ){
+        displayAnimatedNews('Your<br/>clash phase')
+    }
+
+
+
 })

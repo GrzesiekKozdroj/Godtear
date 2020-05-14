@@ -7,10 +7,10 @@ const if_moved_end_it  = () => {
         const speed = $(this).attr('data-speed')
         const speedleft = $(this).attr('data-speedleft')
         const bspeed = Number($(this).attr('data-bspeed'))
-        if(Number(speedleft[w]) + bspeed < Number(speed[w])+bspeed ){
+        if(Number(speedleft[w]) + bspeed < Number(speed[w])+bspeed  && Number(speedleft[w]) >= 0){
             $(`[data-name=${name}][data-tenmodel].${side}`).each(function(){
                 $(this).attr('data-actionstaken', Number(actionstaken) + 1 )
-                let left = phase === 'white' ? [0,speedleft[2]] : [speedleft[0],0]
+                let left = phase === 'white' ? [-1,speedleft[2]] : [speedleft[0],-1]
                 $(this).attr('data-speedleft', left)
             })
             setBoons_Blights($(`[data-name=${name}][data-tenmodel].${side}`),{bspeed:0})
@@ -18,7 +18,7 @@ const if_moved_end_it  = () => {
         }
     })
 }
-const abilTruthChange = (abilName = null) => {
+const abilTruthChange = (abilName = null,side=mySide) => {
     let name = $('.selectedModel').data('name')
     const targetos = (abilName, p = phase) => 
         $('.selectedModel').hasClass('whiteTeam') ? 
@@ -32,15 +32,17 @@ const abilTruthChange = (abilName = null) => {
         targetos(abilName)
 
     $('.skilling_declaration').removeClass('skilling_declaration')
-    $(`[data-m="${abilName}"]`).removeClass('glow_unused').addClass('usedSkill')
+    $(`[data-m="${abilName}"].${side}`).removeClass('glow_unused').addClass('usedSkill')
 }
 
-const abilTruthRead = (abilName = null, name = $('.selectedModel').data('name') ) => {
-    const targetos = (abilName, p = phase) => 
-        $('.selectedModel').hasClass('whiteTeam') ? 
-        mySkillTrack[name][p][abilName].used
-        : 
-        opoSkillTrack[name][p][abilName].used
+const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
+    //console.log(name,phase,abilName)
+    const targetos = (abilName, p = phase) => {
+        if(side === mySide)
+                return mySkillTrack[name][p][abilName].used 
+        else if(side === opoSide)
+                return opoSkillTrack[name][p][abilName].used 
+    }
 
     if (abilName === "legendary")
         return !targetos("legendary","util")
@@ -50,30 +52,35 @@ const abilTruthRead = (abilName = null, name = $('.selectedModel').data('name') 
         return true
 }
 
-const add_action_taken = (abilName = false,shallI = false) => {
+const add_action_taken = (
+    abilName = false,
+    shallI = false, 
+    name = $('.selectedModel').attr('data-name'),
+    side = $('.selectedModel').attr('data-side')
+) => {
         const actionstaken = Number($('.selectedModel').attr('data-actionstaken'))
-        const name  = $('.selectedModel').attr('data-name')
-    if( !shallI && abilTruthRead(abilName) ){
-        $(`[data-name=${name}]`).each(function(){
+    if( abilTruthRead(abilName, side, name) && !shallI ){console.log('up up up')
+        $(`[data-name=${name}].${side}[data-tenmodel]`).each(function(){
             $(this).attr('data-actionstaken', (Number(actionstaken) + 1) )
         })
     }
-    abilTruthChange(abilName)
+    abilTruthChange(abilName,side)
 }
-const check_actions_count = (abilName = false) => {
+const check_actions_count = (abilName = false, side = mySide) => {
+    //console.log(Number( $('.selectedModel').attr('data-actionstaken') ),abilTruthRead(abilName),abilName)
     return Number( $('.selectedModel').attr('data-actionstaken') ) < 2 && 
-    abilTruthRead(abilName)
-    ? true : false
+        abilTruthRead(abilName,side)
+        ? true : false
 }
 
-const onHit = (aim, target) => { 
+const onHit = (aim, target) => { console.log('aim roll: ', ...aim)
     const target_dodge = Number(target.attr('data-dodge')) + Number(target.attr('data-bdodge'))
     const aim_total = aim.reduce((a,b)=>a+b,0)
     setBoons_Blights($('.selectedModel'),{baim:0})
     setBoons_Blights(target,{bdodge:0})
     return aim_total >= target_dodge
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
-const doDamage = (hurt, target) => {
+const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
     const target_protection = Number(target.attr('data-protection')) + Number(target.attr('data-bprotection'))
     const hurt_total = hurt.reduce((a,b)=>a+b,0)
     setBoons_Blights($('.selectedModel'),{bdamage:0})
@@ -82,6 +89,12 @@ const doDamage = (hurt, target) => {
             let target_health = target.attr('data-healthleft')
             let pain = target_health - (hurt_total - target_protection)
             target.attr( 'data-healthleft', pain )
+            $(`.miniGameCard.${target.data('side')}[data-name="${target.data('name')}"]`)
+                .find('.smallCard.health')
+                .find('.gameCard_num')
+                .removeClass('normal')
+                .addClass('blighted')
+                .text( Number(target.attr('data-healthleft')) )
             animateDamage(target, (target_protection - hurt_total))
             return true
         } else { return false }
@@ -105,8 +118,15 @@ const checkIfStillAlive = (target) => {
 }
 const forceKill = (target) => {//$()
     target.addClass('death')
-    setBoons_Blights( target, { baim:0, bdamage:0, bspeed:0, bdodge:0, bprotection:0})
-    target.attr('data-healthleft',target.data('health'))
+    target.attr('data-baim',0)
+    target.attr('data-bdamage',0)
+    target.attr('data-bprotection',0)
+    target.attr('data-bdodge',0)
+    target.attr('data-bspeed',0)
+    if(target.data('type')==='unit')
+        target.attr('data-healthleft',target.data('health'))
+    else
+        target.attr('data-healthleft',0)
     setTimeout(()=>{
         if( target.data('type')==='unit' )
             if(
@@ -121,6 +141,14 @@ const forceKill = (target) => {//$()
             //gotta emit champ death
             $('[data-glow]').removeAttr('data-glow')
             highlightHexes({colour:'deathMove',dist:2},target)
+            //resurrect Mournblade
+            if(Number($(`[data-name="Mournblade"].${mySide}[data-tenmodel]`).attr('data-healthleft')) === 0 &&
+            target.hasClass(opoSide)){
+                $(`[data-name="Mournblade"].${mySide}[data-tenmodel]`)
+                    .attr('data-healthleft',1)
+                    .removeClass('death')
+                setTimeout(()=>displayAnimatedNews('Mournblade<br/>rallies'),700)
+            }
         }
     }, 700)
 }//<---killed units and champs need to give up their boons and blights, what about resurrected units??
@@ -196,14 +224,14 @@ function styleStats(a,b,key,thiz){
             $(`[data-name="${thiz.data('name')}"].miniGameCard.${thiz.data('side')}`)
                 .find('.skill[data-aim]')
                 .each(function(){
-                 //   if( !$(this).children('.aimBoon').length && !$(this).children('.aimBlight').length)
+                    if( !$(this).children('.aimBoon').length && !$(this).children('.aimBlight').length)
                     $(this).prepend(b>0?aimBoon:aimBlight)
                 })
         if(key==='bdamage')
         $(`[data-name="${thiz.data('name')}"].miniGameCard.${thiz.data('side')}`)
             .find('.skill[data-hurt]')
             .each(function(){
-            //    if( !$(this).children('.hurtBoon').length && !$(this).children('.hurtBlight').length)
+                if( !$(this).children('.hurtBoon').length && !$(this).children('.hurtBlight').length)
                 $(this).prepend(b>0?damageBoon:damageBlight)
             })
 
@@ -350,8 +378,8 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
             socket.emit('HH', {color:glowType,dist, hex:h, row:r, river})
         })
     }
-    //highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
-    if ( !$('[data-glow="recruitGlow"]').length )
+    highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))//was commented out but it cannot work without it
+    //if ( !$(`[data-glow="${glowType}"]`).length )prevented me from sending river through server
         socket.emit('HH', {color:glowType,dist, hex, row, river})
 }
 function blights_spew_declaration ({origin, abilName}){
@@ -368,14 +396,14 @@ function blights_spew_declaration ({origin, abilName}){
     $('[data-glow]').removeAttr('data-glow')
     current_ability_method = null
     add_action_taken()
-    if_moved_end_it()
+     
 }
 function blights_spew_recieved({o, blight, m}){
     const { aim, hex, row } = o
     const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
     if(targets.length){
         const target = $(targets[0])
-        if_moved_end_it()
+         
         $('[data-glow]').removeAttr('data-glow')
         add_action_taken(m)
         if( onHit(aim, target) ){
@@ -387,13 +415,21 @@ function blights_spew_recieved({o, blight, m}){
     current_ability_method = null
 }
 function healLife(target, h = 2){
-    for(let oi = 0; oi < 2; oi++){
+    for(let oi = 0; oi < h; oi++){
         if(  Number( target.attr('data-healthleft') ) < Number( target.attr('data-health') )  ){
             const currentWounds = Number(target.attr('data-healthleft')) + 1
             target.attr('data-healthleft', currentWounds)
         }
     }
     displayAnimatedNews(`${target.data('name')}<br/>heals ${h} wound${h>2?"s":''}`)
+    let style =  ( Number(target.attr('data-healthleft') ) < target.data('health') ) ? 0 : 1
+    $(`.miniGameCard.${target.data('side')}[data-name="${target.data('name')}"]`)
+        .find('.smallCard.health')
+        .find('.gameCard_num')
+        .removeClass(style?'normal':'blighted')
+        .addClass(style?'blighted':'normal')
+        .text( Number(target.attr('data-healthleft')) )
+            
 }
 function march (string, targetHex, thizModel = $('.selectedModel') ){
     const { hex, row } = targetHex
@@ -404,7 +440,7 @@ function march (string, targetHex, thizModel = $('.selectedModel') ){
 function marchExec(string, aktion){
     current_ability_method = null
     add_action_taken(aktion)
-    if_moved_end_it()
+     
     $('[data-glow]').removeAttr('data-glow')
     $(`.march${string}_selected`).removeClass(`march${string}_selected`)
     displayAnimatedNews('marching')
@@ -428,6 +464,10 @@ function propagate_BB_s($origin,$target){
     const origin = extractBoons_Blights( $origin )
     const { baim, bdamage, bspeed, bdodge, bprotection } = origin
     setBoons_Blights( $target, { baim, bdamage, bspeed, bdodge, bprotection } )
+    if ( $origin.hasClass('activated') ) 
+        $target.addClass('activated').attr('data-actionstaken',2)
+    else
+        $target.removeClass('activated').attr('data-actionstaken',Number($($origin[0]).attr('data-actionstaken')))
 }
 function shootAndScoot(){
     highlightHexes({colour:'shootAndScoot',dist:1})
@@ -467,4 +507,17 @@ function buildSkillTrack(roster){//['name','name','name']
         }
     })
     return premadeproduct
+}
+function turn_resetter(skillTracker,phase,team){
+    $(`.${team}[data-tenmodel]`).each(function(){
+        const model = $(this)
+        model.removeClass('activated').attr('data-actionstaken',0)
+    })
+    for(let char in skillTracker){
+        let character = skillTracker[char]
+        for(let s in character[phase]){
+            let skill = character[phase][s]
+            skill.used = false
+        }
+    }
 }

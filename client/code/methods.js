@@ -17,7 +17,7 @@ let walk = 'walk',
     protectionBoon = boon_icon('protectionBoon'), 
 skull = 'skull', 
 cogs = 'cogs', 
-self = 'self', 
+sefl = 'self', 
 star = 'star';
 
 
@@ -53,11 +53,10 @@ const m =
         rally: function () { },
         dieGrunt: function () { },
         dieChamp: function () { },
-        claim: function (thiz, teamColor) {
-            if_moved_end_it()
+        claim: function (thiz, teamColor, key = "claimed") {
             thiz.append(placeBanner(teamColor))
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken(key)
             moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
             displayAnimatedNews(`${ $('.selectedModel').data('name') }<br/>claims objective`)
         }
@@ -152,7 +151,7 @@ const m =
             {
                 name: "War Cry",
                 desc: aimBoon,
-                icon: self,
+                icon: 'self',
                 m: "warCry"
             },
             cleavingStrike:
@@ -172,7 +171,7 @@ const m =
                 name: "Rush",
                 desc: "Each Unburnt Reaver in this hex may move up to 2 hexes.",
                 dist:2,
-                icon: self,
+                icon: 'self',
                 m: "rush"
             },
             intimidation:
@@ -250,7 +249,7 @@ const m =
             {
                 name: "Path of Destruction",
                 desc: "Titus may make a skill action. Then he may move 1 hex. Then he may make another skill action",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 legendaryUsed: false,
                 m: "pathOfDestruction"
@@ -328,7 +327,7 @@ const m =
             {
                 name: "Roll",
                 desc: "Grimgut moves up to 3 hexes in a straight line.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "roll"
             },
@@ -451,7 +450,7 @@ const m =
             {
                 name: "Regenerate ",
                 desc: "Remove up to 2 of Halftusk's wounds.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "regenerateBlack"
             },
@@ -484,7 +483,7 @@ const m =
             {
                 name: "Regenerate",
                 desc: "Remove up to 2 of Halftusk's wounds.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "regenerateWhite"
             },
@@ -564,7 +563,7 @@ const m =
             {
                 name: "Hop",
                 desc: "You may place each Froglodyte in a hex up to 2 hexes from its current hex.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 dist: 2,
                 m: "hop"
@@ -586,7 +585,7 @@ const m =
             {
                 name: "March",
                 desc: "Move Rhodri up to 1 hex.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 dist:1,
                 m: "marchRhodriBlack"
@@ -618,7 +617,7 @@ const m =
             {
                 name: "March",
                 desc: "Move Rhodri up to 1 hex.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 dist:1,
                 m: "marchRhodriWhite"
@@ -650,7 +649,7 @@ const m =
                 desc: "Clash phase only. Make a claim action.",
                 unused: true,
                 legendaryUsed: false,
-                icon: self,
+                icon: 'self',
                 dist:1,
                 m: "bannerfall"
             },
@@ -669,7 +668,7 @@ const m =
             {
                 name: "March",
                 desc: "Move each Household Guard up to 1 hex.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "marchGuardBlack"
             },
@@ -690,7 +689,7 @@ const m =
             {
                 name: "Brace",
                 desc: protectionBoon,
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "brace"
             },
@@ -698,7 +697,7 @@ const m =
             {
                 name: "March",
                 desc: "Move each Household Guard up to 1 hex.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "marchGuardWhite"
             }
@@ -792,7 +791,7 @@ const m =
             {
                 name: "Depths of Sorrow",
                 desc: aimBoon,
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "depthsOfSorrow"
             },
@@ -835,7 +834,7 @@ const m =
             {
                 name: "DeathGrip",
                 desc: "Enemy models that make an advance acction while they are adjacent to a Knightshade have speed 0 during that advance action.",
-                m: function () { }
+                m: "deathGrip"
             }
         }
     },
@@ -856,7 +855,7 @@ const m =
             {
                 name: "Void Weapon",
                 desc: damageBoon,
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "voidWeaponChamp"
             },
@@ -878,7 +877,7 @@ const m =
             {
                 name: "Poised to Strike",
                 desc: speedBoon,
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "poisedToStrike"
             },
@@ -921,7 +920,7 @@ const m =
             {
                 name: "Void Weapon",
                 desc: aimBoon,
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "voidWeapon"
             },
@@ -1018,7 +1017,7 @@ const m =
             {
                 name: "Meditation",
                 desc: aimBoon,
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "meditation"
             },
@@ -1026,7 +1025,7 @@ const m =
             {
                 name: "March",
                 desc: "Move Nia up to 1 hex.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "marchNia"
             }
@@ -1059,7 +1058,7 @@ const m =
             {
                 name: "Rolling Stones",
                 desc: "Each Quartzling may move up to 3 hexes in a straight line.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "rollingStones"
             },
@@ -1080,7 +1079,7 @@ const m =
             {
                 name: "Calcify",
                 desc: "If this Quartzling is the only model in its hex and is adjacent to an objective hex, replace it with an objective hex.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "calcify"
             },
@@ -1113,7 +1112,7 @@ const m =
             {
                 name: "Ker-Splash",
                 desc: "Choose a hex within range containing one Splashling. Remove the Splashling and place Raith'Marid in that hex.",
-                icon: self,
+                icon: 'self',
                 dist: 3,
                 unused: true,
                 m: "kerSplash"
@@ -1156,7 +1155,7 @@ const m =
             {
                 name: "Ker-Splash",
                 desc: "Choose a hex within range containing one Splashling. Remove the Splashling and place Raith'Marid in that hex.",
-                icon: self,
+                icon: 'self',
                 dist: 3,
                 unused: true,
                 m: "kerSplash"
@@ -1199,7 +1198,7 @@ const m =
             {
                 name: "Current",
                 desc: "You may place each Splashling in a hex up to 3 hexes from its current hex.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "current"
             },
@@ -1220,7 +1219,7 @@ const m =
             {
                 name: "Current",
                 desc: "You may place each Splashling in a hex up to 3 hexes from its current hex.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "current"
             },
@@ -1364,7 +1363,7 @@ const m =
             {
                 name: "Rubble",
                 desc: "When Landslide is knocked out, replace it with an objective hex.",
-                m: function () { }
+                m: "earthquakeWhite"
             }
         }
     },
@@ -1464,7 +1463,7 @@ const m =
             {
                 name: "Attune Magic",
                 desc: "Gain the boon of your choice.",
-                icon: self,
+                icon: 'self',
                 unused: true,
                 m: "attuneMagic"
             },
@@ -1575,7 +1574,7 @@ const m =
             {
                 name:"Aim",
                 desc:aimBoon,
-                icon:self,
+                icon:'self',
                 unused:true,
                 m:"aim"
             },
@@ -1596,7 +1595,7 @@ const m =
             {
                 name:"Blur",
                 desc:dodgeBoon,
-                icon:self,
+                icon:'self',
                 unused:true,
                 m:"blur"
             },
@@ -1662,7 +1661,7 @@ const m =
             {
                 name:"Leap",
                 desc:"You may place Sneaky Peet on a hex up to 2 hexes away from his current hex.",
-                icon:self,
+                icon:'self',
                 unused:true,
                 dist:2,
                 m:"leap"
@@ -1709,7 +1708,7 @@ const m =
             {
                 name:"sneak",
                 desc:"Remove one sneaky Stabber from the battlefield. Then make a recruit action.",
-                icon:self,
+                icon:'self',
                 unused:true,
                 m:"sneak"
             },
@@ -1730,7 +1729,7 @@ const m =
             {
                 name:"Sprint",
                 desc:"One Sneaky Stabber may move up to 3 hexes.",
-                icon:self,
+                icon:'self',
                 unused:true,
                 m:"sprint"
             },
@@ -1788,7 +1787,7 @@ const m =
             {
                 name:"Channel Rage",
                 desc:damageBoon,
-                icon:self,
+                icon:'self',
                 unused:true,
                 m:"channelRage"
             },
@@ -1855,7 +1854,7 @@ const m =
             {
                 name:"Induct",
                 desc:"If the Red Bandits are below their maximum unit size, add one to a hex containing at least one Red Bandit.",
-                icon:self,
+                icon:'self',
                 unused:true,
                 m:"induct",
             },
@@ -1968,7 +1967,7 @@ const m =
             {
                 name:"Intense Cold",
                 desc:damageBoon,
-                icon:self,
+                icon:'self',
                 unused:true,
                 m:"intenseCold"
             },

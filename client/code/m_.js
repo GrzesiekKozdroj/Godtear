@@ -4,7 +4,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("kick")
             if( onHit(aim, target) )
@@ -22,7 +22,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("fieryAxe",multiAction)
             if( onHit(aim, target) )
@@ -40,7 +40,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("fireball",multiAction)
             if( onHit(aim, target) )
@@ -54,7 +54,7 @@ var m_ = {
         current_ability_method = null
     },
     hootfoot:function(o){
-        if_moved_end_it()
+         
         add_action_taken("hootfoot")
         $('[data-glow]').removeAttr('data-glow')
         current_ability_method = null
@@ -68,7 +68,7 @@ var m_ = {
         const { aim, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         const target = $(targets[0])
-        if_moved_end_it()
+         
         add_action_taken("evilEye")
         current_ability_method = null
         if( onHit(aim, target) ){
@@ -84,7 +84,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             target.removeClass('destined_for_DOOM')
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("firestorm",multiAction)
             if( onHit(aim, target) )
@@ -103,7 +103,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         const target = $(targets[0])
         current_ability_method = null
-        if_moved_end_it()
+         
         add_action_taken("warCry")
         setBoons_Blights(target,{ baim: Number(target.attr('data-baim')) + 1 })
         displayAnimatedNews(`${target.data('name')}<br/>+1 aim`)
@@ -113,7 +113,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("cleavingStrike")
             if( onHit(aim, target) )
@@ -129,7 +129,7 @@ var m_ = {
     rush:function(o){
         const { hex, row } = o
         let friends = $('.selectedModel').siblings('.smallCard')
-        if_moved_end_it()
+         
         if(!friends.length){
             current_ability_method = null
             add_action_taken("rush")
@@ -147,7 +147,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("intimidation")
             if( onHit(aim, target) )
@@ -164,7 +164,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("piercingStrike",multiAction)
             if( onHit(aim, target) )
@@ -183,7 +183,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             target.removeClass('destined_for_DOOM')
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("sweepingSlash",multiAction)
             if( onHit(aim, target) )
@@ -201,7 +201,7 @@ var m_ = {
         const { hex, row , cursePackage, curseCount } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         const target = $(targets[0])
-        if_moved_end_it()
+         
         if( curseCount && !cursePackage && target.hasClass('whiteTeam')){
             let paybacked = $('.selectedModel').parent('.hexagon').data()
             $('#gameScreen').append(challengeOptions(target, paybacked, "challenge",1,"apply one blight to Titus"))
@@ -241,7 +241,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("hack")
             if( onHit(aim, target) ){
@@ -258,7 +258,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             add_action_taken("surroundPound")
             $('[data-glow]').removeAttr('data-glow')
             if( onHit(aim, target) )
@@ -274,7 +274,7 @@ var m_ = {
     roarOfBattle:function(o){
         const { hex, row } = o
         const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.champModel')[0])
-        if_moved_end_it()
+         
         add_action_taken("roarOfBattle")
         if( !$('.illKillYouAll').length ){
             singleSpecimen.addClass('illKillYouAll')
@@ -285,7 +285,7 @@ var m_ = {
     outflank:function(o){
         const { aim, hex, row } = o
         const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        if_moved_end_it()
+         
         add_action_taken("outflank")
         if( onHit(aim, singleSpecimen) && !$('.outflank').length ){
             const team = singleSpecimen.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
@@ -302,14 +302,14 @@ var m_ = {
             displayAnimatedNews('Missed!')
     },
     roll:function(o){
-        if_moved_end_it()
+         
         add_action_taken("roll")
         if( !$('[data-glow]').length )
             highlightDirectPaths({origin: $('.selectedModel').parent('.hexagon').data(), distance:3, colour:'straitPaths'})
             $('.selectedModel').addClass('roll_selected')
     },
     newSpewWhite:function(o){//TRIGGERS TWICE
-        if_moved_end_it()
+         
         add_action_taken("newSpewWhite")
         $(`[data-name="Retchlings"].${o.multiAction}`).each(function(){
             forceKill ( $(this) )
@@ -324,7 +324,7 @@ var m_ = {
         current_ability_method = null
     },
     newSpewBlack:function(o){//TRIGGERS TWICE
-        if_moved_end_it()
+         
         add_action_taken("newSpewBlack")
         $(`[data-name="Retchlings"].${o.multiAction}`).each(function(){
             forceKill ( $(this) )
@@ -351,24 +351,17 @@ var m_ = {
             $('[data-glow]').removeAttr('data-glow')
         }
     },
-    raiseDead:function(o){//conntains untestedo code: make bb's visible first and stat killin then recruitin
-        if_moved_end_it()
-        add_action_taken("rallied")
-        const { hex, row} = o
+    raiseDead:function(o){
+        const { hex, row, key} = o
+        add_action_taken(key?key:"rallied")
         const thiz = $(`.hex_${hex}_in_row_${row}`)
         $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
         $('[data-glow]').removeAttr('data-glow')
         displayAnimatedNews(`${river[3]}<br/>recruited`)
         graveyard[river[1]][river[3]].splice(0,1)
-        //untestedo starts here
         const $thiz = $(thiz.children('.smallCard')[0])
-        const $brothers = $(`
-            [data-name="${$thiz.data('name')}"]
-            [data-side=${$thiz.data('side')}]
-            [data-tenmodel]:not([data-tenmodel=${$thiz.data('tenmodel')}])
-        `)
+        const $brothers = $($(`[data-name="${$thiz.data('name')}"][data-side=${$thiz.data('side')}]:not( [data-tenmodel="${$thiz.data('tenmodel')}"] )`)[0])
         propagate_BB_s($brothers,$thiz)
-        //untestedo ends here
         river = null
         current_ability_method = null
     },
@@ -383,7 +376,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("nomNomNom")
             if( onHit(aim, target) )
@@ -402,7 +395,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             target.removeClass('destined_for_DOOM')
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("buffet",multiAction)
             if( onHit(aim, target) )
@@ -421,7 +414,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("slimed",multiAction)
             if( onHit(aim, target) )
@@ -439,7 +432,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         const target = $(targets[0])
         displayAnimatedNews(`${target.data('name')}<br/>+1 speed`)
-        if_moved_end_it()
+         
         add_action_taken("slipAndSlide")
         current_ability_method = null
         setBoons_Blights(target,{bspeed:Number(target.attr('data-bspeed'))+1})
@@ -449,7 +442,7 @@ var m_ = {
         const { hex, row } = o
         const target = $(`.hex_${hex}_in_row_${row}`).children('.smallCard')
         current_ability_method = null
-        if_moved_end_it()
+         
         add_action_taken("regenerateWhite")
         displayAnimatedNews(`${target.data('name')} heals<br/>2 wounds`)
         healLife(target)
@@ -458,7 +451,7 @@ var m_ = {
         const { hex, row } = o
         const target = $(`.hex_${hex}_in_row_${row}`).children('.smallCard')
         current_ability_method = null
-        if_moved_end_it()
+         
         add_action_taken("regenerateBlack")
         healLife(target)
         displayAnimatedNews(`${target.data('name')} heals<br/>2 wounds`)
@@ -468,7 +461,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("onePunch")
             if( onHit(aim, target) )//allow for bonus twoPunch action here
@@ -486,7 +479,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("twoPunch")
             if( onHit(aim, target) )//allow for bonus one hex movement for Halftusk action here
@@ -503,7 +496,7 @@ var m_ = {
         const { hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         const target = $(targets[0])
-        if_moved_end_it()
+         
         add_action_taken("footwork")
         setBoons_Blights(target,{bdodge:Number(target.attr('data-bdodge'))+1})
         current_ability_method = null
@@ -514,7 +507,7 @@ var m_ = {
         const { aim, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         const target = $(targets[0])
-        if_moved_end_it()
+         
         add_action_taken("feint")
         current_ability_method = null
         $('[data-glow]').removeAttr('data-glow')
@@ -530,7 +523,7 @@ var m_ = {
         const team = $(`.hex_${hex}_in_row_${row}`).children('.smallCard').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
         const ARR = [...$($(`[data-glow].hexagon`).children('.'+team)) ].map(el=>$(el).data('name'))
         const uniqSet = [...new Set(ARR)]
-        if_moved_end_it()
+         
         add_action_taken("legendary")
         current_ability_method = null
         uniqSet.forEach(el=>{
@@ -543,7 +536,7 @@ var m_ = {
             const { hex, row } = o
             const $target = $(`.hex_${hex}_in_row_${row}`)
             $('[data-glow]').removeAttr('data-glow')
-            if_moved_end_it()
+             
             add_action_taken("tongueTow")
             current_ability_method = null
             $target.children('.claimedBanner').addClass('tongueTow_selected')
@@ -557,18 +550,18 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("tongueLash")
             if( onHit(aim, target) && !$('.tongueLash_selected').length ){
                     target.addClass('tongueLash_selected')
                     highlightHexes({colour:'greenGlow',dist:1},target)
                     highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
-                    if_moved_end_it()
+                     
                     displayAnimatedNews(`tongue towing<br/>victim`)
                 }
             else {
-                if_moved_end_it()
+                 
                 displayAnimatedNews ("missed!")
             }
         }
@@ -577,27 +570,28 @@ var m_ = {
     feelThePower:function(o){
         const { hex, row } = o
         const target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        if_moved_end_it()
+        displayAnimatedNews('Froglodytes <br/>+1 dodge & shield')         
         add_action_taken("feelThePower")
         current_ability_method = null
         $('[data-glow]').removeAttr('data-glow')
         setBoons_Blights(target,{
             bdodge:Number(target.attr('data-bdodge'))+1,
             bprotection:Number(target.attr('data-bprotection'))+1})
-        displayAnimatedNews('Froglodytes <br/>+1 dodge & shield')
+        //displayAnimatedNews('Froglodytes <br/>+1 dodge & shield')
     },
-    hop:function(o){
+    hop:function(o){//seems to have a bug that I can't fix....
         const { hex, row } = o
         const parentHex = $('.selectedModel').parent('.hexagon')
         parentHex.children('.smallCard').addClass('hop')
-        if_moved_end_it()
         add_action_taken("hop")
         $('.selectedModel').removeClass('selectedModel')
         $(parentHex.children('.hop')[0])
             .detach()
             .appendTo(`.hex_${hex}_in_row_${row}`)
+            .removeClass('hop')
+        console.log(hex,row)
         $(parentHex.children('.hop')[0]).addClass('selectedModel')
-        $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')).removeClass('.hop')
+        //$($(`.hex_${hex}_in_row_${row}`).children('.smallCard'))
         if(!parentHex.children('.smallCard').length){
             $('.hop').removeClass('hop')
             $('[data-glow]').removeAttr('data-glow')
@@ -613,7 +607,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             $('[data-glow]').removeAttr('data-glow')
-            if_moved_end_it()
+             
             add_action_taken('shieldBash')
             if( onHit(aim, target) ){
                 displayAnimatedNews(`Rhodri bashed<br/>${target.data('name')}`)
@@ -631,7 +625,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('swordSlash')
             if( onHit(aim, target) )
@@ -649,27 +643,27 @@ var m_ = {
     },
     answerTheCall:function(o){
         current_ability_method = null
-        if_moved_end_it()
-        add_action_taken('answerTheCall')
+        //add_action_taken('answerTheCall')
     },
     hold:function(o){
         const { hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         const target = $(targets[0])
-        if_moved_end_it()
+         
         add_action_taken('hold')
         setBoons_Blights(target,{bprotection:Number(target.attr('data-bprotection'))+1})
         current_ability_method = null
         displayAnimatedNews(`${target.data('name')}<br/>+1 protection`)
         $('[data-glow]').removeAttr('data-glow')
     },
-    bannerfall:function(o){},//TO DO TO DO TO DO TO DO TO DO TO DO 
+    bannerfall:function(o){
+        add_action_taken("bannerfall")
+    },//TO DO TO DO TO DO TO DO TO DO TO DO 
 
     marchGuardBlack:function(o){
         const {  hex, row } = o
         const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
-        if_moved_end_it()
         add_action_taken('marchGuardBlack')
         if(!$('.marchGuardBlack').length){
             $(`[data-name="${singleSpecimen.data('name')}"].${team}`).addClass('marchGuardBlack')
@@ -682,7 +676,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('swordStrike')
             if( onHit(aim, target) )
@@ -699,7 +693,7 @@ var m_ = {
         const { hex, row } = o
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.unitModel')[0])
         const { bprotection } = extractBoons_Blights($target)
-        if_moved_end_it()
+         
         add_action_taken('brace')
         setBoons_Blights($target,{bprotection: bprotection + 1})
         displayAnimatedNews("Household Guards<br/>+1 protection")
@@ -709,9 +703,7 @@ var m_ = {
         const {  hex, row } = o
         const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
-        if_moved_end_it()
-        add_action_taken('marchGuardWhite')
-        if(!$('.marchGuardBlack').length){
+        if(!$('.marchGuardWhite').length){
             $(`[data-name="${singleSpecimen.data('name')}"].${team}`).addClass('marchGuardWhite')
             $('[data-glow]').removeAttr('data-glow')
             displayAnimatedNews('Guards<br/>march')
@@ -736,7 +728,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('soulClave')
             if( onHit(aim, target) ){
@@ -754,8 +746,8 @@ var m_ = {
     graveSummons:function(o){
         $('[data-glow]').removeAttr('data-glow')
         highlightHexes({colour:'claimColor',dist:3})
-        add_action_taken('graveSummons')
-        if_moved_end_it()
+        add_action_taken('graveSummons',true, 'Mournblade')
+        myTurn? mySkillTrack.Mournblade.white.claimed.used = true:opoSkillTrack.Mournblade.white.claimed.used = true
         current_ability_method = null
         displayAnimatedNews('double click<br/>to claim')
     },
@@ -764,27 +756,27 @@ var m_ = {
         const boss = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         const team = boss.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
         if( !$('.forwardMinions').length ){
-            add_action_taken('forwardMinions')
-            if_moved_end_it()
-            $('[data-glow]').children(`[data-name="Knightshades"].${team}`).addClass('forwardMinions')
+            add_action_taken('forwardMinions',false,'Mournblade')
+             
+            $('[data-glow]').children(`[data-name="Knightshades"].${team}[data-tenmodel]`).addClass('forwardMinions')
             $('[data-glow]').removeAttr('data-glow')
             displayAnimatedNews('Knightshades<br/>shamble onwards')
         }
     },
     graspingDead:function(o){
-        $(`[data-name="Knightshades"].${o.multiAction}`).each(function(){
+        $(`[data-name="Knightshades"].${o.multiAction}[data-tenmodel]`).each(function(){
             forceKill ( $(this) )
         })
         $('[data-glow]').removeAttr('data-glow')
-        if_moved_end_it()
-        add_action_taken('graspingDead')
+         
+        add_action_taken('legendary')
         setTimeout(
             ()=>{rallyActionDeclaration({ 
                 unitname:"Mournblade", 
                 side:o.multiAction, 
                 type:"champion", 
                 name:"Knightshades",
-                dist:2 }, 'graspingDead')}
+                dist:3 }, 'graspingDead')}
         ,700)
         current_ability_method = null
     },
@@ -794,8 +786,8 @@ var m_ = {
         $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
         graveyard[river[1]][river[3]].splice(0,1)
         $('[data-glow]').removeAttr('data-glow')
-        if( $(`[data-name="Knightshades"].${multiAction}`).length < 3 ){//[unitname,side,type,name]
-            rallyActionDeclaration({ unitname:"Mournblade", side:multiAction, type:"champion", name:"Knightshades", dist:2 }, `graspingDead`);
+        if( $(`[data-name="Knightshades"].${multiAction}[data-tenmodel]`).length < 3 ){//[unitname,side,type,name]
+            rallyActionDeclaration({ unitname:"Mournblade", side:multiAction, type:"champion", name:"Knightshades", dist:3 }, `graspingDead`);
         } else {
             river = null
             current_ability_method = null
@@ -816,7 +808,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('deathsDoor')
             if( onHit(aim, target) )
@@ -836,7 +828,6 @@ var m_ = {
         displayAnimatedNews("Mournblade<br/>+1 dodge")
         current_ability_method = null
         add_action_taken('carefulMaster')
-        if_moved_end_it()
         $('[data-glow]').removeAttr('data-glow')
         setBoons_Blights($target,{bdodge:bdodge+1})
     },
@@ -844,7 +835,7 @@ var m_ = {
         const { hex, row } = o
         const $mourn = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Mournblade"]')[0])
         $('[data-glow]').removeAttr('data-glow')
-        if_moved_end_it()
+         
         add_action_taken('wheresMaster')
         if ( Number($mourn.attr('data-healthleft')) < 1 ){
             displayAnimatedNews('Mournblade<br/>rallies')
@@ -863,7 +854,7 @@ var m_ = {
             $('[data-glow]').removeAttr('data-glow')
             $target.children('.claimedBanner').addClass('tongueTow_selected')
             highlightHexes({colour:'greenGlow',dist:1},$($target.children('.claimedBanner')[0]))
-            if_moved_end_it()
+             
             add_action_taken('mirage')
             current_ability_method = null
             displayAnimatedNews(`mirage<br/>banner moved`)
@@ -873,7 +864,7 @@ var m_ = {
         const { hex, row } = o
         displayAnimatedNews("Finvarr<br/>+1 to damage")
         add_action_taken('voidWeaponChamp')
-        if_moved_end_it()
+         
         $('[data-glow]').removeAttr('data-glow')
         current_ability_method = null
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Finvarr"]')[0])
@@ -903,7 +894,7 @@ var m_ = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Finvarr"]')[0])
         displayAnimatedNews("Finvarr<br/>+1 to speed")
         add_action_taken('poisedToStrike')
-        if_moved_end_it()
+         
         $('[data-glow]').removeAttr('data-glow')
         current_ability_method = null
         setBoons_Blights($target,{ bspeed: Number( $target.attr('data-bspeed') ) + 1 })
@@ -913,7 +904,7 @@ var m_ = {
         const targets = $($(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)[0])
         if(targets.length && !$('.shadowWard_selected').length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('shadowWard')
             if( onHit(aim, target) ){
@@ -940,7 +931,7 @@ var m_ = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)[0])
         displayAnimatedNews('Shadow Sentinels<br/>+1 aim')
         add_action_taken('voidWeapon')
-        if_moved_end_it()
+         
         $('[data-glow]').removeAttr('data-glow')
         current_ability_method = null
         setBoons_Blights($target,{baim:Number($target.attr('data-baim'))+1})
@@ -950,7 +941,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('lifeTrade')
             if( onHit(aim, target) )
@@ -975,7 +966,7 @@ var m_ = {
         const targets = $($(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)[0])
         displayAnimatedNews(`${targets.data('name')}<br/>+1 protection`)
         $('[data-glow]').removeAttr('data-glow')
-        if_moved_end_it()
+         
         add_action_taken('protect')
         current_ability_method = null
         setBoons_Blights(targets,{bprotection:Number( targets.attr('data-bprotection') )+1})
@@ -985,7 +976,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('shadowSnare')
             if( onHit(aim, target) ){
@@ -1000,7 +991,7 @@ var m_ = {
         const { curseType } = cursePackage
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         displayAnimatedNews(`${$target.data('name')}<br/>-1 ${[...curseType].slice(1).join('')}`)
-        if_moved_end_it()
+         
         add_action_taken('crystalGlare')
         current_ability_method = null
         $('[data-glow').removeAttr('data-glow')
@@ -1010,7 +1001,7 @@ var m_ = {
     erosion:function(o){
         const { aim, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
-        if_moved_end_it()
+         
         $('[data-glow]').removeAttr('data-glow')
         add_action_taken('erosion')
         current_ability_method = null
@@ -1027,7 +1018,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('blindingLight')
             if( onHit(aim, target) ){
@@ -1048,7 +1039,7 @@ var m_ = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) + 1 })
         displayAnimatedNews(`${$target.data('name')}<br/>+1 ${[...curseType].slice(1).join('')}`)
-        if_moved_end_it()
+         
         add_action_taken()
         current_ability_method = null
         $('[data-glow').removeAttr('data-glow')
@@ -1060,7 +1051,7 @@ var m_ = {
         setBoons_Blights($target,{baim:Number($target.attr('data-baim'))+1})
         displayAnimatedNews('Nia<br/>+1 aim')
         add_action_taken()
-        if_moved_end_it()
+         
         $('[data-glow]').removeAttr('data-glow')
         current_ability_method = null
     },
@@ -1089,7 +1080,7 @@ var m_ = {
             }
         })
         add_action_taken()
-        if_moved_end_it()
+         
         current_ability_method=null
         displayAnimatedNews('Geode')
     },
@@ -1114,7 +1105,7 @@ var m_ = {
                 }
             })
             add_action_taken()
-            if_moved_end_it()
+             
         }
         current_ability_method=null
         $('[data-glow]').removeAttr('data-glow')
@@ -1124,7 +1115,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1143,7 +1134,7 @@ var m_ = {
             forceKill($target)
             makeAnim($(`[data-name="RaithMarid"].${team}`),$(`.hex_${hex}_in_row_${row}`))
             add_action_taken()
-            if_moved_end_it()
+             
         }
         current_ability_method=null
         $('[data-glow]').removeAttr('data-glow')
@@ -1153,7 +1144,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             const hedbut = (n='')=>{
@@ -1180,7 +1171,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) )
@@ -1208,7 +1199,7 @@ var m_ = {
             $('[data-glow]').removeAttr('data-glow')
             pocketBox = null
             add_action_taken()
-            if_moved_end_it()
+             
             current_ability_method = null
             displayAnimatedNews('underthrow')
         }
@@ -1221,7 +1212,7 @@ var m_ = {
         $mourn.addClass('marchjet_selected')
         highlightHexes({colour:'legendaryGlow',dist: 3}, $mourn)
         current_ability_method = null
-        if_moved_end_it()
+         
         add_action_taken()
     },
     tsunami:function(o){
@@ -1250,7 +1241,7 @@ var m_ = {
         const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
         if(!$('.current').length){
             add_action_taken('current')
-            if_moved_end_it()
+             
             $(`[data-name="${singleSpecimen.data('name')}"].${team}`).addClass('current')
             $('[data-glow]').removeAttr('data-glow')
             displayAnimatedNews('current')
@@ -1261,7 +1252,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('tide')
             if( onHit(aim, target) ){
@@ -1289,7 +1280,7 @@ var m_ = {
         })
         $('[data-glow]').removeAttr('data-glow')
         add_action_taken()
-        if_moved_end_it()
+         
         current_ability_method = null
         displayAnimatedNews('tremor<br/>boons removed')
     },
@@ -1298,7 +1289,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1315,7 +1306,7 @@ var m_ = {
         setBoons_Blights($target,{bprotection:bprotection+1,bdamage:bdamage+1})
         displayAnimatedNews('stone strength<br/>+1 shield and damage')
         $('[data-glow]').removeAttr('data-glow')
-        if_moved_end_it()
+         
         add_action_taken()
         current_ability_method = null
     },
@@ -1324,7 +1315,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             add_action_taken()
             if( onHit(aim, target) ){
                 displayAnimatedNews('runeweaving')
@@ -1341,7 +1332,7 @@ var m_ = {
         setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) + 1 })
         setBoons_Blights($origin,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) - 1 })
         displayAnimatedNews(`${$target.data('name')}<br/>+1 ${[...curseType].slice(1).join('')}`)
-        if_moved_end_it()
+         
         add_action_taken()
         current_ability_method = null
         $('[data-glow').removeAttr('data-glow')
@@ -1385,7 +1376,7 @@ var m_ = {
 
         if( !$('.avalanche_selected').length ){
             current_ability_method = null
-            if_moved_end_it()
+             
             add_action_taken()
         }
     },
@@ -1395,7 +1386,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             const team = target.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) && !$('.earthquake_selected').length ){
@@ -1412,7 +1403,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1443,7 +1434,7 @@ var m_ = {
         })
         $(`[data-glow]`).removeAttr('data-glow')
         add_action_taken()
-        if_moved_end_it()
+         
         current_ability_method = null
     },
     cursedGround:function(o){//no endphase yet
@@ -1461,7 +1452,7 @@ var m_ = {
 
         if ( $('[data-kill]').length > 1 ){
             add_action_taken()
-            if_moved_end_it()
+             
             current_ability_method = null
             $('[data-glow]').removeAttr('data-glow')
         }
@@ -1472,7 +1463,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             const { side, name } = target.data()
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){ 
@@ -1532,7 +1523,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             const { side, name } = target.data()
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){ 
@@ -1552,7 +1543,7 @@ var m_ = {
         $('[data-glow].hexagon').children(`.champModel.${team}`).each(function(){
             setBoons_Blights($(this),curses)
         })
-        if_moved_end_it()
+         
         add_action_taken()
         current_ability_method = null
         $('[data-glow]').removeAttr('data-glow')
@@ -1568,7 +1559,7 @@ var m_ = {
         setBoons_Blights( $hexlings, { baim:0, bdamage:0, bspeed:0, bdodge:0, bprotection:0})
         $('[data-glow]').removeAttr('data-glow')
         displayAnimatedNews(`Hexlings<br/>pure magic`)
-        if_moved_end_it()
+         
         add_action_taken()
         current_ability_method = null
     },
@@ -1578,7 +1569,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             const { side, name } = target.data()
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){ 
@@ -1599,7 +1590,7 @@ var m_ = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Hexlings"]')[0])
         setBoons_Blights($target,{[cursePackage[0]]:Number($target.attr(`data-${cursePackage[0]}`))+1})
         displayAnimatedNews(`Hexlings<br/>+1 ${[...cursePackage[0]].slice(1).join('')}`)
-        if_moved_end_it()
+         
         add_action_taken()
         current_ability_method = null
     },
@@ -1608,7 +1599,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1627,7 +1618,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1656,7 +1647,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) )
@@ -1675,7 +1666,7 @@ var m_ = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         setBoons_Blights($target,{bdamage:Number($target.attr('data-bdamage'))+1})
         displayAnimatedNews(`${$target.data('name')}<br/>+1 damage`)
-        if_moved_end_it()
+         
         add_action_taken()
         current_ability_method = null
         $('[data-glow]').removeAttr('data-glow')
@@ -1685,7 +1676,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1700,7 +1691,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1719,7 +1710,7 @@ var m_ = {
         target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         displayAnimatedNews('Mistwood Rangers<br/>+1 aim')
         setBoons_Blights(target,{baim:Number(target.attr('data-baim'))+1})
-        if_moved_end_it()
+         
         add_action_taken()
         current_ability_method = null
     },
@@ -1728,7 +1719,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) )
@@ -1746,7 +1737,7 @@ var m_ = {
         target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         displayAnimatedNews('Mistwood Rangers<br/>+1 dodge')
         setBoons_Blights(target,{bdodge:Number(target.attr('data-bdodge'))+1})
-        if_moved_end_it()
+         
         add_action_taken()
         current_ability_method = null
     },
@@ -1755,7 +1746,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1770,7 +1761,7 @@ var m_ = {
         target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         displayAnimatedNews(`${target.data('name')}<br/>+1 aim`)
         setBoons_Blights(target,{baim:Number(target.attr('data-baim'))+1})
-        if_moved_end_it()
+         
         add_action_taken()
         $('[data-glow]').removeAttr('data-glow')
         current_ability_method = null
@@ -1780,7 +1771,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1799,7 +1790,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1843,7 +1834,7 @@ var m_ = {
         setTimeout(()=>{
             const target = $('.pounced')
             target.removeClass('pounced')
-            if_moved_end_it()
+             
             add_action_taken()
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) )
@@ -1866,7 +1857,7 @@ var m_ = {
         displayAnimatedNews('sneaky<br/>sneak')
         current_ability_method = null
         add_action_taken()
-        if_moved_end_it()
+         
         highlightHexes({colour:'recruitGlow',dist:1},sneakyPreet)
         setTimeout(()=>rallyActionDeclaration({ unitname:"SneakyPeet", side, type:'unit', name:'SneakyStabbers'}),1000)
     },
@@ -1875,7 +1866,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1898,7 +1889,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) )
@@ -1916,7 +1907,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) )
@@ -1942,7 +1933,7 @@ var m_ = {
         const targets = dAD.children(`.smallCard`)
         if( targets.length ){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1961,7 +1952,7 @@ var m_ = {
         target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         displayAnimatedNews(`${target.data('name')}<br/>+1 damage`)
         setBoons_Blights(target,{bdamage:Number(target.attr('data-bdamage'))+1})
-        if_moved_end_it()
+         
         add_action_taken()
         $('[data-glow]').removeAttr('data-glow')
         current_ability_method = null
@@ -1971,7 +1962,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1993,7 +1984,7 @@ var m_ = {
                 if( checkIfStillAlive(target) )
                     moveLadder(target, target.data('stepsgiven'))
                 else null
-            if_moved_end_it()
+             
             add_action_taken()
             current_ability_method = null
             $('[data-glow]').removeAttr('data-glow')
@@ -2004,7 +1995,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -2023,7 +2014,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) )
@@ -2056,7 +2047,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) )
@@ -2077,7 +2068,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -2106,7 +2097,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
@@ -2136,7 +2127,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('frostyGlance')
             if( onHit(aim, target) ){//allow for bonus one hex movement for Halftusk action here
@@ -2154,7 +2145,7 @@ var m_ = {
         const team = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard[data-name="Morrigan"]')[0]).hasClass(mySide) ? opoSide : mySide
         displayAnimatedNews("flash freeze<br/>-1 dodge & speed")
         add_action_taken('legendary')
-        if_moved_end_it()
+         
         const ARR = [...$($(`[data-glow].hexagon`).children(`.smallCard.${team}`)) ].map(el=>$(el).data('name'))
         const uniqSet = [...new Set(ARR)]
         current_ability_method = null
@@ -2166,7 +2157,7 @@ var m_ = {
     },
     intenseCold:function(o){
         const { hex, row } = o
-        if_moved_end_it()
+         
         add_action_taken('intenseCold')
         const target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         setBoons_Blights(target,{bdamage:Number(target.attr('data-bdamage'))+1})
@@ -2178,7 +2169,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('snowbladefight')
             if( onHit(aim, target) )
@@ -2198,7 +2189,7 @@ var m_ = {
         current_ability_method = null
         $('[data-glow').removeAttr('data-glow')
         add_action_taken('soCoolMistress')
-        if_moved_end_it()
+         
         setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) + 1 })
         crystalGlare_bb = null
     },
@@ -2207,7 +2198,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            if_moved_end_it()
+             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('chillOut')
             if( onHit(aim, target) ){
@@ -2216,5 +2207,22 @@ var m_ = {
             } else displayAnimatedNews ("missed!")
         }
         current_ability_method = null
+    },
+    phaseEnd:function(o){
+        const { side, name } = o.key
+        const selectedModels = $(`[data-name="${name}"][data-side="${side}"]`)
+        displayAnimatedNews(`${name}<br/>ends activation`)
+        selectedModels.each(function(){
+            $(this).attr('data-actionstaken',2).addClass('activated')
+        })
+        $(`[data-glow]`).removeAttr('data-glow')
+        current_ability_method = null
+        if(phase === 'white' && side === mySide){
+            if( $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length )
+                socket.emit('turnEnd',{p1:myTurn, phase})
+                //emit end of my white phase here here and below
+        }else if (phase==='black' && side === mySide){
+            socket.emit('turnEnd',{p1:myTurn, phase})
+        }
     }
 }

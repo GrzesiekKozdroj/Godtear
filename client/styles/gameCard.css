@@ -621,7 +621,8 @@
       align-content: center;
   width: 131%;
   height: 100%;
-  left: 0;
+  left: 42%;
+  top: -46%;
   text-align: center;
   z-index: 21;
   display: flex;
@@ -888,5 +889,65 @@
 
 .endTask {
   background-image: url("../img/minus.svg");
+}
+
+#jewelsCont {
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.treasureBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 9vh;
+  height: 9vh;
+  background: #421905;
+  background: radial-gradient(circle, rgba(66, 25, 5, 0.851961) 0%, rgba(57, 30, 3, 0.767927) 41%, rgba(20, 157, 175, 0.896779) 55%, rgba(56, 8, 2, 0.87437) 67%, rgba(56, 2, 2, 0.753922) 90%, rgba(70, 37, 3, 0.871569) 100%);
+  border-radius: 45%;
+  -webkit-box-shadow: 0 0 1px 0 black, 0 0 1px 0 black inset;
+          box-shadow: 0 0 1px 0 black, 0 0 1px 0 black inset;
+}
+
+.treasureBox img {
+  width: 4.05vh;
+  margin-bottom: -8%;
+}
+
+.treasureBox .gem1 {
+  margin-right: -5%;
+}
+
+.treasureBox .gem2 {
+  margin-left: -5%;
+}
+
+.treasureBox .gem3 {
+  margin-left: -5%;
+  margin-right: 10%;
+}
+
+.treasureBox .gem4 {
+  margin-left: 10%;
+  margin-right: -5%;
+}
+
+.treasureBox .gem5 {
+  margin-top: -14%;
+}
+
+.nope {
+  -webkit-filter: brightness(0.3);
+          filter: brightness(0.3);
 }
 /*# sourceMappingURL=gameCard.css.map */

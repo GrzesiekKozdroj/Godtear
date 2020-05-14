@@ -109,8 +109,8 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
             margin: $hexMargin 0;
             background-size: auto $hexBackground;
             background-position: center;
-            border-left: solid $hexBorder #333333;
-            border-right: solid $hexBorder #333333;
+            border-left: solid $hexBorder rgba(255, 255, 255, 0.829);
+            border-right: solid $hexBorder rgba(216, 216, 216, 0.637);
             &:after {
                 content: "";
                 position: absolute;
@@ -156,16 +156,16 @@ $hexMinusQuarter: (-.248261 / $sA * 100vh);
             }
             .top {
               top: (-.353553 / $sA * 100vh);
-              border-top: solid $hexBottomSize #333333;
-              border-right: solid $hexBottomSize #333333;
+              border-top: solid $hexBottomSize #f8f8f8e5;
+              border-right: solid $hexBottomSize #ffffffcb;
             }
             .top:after {
               background-position: center top;
             }
             .bottom {
               bottom: $hexBottom;
-              border-bottom: solid $hexBottomSize #333333;
-              border-left: solid $hexBottomSize #333333;
+              border-bottom: solid $hexBottomSize rgba(255, 255, 255, 0.582);
+              border-left: solid $hexBottomSize rgba(194, 194, 194, 0.767);
             }        
             .bottom:after {
               background-position: center bottom;
@@ -206,7 +206,11 @@ $colorFillHex: transparent;
     flex-wrap:wrap;
 }
 .ladderBlock{
-    border:.5vh solid black;
+    border-top:.5vh solid rgba(243, 243, 243, 0.89);
+    border-left:.5vh solid rgba(235, 235, 235, 0.945);
+    border-bottom:.5vh solid rgba(180, 180, 180, 0.863);
+    background: rgba(0, 4, 36, 0.301);
+    background: radial-gradient(circle, rgba(0,4,36,0.38137261740633754) 0%, rgba(213,215,241,0.4962185557816877) 41%, rgba(83,85,98,0.26652667903098737) 100%); 
     border-right:none;
     width:calc((100% / 17.23 ) - 1vw);//calc($appWidth / 22);
     height:100%;//calc((100% / 18.2 ) - 1vh);
@@ -216,10 +220,10 @@ $colorFillHex: transparent;
     border-radius: 50% 0 0 50%;
 }
 .block11{
-    border-right: .5vh solid black;
+    border-right:.5vh solid rgba(240, 240, 240, 0.911);
 }
 .block22{
-    border-right:.5vh solid black;
+    border-right:.5vh solid rgba(240, 240, 240, 0.911);
     border-radius: 0 50% 50% 0;
 }
 #gameScreen{
@@ -228,6 +232,17 @@ $colorFillHex: transparent;
     @include instaFlex;
     padding:0;
     overflow: hidden;
+}
+#map_place{
+    width:100vw;
+    height:100vh;
+    position:absolute;
+    top:0;
+    left:0;
+    margin:0;
+    padding:0;
+    z-index:-1;
+    filter: grayscale(.08) brightness(.4) saturate(2.7);
 }
 body{
     display:flex;
@@ -296,8 +311,8 @@ body{
 }
 .miniGameCard{
     width:10vw;
-    height:100vh;
-    background-color:darkslategrey;
+    height:100vh; 
+    background: rgb(0,4,36);
     @include instaFlex;
     .list{
         @include instaFlex;
@@ -312,16 +327,19 @@ body{
 .smallCard{
     @include hexagonomicron(13);
 }
-.smallCard:nth-child(odd){
-    margin-left: 1.5vw;
-    p{margin-left: 1.5vw;}
-}
-.smallCard:nth-child(even){
-    margin-left:-1.39vw;
-    p{margin-left:-1.39vw;}
+.miniGameCard{
+    .smallCard:nth-child(odd){
+        margin-left: 1.5vw;
+        margin-right: -1.5vw;
+        p{margin-left: 1.5vw;}
+    }
+    .smallCard:nth-child(even){
+        margin-left:-1.39vw;
+        margin-right:1.39vw;
+        p{margin-left:-1.39vw;}
+    }
 }
 .puller{
-    background-color:darkslategrey;
     @include instaFlex;
     width:7vh;
     height:7vh;
@@ -386,15 +404,19 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     max-width:90%;
 }
 .unitModel{
-    transform:scale(35%);
+    transform:scale(.35,.35);
+    -ms-transform: scale(.35,.35); /* Internet Explorer */
+    -moz-transform: scale(.35,.35); /* Firefox */
+    -webkit-transform: scale(.35,.35); /* Safari and Chrome */
+    -o-transform: scale(.35,.35); /* Opera */
     z-index:4;
     margin:auto -47%!important;
 
 }
 .champModel{
     position:relative;
-    top: -10%;
-    left: -17%;
+    top: -1%;
+    left: 0%;
     z-index:4;
 }
 .teamBox{
@@ -685,8 +707,22 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     left: -17%;
     top: 91%;
 }
+.bb_HUD.grunt{width:360%;left:-130%}
+div.unitModel:nth-child(3) > .bb_HUD > .onBoard{
+    width: 37%;
+    height: 11500%;
+    z-index: 10;
+    position: relative;
+    border-radius: 50%;
+    left:-1%;
+}
+div.unitModel:nth-child(3) > .bb_HUD > .baim.onBoard{top:0%;left:0%;background-color: goldenrod;}
+div.unitModel:nth-child(3) > .bb_HUD > .bdamage.onBoard{top:2000%;left:0%;background-color: red;}
+div.unitModel:nth-child(3) > .bb_HUD > .bdodge.onBoard{top:2500%;left:0%;background-color: blue;}
+div.unitModel:nth-child(3) > .bb_HUD > .bprotection.onBoard{top:2000%;left:0%;background-color: grey;}
+div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background-color: green;}
 
-.onBoard{
+.champModel > .bb_HUD > .onBoard{
     width: 37%;
     height: 4500%;
     z-index: 10;
@@ -694,11 +730,11 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     border-radius: 50%;
     left:-1%;
 }
-.baim.onBoard{top:0%;left:0%;background-color: goldenrod;}
-.bdamage.onBoard{top:2000%;left:0%;background-color: red;}
-.bdodge.onBoard{top:2500%;left:0%;background-color: blue;}
-.bprotection.onBoard{top:2000%;left:0%;background-color: grey;}
-.bspeed.onBoard{top:0%;left:0%;background-color: green;}
+.champModel > .bb_HUD > .baim.onBoard{top:0%;left:0%;background-color: goldenrod;}
+.champModel > .bb_HUD > .bdamage.onBoard{top:2000%;left:0%;background-color: red;}
+.champModel > .bb_HUD > .bdodge.onBoard{top:2500%;left:0%;background-color: blue;}
+.champModel > .bb_HUD > .bprotection.onBoard{top:2000%;left:0%;background-color: grey;}
+.champModel > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background-color: green;}
 .onBoard.blighted{box-shadow:0 0 1vw rgb(41, 0, 0),0 0 1.25vw rgb(41, 0, 0),0 0 1.5vw rgb(41, 0, 0),0 0 1.75vw rgb(41, 0, 0),
     0 0 1vw rgba(59, 54, 54, 0.4) inset;}
 .onBoard.booned{box-shadow: 0 0 1vw rgb(160, 241, 38),0 0 1.25vw rgb(160, 241, 38),0 0 1.5vw rgb(160, 241, 38),0 0 1.75vw rgb(160, 241, 38),
@@ -771,19 +807,16 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     }
 }
 @mixin bbsmin {
-            width: 62%;
+            width: 62%!important;
             position: relative;
-            top: -16%;
-            margin: -50% 0;
+            top: -24%;
+            margin: -77% 0;
         }
 .right{
     .smallCard:nth-child(odd){
         .BB_s{
             left: -31%;
-            width: 97%;
-            position: relative;
-            top: -24%;
-            margin: -72% 0;
+            @include bbsmin;
         }
     }
     .smallCard:nth-child(even){
@@ -796,10 +829,7 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
 .left{
     .smallCard:nth-child(odd){
         .BB_s{
-            width: 97%;
-            position: relative;
-            top: -24%;
-            margin: -72% 0;
+            @include bbsmin;
             left: -31%;
         }
     }
@@ -809,4 +839,37 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
             left: 70%;
         }
     }
+}
+.gameCard_num.booned.white,.big_card__BB_skill.booned{
+    text-shadow: 0 0 1px rgb(0, 204, 255), 0 0 2px rgb(0, 255, 191), 0 0 3px rgb(0, 255, 179);
+    color:rgb(0, 0, 31);
+}
+.gameCard_num.blighted.white,.big_card__BB_skill.blighted{
+    text-shadow: 0 0 1px rgb(114, 33, 1), 0 0 2px rgb(117, 34, 1), 0 0 3px rgb(155, 1, 134);
+    color:rgb(39, 2, 2);
+}
+.gameCard_num.booned.black,.big_card__BB_skill.booned{
+    text-shadow: 0 0 1px rgb(0, 204, 255), 0 0 2px rgb(0, 255, 191), 0 0 3px rgb(0, 255, 179);
+    color:rgb(194, 230, 255);
+}
+.gameCard_num.blighted.black,.big_card__BB_skill.blighted{
+    text-shadow: 0 0 1px rgb(114, 33, 1), 0 0 2px rgb(117, 34, 1), 0 0 3px rgb(155, 1, 134);
+    color:rgb(255, 236, 236);
+}
+.miniGameCard.black.left{
+    background: rgb(0,4,36);
+    background: linear-gradient(90deg, rgba(0,4,36,1) 0%, rgba(77,78,93,0.6530813008797269) 33%, rgba(62,63,73,0.3477591720281863) 73%, rgba(83,85,98,0) 100%); 
+}
+.miniGameCard.white.left{
+    background: rgb(165,166,177);
+    background: linear-gradient(90deg, rgba(165,166,177,1) 0%, rgba(131,133,156,0.6530813008797269) 33%, rgba(104,106,126,0.3477591720281863) 73%, rgba(83,85,98,0) 100%); 
+}
+.miniGameCard.black.right{
+    background: rgb(0,4,36);
+    background: linear-gradient(90deg, rgba(0,4,36,0) 0%, rgba(77,78,93,0.47941183309261204) 33%, rgba(62,63,73,0.510224158022584) 73%, rgba(83,85,98,1) 100%); 
+}
+
+.miniGameCard.white.right{
+    background: rgb(177, 170, 165);
+    background: linear-gradient(90deg, rgba(165,166,177,0) 0%, rgba(121,123,140,0.35056029247636555) 33%, rgba(173,173,173,0.5802521692270659) 73%, rgba(196,196,196,1) 100%); 
 }

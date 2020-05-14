@@ -2,7 +2,8 @@ let bob = false;
 let zIndex = 1;
 
 $((e) => {
-  //  $('#gameScreen').empty().append(firstStitch());
+    $('body').append(`<img id="map_place" src="../img/place${Math.floor(Math.random()*8)}.jpg" />`)
+   // $('#gameScreen').empty().append(firstStitch());
 
     socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
 
@@ -135,7 +136,7 @@ $('body').on('click','#game_card-big',function(e){
     //below is no good, it needs to start extracting attribue(data) from board and return it in form of object
     const h = rosters[ data.klass ][ data.index ][ data.type === 'champion' ? 'champ' : 'grunt' ]
     const l = $($(`[data-tenmodel][data-name="${data.name}"].${data.side}`)[0])
-    console.log(l, data)
+    //console.log(l, data)
     const selectedChar = {
             klass: h.klass,
             type: l.attr('data-type') || h.type,
@@ -179,12 +180,15 @@ $('body').on('click','.hexagon[data-glow="yellowGlow"]', function(e){
 })
 
 $('body').on('click','#claimAction',function(e){
-    if( phase==='white' && myTurn && check_actions_count("claimed") ){
-        e.preventDefault()
-        let claimsize = $('.selectedModel').data('name') === 'Mournblade' ? 3 : 1
-        $('[data-glow]').removeAttr('data-glow')
-        highlightHexes({colour:'claimColor',dist:claimsize})
-        socket.emit('HH', {color:'claimColor',dist:claimsize})
+    if( phase==='white' && myTurn ){
+        if_moved_end_it()
+        if( check_actions_count("claimed",mySide) ){
+            e.preventDefault()
+            let claimsize = $('.selectedModel').data('name') === 'Mournblade' ? 3 : 1
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'claimColor',dist:claimsize})
+            socket.emit('HH', {color:'claimColor',dist:claimsize})
+        }
     }
 })
 $('body').on('click','.objectiveGlow[data-glow="claimColor"]', function(){
@@ -215,8 +219,13 @@ $('body').on('click','.hexagon',function(e){
         !$(this).attr('data-glow') && 
         !$(this).hasClass('objectiveGlow')
     ) {
-        current_ability_method === null
-        $('[data-glow]').removeAttr('data-glow')
+        const cancelMove = ()=>{
+            if( $(`[data-glow="yellowGlow"]`).length )
+            $(`[data-glow="yellowGlow"]`).removeAttr(`data-glow`)
+        }
+        canceller ? canceller() : cancelMove()
+      //  current_ability_method = null
+      //  $('[data-glow]').removeAttr('data-glow')
     }
 
     //display appropriate card if needed
@@ -231,10 +240,11 @@ for(let K in m){
         const PHASE_PLAY = character[P]
         for(let S in PHASE_PLAY){
             let SKILL = PHASE_PLAY[S]
-            $('body').on('click',`[data-name="${SKILL.name}"]`,function(){
+            $('body').on('click',`[data-m="${SKILL.m}"]`,function(){
                 const data = $(this).data()
                 let modo = ['white','black'].includes(P) ? P === phase ? true : false : true
-                    if(modo && myTurn && $(this).hasClass(mySide) && check_actions_count(S)){
+                if_moved_end_it()
+                    if(modo && myTurn && $(this).hasClass(mySide) && check_actions_count(S,mySide)){
                         $(this).children('#smallCardParagraph').addClass('skilling_declaration')
                         let glow = data.icon === "skull" ? 'redGlow' :
                                    data.icon === "cogs"  ? 'blueGlow' :
@@ -243,6 +253,7 @@ for(let K in m){
                         $('[data-glow]').removeAttr('data-glow')
                         highlightHexes({colour:glow,dist:data.dist})
                         current_ability_method = _m[data.m]
+                        canceller = defy[SKILL.m] ? defy[SKILL.m] : null
                         if(data.dist)
                             socket.emit('HH', {color:glow,dist:data.dist,m:SKILL.preface})//r way also pre init function
                         else//for things like initiating message to other player, highlighting uttons active, pre setting skills
@@ -411,6 +422,8 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.whiplash_selected').length )extraMover('whiplash',thiz)
         if( $('.beastlyCharge_selected').length && !thiz.children('.smallCard').length )extraMover('beastlyCharge',thiz)
         if( $('.frostyGlance_selected').length )extraMover('frostyGlance',thiz)
+        if( $('[data-glow="answerTheCall"]').length )
+            socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row,key:"answerTheCall"})
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
@@ -534,10 +547,18 @@ $('body').on('click','.fire[data-socksmethod="callTotems"]',function(e){
         socket.emit('rolloSkill',{socksMethod:'callTotems1'})
     else {
         socket.emit('rolloSkill',{socksMethod:'callTotems1'})
-        if_moved_end_it()
         current_ability_method = null
         add_action_taken()
         $('#multi_choice_info_panel').remove()
+    }
+})
+
+$(`body`).on('click',`.endTask`,function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    if( $(this).hasClass(`${mySide}`) ){
+        const { name } = $($(this).parents(`[data-klass][data-name][data-type]`)[0]).data()
+        socket.emit('rolloSkill',{socksMethod:'phaseEnd',key:{ name, side:mySide }})
     }
 })
 

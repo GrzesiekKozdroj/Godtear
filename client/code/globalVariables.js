@@ -18,6 +18,7 @@ var graveyard =
         right:{}
     };
 var crystalGlare_bb = null;
+var canceller;
 var pocketBox = null;
 var opoSkillTrack;
 var mySkillTrack;

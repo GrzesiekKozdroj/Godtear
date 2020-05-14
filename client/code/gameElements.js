@@ -91,16 +91,16 @@ function highlightHexes ({colour, dist},thiz = $('.selectedModel')){
     const {hex, row} = thiz.parent('.hexagon').data()
     for(let m = 0; m < dist; m++ ){
         if(m === 0) 
-            applyClass({colour:colour, hex: hex, row: row})
+            applyClass({colour, hex, row})
         else
             $(`[data-glow="${colour}"]`).each(
                 function(){
                     let rg = Number( $(this).data('row') )
                     let hg = Number( $(this).data('hex') )
-                    applyClass({row: rg, hex: hg, colour: colour})
+                    applyClass({row: rg, hex: hg, colour})
                 })
     }
-    if(colour === 'yellowGlow'){
+    if(colour === 'yellowGlow' || colour === 'legendaryGlow'){
         thiz.parent('.hexagon').removeAttr('data-glow')
         thiz.parent('.hexagon').children().removeAttr('data-glow')
     }

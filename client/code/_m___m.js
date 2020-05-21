@@ -299,7 +299,12 @@ var _m_ = {
         $('.frostyGlance_selected').removeClass('frostyGlance')
         current_ability_method = null
         $(`[data-glow]`).removeAttr('data-glow')
-    }
+    },
+    twoPunch:thiz=>{
+        $('[data-glow]').removeAttr('data-glow')
+        $(thiz).removeClass(`twoPunch_selected`)
+        setTimeout(()=>thiz.removeAttr('style'),100)
+    },
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -319,4 +324,8 @@ var __m = {//only on da otha sajd
         $('[data-glow]').removeAttr('data-glow')
         highlightHexes({colour:'legendaryGlow',dist:2})
     }
+}
+
+var bonusAction = {//sets of conditions requiered for bonus actions
+
 }

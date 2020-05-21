@@ -456,12 +456,20 @@ var m_ = {
         healLife(target)
         displayAnimatedNews(`${target.data('name')} heals<br/>2 wounds`)
     },
-    onePunch:function(o){//needs bonus action defined
+    onePunch:function(o){console.log('onePunch')
         const { aim, hurt, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
+            //bonus action added
+            if(target.hasClass('whiteTeam') && !mySkillTrack.Halftusk.black.twoPunch.used){
+                let myTusk = $('[data-name="Halftusk"][data-tenmodel].whiteTeam')
+                myTusk.attr('data-actionstaken',(Number(myTusk.attr('data-actionstaken'))-1) )
+            }else if(target.hasClass('blackTeam') && !opoSkillTrack.Halftusk.black.twoPunch.used){
+                let opoTusk = $('[data-name="Halftusk"][data-tenmodel].blackTeam')
+                opoTusk.attr('data-actionstaken',(Number(opoTusk.attr('data-actionstaken'))-1) )
+            }
+
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("onePunch")
             if( onHit(aim, target) )//allow for bonus twoPunch action here
@@ -477,10 +485,13 @@ var m_ = {
     twoPunch:function(o){//needs bonus action defined
         const { aim, hurt, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        $('[data-glow]').removeAttr('data-glow')
         if(targets.length){
             const target = $(targets[0])
-             
-            $('[data-glow]').removeAttr('data-glow')
+            const team = $('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+            $('.selectedModel').addClass('twoPunch_selected')
+            highlightHexes({colour:'legendaryGlow',dist:1})
+            highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
             add_action_taken("twoPunch")
             if( onHit(aim, target) )//allow for bonus one hex movement for Halftusk action here
                 if( doDamage(hurt, target) )
@@ -581,21 +592,23 @@ var m_ = {
     },
     hop:function(o){//seems to have a bug that I can't fix....
         const { hex, row } = o
-        const parentHex = $('.selectedModel').parent('.hexagon')
-        parentHex.children('.smallCard').addClass('hop')
-        add_action_taken("hop")
-        $('.selectedModel').removeClass('selectedModel')
-        $(parentHex.children('.hop')[0])
-            .detach()
-            .appendTo(`.hex_${hex}_in_row_${row}`)
-            .removeClass('hop')
-        console.log(hex,row)
-        $(parentHex.children('.hop')[0]).addClass('selectedModel')
-        //$($(`.hex_${hex}_in_row_${row}`).children('.smallCard'))
-        if(!parentHex.children('.smallCard').length){
-            $('.hop').removeClass('hop')
-            $('[data-glow]').removeAttr('data-glow')
-            current_ability_method  = null
+        if(hex&&row){
+            const parentHex = $('.selectedModel').parent('.hexagon')
+            parentHex.children('.smallCard').addClass('hop')
+            add_action_taken("hop")
+            console.log('hop: ',hex,' ', row)
+            $('.selectedModel').removeClass('selectedModel')
+            $(parentHex.children('.hop')[0])
+                .detach()
+                .appendTo(`.hex_${hex}_in_row_${row}`)
+                .removeClass('hop')
+            $(parentHex.children('.hop')[0]).addClass('selectedModel')
+            //$($(`.hex_${hex}_in_row_${row}`).children('.smallCard'))
+            if(!parentHex.children('.smallCard').length){
+                $('.hop').removeClass('hop')
+                $('[data-glow]').removeAttr('data-glow')
+                current_ability_method  = null
+            }
         }
     },
     marchRhodriBlack:function(o){
@@ -2165,7 +2178,6 @@ var m_ = {
     },
     snowbladefight:function(o){
         const { aim, hurt, hex, row } = o
-        console.log(aim)
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
@@ -2208,21 +2220,43 @@ var m_ = {
         }
         current_ability_method = null
     },
-    phaseEnd:function(o){
-        const { side, name } = o.key
+    phaseEnd:function(o){console.log('clicked')
+        const { next, name, side } = o.key//o.phase
+        let strajng = ''
         const selectedModels = $(`[data-name="${name}"][data-side="${side}"]`)
-        displayAnimatedNews(`${name}<br/>ends activation`)
         selectedModels.each(function(){
             $(this).attr('data-actionstaken',2).addClass('activated')
         })
         $(`[data-glow]`).removeAttr('data-glow')
         current_ability_method = null
-        if(phase === 'white' && side === mySide){
-            if( $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length )
-                socket.emit('turnEnd',{p1:myTurn, phase})
-                //emit end of my white phase here here and below
-        }else if (phase==='black' && side === mySide){
-            socket.emit('turnEnd',{p1:myTurn, phase})
+        strajng=`${name}<br/>ends activation`
+        if(
+            phase === 'white' && 
+            side === mySide && 
+            myNextPhase === 'white' && 
+            $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length
+        ){
+            socket.emit('turnEnd',{current:phase, next:'black'})
+            strajng+='<br/>turn end'
         }
+        if(
+            phase==='black' && 
+            myNextPhase==='black' && 
+            $('.activated.whiteTeam[data-tenmodel]').length !== $('.whiteTeam[data-tenmodel]').length
+        ){
+            myTurn = myTurn ? false : true
+            strajng+=(!myTurn?'<br/>turn end':'<br/>your turn')
+        } else
+        if(
+            phase==='black' && 
+            myNextPhase==='black' && 
+            $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length
+        ){
+            //here should be socket emitted like:
+            //socket.emit('turnEnd',{current:phase, next:'black'})
+            //which will instruct the game to end and a appropriate string modification made:
+            //strajng+='say smthing'
+        }
+        displayAnimatedNews(strajng)
     }
 }

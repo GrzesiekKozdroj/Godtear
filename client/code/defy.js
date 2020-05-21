@@ -3,7 +3,6 @@ const uniCancel = ()=>{
     $('.skilling_declaration').removeClass('skilling_declaration')
     current_ability_method = null
     defy = null
-    console.log('cancel triggered')
 }
 var defy = {
     forwardMinions:()=>{

@@ -422,6 +422,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.whiplash_selected').length )extraMover('whiplash',thiz)
         if( $('.beastlyCharge_selected').length && !thiz.children('.smallCard').length )extraMover('beastlyCharge',thiz)
         if( $('.frostyGlance_selected').length )extraMover('frostyGlance',thiz)
+        if( $('.twoPunch_selected').length )extraMover('twoPunch',thiz)
         if( $('[data-glow="answerTheCall"]').length )
             socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row,key:"answerTheCall"})
     }
@@ -556,9 +557,9 @@ $('body').on('click','.fire[data-socksmethod="callTotems"]',function(e){
 $(`body`).on('click',`.endTask`,function(e){
     e.preventDefault()
     e.stopPropagation()
-    if( $(this).hasClass(`${mySide}`) ){
+    if( $(this).hasClass(`${mySide}`) && myTurn ){
         const { name } = $($(this).parents(`[data-klass][data-name][data-type]`)[0]).data()
-        socket.emit('rolloSkill',{socksMethod:'phaseEnd',key:{ name, side:mySide }})
+        socket.emit('rolloSkill',{    socksMethod:'phaseEnd',key: { phase, next: myNextPhase, name, side:mySide }   })
     }
 })
 
@@ -586,3 +587,10 @@ $(`body`).on('click',`.endTask`,function(e){
 
 
 })//DOM
+
+
+
+
+const BADCALLZ_OFF = ()=>{
+    $('.marchGuardWhite').removeClass('marchGuardWhite')
+}

@@ -36,7 +36,6 @@ const abilTruthChange = (abilName = null,side=mySide) => {
 }
 
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
-    //console.log(name,phase,abilName)
     const targetos = (abilName, p = phase) => {
         if(side === mySide)
                 return mySkillTrack[name][p][abilName].used 
@@ -59,7 +58,7 @@ const add_action_taken = (
     side = $('.selectedModel').attr('data-side')
 ) => {
         const actionstaken = Number($('.selectedModel').attr('data-actionstaken'))
-    if( abilTruthRead(abilName, side, name) && !shallI ){console.log('up up up')
+    if( abilTruthRead(abilName, side, name) && !shallI ){
         $(`[data-name=${name}].${side}[data-tenmodel]`).each(function(){
             $(this).attr('data-actionstaken', (Number(actionstaken) + 1) )
         })
@@ -67,7 +66,6 @@ const add_action_taken = (
     abilTruthChange(abilName,side)
 }
 const check_actions_count = (abilName = false, side = mySide) => {
-    //console.log(Number( $('.selectedModel').attr('data-actionstaken') ),abilTruthRead(abilName),abilName)
     return Number( $('.selectedModel').attr('data-actionstaken') ) < 2 && 
         abilTruthRead(abilName,side)
         ? true : false
@@ -367,7 +365,6 @@ function leave_only_selected_path(){
     })
 }
 function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowType = 'recruitGlow'){
-    console.log(unitname,side,type,name,dist)
     const { hex, row } = $(`[data-name="${unitname}"].${side}`).parent('.hexagon').data()
     river = [unitname,side,type,name]
     if(name==="Retchlings"){
@@ -446,7 +443,6 @@ function marchExec(string, aktion){
     displayAnimatedNews('marching')
 }
 function rallyChampion(thiz){
-    console.log(thiz)
     thiz.removeClass('death mournblade_raisins').attr('data-healthleft', thiz.data('health') )
     displayAnimatedNews(`${thiz.data('name')}<br/>back in game`)
 }
@@ -457,7 +453,6 @@ function _target({ hex, row }){//UNFINISHED, not annoyed enuff yet
 function moveContentsOfHex(stringz,thiz){//"string for callback name" and $(thestinationHex)
     const { hex, row } = thiz.data()
     socket.emit('rolloSkill',{ hex, row, socksMethod:stringz })
-    console.log('step4')
 }
 
 function propagate_BB_s($origin,$target){
@@ -514,10 +509,8 @@ function turn_resetter(skillTracker,phase,team){
         model.removeClass('activated').attr('data-actionstaken',0)
     })
     for(let char in skillTracker){
-        let character = skillTracker[char]
-        for(let s in character[phase]){
-            let skill = character[phase][s]
-            skill.used = false
+        for(let s in skillTracker[char][phase]){
+            skillTracker[char][phase][s].used = false
         }
     }
 }

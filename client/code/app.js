@@ -1,6 +1,4 @@
 function buildRosters(o,coin){
-    console.log(o)
-    //console.log(o)
     //o={nickName:{roster,nickName,opoName,gamePlace,socket.id,side},opoName:{roster,nickName,opoName,gamePlace,socket.id}}
     if(o) for (let key in o){
         let plajer = o[key];
@@ -16,6 +14,7 @@ function buildRosters(o,coin){
             myTurn = (plajer.side === 'left' && coin === 11) || (plajer.side === 'right' && coin === 12) ? true : false;
             myDeployment = plajer.side === 'left' ? 'greenGlow' : 'redGlow';
             opoDeployment = plajer.side === 'left' ? 'redGlow' : 'greenGlow';
+            myNextPhase = 'white'
         }
     }
 }
@@ -43,7 +42,7 @@ function beginBattle(){
     `);
     }
 }
-const makeAnim = (model,whereTo,callback=false) => {//console.log(whereTo.data('row'),whereTo.data('hex'))//model, destination
+const makeAnim = (model,whereTo,callback=false) => {//model, destination
     let ofsetSize = model.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
     MOVINGNOW = true
     if(whereTo)
@@ -60,7 +59,6 @@ const makeAnim = (model,whereTo,callback=false) => {//console.log(whereTo.data('
             else
                 whereTo.removeAttr('data-glow')
             MOVINGNOW = false
-            console.log('done',whereTo.data('row'),whereTo.data('hex'))
         });
 };//anim
 function gameCard (name, roster, color) {
@@ -84,7 +82,7 @@ function makeGameBoard(o,coin){
     beginBattle()
 
     QUICK_DEEPLOY()
-    setTimeout(()=>phase='black',1900)
+   // setTimeout(()=>{phase='black';myNextPhase='black'},1900)
     opoSkillTrack = buildSkillTrack(opoRoster)
     mySkillTrack = buildSkillTrack(roster)
 }

@@ -384,7 +384,7 @@ const _m = {
     onePunch:function(origin,target){
         const { baim, bdamage, healthleft } = extractBoons_Blights(origin)
         const { hex, row } = target
-        let aim = 6 + baim + healthleft === 7 ? 2 : 0
+        let aim = 6 + baim + (healthleft === 7 ? 2 : 0)
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         if($target.hasClass(`blackTeam`))
             socket.emit('rolloSkill',{ aim: aim, hurt:(4 + bdamage), socksMethod:"onePunch", hex, row })
@@ -392,7 +392,7 @@ const _m = {
     twoPunch:function(origin,target){
         const { baim, bdamage, healthleft } = extractBoons_Blights(origin)
         const { hex, row } = target
-        let aim = 4 + baim + healthleft === 7 ? 2 : 0
+        let aim = 4 + baim + (healthleft === 7 ? 2 : 0)
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         if($target.hasClass(`blackTeam`))
             socket.emit('rolloSkill',{ aim: aim, hurt:(5 + bdamage), socksMethod:"twoPunch", hex, row })
@@ -407,7 +407,6 @@ const _m = {
         const { baim, healthleft } = extractBoons_Blights(origin)
         const {hex, row } = target
         let aim = 5 + baim + (healthleft === 7 ? 2 : 0)
-        console.log(aim)
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.blackTeam')[0])
         if($target){
             socket.emit('rolloSkill',{aim:aim, hurt:0, socksMethod:"feint", hex, row})
@@ -853,7 +852,7 @@ const _m = {
             socket.emit('rolloSkill',{ aim: (4 + baim), hurt:(6 + bdamage), socksMethod:"deadlyCurse", hex, row })
     },
     callTotems:function(origin,target){
-        $('[data-glow="greenGlow"]').removeAttr('data-glow');console.log('glow removed totmes1')
+        $('[data-glow="greenGlow"]').removeAttr('data-glow');
         const { hex, row } = target
         const $targets = $(`[data-name="Hexlings"][data-tenmodel].${mySide}`)
         const $target = $($(`.hex_${hex}_in_row_${row}`).children(`[data-name="Hexlings"][data-tenmodel].${mySide}`)[0])
@@ -1108,7 +1107,7 @@ const _m = {
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt+bdamage), socksMethod:"shoot", hex, row })
     },
-    induct:function(origin,target){console.log('_m')
+    induct:function(origin,target){
         const { hex, row } = target
         if ( !$('[data-glow]').length && $(`[data-name="RedBandits"][data-tenmodel].whiteTeam`).length < 5 )
             $(`[data-name="RedBandits"][data-tenmodel].whiteTeam`).parent('.hexagon').each(function(){

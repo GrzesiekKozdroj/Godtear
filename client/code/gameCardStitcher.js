@@ -319,6 +319,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
     let skillx = rosters[klass][index][type==='champion'?'champ':'grunt'].skills// JSON.parse(decodeURIComponent(skills));
     const { baim, bdamage, bdodge, bprotection, bspeed } = extractBoons_Blights( $($(`[data-name="${name}"].${side}`)[0]) )
     feedSkillstheData (skillx)
+    const zpeed = (speed,i) => typeof speed === 'string' ? Number([...speed][i===0?0:2]):speed[i]
     const skillzBlack = (skillx,phase,side)=>{
         let skillList = []
         for(let s in skillx[phase]){
@@ -339,7 +340,6 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
             `}).join('')
     }
     const BB_HUD = (c)=>c>0? 'glow_BB_card booned' : c < 0 ? 'glow_BB_card blighted' : ''
-
     return `
     <div class='miniGameCard ${side} ${phase}' 
         data-klass='${klass}' 
@@ -371,7 +371,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
 
         <div class='smallCard speed ${phase} ${BB_HUD(bspeed)}'>
             <div class='top'></div>
-            ${phase==='white' ? styled_attribute_number(speed[0],bspeed) : styled_attribute_number(speed[2],bspeed)}
+            ${phase==='white' ? styled_attribute_number(zpeed(speed,0),bspeed) : styled_attribute_number(zpeed(speed,1),bspeed)}
             <div class='bottom'></div>
         </div>
 

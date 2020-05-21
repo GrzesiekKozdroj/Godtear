@@ -59,7 +59,7 @@ socket.on('sM',p=>{
     displayMovementAura(thiz)
 })
 
-socket.on('mM',p=>{console.log('mM',p.r,p.h)
+socket.on('mM',p=>{
     let thiz = $(`.hex_${p.h}_in_row_${p.r}`)
     reduceSpeedLeft()
     makeAnim(  $('.selectedModel'), thiz, displayMovementAura )
@@ -83,7 +83,7 @@ socket.on('markedMan',p=>{
     const target = $($(`.hex_${hex}_in_row_${row}`).children('.unitModel').not(`.${klass}`)[0])
     placeMark({hex, row, multiInfo, target})
 })
-socket.on('fM',p=>{console.log('fM',p)
+socket.on('fM',p=>{
     const { h, r, klass, callback } = p
     //this shouldn't just be a small card, has to be smallcard by default though, unless i want to backtrack
     const children = $(`.hex_${klass.h}_in_row_${klass.r}`).children('.smallCard').length ? 
@@ -91,28 +91,25 @@ socket.on('fM',p=>{console.log('fM',p)
             $(`.hex_${klass.h}_in_row_${klass.r}`).children('.claimedBanner')[0]
     makeAnim( $(children), $(`.hex_${h}_in_row_${r}`), _m_[callback] )
 })
-socket.on('tt',p=>{
+socket.on('tt',p=>{//{current:myTurn, next:phase}
+    const { current, next } = p
     myTurn = myTurn ? false : true
-    if( myTurn && p.phase === 'white' && phase === p.phase && !$('.whiteTeam.activated').length ){
-        //turn_resetter(mySkillTrack,'white','whiteTeam')
-        displayAnimatedNews('Your<br/>plots')
-    } else if ( !myTurn && p.phase==='white' && phase === 'white' ){
-        displayAnimatedNews('plots<br/>ended')
-        //turn_resetter(mySkillTrack,'white','blackTeam')
-    }
-    if( myTurn && phase==='white' && $('.whiteTeam.activated').length ){
-        phase='black'
+    //switch p1 to p2 in white, activate p2
+    if(myTurn && current === 'white' && myNextPhase === 'white' && 
+       !$('.whiteTeam.activated').length && next==='black' ){
+        turn_resetter(opoSkillTrack,'white','blackTeam')
+        displayAnimatedNews('Your<br/>turn')
+    } 
+    //prepare p1 for black
+    if ( !myTurn && current==='white' && next === 'black' && myNextPhase === 'white'){
         turn_resetter(mySkillTrack,'black','whiteTeam')
-        displayAnimatedNews('begin<br/>clash phase')
-    } else if ( !myTurn && phase === 'white' && $('.blackTeam.activated').length ){
+        myNextPhase = 'black'
+    } 
+    //p1 && p2 starts black
+    if ( phase === 'white' && myNextPhase==='black'){
         phase='black'
-        turn_resetter(mySkillTrack,'black','blackTeam')
-        displayAnimatedNews('enemy<br/>clash phase')
+        turn_resetter(opoSkillTrack,'black','blackTeam')
+        turn_resetter(mySkillTrack,'black','whiteTeam')
     }
-    if( myTurn && phase==='black' ){
-        displayAnimatedNews('Your<br/>clash phase')
-    }
-
-
 
 })

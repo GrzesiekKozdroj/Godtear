@@ -179,7 +179,6 @@ function displayMovementAura (thiz) {
     const noKnightshades = ()=>{
         let produce = true
         highlightHexes({colour:'trans',dist:1},thiz)
-        console.log($('[data-glow]').children(`[data-name="Knightshades"][data-tenmodel].blackTeam`).length)
         $(`[data-glow].hexagon`).each(function(){
             if( $(this).children(`[data-name="Knightshades"][data-tenmodel].blackTeam`).length ){
                 produce = false

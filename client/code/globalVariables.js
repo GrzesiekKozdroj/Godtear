@@ -9,6 +9,7 @@ var myTurn;
 var myDeployment;
 var opoDeployment;
 var phase = 'white';
+var myNextPhase = "white";
 var glow;
 var river;//used for resurrection
 var MOVINGNOW = false;//used to stop doublemove

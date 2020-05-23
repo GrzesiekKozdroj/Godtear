@@ -504,11 +504,8 @@ const _m = {
     },
     bannerfall:function(origin,target){
         const { hex, row } = target
-        const $target = $(`.hex_${hex}_in_row_${row}.objectiveGlow`)
-        if(phase==="black" && target){
-            m.universal.claim( $target, 'whiteTeam' )
-            socket.emit('stakeClaim',{hex: hex, row: row, key:"bannerfall"})
-        }
+        if(phase==="black" && target)
+            socket.emit('rolloSkill',{ socksMethod:"bannerfall", hex, row })
     },
     marchGuardBlack:function(origin,target){
         const { hex, row } = target
@@ -572,10 +569,16 @@ const _m = {
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         const unitSize = origin.siblings('.smallCard').length
+        const bonu = !mySkillTrack.Knightshades[phase].rallied.used?0:1
         const aim = [4, 5, 5][unitSize]
         const hurt = [4, 4, 5][unitSize]
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"deathsDoor", hex, row })
+            socket.emit('rolloSkill',{ 
+                aim: (aim + baim + bonu), 
+                hurt:(hurt + bdamage + bonu), 
+                socksMethod:"deathsDoor", 
+                hex, row 
+            })
     },
     carefulMaster:function(origin,target){
         const { hex, row } = target

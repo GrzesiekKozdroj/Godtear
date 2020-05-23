@@ -71,10 +71,11 @@ socket.on('HH',p=>{
     const m = p.m   ? p.m     : false
     const specimen = r && h ? $($(`.hex_${h}_in_row_${r}`).children()[0]) : $('.selectedModel')
     if(!river)$('[data-glow]').removeAttr('data-glow')
+    $('[data-glow]').removeAttr('data-glow')//added cause graspingDead double aura
     highlightHexes({colour:p.color,dist:p.dist}, specimen)
     if( m )__m[m]()
 })
-socket.on('sC',p=>{
+socket.on('sC',p=>{console.log('banner falle after emit')
     m.universal.claim( $(`.hex_${p.hex}_in_row_${p.row}`), 'blackTeam',p.key )
 })
 socket.on('markedMan',p=>{
@@ -94,22 +95,18 @@ socket.on('fM',p=>{
 socket.on('tt',p=>{//{current:myTurn, next:phase}
     const { current, next } = p
     myTurn = myTurn ? false : true
-    //switch p1 to p2 in white, activate p2
-    if(myTurn && current === 'white' && myNextPhase === 'white' && 
-       !$('.whiteTeam.activated').length && next==='black' ){
-        turn_resetter(opoSkillTrack,'white','blackTeam')
-        displayAnimatedNews('Your<br/>turn')
-    } 
-    //prepare p1 for black
-    if ( !myTurn && current==='white' && next === 'black' && myNextPhase === 'white'){
-        turn_resetter(mySkillTrack,'black','whiteTeam')
-        myNextPhase = 'black'
-    } 
     //p1 && p2 starts black
-    if ( phase === 'white' && myNextPhase==='black'){
+    if(phase==='white'&&myNextPhase==='black'){
         phase='black'
         turn_resetter(opoSkillTrack,'black','blackTeam')
         turn_resetter(mySkillTrack,'black','whiteTeam')
     }
-
+    if(phase==='white'&&myNextPhase==='white'){
+        turn_resetter(opoSkillTrack,'white','blackTeam')
+        turn_resetter(mySkillTrack,'white','whiteTeam')
+        myNextPhase='black'
+    }
+    if(phase==='black'&&$('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length)
+        console.log('TURN END TURN END TURN END TURN END TURN END TURN END')
+    myTurn?displayAnimatedNews('Your<br/>turn'):0
 })

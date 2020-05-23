@@ -99,6 +99,7 @@ $white: white;
         }
     }
 }
+
 @mixin miniCardSkills {
     @each $phase in $phases {
         @each $icon in $icons {
@@ -437,3 +438,9 @@ $white: white;
 }
 
 .nope{filter:brightness(.3)}
+.img_cogs_black.left,.img_cogs_white.left{
+    transform:rotate(180deg);
+}
+.img_cogs_black.right,.img_cogs_whire.right{
+    transform: rotate(270deg);
+}

@@ -18,6 +18,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: -10%;
+  margin-right: -10%;
+  transform: scale(1.18);
+  -ms-transform: scale(1.18);
+  /* Internet Explorer */
+  -moz-transform: scale(1.18);
+  /* Firefox */
+  -webkit-transform: scale(1.18);
+  /* Safari and Chrome */
+  -o-transform: scale(1.18);
+  /* Opera */
 }
 
 .hexagon:after {
@@ -181,12 +192,12 @@ body {
 }
 
 .shelf:nth-child(odd) {
-  margin-right: 5vh;
+  margin-right: 4.6vh;
   color: white;
 }
 
 .shelf:nth-child(even) {
-  margin-left: 5vh;
+  margin-left: 4.6vh;
   color: white;
 }
 

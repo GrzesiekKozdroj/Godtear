@@ -44,7 +44,7 @@ const bigCard_bb = (a,b)=>`<span class="${b>0?'booned':b<0?'blighted':'normal'} 
         }
 function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side) {
     const { baim, bdamage,bdodge,bprotection,bspeed,healthleft } = extractBoons_Blights( $(`[data-name="${name}"].${side}`) )
-    const skillList = (skills)=>{
+    const skillList = (skills,side)=>{
         let skillzList = []
         for(let s in skills[phase]){
             let skill = skills[phase][s]
@@ -79,7 +79,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
         return `
                 <div class="card_list_item_${phase} ${skill.legendaryUsed === false ?'legendary':''} ${side}" ${makedata(skill)}>
 
-                    <div class="img_${icon}_${phase}"></div>
+                    <div class="img_${icon}_${phase} ${side}"></div>
 
                     <div class="roster_description">
                         <div class="roster_abil_name left">${name}</div>
@@ -178,7 +178,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
         </div>
 
         <div class='game_card-skill_list card_shadow-${side}'>
-            ${skillList(skills)}
+            ${skillList(skills,side)}
         </div>
 
     </div>
@@ -187,7 +187,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
 function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side){
     const { baim, bdamage,bdodge,bprotection,bspeed,healthleft } = extractBoons_Blights( $(`[data-name="${name}"].${side}`) )
-    const skillList = (skills)=>{
+    const skillList = (skills,side)=>{
         let skillzList = []
         for(let s in skills[phase]){
             let skill = skills[phase][s]
@@ -246,7 +246,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
                         <div class="roster_abil_desc">${desc ? desc : ''}</div>
                     </div>
 
-                    <div class="img_${icon}_${phase}"></div>
+                    <div class="img_${icon}_${phase} ${side}"></div>
 
                 </div>
             `
@@ -309,7 +309,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
             </div>
         </div>
         <div class='game_card-skill_list card_shadow-right'>
-            ${skillList(skills)}
+            ${skillList(skills,side)}
         </div>
     </div>
     `

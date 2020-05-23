@@ -288,6 +288,12 @@ const highlight_closest_path = (a,b,way='towards') => {//UTTER FAILURE, MOSTLY B
             $(this).children().removeAttr('data-glow')
         }
     })
+    const $a = $(`.hex_${a.hex}_in_row_${a.row}`)
+    const $b = $(`.hex_${b.hex}_in_row_${b.row}`)
+    $a.removeAttr('data-glow')
+    $a.children().removeAttr('data-glow')
+    $b.removeAttr('data-glow')
+    $b.children().removeAttr('data-glow')
 }
 const highlightDirectPaths = ( { origin, distance, colour } ) => {
     //origin:$(this).parent('.hexagon).data(), number, i.e. 'greenGlow
@@ -367,14 +373,14 @@ function leave_only_selected_path(){
 function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowType = 'recruitGlow'){
     const { hex, row } = $(`[data-name="${unitname}"].${side}`).parent('.hexagon').data()
     river = [unitname,side,type,name]
-    if(name==="Retchlings"){
+    if(name==="Retchlings"){console.log('retchlings recruitment')
         $(`[data-name="${name}"].${side}`).each(function(){
             const h = $(this).parent('.hexagon').data('hex')
             const r = $(this).parent('.hexagon').data('row')
             highlightHexes({colour:glowType,dist},$(this))
             socket.emit('HH', {color:glowType,dist, hex:h, row:r, river})
         })
-    }
+    };
     highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))//was commented out but it cannot work without it
     //if ( !$(`[data-glow="${glowType}"]`).length )prevented me from sending river through server
         socket.emit('HH', {color:glowType,dist, hex, row, river})
@@ -506,7 +512,10 @@ function buildSkillTrack(roster){//['name','name','name']
 function turn_resetter(skillTracker,phase,team){
     $(`.${team}[data-tenmodel]`).each(function(){
         const model = $(this)
-        model.removeClass('activated').attr('data-actionstaken',0)
+        model
+            .removeClass('activated')
+            .attr('data-actionstaken',0)
+            .attr('data-speedleft', model.attr('data-speed'))
     })
     for(let char in skillTracker){
         for(let s in skillTracker[char][phase]){

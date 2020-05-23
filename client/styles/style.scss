@@ -175,6 +175,13 @@ $colorFillHex: transparent;
 .hexagon {
     @include hexagonomicron(15);
     @include instaFlex;
+    margin-left: -10%;
+    margin-right: -10%;
+    transform: scale(1.18);
+    -ms-transform: scale(1.18); /* Internet Explorer */
+    -moz-transform: scale(1.18); /* Firefox */
+    -webkit-transform: scale(1.18); /* Safari and Chrome */
+    -o-transform: scale(1.18); /* Opera */
     p{
         font-family: $coinFont2;
         text-shadow: 0 0 1px orangered, 0 0 2px orangered, 0 0 3px orangered;
@@ -269,11 +276,11 @@ body{
 
 
 .shelf:nth-child(odd){
-    margin-right: $marginLeft;
+    margin-right: 4.6vh;
     color:white;
 }
 .shelf:nth-child(even){
-    margin-left: $marginLeft;
+    margin-left: 4.6vh;
     color:white;
 }
 @mixin arrow($color,$direction,$size){

@@ -451,7 +451,6 @@ var m_ = {
         const { hex, row } = o
         const target = $(`.hex_${hex}_in_row_${row}`).children('.smallCard')
         current_ability_method = null
-         
         add_action_taken("regenerateBlack")
         healLife(target)
         displayAnimatedNews(`${target.data('name')} heals<br/>2 wounds`)
@@ -459,26 +458,26 @@ var m_ = {
     onePunch:function(o){console.log('onePunch')
         const { aim, hurt, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        console.log('targets length:', targets.length)
         if(targets.length){
             const target = $(targets[0])
-            //bonus action added
-            if(target.hasClass('whiteTeam') && !mySkillTrack.Halftusk.black.twoPunch.used){
-                let myTusk = $('[data-name="Halftusk"][data-tenmodel].whiteTeam')
-                myTusk.attr('data-actionstaken',(Number(myTusk.attr('data-actionstaken'))-1) )
-            }else if(target.hasClass('blackTeam') && !opoSkillTrack.Halftusk.black.twoPunch.used){
-                let opoTusk = $('[data-name="Halftusk"][data-tenmodel].blackTeam')
-                opoTusk.attr('data-actionstaken',(Number(opoTusk.attr('data-actionstaken'))-1) )
-            }
-
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("onePunch")
-            if( onHit(aim, target) )//allow for bonus twoPunch action here
+            if( onHit(aim, target) ){
+                //bonus action added
+                if(target.hasClass('blackTeam') && !mySkillTrack.Halftusk.black.twoPunch.used){
+                    let myTusk = $('[data-name="Halftusk"][data-tenmodel].whiteTeam')
+                    myTusk.attr('data-actionstaken',(Number(myTusk.attr('data-actionstaken'))-1) )
+                }else if(target.hasClass('whiteTeam') && !opoSkillTrack.Halftusk.black.twoPunch.used){
+                    let opoTusk = $('[data-name="Halftusk"][data-tenmodel].blackTeam')
+                    opoTusk.attr('data-actionstaken',(Number(opoTusk.attr('data-actionstaken'))-1) )
+                }
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target,target.data('stepsgiven'))
                     else null
                 else displayAnimatedNews("no damage!")
-            else displayAnimatedNews ("missed!")
+            }else displayAnimatedNews ("missed!")
         }
         current_ability_method = null
     },
@@ -491,7 +490,6 @@ var m_ = {
             const team = $('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
             $('.selectedModel').addClass('twoPunch_selected')
             highlightHexes({colour:'legendaryGlow',dist:1})
-            highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
             add_action_taken("twoPunch")
             if( onHit(aim, target) )//allow for bonus one hex movement for Halftusk action here
                 if( doDamage(hurt, target) )
@@ -547,7 +545,6 @@ var m_ = {
             const { hex, row } = o
             const $target = $(`.hex_${hex}_in_row_${row}`)
             $('[data-glow]').removeAttr('data-glow')
-             
             add_action_taken("tongueTow")
             current_ability_method = null
             $target.children('.claimedBanner').addClass('tongueTow_selected')
@@ -568,7 +565,6 @@ var m_ = {
                     target.addClass('tongueLash_selected')
                     highlightHexes({colour:'greenGlow',dist:1},target)
                     highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
-                     
                     displayAnimatedNews(`tongue towing<br/>victim`)
                 }
             else {
@@ -670,9 +666,13 @@ var m_ = {
         $('[data-glow]').removeAttr('data-glow')
     },
     bannerfall:function(o){
-        add_action_taken("bannerfall")
-    },//TO DO TO DO TO DO TO DO TO DO TO DO 
-
+        const { hex, row } = o
+        const $target = $(`.hex_${hex}_in_row_${row}.objectiveGlow`)
+        const team = $('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        $(`.claimedBanner.${team}[data-name="Rhodri"]`).remove()
+        m.universal.claim( $target, team, "legendary")
+        //socket.emit('stakeClaim',{hex, row, key:"legendary"})
+    },
     marchGuardBlack:function(o){
         const {  hex, row } = o
         const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
@@ -736,17 +736,19 @@ var m_ = {
         })
         rallyChampion( $(`.hex_${hex}_in_row_${row}`).children('.champModel.mournblade_raisins') )
     },
-    soulClave:function(o){
+    soulCleave:function(o){
         const { aim, hurt, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
              
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken('soulClave')
+            add_action_taken('soulCleave')
             if( onHit(aim, target) ){
+                const team = target.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
                 //resurrection starts here
-                rallyActionDeclaration({ unitname:"Mournblade", side:o.multiAction, type:"champion", name:"Knightshades" })
+                if($(`[data-name="Knightshades"][data-tenmodel].${team}`).length < 3)
+                    rallyActionDeclaration({ unitname:"Mournblade", side:o.multiAction, type:"champion", name:"Knightshades" })
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target,target.data('stepsgiven'))
@@ -776,24 +778,25 @@ var m_ = {
             displayAnimatedNews('Knightshades<br/>shamble onwards')
         }
     },
-    graspingDead:function(o){
+    graspingDead:function(o){console.log('first')
         $(`[data-name="Knightshades"].${o.multiAction}[data-tenmodel]`).each(function(){
             forceKill ( $(this) )
         })
-        $('[data-glow]').removeAttr('data-glow')
          
         add_action_taken('legendary')
         setTimeout(
-            ()=>{rallyActionDeclaration({ 
-                unitname:"Mournblade", 
-                side:o.multiAction, 
-                type:"champion", 
-                name:"Knightshades",
-                dist:3 }, 'graspingDead')}
+            ()=>{
+                $('[data-glow]').removeAttr('data-glow')
+                rallyActionDeclaration({ 
+                    unitname:"Mournblade", 
+                    side:o.multiAction, 
+                    type:"champion", 
+                    name:"Knightshades",
+                    dist:3 }, 'graspingDead')}
         ,700)
         current_ability_method = null
     },
-    raiseGraspingDead:function(o){
+    raiseGraspingDead:function(o){console.log('second')
         const { hex, row, multiAction} = o
         const thiz = $(`.hex_${hex}_in_row_${row}`)
         $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
@@ -809,8 +812,8 @@ var m_ = {
     depthsOfSorrow:function(o){
         displayAnimatedNews("Knightshades<br/>+1 aim")
         current_ability_method = null
-        add_action_taken()
-        if_moved_end_it('depthsOfSorrow')
+        add_action_taken('depthsOfSorrow')
+        if_moved_end_it()
         const { hex, row } = o
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         const { baim } = extractBoons_Blights($target)
@@ -2220,7 +2223,7 @@ var m_ = {
         }
         current_ability_method = null
     },
-    phaseEnd:function(o){console.log('clicked')
+    phaseEnd:function(o){
         const { next, name, side } = o.key//o.phase
         let strajng = ''
         const selectedModels = $(`[data-name="${name}"][data-side="${side}"]`)
@@ -2229,33 +2232,14 @@ var m_ = {
         })
         $(`[data-glow]`).removeAttr('data-glow')
         current_ability_method = null
-        strajng=`${name}<br/>ends activation`
-        if(
-            phase === 'white' && 
-            side === mySide && 
-            myNextPhase === 'white' && 
-            $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length
-        ){
-            socket.emit('turnEnd',{current:phase, next:'black'})
-            strajng+='<br/>turn end'
-        }
-        if(
-            phase==='black' && 
-            myNextPhase==='black' && 
-            $('.activated.whiteTeam[data-tenmodel]').length !== $('.whiteTeam[data-tenmodel]').length
-        ){
-            myTurn = myTurn ? false : true
-            strajng+=(!myTurn?'<br/>turn end':'<br/>your turn')
-        } else
-        if(
-            phase==='black' && 
-            myNextPhase==='black' && 
-            $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length
-        ){
-            //here should be socket emitted like:
-            //socket.emit('turnEnd',{current:phase, next:'black'})
-            //which will instruct the game to end and a appropriate string modification made:
-            //strajng+='say smthing'
+        strajng+=`${name}<br/>activated`
+        //need to add deifer and ultra resetter here
+        if(phase==='white'&&$('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length){
+            socket.emit('turnEnd',{current:'white', next:'black'})
+            strajng+="<br/>turn end"
+        }else if(phase==='black' && side===mySide){
+            socket.emit('turnEnd',{current:'black', next:'black'})
+            strajng+="<br/>turn end"
         }
         displayAnimatedNews(strajng)
     }

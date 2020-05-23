@@ -82,7 +82,7 @@ function makeGameBoard(o,coin){
     beginBattle()
 
     QUICK_DEEPLOY()
-   // setTimeout(()=>{phase='black';myNextPhase='black'},1900)
+  //  setTimeout(()=>{phase='black';myNextPhase='black'},1900)
     opoSkillTrack = buildSkillTrack(opoRoster)
     mySkillTrack = buildSkillTrack(roster)
 }
@@ -184,7 +184,7 @@ function deeploy (group,side){
 
 function QUICK_DEEPLOY() {
     console.log('HI -_-')
-    let roow = 4;
+    let roow = 5;
     let heex = 1;
     $(`.teamBox.left`).children(`.smallCard`).each(function(){
         let className = $(this).data('type') === 'unit' ? 30 : 14 
@@ -196,7 +196,7 @@ function QUICK_DEEPLOY() {
         roow += heex <14 ? 0 : 1;
         heex += heex < 14 ? 1 : -13;
     })
-    roow = 9 
+    roow = 8 
     heex = 14
     $(`.teamBox.right`).children(`.smallCard`).each(function(){
         let className = $(this).data('type') === 'unit' ? 30 : 14 

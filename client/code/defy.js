@@ -27,15 +27,43 @@ var defy = {
     marchRhodriWhite:()=>{uniCancel()},
     hold:()=>uniCancel(),
     marchGuardWhite:()=>{
-        $('.marchGuardWhite').removeClass('marchGuardWhite').removeClass('marchGuardWhite_selected')
+        $('.marchGuardWhite')
+            .removeClass('marchGuardWhite marchGuardWhite_selected')
+        uniCancel()
+    },
+    marchGuardBlack:()=>{
+        $('.marchGuardBlack').removeClass('marchGuardBlack').removeClass('marchGuardBlack_selected')
         uniCancel()
     },
     feelThePoweer:()=>uniCancel(),
     hop:()=>{
         uniCancel()
-        $('.hop').removeClass('hop')
-    }
-
+        ,$('.hop').removeClass('hop')
+    },
+    twoPunch:()=>{
+        uniCancel()
+        $('.twoPunch_selected').removeClass('twoPunch_selected')
+    },
+    bannerfall:()=>uniCancel(),
+    tongueTow:()=>{
+        uniCancel()
+        $('.tongueTow_selected').removeClass('tongueTow_selected')
+    },
+    tongueLash:()=>{
+        uniCancel()
+        $('.tongueLash_selected').removeClass('tongueLash_selected')
+    },
+    marchRhodriBlack:()=>{
+        uniCancel()
+        $('.marchRhodriBlack_selected').removeClass('marchRhodriBlack_selected')
+    },
+    shieldBash:()=>{
+        uniCancel()
+        $('.shieldBash_selected').removeClass('shieldBash_selected')
+    },
+    swordSlash:()=>uniCancel(),
+    swordStrike:()=>uniCancel(),
+    deathsDoor:()=>uniCancel(),
 
 
 }

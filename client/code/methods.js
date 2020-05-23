@@ -53,11 +53,12 @@ const m =
         rally: function () { },
         dieGrunt: function () { },
         dieChamp: function () { },
-        claim: function (thiz, teamColor, key = "claimed") {
+        claim: function (thiz, teamColor, key = "claimed") {//console.log(key)
             thiz.append(placeBanner(teamColor))
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken(key)
-            moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
+            if(phase==='white')
+                moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
             displayAnimatedNews(`${ $('.selectedModel').data('name') }<br/>claims objective`)
         }
     },
@@ -732,7 +733,7 @@ const m =
                 unused: true,
                 m: "raiseDeadChamps"
             },
-            soulClave:
+            soulCleave:
             {
                 name: "Soul Cleave",
                 desc: "Hit Effect: The Knightshades make a recruit action.",
@@ -741,7 +742,7 @@ const m =
                 aim: [5],
                 hurt: [5],
                 unused: true,
-                m: "soulClave"
+                m: "soulCleave"
             }
         },
         white:

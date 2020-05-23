@@ -61,9 +61,15 @@ var _m_ = {
         marchExec('RhodriWhite','marchRhodriWhite')
     },
     shieldBash:()=>{
-        current_ability_method = null
-        $('[data-glow]').removeAttr('data-glow')
-        $('.shieldBash_selected').removeClass('shieldBash_selected')
+        if( $('[data-glow].hexagon').length > 6 ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1},$('.shieldBash_selected'))
+        } else {
+            $('[data-glow]').removeAttr('data-glow')
+            $('.shieldBash_selected').removeClass(`shieldBash_selected`)
+            setTimeout(()=>$('.shieldBash_selected').removeAttr('style'),100)
+            current_ability_method = null
+        }
     },
     marchGuardBlack:($thiz)=>{
             $('[data-glow]').removeAttr('data-glow')

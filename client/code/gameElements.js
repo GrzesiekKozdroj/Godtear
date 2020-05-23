@@ -83,7 +83,7 @@ function reduceSpeedLeft(){
     } else 
         spedred()
 }
-function highlightHexes ({colour, dist},thiz = $('.selectedModel')){
+function highlightHexes ({colour, dist},thiz = $('.selectedModel')){//console.trace()
     const applyClass = ({colour, row, hex}) => {
         if(row % 2 === 1) oddRowPosition(row, hex, colour) 
         else if (row % 2 === 0) evenRowPosition(row, hex, colour)

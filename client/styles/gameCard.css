@@ -2,17 +2,10 @@
   position: absolute;
   height: 100vh;
   z-index: 42;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 #game_card-big {
@@ -20,17 +13,10 @@
   height: 100vh;
   width: 24vw;
   z-index: 42;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .left_card {
@@ -44,15 +30,9 @@
 
 .game_card-portrait {
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   height: 28vh;
   min-height: 10vw;
   max-height: 20vw;
@@ -60,18 +40,10 @@
 
 .game_card-actions {
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
   height: 17vh;
   min-height: 5vw;
   max-height: 10vw;
@@ -79,30 +51,19 @@
 
 .game_card-skill_list {
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   height: 48vh;
   min-height: 20vw;
   max-height: 40vw;
   overflow-y: scroll;
   pointer-events: auto;
-  min-height: -webkit-min-content;
-  min-height: -moz-min-content;
   min-height: min-content;
 }
 
 .game_card-skill_list .card_list_item_black {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   width: 46vw;
   height: auto;
@@ -114,8 +75,7 @@
   font-size: 85%;
   background-color: black;
   color: white;
-  -webkit-box-shadow: inset 0 0 3vh white, 0 0 2vh black;
-          box-shadow: inset 0 0 3vh white, 0 0 2vh black;
+  box-shadow: inset 0 0 3vh white, 0 0 2vh black;
   text-shadow: 0 0 2vh black, 0 0 1vh black, 0 0 1.5vh #3a0e0e;
 }
 
@@ -123,9 +83,7 @@
   margin: 1vh -2vw;
   min-height: 10vh;
   max-height: 11vh;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-size: contain;
@@ -139,9 +97,7 @@
   margin: 1vh -2vw;
   min-height: 10vh;
   max-height: 11vh;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-size: contain;
@@ -155,9 +111,7 @@
   margin: 1vh -2vw;
   min-height: 10vh;
   max-height: 11vh;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-size: contain;
@@ -171,9 +125,7 @@
   margin: 1vh -2vw;
   min-height: 10vh;
   max-height: 11vh;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-size: contain;
@@ -194,9 +146,7 @@
   font-size: 110%;
   font-weight: 700;
   letter-spacing: .04vw;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
 }
 
 .game_card-skill_list .card_list_item_black .roster_description .roster_abil_desc {
@@ -211,14 +161,10 @@
 }
 
 .game_card-skill_list .card_list_item_black .roster_abil_stats {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   min-width: 15%;
   max-width: 20%;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
 }
 
 .game_card-skill_list .card_list_item_black .roster_abil_stats .roster_abil_column {
@@ -233,15 +179,9 @@
 }
 
 .game_card-skill_list .card_list_item_black .roster_abil_stats .roster_abil_column .roster_abil_number {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   height: 25%;
 }
 
@@ -258,8 +198,6 @@
 }
 
 .game_card-skill_list .card_list_item_white {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   width: 46vw;
   height: auto;
@@ -271,8 +209,7 @@
   font-size: 85%;
   background-color: white;
   color: black;
-  -webkit-box-shadow: inset 0 0 3vh black, 0 0 2vh black;
-          box-shadow: inset 0 0 3vh black, 0 0 2vh black;
+  box-shadow: inset 0 0 3vh black, 0 0 2vh black;
   text-shadow: 0 0 2vh white, 0 0 1vh white, 0 0 1.5vh #a4e6e0;
 }
 
@@ -280,9 +217,7 @@
   margin: 1vh -2vw;
   min-height: 10vh;
   max-height: 11vh;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-size: contain;
@@ -296,9 +231,7 @@
   margin: 1vh -2vw;
   min-height: 10vh;
   max-height: 11vh;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-size: contain;
@@ -312,9 +245,7 @@
   margin: 1vh -2vw;
   min-height: 10vh;
   max-height: 11vh;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-size: contain;
@@ -328,9 +259,7 @@
   margin: 1vh -2vw;
   min-height: 10vh;
   max-height: 11vh;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-size: contain;
@@ -351,9 +280,7 @@
   font-size: 110%;
   font-weight: 700;
   letter-spacing: .04vw;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
 }
 
 .game_card-skill_list .card_list_item_white .roster_description .roster_abil_desc {
@@ -368,14 +295,10 @@
 }
 
 .game_card-skill_list .card_list_item_white .roster_abil_stats {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   min-width: 15%;
   max-width: 20%;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
 }
 
 .game_card-skill_list .card_list_item_white .roster_abil_stats .roster_abil_column {
@@ -390,15 +313,9 @@
 }
 
 .game_card-skill_list .card_list_item_white .roster_abil_stats .roster_abil_column .roster_abil_number {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   height: 25%;
 }
 
@@ -415,12 +332,10 @@
 }
 
 .card_shadow-left {
-  background: -webkit-gradient(linear, left top, right top, from(rgba(0, 4, 36, 0.77)), color-stop(35%, rgba(3, 5, 60, 0.637)), to(rgba(0, 26, 255, 0.012)));
   background: linear-gradient(90deg, rgba(0, 4, 36, 0.77) 0%, rgba(3, 5, 60, 0.637) 35%, rgba(0, 26, 255, 0.012) 100%);
 }
 
 .card_shadow-right {
-  background: -webkit-gradient(linear, right top, left top, from(rgba(0, 4, 36, 0.77)), color-stop(35%, rgba(3, 5, 60, 0.637)), to(rgba(0, 26, 255, 0.012)));
   background: linear-gradient(270deg, rgba(0, 4, 36, 0.77) 0%, rgba(3, 5, 60, 0.637) 35%, rgba(0, 26, 255, 0.012) 100%);
 }
 
@@ -462,6 +377,7 @@
   height: 12.40526vh;
   overflow: hidden;
   -webkit-transform: scaleY(0.5774) rotate(-45deg);
+  -ms-transform: scaleY(0.5774) rotate(-45deg);
   transform: scaleY(0.5774) rotate(-45deg);
   background: inherit;
   left: 1.34035vh;
@@ -473,8 +389,10 @@
   width: 15.08772vh;
   height: 8.71053vh;
   -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-4.35546vh);
+  -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-4.35546vh);
   transform: rotate(45deg) scaleY(1.7321) translateY(-4.35546vh);
   -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
   transform-origin: 0 0;
   background: inherit;
 }
@@ -501,15 +419,9 @@
 
 .game_card-attribs {
   width: 50%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   height: 100%;
 }
 
@@ -572,6 +484,7 @@
   height: 6.42818vh;
   overflow: hidden;
   -webkit-transform: scaleY(0.5774) rotate(-45deg);
+  -ms-transform: scaleY(0.5774) rotate(-45deg);
   transform: scaleY(0.5774) rotate(-45deg);
   background: inherit;
   left: 0.69455vh;
@@ -583,8 +496,10 @@
   width: 7.81818vh;
   height: 4.51364vh;
   -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-2.25692vh);
+  -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-2.25692vh);
   transform: rotate(45deg) scaleY(1.7321) translateY(-2.25692vh);
   -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
   transform-origin: 0 0;
   background: inherit;
 }
@@ -611,14 +526,9 @@
 
 .game_card-attrib p {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -ms-flex-line-pack: center;
-      align-content: center;
+  justify-content: center;
+  align-content: center;
   width: 131%;
   height: 100%;
   left: 42%;
@@ -627,9 +537,7 @@
   z-index: 21;
   display: flex;
   justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   font-size: 130%;
   font-weight: 900;
 }
@@ -750,23 +658,16 @@
 
 .smallCard p {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -ms-flex-line-pack: center;
-      align-content: center;
+  justify-content: center;
+  align-content: center;
   width: 100%;
   height: 100%;
   text-align: center;
   z-index: 21;
   display: flex;
   justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   font-size: 130%;
   font-weight: 900;
 }
@@ -778,8 +679,7 @@
 .list .img_skull_black {
   background-color: black;
   color: white;
-  -webkit-box-shadow: inset 0 0 3vh white, 0 0 2vh black;
-          box-shadow: inset 0 0 3vh white, 0 0 2vh black;
+  box-shadow: inset 0 0 3vh white, 0 0 2vh black;
   text-shadow: 0 0 2vh black, 0 0 1vh black, 0 0 1.5vh #3a0e0e;
   background: center/115% no-repeat url("../img/skull_black.png");
   font-size: 79%;
@@ -789,8 +689,7 @@
 .list .img_self_black {
   background-color: black;
   color: white;
-  -webkit-box-shadow: inset 0 0 3vh white, 0 0 2vh black;
-          box-shadow: inset 0 0 3vh white, 0 0 2vh black;
+  box-shadow: inset 0 0 3vh white, 0 0 2vh black;
   text-shadow: 0 0 2vh black, 0 0 1vh black, 0 0 1.5vh #3a0e0e;
   background: center/115% no-repeat url("../img/self_black.png");
   font-size: 79%;
@@ -800,8 +699,7 @@
 .list .img_star_black {
   background-color: black;
   color: white;
-  -webkit-box-shadow: inset 0 0 3vh white, 0 0 2vh black;
-          box-shadow: inset 0 0 3vh white, 0 0 2vh black;
+  box-shadow: inset 0 0 3vh white, 0 0 2vh black;
   text-shadow: 0 0 2vh black, 0 0 1vh black, 0 0 1.5vh #3a0e0e;
   background: center/115% no-repeat url("../img/star_black.png");
   font-size: 79%;
@@ -811,8 +709,7 @@
 .list .img_cogs_black {
   background-color: black;
   color: white;
-  -webkit-box-shadow: inset 0 0 3vh white, 0 0 2vh black;
-          box-shadow: inset 0 0 3vh white, 0 0 2vh black;
+  box-shadow: inset 0 0 3vh white, 0 0 2vh black;
   text-shadow: 0 0 2vh black, 0 0 1vh black, 0 0 1.5vh #3a0e0e;
   background: center/115% no-repeat url("../img/cogs_black.png");
   font-size: 79%;
@@ -822,8 +719,7 @@
 .list .img_skull_white {
   background-color: white;
   color: black;
-  -webkit-box-shadow: inset 0 0 3vh black, 0 0 2vh black;
-          box-shadow: inset 0 0 3vh black, 0 0 2vh black;
+  box-shadow: inset 0 0 3vh black, 0 0 2vh black;
   text-shadow: 0 0 2vh white, 0 0 1vh white, 0 0 1.5vh #a4e6e0;
   background: center/115% no-repeat url("../img/skull_white.png");
   font-size: 79%;
@@ -833,8 +729,7 @@
 .list .img_self_white {
   background-color: white;
   color: black;
-  -webkit-box-shadow: inset 0 0 3vh black, 0 0 2vh black;
-          box-shadow: inset 0 0 3vh black, 0 0 2vh black;
+  box-shadow: inset 0 0 3vh black, 0 0 2vh black;
   text-shadow: 0 0 2vh white, 0 0 1vh white, 0 0 1.5vh #a4e6e0;
   background: center/115% no-repeat url("../img/self_white.png");
   font-size: 79%;
@@ -844,8 +739,7 @@
 .list .img_star_white {
   background-color: white;
   color: black;
-  -webkit-box-shadow: inset 0 0 3vh black, 0 0 2vh black;
-          box-shadow: inset 0 0 3vh black, 0 0 2vh black;
+  box-shadow: inset 0 0 3vh black, 0 0 2vh black;
   text-shadow: 0 0 2vh white, 0 0 1vh white, 0 0 1.5vh #a4e6e0;
   background: center/115% no-repeat url("../img/star_white.png");
   font-size: 79%;
@@ -855,8 +749,7 @@
 .list .img_cogs_white {
   background-color: white;
   color: black;
-  -webkit-box-shadow: inset 0 0 3vh black, 0 0 2vh black;
-          box-shadow: inset 0 0 3vh black, 0 0 2vh black;
+  box-shadow: inset 0 0 3vh black, 0 0 2vh black;
   text-shadow: 0 0 2vh white, 0 0 1vh white, 0 0 1.5vh #a4e6e0;
   background: center/115% no-repeat url("../img/cogs_white.png");
   font-size: 79%;
@@ -899,24 +792,16 @@
 }
 
 .treasureBox {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   width: 9vh;
   height: 9vh;
   background: #421905;
   background: radial-gradient(circle, rgba(66, 25, 5, 0.851961) 0%, rgba(57, 30, 3, 0.767927) 41%, rgba(20, 157, 175, 0.896779) 55%, rgba(56, 8, 2, 0.87437) 67%, rgba(56, 2, 2, 0.753922) 90%, rgba(70, 37, 3, 0.871569) 100%);
   border-radius: 45%;
-  -webkit-box-shadow: 0 0 1px 0 black, 0 0 1px 0 black inset;
-          box-shadow: 0 0 1px 0 black, 0 0 1px 0 black inset;
+  box-shadow: 0 0 1px 0 black, 0 0 1px 0 black inset;
 }
 
 .treasureBox img {
@@ -947,7 +832,13 @@
 }
 
 .nope {
-  -webkit-filter: brightness(0.3);
-          filter: brightness(0.3);
+  filter: brightness(0.3);
 }
-/*# sourceMappingURL=gameCard.css.map */
+
+.img_cogs_black.left, .img_cogs_white.left {
+  transform: rotate(180deg);
+}
+
+.img_cogs_black.right, .img_cogs_whire.right {
+  transform: rotate(270deg);
+}

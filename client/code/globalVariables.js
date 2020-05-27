@@ -20,6 +20,7 @@ var graveyard =
     };
 var crystalGlare_bb = null;
 var canceller;
+var cancellerName;
 var pocketBox = null;
 var opoSkillTrack;
 var mySkillTrack;

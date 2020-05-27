@@ -95,6 +95,8 @@ socket.on('fM',p=>{
 socket.on('tt',p=>{//{current:myTurn, next:phase}
     const { current, next } = p
     myTurn = myTurn ? false : true
+    $('.activatingShow').removeClass('activatingShow').addClass('nonActivShow')
+    $('.nonActivShow').removeClass('nonActivShow').addClass('activatingShow')
     //p1 && p2 starts black
     if(phase==='white'&&myNextPhase==='black'){
         phase='black'
@@ -110,3 +112,4 @@ socket.on('tt',p=>{//{current:myTurn, next:phase}
         console.log('TURN END TURN END TURN END TURN END TURN END TURN END')
     myTurn?displayAnimatedNews('Your<br/>turn'):0
 })
+socket.on('camcel',p=>defy[p.m]())

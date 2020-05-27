@@ -260,7 +260,6 @@ var _m_ = {
             if(!$('.sprint_selected').length ){
                 current_ability_method = null
                 pocketBox = null
-                 
                 add_action_taken('sprint')
             }
         }
@@ -297,7 +296,7 @@ var _m_ = {
             setTimeout(()=>$thiz.removeAttr('style'),100)
             if(!$('.forwardMinionsMorrigan').length ){
                 current_ability_method = null
-                add_action_taken('sprint')
+              //  add_action_taken('sprint')
             }
         }
     },
@@ -311,6 +310,13 @@ var _m_ = {
         $(thiz).removeClass(`twoPunch_selected`)
         setTimeout(()=>thiz.removeAttr('style'),100)
     },
+    shadowStepWhite:thiz=>{
+        $('[data-glow]').removeAttr('data-glow')
+        thiz.removeClass('shadowStepWhite shadowStepWhite_selected')
+        if( !$('.shadowStepWhite').length ){
+            current_ability_method = null
+        }
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

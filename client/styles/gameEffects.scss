@@ -1,27 +1,29 @@
 @keyframes objectiveGlow {
+    $W:.4vw;
+    $H:.3vw;
     0%{
-        box-shadow: 0 0 .5vw .4vw #b3b32a;
+        box-shadow: 0 0 $W $H #b3b32a;
     }
     15%{
-        box-shadow: 0 0 .5vw .42vw #2ab34f;
+        box-shadow: 0 0 $W $H #2ab34f;
     }
     30%{
-        box-shadow: 0 0 .5vw .44vw #2ab39b;
+        box-shadow: 0 0 $W $H #2ab39b;
     }
     45%{
-        box-shadow: 0 0 .5vw .48vw #2a8cb3;
+        box-shadow: 0 0 $W $H #2a8cb3;
     }
     60%{
-        box-shadow: 0 0 .5vw .50vw #792ab3;
+        box-shadow: 0 0 $W $H #792ab3;
     }
     75%{
-        box-shadow: 0 0 .5vw .52vw #2a5ab3;
+        box-shadow: 0 0 $W $H #2a5ab3;
     }
     90%{
-        box-shadow: 0 0 .5vw .55vw #b1b32a;
+        box-shadow: 0 0 $W $H #b1b32a;
     }
     100%{
-        box-shadow: 0 0 .5vw .59vw white;
+        box-shadow: 0 0 $W $H white;
     }
 }
 .obj1 {background-image:url("../img/1Obj.svg")}
@@ -70,10 +72,10 @@
 }
 .yellowGlow{
     @include makeGlow('yellow', 
-    rgba(230, 255, 10, 0.4), 
-    rgba(236, 240, 0, 0.562), 
-    rgba(252, 239, 119, 0.541), 
-    rgba(255, 251, 42, 0.541)
+    rgba(230, 255, 10, 0.2), 
+    rgba(236, 240, 0, 0.2), 
+    rgba(252, 239, 119, 0.2), 
+    rgba(255, 251, 42, 0.2)
     )
 }
 .greenGlow{
@@ -124,28 +126,72 @@ $selectedByEnemyGlow:rgba(238, 65, 53, 1);
     position:relative;
     animation: alternate infinite 4s coinPulse;
 }
+$glowDensity:.25;
+
 [data-glow="redGlow"]{
-    @include makeGlow('red', rgb(255, 0, 0), rgb(175, 0, 0), rgb(187, 0, 93), rgb(201, 44, 109))
+    @include makeGlow('red', 
+        rgba(255, 0, 0, $glowDensity), 
+        rgba(175, 0, 0, $glowDensity), 
+        rgba(187, 0, 93, $glowDensity), 
+        rgba(201, 44, 109, $glowDensity)
+    )
 }
 [data-glow="blueGlow"]{
-    @include makeGlow('blue', rgb(0, 38, 255), rgb(0, 175, 152), rgb(0, 187, 156), rgb(110, 78, 196))
+    @include makeGlow('blue', 
+        rgba(0, 38, 255, $glowDensity), 
+        rgba(0, 175, 152, $glowDensity),
+        rgba(0, 187, 156, $glowDensity), 
+        rgba(110, 78, 196, $glowDensity)
+    )
 }
 [data-glow="yellowGlow"]{
-    @include makeGlow('yellow', rgb(238, 255, 0), rgb(236, 240, 0), rgb(252, 238, 119), rgb(255, 251, 42))
+    @include makeGlow('yellow', 
+        rgba(238, 255, 0,.25), 
+        rgba(236, 240, 0,.25), 
+        rgba(252, 238, 119,.25), 
+        rgba(255, 251, 42,.25)
+    )
 }
 [data-glow="greenGlow"]{
-    @include makeGlow('green', rgb(81, 255, 0), rgb(0, 240, 12), rgb(84, 155, 67), rgb(73, 187, 8))
+    @include makeGlow('green', 
+        rgba(81, 255, 0, $glowDensity), 
+        rgba(0, 240, 12, $glowDensity), 
+        rgba(84, 155, 67, $glowDensity), 
+        rgba(73, 187, 8, $glowDensity)
+    )
 }
 [data-glow="legendaryGlow"],[data-glow="shootAndScoot"]{
-    @include makeGlow('goldenrod', goldenrod, goldenrod, goldenrod, goldenrod)
+    @include makeGlow('goldenrod', 
+        rgba(218, 165, 32, $glowDensity), 
+        rgba(218, 165, 32, $glowDensity), 
+        rgba(218, 165, 32, $glowDensity), 
+        rgba(218, 165, 32, $glowDensity)
+    )
 }
 [data-glow="recruitGlow"],[data-glow="claimColor"],[data-glow="newSpewWhite"],[data-glow="graspingDead"],[data-glow="answerTheCall"]{
-    @include makeGlow('white', rgb(245, 245, 245), rgb(194, 197, 194), rgb(243, 243, 243), rgb(238, 250, 231))
+    @include makeGlow('white', 
+        rgba(245, 245, 245, $glowDensity), 
+        rgba(194, 197, 194, $glowDensity), 
+        rgba(243, 243, 243, $glowDensity), 
+        rgba(238, 250, 231, $glowDensity)
+    )
 }
 [data-glow="straitPaths"], [data-glow="straitPaths1"], [data-glow="straitPaths2"], [data-glow="straitPaths3"], [data-glow="straitPaths4"], [data-glow="straitPaths5"], [data-glow="straitPaths6"]{
-    @include makeGlow('white', rgb(239, 255, 95), rgb(166, 255, 166), rgb(255, 252, 45), rgb(152, 241, 101))
+    @include makeGlow('white', 
+        rgba(239, 255, 95, $glowDensity), 
+        rgba(166, 255, 166, $glowDensity), 
+        rgba(255, 252, 45, $glowDensity), 
+        rgba(152, 241, 101, $glowDensity)
+    )
 }
-[data-glow="deathMove"],.usedSkill{ @include makeGlow('black',rgb(29, 28, 28) ,rgb(36, 32, 32) ,rgb(49, 6, 6) ,rgb(41, 39, 39) )}
+[data-glow="deathMove"],.usedSkill{ 
+    @include makeGlow('black',
+        rgba(29, 28, 28, $glowDensity) ,
+        rgba(36, 32, 32, $glowDensity) ,
+        rgba(49, 6, 6, $glowDensity) ,
+        rgba(41, 39, 39, $glowDensity) 
+    )
+}
 @keyframes shake {
     0% { transform: translate(1px, 1px) rotate(0deg); }
     10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -268,7 +314,7 @@ $partSize: 5em;
     top:54vh;
     font-size:151%;
 }
-.destined_for_DOOM{
+.destined_for_DOOM,.shadowStepWhite{
     img{
         filter: invert(90%) saturate(8);
     }
@@ -401,7 +447,7 @@ $partSize: 5em;
     content: '';
 }
 .activated{
-    filter:grayscale(.55) opacity(.95);
+    filter:grayscale(.65) opacity(.8);
 }
 
 @mixin barwyZespolu ($a,$b,$c,$d,$e,$f,$g,$h,$i){
@@ -452,3 +498,8 @@ $partSize: 5em;
         rgb(190, 10, 142)
     )
 }
+@mixin click($g){
+    transform:scale($g)
+}
+.smallCard:active,#claimAction:active{@include click(.9);}
+.hexagon:active{@include click(.9);}

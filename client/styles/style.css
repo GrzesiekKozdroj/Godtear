@@ -133,7 +133,6 @@
   border-left: 0.5vh solid rgba(235, 235, 235, 0.945);
   border-bottom: 0.5vh solid rgba(180, 180, 180, 0.863);
   background: rgba(0, 4, 36, 0.301);
-  background: radial-gradient(circle, rgba(0, 4, 36, 0.381373) 0%, rgba(213, 215, 241, 0.496219) 41%, rgba(83, 85, 98, 0.266527) 100%);
   border-right: none;
   width: calc((100% / 17.23 ) - 1vw);
   height: 100%;
@@ -142,17 +141,198 @@
   align-items: center;
 }
 
-.block1 {
+.left.block1, .right.block1 {
   border-radius: 50% 0 0 50%;
 }
 
-.block11 {
+.left.block11, .right.block11 {
   border-right: 0.5vh solid rgba(240, 240, 240, 0.911);
 }
 
-.block22 {
+.left.block22, .right.block22 {
   border-right: 0.5vh solid rgba(240, 240, 240, 0.911);
   border-radius: 0 50% 50% 0;
+}
+
+.left.block1 {
+  background: radial-gradient(circle, rgba(8, 203, 1, 0.38) 0%, rgba(8, 203, 1, 0.49) 41%, rgba(8, 203, 1, 0.27) 100%);
+}
+
+.left.block2 {
+  background: radial-gradient(circle, rgba(31, 203, 1, 0.38) 0%, rgba(31, 203, 1, 0.49) 41%, rgba(31, 203, 1, 0.27) 100%);
+}
+
+.left.block3 {
+  background: radial-gradient(circle, rgba(55, 203, 1, 0.38) 0%, rgba(55, 203, 1, 0.49) 41%, rgba(55, 203, 1, 0.27) 100%);
+}
+
+.left.block4 {
+  background: radial-gradient(circle, rgba(78, 203, 1, 0.38) 0%, rgba(78, 203, 1, 0.49) 41%, rgba(78, 203, 1, 0.27) 100%);
+}
+
+.left.block5 {
+  background: radial-gradient(circle, rgba(102, 203, 1, 0.38) 0%, rgba(102, 203, 1, 0.49) 41%, rgba(102, 203, 1, 0.27) 100%);
+}
+
+.left.block6 {
+  background: radial-gradient(circle, rgba(126, 203, 1, 0.38) 0%, rgba(126, 203, 1, 0.49) 41%, rgba(126, 203, 1, 0.27) 100%);
+}
+
+.left.block7 {
+  background: radial-gradient(circle, rgba(149, 203, 1, 0.38) 0%, rgba(149, 203, 1, 0.49) 41%, rgba(149, 203, 1, 0.27) 100%);
+}
+
+.left.block8 {
+  background: radial-gradient(circle, rgba(173, 203, 1, 0.38) 0%, rgba(173, 203, 1, 0.49) 41%, rgba(173, 203, 1, 0.27) 100%);
+}
+
+.left.block9 {
+  background: radial-gradient(circle, rgba(196, 203, 1, 0.38) 0%, rgba(196, 203, 1, 0.49) 41%, rgba(196, 203, 1, 0.27) 100%);
+}
+
+.left.block10 {
+  background: radial-gradient(circle, rgba(203, 186, 1, 0.38) 0%, rgba(203, 186, 1, 0.49) 41%, rgba(203, 186, 1, 0.27) 100%);
+}
+
+.left.block11 {
+  background: radial-gradient(circle, rgba(203, 163, 1, 0.38) 0%, rgba(203, 163, 1, 0.49) 41%, rgba(203, 163, 1, 0.27) 100%);
+}
+
+.left.block12 {
+  background: radial-gradient(circle, rgba(203, 139, 1, 0.38) 0%, rgba(203, 139, 1, 0.49) 41%, rgba(203, 139, 1, 0.27) 100%);
+}
+
+.left.block13 {
+  background: radial-gradient(circle, rgba(203, 115, 1, 0.38) 0%, rgba(203, 115, 1, 0.49) 41%, rgba(203, 115, 1, 0.27) 100%);
+}
+
+.left.block14 {
+  background: radial-gradient(circle, rgba(203, 92, 1, 0.38) 0%, rgba(203, 92, 1, 0.49) 41%, rgba(203, 92, 1, 0.27) 100%);
+}
+
+.left.block15 {
+  background: radial-gradient(circle, rgba(203, 68, 1, 0.38) 0%, rgba(203, 68, 1, 0.49) 41%, rgba(203, 68, 1, 0.27) 100%);
+}
+
+.left.block16 {
+  background: radial-gradient(circle, rgba(203, 45, 1, 0.38) 0%, rgba(203, 45, 1, 0.49) 41%, rgba(203, 45, 1, 0.27) 100%);
+}
+
+.left.block17 {
+  background: radial-gradient(circle, rgba(203, 21, 1, 0.38) 0%, rgba(203, 21, 1, 0.49) 41%, rgba(203, 21, 1, 0.27) 100%);
+}
+
+.left.block18 {
+  background: radial-gradient(circle, rgba(203, 1, 4, 0.38) 0%, rgba(203, 1, 4, 0.49) 41%, rgba(203, 1, 4, 0.27) 100%);
+}
+
+.left.block19 {
+  background: radial-gradient(circle, rgba(203, 1, 28, 0.38) 0%, rgba(203, 1, 28, 0.49) 41%, rgba(203, 1, 28, 0.27) 100%);
+}
+
+.left.block20 {
+  background: radial-gradient(circle, rgba(203, 1, 52, 0.38) 0%, rgba(203, 1, 52, 0.49) 41%, rgba(203, 1, 52, 0.27) 100%);
+}
+
+.left.block21 {
+  background: radial-gradient(circle, rgba(203, 1, 75, 0.38) 0%, rgba(203, 1, 75, 0.49) 41%, rgba(203, 1, 75, 0.27) 100%);
+}
+
+.left.block22 {
+  background: radial-gradient(circle, rgba(203, 1, 99, 0.38) 0%, rgba(203, 1, 99, 0.49) 41%, rgba(203, 1, 99, 0.27) 100%);
+}
+
+.right.block1 {
+  background: radial-gradient(circle, rgba(203, 25, 1, 0.38) 0%, rgba(203, 25, 1, 0.49) 41%, rgba(203, 25, 1, 0.27) 100%);
+}
+
+.right.block2 {
+  background: radial-gradient(circle, rgba(203, 48, 1, 0.38) 0%, rgba(203, 48, 1, 0.49) 41%, rgba(203, 48, 1, 0.27) 100%);
+}
+
+.right.block3 {
+  background: radial-gradient(circle, rgba(203, 72, 1, 0.38) 0%, rgba(203, 72, 1, 0.49) 41%, rgba(203, 72, 1, 0.27) 100%);
+}
+
+.right.block4 {
+  background: radial-gradient(circle, rgba(203, 95, 1, 0.38) 0%, rgba(203, 95, 1, 0.49) 41%, rgba(203, 95, 1, 0.27) 100%);
+}
+
+.right.block5 {
+  background: radial-gradient(circle, rgba(203, 119, 1, 0.38) 0%, rgba(203, 119, 1, 0.49) 41%, rgba(203, 119, 1, 0.27) 100%);
+}
+
+.right.block6 {
+  background: radial-gradient(circle, rgba(203, 142, 1, 0.38) 0%, rgba(203, 142, 1, 0.49) 41%, rgba(203, 142, 1, 0.27) 100%);
+}
+
+.right.block7 {
+  background: radial-gradient(circle, rgba(203, 166, 1, 0.38) 0%, rgba(203, 166, 1, 0.49) 41%, rgba(203, 166, 1, 0.27) 100%);
+}
+
+.right.block8 {
+  background: radial-gradient(circle, rgba(203, 190, 1, 0.38) 0%, rgba(203, 190, 1, 0.49) 41%, rgba(203, 190, 1, 0.27) 100%);
+}
+
+.right.block9 {
+  background: radial-gradient(circle, rgba(193, 203, 1, 0.38) 0%, rgba(193, 203, 1, 0.49) 41%, rgba(193, 203, 1, 0.27) 100%);
+}
+
+.right.block10 {
+  background: radial-gradient(circle, rgba(169, 203, 1, 0.38) 0%, rgba(169, 203, 1, 0.49) 41%, rgba(169, 203, 1, 0.27) 100%);
+}
+
+.right.block11 {
+  background: radial-gradient(circle, rgba(146, 203, 1, 0.38) 0%, rgba(146, 203, 1, 0.49) 41%, rgba(146, 203, 1, 0.27) 100%);
+}
+
+.right.block12 {
+  background: radial-gradient(circle, rgba(122, 203, 1, 0.38) 0%, rgba(122, 203, 1, 0.49) 41%, rgba(122, 203, 1, 0.27) 100%);
+}
+
+.right.block13 {
+  background: radial-gradient(circle, rgba(99, 203, 1, 0.38) 0%, rgba(99, 203, 1, 0.49) 41%, rgba(99, 203, 1, 0.27) 100%);
+}
+
+.right.block14 {
+  background: radial-gradient(circle, rgba(75, 203, 1, 0.38) 0%, rgba(75, 203, 1, 0.49) 41%, rgba(75, 203, 1, 0.27) 100%);
+}
+
+.right.block15 {
+  background: radial-gradient(circle, rgba(52, 203, 1, 0.38) 0%, rgba(52, 203, 1, 0.49) 41%, rgba(52, 203, 1, 0.27) 100%);
+}
+
+.right.block16 {
+  background: radial-gradient(circle, rgba(28, 203, 1, 0.38) 0%, rgba(28, 203, 1, 0.49) 41%, rgba(28, 203, 1, 0.27) 100%);
+}
+
+.right.block17 {
+  background: radial-gradient(circle, rgba(4, 203, 1, 0.38) 0%, rgba(4, 203, 1, 0.49) 41%, rgba(4, 203, 1, 0.27) 100%);
+}
+
+.right.block18 {
+  background: radial-gradient(circle, rgba(1, 203, 21, 0.38) 0%, rgba(1, 203, 21, 0.49) 41%, rgba(1, 203, 21, 0.27) 100%);
+}
+
+.right.block19 {
+  background: radial-gradient(circle, rgba(1, 203, 45, 0.38) 0%, rgba(1, 203, 45, 0.49) 41%, rgba(1, 203, 45, 0.27) 100%);
+}
+
+.right.block20 {
+  background: radial-gradient(circle, rgba(1, 203, 68, 0.38) 0%, rgba(1, 203, 68, 0.49) 41%, rgba(1, 203, 68, 0.27) 100%);
+}
+
+.right.block21 {
+  background: radial-gradient(circle, rgba(1, 203, 92, 0.38) 0%, rgba(1, 203, 92, 0.49) 41%, rgba(1, 203, 92, 0.27) 100%);
+}
+
+.right.block22 {
+  background: radial-gradient(circle, rgba(1, 203, 115, 0.38) 0%, rgba(1, 203, 115, 0.49) 41%, rgba(1, 203, 115, 0.27) 100%);
+}
+
+.f {
+  color: rgba(1, 203, 18, 0.719);
+  color: rgba(203, 1, 1, 0.562);
 }
 
 #gameScreen {
@@ -1810,14 +1990,14 @@ body {
 }
 
 .unitModel {
-  transform: scale(0.35, 0.35);
-  -ms-transform: scale(0.35, 0.35);
+  transform: scale(0.4);
+  -ms-transform: scale(0.4);
   /* Internet Explorer */
-  -moz-transform: scale(0.35, 0.35);
+  -moz-transform: scale(0.4);
   /* Firefox */
-  -webkit-transform: scale(0.35, 0.35);
+  -webkit-transform: scale(0.4);
   /* Safari and Chrome */
-  -o-transform: scale(0.35, 0.35);
+  -o-transform: scale(0.4);
   /* Opera */
   z-index: 4;
   margin: auto -47% !important;
@@ -1956,7 +2136,7 @@ body {
   position: relative;
   left: 0%;
   top: 0%;
-  transform: scale(120%);
+  transform: scale(95%);
 }
 
 .claimedBanner.whiteTeam {
@@ -2333,8 +2513,6 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
 }
 
 .gameCard_num {
-  font-family: "Shojumaru", cursive;
-  font-size: 212% !important;
   position: relative;
   top: -21%;
   width: 100%;
@@ -2342,18 +2520,50 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Shojumaru", cursive;
+  font-size: 212% !important;
 }
 
-.gameCard_num.normal {
+.gameCard_name.white {
+  position: relative;
+  top: -21%;
+  width: 100%;
+  height: 161%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Shojumaru", cursive;
+  font-size: 77% !important;
+  color: black;
+}
+
+.gameCard_name.black {
+  position: relative;
+  top: -21%;
+  width: 100%;
+  height: 161%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Shojumaru", cursive;
+  font-size: 77% !important;
+  color: white;
+}
+
+.gameCard_name {
+  height: 0 !important;
+}
+
+.gameCard_num.normal, .gameCard_name.normal {
   text-shadow: 0 0 1px #696462, 0 0 2px #837c7a, 0 0 3px #75716f;
 }
 
-.gameCard_num.booned {
+.gameCard_num.booned, .gameCard_name.booned {
   text-shadow: 0 0 1px #00ccff, 0 0 2px #00ffbf, 0 0 3px #00ffb3;
   color: #00001f;
 }
 
-.gameCard_num.blighted {
+.gameCard_num.blighted, .gameCard_name.blighted {
   text-shadow: 0 0 1px #722101, 0 0 2px #752201, 0 0 3px #9b0186;
   color: #270202;
 }
@@ -2415,22 +2625,42 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   color: #ffecec;
 }
 
-.miniGameCard.black.left {
+.miniGameCard.black.left.activatingShow {
   background: #000424;
-  background: linear-gradient(90deg, #000424 0%, rgba(77, 78, 93, 0.653081) 33%, rgba(62, 63, 73, 0.347759) 73%, rgba(83, 85, 98, 0) 100%);
+  background: linear-gradient(90deg, #000424 0%, rgba(77, 78, 93, 0.7) 33%, rgba(62, 63, 73, 0.5) 73%, rgba(83, 85, 98, 0) 100%);
 }
 
-.miniGameCard.white.left {
+.miniGameCard.white.left.activatingShow {
   background: #a5a6b1;
-  background: linear-gradient(90deg, #a5a6b1 0%, rgba(131, 133, 156, 0.653081) 33%, rgba(104, 106, 126, 0.347759) 73%, rgba(83, 85, 98, 0) 100%);
+  background: linear-gradient(90deg, #a5a6b1 0%, rgba(131, 133, 156, 0.7) 33%, rgba(104, 106, 126, 0.5) 73%, rgba(83, 85, 98, 0) 100%);
 }
 
-.miniGameCard.black.right {
+.miniGameCard.black.right.activatingShow {
   background: #000424;
-  background: linear-gradient(90deg, rgba(0, 4, 36, 0) 0%, rgba(77, 78, 93, 0.479412) 33%, rgba(62, 63, 73, 0.510224) 73%, #535562 100%);
+  background: linear-gradient(90deg, rgba(0, 4, 36, 0) 0%, rgba(77, 78, 93, 0.5) 33%, rgba(62, 63, 73, 0.7) 73%, #535562 100%);
 }
 
-.miniGameCard.white.right {
+.miniGameCard.white.right.activatingShow {
   background: #b1aaa5;
-  background: linear-gradient(90deg, rgba(165, 166, 177, 0) 0%, rgba(121, 123, 140, 0.35056) 33%, rgba(173, 173, 173, 0.580252) 73%, #c4c4c4 100%);
+  background: linear-gradient(90deg, rgba(165, 166, 177, 0) 0%, rgba(121, 123, 140, 0.5) 33%, rgba(173, 173, 173, 0.7) 73%, #c4c4c4 100%);
+}
+
+.miniGameCard.black.left.nonActivShow {
+  background: #000424;
+  background: linear-gradient(90deg, rgba(0, 4, 36, 0.5) 0%, rgba(77, 78, 93, 0.35) 33%, rgba(62, 63, 73, 0.05) 73%, rgba(83, 85, 98, 0) 100%);
+}
+
+.miniGameCard.white.left.nonActivShow {
+  background: #a5a6b1;
+  background: linear-gradient(90deg, rgba(165, 166, 177, 0.5) 0%, rgba(131, 133, 156, 0.35) 33%, rgba(104, 106, 126, 0.05) 73%, rgba(83, 85, 98, 0) 100%);
+}
+
+.miniGameCard.black.right.nonActivShow {
+  background: #000424;
+  background: linear-gradient(90deg, rgba(0, 4, 36, 0) 0%, rgba(77, 78, 93, 0.05) 33%, rgba(62, 63, 73, 0.35) 73%, rgba(83, 85, 98, 0.5) 100%);
+}
+
+.miniGameCard.white.right.nonActivShow {
+  background: #b1aaa5;
+  background: linear-gradient(90deg, rgba(165, 166, 177, 0) 0%, rgba(121, 123, 140, 0.05) 33%, rgba(173, 173, 173, 0.35) 73%, rgba(196, 196, 196, 0.5) 100%);
 }

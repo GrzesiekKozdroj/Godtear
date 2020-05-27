@@ -31,7 +31,7 @@ const m =
               (
                 !thiz.hasClass('objectiveGlow') || 
                 type !== 'unit' || 
-                name === 'Froglodytes'
+                ( name === 'Froglodytes' && !thiz.children(`.claimedBanner`).length )
               ) &&
               (
                   !thiz.children(`.smallCard`).length || 
@@ -39,7 +39,7 @@ const m =
                   name === thiz.children(`.smallCard.whiteTeam`).first().data('name') && 
                   thiz.children(`.smallCard`).length < 3
                 )
-              ) && onlyOneStep(thiz) &&  check_actions_count()
+              ) && onlyOneStep(thiz) && check_actions_count() && !thiz.children(`.claimedBanner.whiteTeam`).length
             )
             {
                 const h = thiz.data('hex')
@@ -49,11 +49,13 @@ const m =
                 makeAnim( $('.selectedModel.whiteTeam'), thiz, displayMovementAura )
             }
         },
-        recruit: function () { },
-        rally: function () { },
-        dieGrunt: function () { },
-        dieChamp: function () { },
-        claim: function (thiz, teamColor, key = "claimed") {//console.log(key)
+        stepOnBanner: function (model,whereTo){
+            if( whereTo.children(`.claimedBanner`).length && model.hasClass('smallCard') ){
+                whereTo.children(`.claimedBanner`).remove()
+                moveLadder(model,-1)
+            }
+        },
+        claim: function (thiz, teamColor, key = "claimed") {//console.log(key), key = "claimed"
             thiz.append(placeBanner(teamColor))
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken(key)
@@ -909,7 +911,7 @@ const m =
             {
                 name: "Banner Warden",
                 desc: `If Finvarr is on an objective hex, his skills have +2${aim}.`,
-                m: "null"
+                m: "bannerWarden"
             }
         }
     },
@@ -935,6 +937,13 @@ const m =
                 hurt: [4, 5, 5],
                 unused: true,
                 m: "lifeTrade"
+            },
+            shadowStepBlack:
+            {
+                name: "Shadow Step",
+                desc: "If the Shadow Sentinels do not make an advance action during their activation, each Shadow Sentinel may move up to 1 hex when activation ends.",
+                m: "shadowStepWhite",
+                icon:'self'
             }
         },
         white: {
@@ -956,17 +965,16 @@ const m =
                 aim: [4, 5, 5],
                 unused: true,
                 m: "shadowSnare"
-            }
-        },
-        util://waits until proper action validation
-        {
-            shadowStep:
+            },
+            shadowStepWhite:
             {
                 name: "Shadow Step",
                 desc: "If the Shadow Sentinels do not make an advance action during their activation, each Shadow Sentinel may move up to 1 hex when activation ends.",
-                m: function () { }
+                m: "shadowStepWhite",
+                icon:'self'
             }
-        }
+        },
+        util:{}
     },
     Nia:
     {
@@ -1600,7 +1608,7 @@ const m =
                 unused:true,
                 m:"blur"
             },
-            faryFire:
+            faryFire_MR:
             {
                 name:"Fairy Fire",
                 desc:`Hit Effect: ${protectionBlight}.`,
@@ -1617,7 +1625,7 @@ const m =
             {
                 name:"Kill Shot",
                 desc:`When the target is a wounded enemy chmpion, the Mistwood Rangers' skills have +1${hurt}.`,
-                m:function(){}
+                m:false
             }
         }
     },
@@ -1923,7 +1931,7 @@ const m =
             forwardMinionsMorrigan:
             {
                 name:"Forward, Minions!",
-                desc:"Move each Cold Bones that is within range up top 2 hexes.",
+                desc:"Move each Cold Bones that is within range up to 2 hexes.",
                 icon:cogs,
                 dist:4,
                 unused:true,

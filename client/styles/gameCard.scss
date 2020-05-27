@@ -69,14 +69,17 @@ $white: white;
                     flex:1;
                 }
                 .roster_abil_desc{
-                    padding-right:4%;
-                    font-size: 95%;
-                    font-weight: 400;
-                    line-height: 1.25;
-                    letter-spacing: -.06vw;
                     height:auto;
                     width:129%;
                     position:relative;
+                    z-index:1;
+                    padding-right:4%;
+                    padding-top:14%;
+                    color:rgb(48, 25, 25);
+                    font-weight: 900;
+                    font-size: 95%;
+                    line-height: 1.25;
+                    letter-spacing: -.06vw;
                 }
             }
             .roster_abil_stats{
@@ -440,7 +443,33 @@ $white: white;
 .nope{filter:brightness(.3)}
 .img_cogs_black.left,.img_cogs_white.left{
     transform:rotate(180deg);
+    .gameCard_name{
+        transform:rotate(-180deg)
+    }
 }
 .img_cogs_black.right,.img_cogs_whire.right{
-    transform: rotate(270deg);
+    transform: rotate(180deg);
+    .gameCard_name{
+        transform:rotate(-180deg)
+    }
+}
+#dummy_contain{
+    width:1%;
+    height:1%;
+    position:relative;
+    top:-94%;
+    z-index:-1;
+    .mini-card-actions{
+        justify-content: space-evenly;
+    }
+}
+#dummy_contain.right{ left: -220%}
+#dummy_contain.left{ left: 70%}
+.mini-card-actions{
+    @include instaFlex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    position: relative;
+    width: 10000%;
+    height: 10000%;
 }

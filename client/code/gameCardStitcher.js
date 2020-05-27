@@ -23,7 +23,7 @@ const bigCard_bb = (a,b)=>`<span class="${b>0?'booned':b<0?'blighted':'normal'} 
                     produce = [ ...produce, damageBoon ]
                 else if ( bdamage < 0 )
                 produce = [ ...produce, damageBlight ]
-            return produce.join('')
+            return [styled_attribute_name(skill.name,bdamage+baim),...produce].join('')
         }
 
         const bloodedUnit = (unitName, side, unitSize,type, name) =>{
@@ -330,18 +330,28 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
         return skillList.map(skill=>{
             let jinput = skill.legendaryUsed === false ? 'legendary' : skill.m && typeof skill.m === 'string' ? skill.m : null
             let stajtus = abilTruthRead(jinput,side,name) ? 'glow_unused' : 'usedSkill'
+            let b_b = baim+bdamage
             return `
                 <div class='smallCard img_${skill.icon}_${phase} ${side} ${stajtus} skill' ${makedata(skill)} >
                     <div class='top ${stajtus}'></div>
                     ${dis_min_BBs(skill,baim,bdamage)}
-                    <p id="smallCardParagraph">${/*skill.name*/''}</p>
                     <div class='bottom ${stajtus}'></div>
                 </div>
             `}).join('')
     }
     const BB_HUD = (c)=>c>0? 'glow_BB_card booned' : c < 0 ? 'glow_BB_card blighted' : ''
     return `
-    <div class='miniGameCard ${side} ${phase}' 
+    <div class='
+            miniGameCard 
+            ${side} ${phase} 
+            ${ side === mySide && myTurn ?
+                    'activatingShow'
+               : side === opoSide && !myTurn ? 
+                    'activatingShow' 
+               : 
+                 'nonActivShow' 
+            }
+        ' 
         data-klass='${klass}' 
         data-type='${type}' 
         data-name='${name}' 
@@ -396,6 +406,15 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
         <div id='endAction' class='smallCard endTask ${type} ${phase} ${side}'>
             <div class='top'></div><div class='bottom'></div>
         </div>
+        <div id="dummy_contain" class="${side}">
+            <div class="mini-card-actions">
+                <div id='claimAction' class='game_card-attrib card_base_action ${phase} ${type} claim'>
+                    <div class='top'></div><div class='bottom'></div>
+                </div>
+                ${bloodedUnit(unitName, side, unitSize,type,name)}
+                ${treasureBox(side)}
+            </div>
+        </div>
     </div>
 </div>
     `
@@ -408,6 +427,12 @@ function styled_attribute_number(num, bb){
     const colour = bb === 1 ? 'booned' : bb === 0 ? 'normal' : 'blighted'
     return `
         <p class="${colour} gameCard_num ${phase}" >${Number(num)+bb}</p>
+    `
+}
+function styled_attribute_name(name, bb){
+    const colour = bb === 1 ? 'booned' : bb === 0 ? 'normal' : 'blighted'
+    return `
+        <p class="${colour} gameCard_name ${phase}" >${name}</p>
     `
 }
 function treasureBox(side){

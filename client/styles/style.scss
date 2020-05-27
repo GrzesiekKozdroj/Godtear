@@ -217,21 +217,43 @@ $colorFillHex: transparent;
     border-left:.5vh solid rgba(235, 235, 235, 0.945);
     border-bottom:.5vh solid rgba(180, 180, 180, 0.863);
     background: rgba(0, 4, 36, 0.301);
-    background: radial-gradient(circle, rgba(0,4,36,0.38137261740633754) 0%, rgba(213,215,241,0.4962185557816877) 41%, rgba(83,85,98,0.26652667903098737) 100%); 
     border-right:none;
     width:calc((100% / 17.23 ) - 1vw);//calc($appWidth / 22);
     height:100%;//calc((100% / 18.2 ) - 1vh);
     @include instaFlex;
 }
-.block1{
+.left.block1,.right.block1{
     border-radius: 50% 0 0 50%;
 }
-.block11{
+.left.block11,.right.block11{
     border-right:.5vh solid rgba(240, 240, 240, 0.911);
 }
-.block22{
+.left.block22,.right.block22{
     border-right:.5vh solid rgba(240, 240, 240, 0.911);
     border-radius: 0 50% 50% 0;
+}
+$sq: 7;
+@for $ij from 1 through 22 {
+    .left.block#{$ij}{
+        background: radial-gradient(circle, 
+            hsla(125 - ( $ij * $sq ), 99%, 40%, .38) 0%, 
+            hsla(125 - ( $ij * $sq ), 99%, 40%, .49) 41%, 
+            hsla(125 - ( $ij * $sq ), 99%, 40%, .27) 100%
+        ); 
+    }
+}
+@for $ij from 1 through 22 {
+    .right.block#{$ij}{
+        background: radial-gradient(circle, 
+            hsla(0 + ( $ij * $sq ), 99%, 40%, .38) 0%, 
+            hsla(0 + ( $ij * $sq ), 99%, 40%, .49) 41%, 
+            hsla(0 + ( $ij * $sq ), 99%, 40%, .27) 100%
+        ); 
+    }
+}
+.f{
+    color:hsla(125, 99%, 40%, 0.719);
+    color:hsla(0, 99%, 40%, 0.562);
 }
 #gameScreen{
     height:100vh;
@@ -411,11 +433,12 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     max-width:90%;
 }
 .unitModel{
-    transform:scale(.35,.35);
-    -ms-transform: scale(.35,.35); /* Internet Explorer */
-    -moz-transform: scale(.35,.35); /* Firefox */
-    -webkit-transform: scale(.35,.35); /* Safari and Chrome */
-    -o-transform: scale(.35,.35); /* Opera */
+    $s:.4;
+    transform:scale($s);
+    -ms-transform: scale($s); /* Internet Explorer */
+    -moz-transform: scale($s); /* Firefox */
+    -webkit-transform: scale($s); /* Safari and Chrome */
+    -o-transform: scale($s); /* Opera */
     z-index:4;
     margin:auto -47%!important;
 
@@ -536,7 +559,7 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     position: relative;
     left: 0%;
     top: 0%;
-    transform:scale(120%);
+    transform:scale(95%);
 }
 .claimedBanner.whiteTeam{box-shadow: 0 0 1vh white inset, 0 0 1.2vh white inset,  0 0 1vh white , 0 0 1.2vh white ;}
 .claimedBanner.blackTeam{box-shadow: 0 0 1vh black inset, 0 0 1.2vh black inset,  0 0 1vh black , 0 0 1.2vh black ;}
@@ -786,24 +809,41 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
     background-image: url("../img/speedBlight.svg"); 
     background-size: contain;
 }
-
-.gameCard_num{
-    font-family: $coinFont2;
-    font-size:212%!important;
+@mixin gC_uni{
     position:relative;
     top:-21%;
     width: 100%;
     height:161%;
     @include instaFlex;
+    font-family: $coinFont2;
+
 }
-.gameCard_num.normal{
+.gameCard_num{
+    @include gC_uni;
+    font-size:212%!important;
+}
+.gameCard_name.white{
+    @include gC_uni;
+    font-size:77%!important;
+    color:black;
+}
+.gameCard_name.black{
+    @include gC_uni;
+    font-size:77%!important;
+    color:white;
+}
+.gameCard_name{
+    height:0!important;
+}
+
+.gameCard_num.normal,.gameCard_name.normal{
     text-shadow: 0 0 1px rgb(105, 100, 98), 0 0 2px rgb(131, 124, 122), 0 0 3px rgb(117, 113, 111);
 }
-.gameCard_num.booned{
+.gameCard_num.booned,.gameCard_name.booned{
     text-shadow: 0 0 1px rgb(0, 204, 255), 0 0 2px rgb(0, 255, 191), 0 0 3px rgb(0, 255, 179);
     color:rgb(0, 0, 31);
 }
-.gameCard_num.blighted{
+.gameCard_num.blighted,.gameCard_name.blighted{
     text-shadow: 0 0 1px rgb(114, 33, 1), 0 0 2px rgb(117, 34, 1), 0 0 3px rgb(155, 1, 134);
     color:rgb(39, 2, 2);
 }
@@ -863,20 +903,75 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
     text-shadow: 0 0 1px rgb(114, 33, 1), 0 0 2px rgb(117, 34, 1), 0 0 3px rgb(155, 1, 134);
     color:rgb(255, 236, 236);
 }
-.miniGameCard.black.left{
+.miniGameCard.black.left.activatingShow{
     background: rgb(0,4,36);
-    background: linear-gradient(90deg, rgba(0,4,36,1) 0%, rgba(77,78,93,0.6530813008797269) 33%, rgba(62,63,73,0.3477591720281863) 73%, rgba(83,85,98,0) 100%); 
+    background: linear-gradient(90deg, 
+        rgba(0,4,36,1) 0%,
+        rgba(77,78,93,0.7) 33%, 
+        rgba(62,63,73,0.5) 73%, 
+        rgba(83,85,98,0) 100%); 
 }
-.miniGameCard.white.left{
+.miniGameCard.white.left.activatingShow{
     background: rgb(165,166,177);
-    background: linear-gradient(90deg, rgba(165,166,177,1) 0%, rgba(131,133,156,0.6530813008797269) 33%, rgba(104,106,126,0.3477591720281863) 73%, rgba(83,85,98,0) 100%); 
+    background: linear-gradient(90deg, 
+        rgba(165,166,177,1) 0%, 
+        rgba(131,133,156,0.7) 33%, 
+        rgba(104,106,126,.5) 73%,
+        rgba(83,85,98,0) 100%
+    ); 
 }
-.miniGameCard.black.right{
+.miniGameCard.black.right.activatingShow{
     background: rgb(0,4,36);
-    background: linear-gradient(90deg, rgba(0,4,36,0) 0%, rgba(77,78,93,0.47941183309261204) 33%, rgba(62,63,73,0.510224158022584) 73%, rgba(83,85,98,1) 100%); 
+    background: linear-gradient(90deg, 
+        rgba(0,4,36,0) 0%, 
+        rgba(77,78,93,0.5) 33%, 
+        rgba(62,63,73,0.7) 73%, 
+        rgba(83,85,98,1) 100%
+    ); 
+}
+.miniGameCard.white.right.activatingShow{
+    background: rgb(177, 170, 165);
+    background: linear-gradient(90deg, 
+        rgba(165,166,177,0) 0%, 
+        rgba(121,123,140,0.5) 33%, 
+        rgba(173,173,173,0.7) 73%, 
+        rgba(196,196,196,1) 100%
+    ); 
 }
 
-.miniGameCard.white.right{
+
+.miniGameCard.black.left.nonActivShow{
+    background: rgb(0,4,36);
+    background: linear-gradient(90deg, 
+        rgba(0,4,36,.5) 0%,
+        rgba(77,78,93,0.35) 33%, 
+        rgba(62,63,73,0.05) 73%, 
+        rgba(83,85,98,0) 100%); 
+}
+.miniGameCard.white.left.nonActivShow{
+    background: rgb(165,166,177);
+    background: linear-gradient(90deg, 
+        rgba(165,166,177,.5) 0%, 
+        rgba(131,133,156,0.35) 33%, 
+        rgba(104,106,126,0.05) 73%,
+        rgba(83,85,98,0) 100%
+    ); 
+}
+.miniGameCard.black.right.nonActivShow{
+    background: rgb(0,4,36);
+    background: linear-gradient(90deg, 
+        rgba(0,4,36,0) 0%, 
+        rgba(77,78,93,0.05) 33%, 
+        rgba(62,63,73,0.35) 73%, 
+        rgba(83,85,98,.5) 100%
+    ); 
+}
+.miniGameCard.white.right.nonActivShow{
     background: rgb(177, 170, 165);
-    background: linear-gradient(90deg, rgba(165,166,177,0) 0%, rgba(121,123,140,0.35056029247636555) 33%, rgba(173,173,173,0.5802521692270659) 73%, rgba(196,196,196,1) 100%); 
+    background: linear-gradient(90deg, 
+        rgba(165,166,177,0) 0%, 
+        rgba(121,123,140,0.05) 33%, 
+        rgba(173,173,173,0.35) 73%, 
+        rgba(196,196,196,.5) 100%
+    ); 
 }

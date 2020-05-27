@@ -223,7 +223,7 @@ $('body').on('click','.hexagon',function(e){
             if( $(`[data-glow="yellowGlow"]`).length )
             $(`[data-glow="yellowGlow"]`).removeAttr(`data-glow`)
         }
-        canceller ? canceller() : cancelMove()
+        cancellerName ? socket.emit('camcel',{m:cancellerName}) : cancelMove()
       //  current_ability_method = null
       //  $('[data-glow]').removeAttr('data-glow')
     }
@@ -253,7 +253,8 @@ for(let K in m){
                         $('[data-glow]').removeAttr('data-glow')
                         highlightHexes({colour:glow,dist:data.dist})
                         current_ability_method = _m[data.m]
-                        canceller = defy[SKILL.m] ? defy[SKILL.m] : null
+                        canceller = defy[SKILL.m] ? defy[SKILL.m] : ()=>{return 0}
+                        cancellerName = SKILL.m
                         if(data.dist)
                             socket.emit('HH', {color:glow,dist:data.dist,m:SKILL.preface})//r way also pre init function
                         else//for things like initiating message to other player, highlighting uttons active, pre setting skills
@@ -425,6 +426,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.twoPunch_selected').length )extraMover('twoPunch',thiz)
         if( $('[data-glow="answerTheCall"]').length )
             socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row,key:"answerTheCall"})
+        if( $('.shadowStepWhite_selected').length )extraMover('shadowStepWhite',thiz)
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
@@ -434,6 +436,16 @@ $('body').on('click','.avalanche_moveable',function(e){
     const { hex, row } = $(this).data()
     socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"avalanche2", hex, row})
 
+})
+$('body').on('click','.shadowStepWhite',function(e){
+    e.preventDefault()
+    if(myTurn){
+        $('.shadowStepWhite_selected').removeClass('shadowStepWhite_selected')
+        $(this).addClass('shadowStepWhite_selected')
+        $(`[data-glow]`).removeAttr('data-glow')
+        highlightHexes({colour:'legendaryGlow',dist:1},$(this))
+        socket.emit('HH',{colour:'legendaryGlow',dist:1})
+    }
 })
 $('body').on('click','.illKillYouAll',function(e){
     e.preventDefault()

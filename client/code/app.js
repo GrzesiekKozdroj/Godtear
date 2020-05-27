@@ -1,3 +1,10 @@
+function buildLadder(){
+    for (let l = 1; l < 23; l++) {
+        $('#ladder').append(`
+            <div class="ladderBlock ${mySide} block${l}" data-block="${l}"></div>
+        `);
+    }
+}
 function buildRosters(o,coin){
     //o={nickName:{roster,nickName,opoName,gamePlace,socket.id,side},opoName:{roster,nickName,opoName,gamePlace,socket.id}}
     if(o) for (let key in o){
@@ -36,11 +43,6 @@ function beginBattle(){
             $(`.row${r}`).append(hex);
         }
     }
-    for (let l = 1; l < 23; l++) {
-        $('#ladder').append(`
-        <div class="ladderBlock block${l}" data-block="${l}"></div>
-    `);
-    }
 }
 const makeAnim = (model,whereTo,callback=false) => {//model, destination
     let ofsetSize = model.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
@@ -54,6 +56,7 @@ const makeAnim = (model,whereTo,callback=false) => {//model, destination
             const team = model.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
             model.removeAttr('style').detach().appendTo(whereTo)
             document.querySelector(`[data-name="${name}"]${team}`).removeAttribute('style')
+            m.universal.stepOnBanner(model,whereTo)//bugs the shit out of phantomBanners
             if(callback)
                 callback(model)
             else
@@ -65,7 +68,7 @@ function gameCard (name, roster, color) {
     return `    <div id="${name}" class="game_card"></div>    `
 }
 function makeGameBoard(o,coin){
-    buildRosters(o,coin)
+        buildRosters(o,coin)
         $('#gameScreen').empty()//.css('background-color','darkgreen')
             .append(`
                 <div id='game_card' class='${opoSide} cardsContainer ${opoSide}_card'>
@@ -80,7 +83,7 @@ function makeGameBoard(o,coin){
                 </div>
             `)
     beginBattle()
-
+    buildLadder()
     QUICK_DEEPLOY()
   //  setTimeout(()=>{phase='black';myNextPhase='black'},1900)
     opoSkillTrack = buildSkillTrack(opoRoster)

@@ -541,12 +541,12 @@ const _m = {
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDeadChamps", hex, row })
         displayAnimatedNews('choose champions<br/>to rally')
     },
-    soulClave:function(origin,target){
+    soulCleave:function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         if($target.hasClass(`blackTeam`) && $target.hasClass('unitModel') )
-            socket.emit('rolloSkill',{ aim:(5+baim), hurt:(5+bdamage), socksMethod:"soulClave", hex, row, multiAction:mySide})
+            socket.emit('rolloSkill',{ aim:(5+baim), hurt:(5+bdamage), socksMethod:"soulCleave", hex, row, multiAction:mySide})
     },
     graveSummons:function(origin,target){
         const {hex,row}=target
@@ -612,21 +612,21 @@ const _m = {
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        const bannerWarden = $(`.hex_${hex}_in_row_${row}`).hasClass('objectiveGlow') ? 2 : 0
+        const bW = bannerWarden(origin)
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (4 + baim + bannerWarden), hurt:(5 + bdamage), socksMethod:"lifeBlade", hex, row })
+            socket.emit('rolloSkill',{ aim: (4 + baim + bW), hurt:(5 + bdamage), socksMethod:"lifeBlade", hex, row })
     },
     poisedToStrike:function(origin,target){
         const { hex, row } = origin.parent('.hexagon').data()
         socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"poisedToStrike", hex, row})
     },
     shadowWard:function(origin,target){
-        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { baim } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        const bannerWarden = $(`.hex_${hex}_in_row_${row}`).hasClass('objectiveGlow') ? 2 : 0
+        const bW = bannerWarden(origin)
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (5 + baim + bannerWarden), hurt:0, socksMethod:"shadowWard", hex, row })
+            socket.emit('rolloSkill',{ aim: (5 + baim + bW), hurt:0, socksMethod:"shadowWard", hex, row })
     },
     phantomBanners:function(origin,target){
         const { hex, row } = target
@@ -661,6 +661,14 @@ const _m = {
         const aim = [4, 5, 5][unitSize]
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim + baim), hurt:0, socksMethod:"shadowSnare", hex, row })
+    },
+    shadowStepWhite:function(origin,target){
+        const { hex, row } = target
+        if(origin.attr('data-speed') === origin.attr('data-speedleft'))
+            socket.emit('rolloSkill',{ socksMethod:"shadowStepWhite",hex,row})
+    },
+    shadowStepBlack:function(origin,target){
+
     },
     crystalGlare:function(origin,target){
         const { hex, row } = target

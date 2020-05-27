@@ -163,12 +163,15 @@ const moveLadder = (target,steps) => {
         direction = mySide === 'left' ? 1 : -1
     }        
     const calculus = ((.79*window.innerWidth / 17.23 ) - .01*window.innerWidth)
-    const destination = $(`.block${ origin + steps * direction }`)
-    $('#coin').animate({
-        left: (steps * direction * calculus)
-    }, 500, ()=>{
-        $('#coin').removeAttr('style').finish().detach().appendTo(destination)
-    })
+    let adres = origin+steps*direction
+    adres = adres < 0 ? 1 : adres > 22 ? 22 : adres > 0 && adres < 23 ? adres : false
+    const destination = $(`.block${ adres }`)
+    if( adres )
+        $('#coin').animate({
+            left: (steps * direction * calculus)
+        }, 500, ()=>{
+            $('#coin').removeAttr('style').finish().detach().appendTo(destination)
+        })
 }
 const extractBoons_Blights = (origin) => {
     const baim = Number(origin.attr('data-baim'))
@@ -224,6 +227,10 @@ function styleStats(a,b,key,thiz){
                 .each(function(){
                     if( !$(this).children('.aimBoon').length && !$(this).children('.aimBlight').length)
                     $(this).prepend(b>0?aimBoon:aimBlight)
+                    $(this)
+                        .children('.gameCard_name')
+                        .removeClass('booned blighted normal')
+                        .addClass(b>0?'booned':b<0?'blighted':'normal')
                 })
         if(key==='bdamage')
         $(`[data-name="${thiz.data('name')}"].miniGameCard.${thiz.data('side')}`)
@@ -231,6 +238,10 @@ function styleStats(a,b,key,thiz){
             .each(function(){
                 if( !$(this).children('.hurtBoon').length && !$(this).children('.hurtBlight').length)
                 $(this).prepend(b>0?damageBoon:damageBlight)
+                $(this)
+                    .children('.gameCard_name')
+                    .removeClass('booned blighted normal')
+                    .addClass(b>0?'booned':b<0?'blighted':'normal')
             })
 
     }else if(b==0){
@@ -356,6 +367,9 @@ function extraMover(methodName,thiz,conditions=true){//<----needs another props:
             socket.emit('forceMove',{h:h, r:r, klass, callback:methodName})
         }
     }
+}
+function bannerWarden(origin){
+    return origin.parent('.hexagon').hasClass('objectiveGlow') ? 2 : 0
 }
 function leave_only_selected_path(){
     $('[data-glow].hexagon').each(function(){

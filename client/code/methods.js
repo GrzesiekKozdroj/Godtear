@@ -942,7 +942,7 @@ const m =
             {
                 name: "Shadow Step",
                 desc: "If the Shadow Sentinels do not make an advance action during their activation, each Shadow Sentinel may move up to 1 hex when activation ends.",
-                m: "shadowStepWhite",
+                m: "shadowStepBlack",
                 icon:'self'
             }
         },
@@ -1513,7 +1513,7 @@ const m =
             mysticArrow:
             {
                 name:"Mystic Arrow",
-                desc:`After the mystic arrow damage roll, make a 5${hurt} damage roll againt the target.`,
+                desc:`After the mystic arrow damage roll, make a 5 damage roll againt the target.`,
                 icon:skull,
                 dist:3,
                 aim:[3],

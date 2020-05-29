@@ -241,6 +241,7 @@ for(let K in m){
         for(let S in PHASE_PLAY){
             let SKILL = PHASE_PLAY[S]
             $('body').on('click',`[data-m="${SKILL.m}"]`,function(){
+                if( typeof canceller === 'function') canceller()//untestedo HERE
                 const data = $(this).data()
                 let modo = ['white','black'].includes(P) ? P === phase ? true : false : true
                 if_moved_end_it()

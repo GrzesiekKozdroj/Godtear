@@ -2,13 +2,13 @@ const uniCancel = ()=>{
     $('[data-glow]').removeAttr('data-glow')
     $('.skilling_declaration').removeClass('skilling_declaration')
     current_ability_method = null
-    defy = null
+    canceller = null
     cancellerName = null
 }
 var defy = {
     forwardMinions:()=>{
-        uniCancel()
         $('.forwardMinions').removeClass('forwardMinions').removeClass('forwardMinions_selected')
+        uniCancel()
     },
     graspingDead:()=>{//THAT CANNOT BEE JUST whiteTeam, now it contains untestedo
         if( $(`[data-name="Knightshades"][data-tenmodel].${myTurn?'whiteTeam':'blackTeam'}`).length === 3 )
@@ -38,72 +38,104 @@ var defy = {
     },
     feelThePoweer:()=>uniCancel(),
     hop:()=>{
+        $('.hop').removeClass('hop')
         uniCancel()
-        ,$('.hop').removeClass('hop')
     },
     twoPunch:()=>{
-        uniCancel()
         $('.twoPunch_selected').removeClass('twoPunch_selected')
+        uniCancel()
     },
     bannerfall:()=>uniCancel(),
     tongueTow:()=>{
-        uniCancel()
         $('.tongueTow_selected').removeClass('tongueTow_selected')
+        uniCancel()
     },
     tongueLash:()=>{
-        uniCancel()
         $('.tongueLash_selected').removeClass('tongueLash_selected')
+        uniCancel()
     },
     marchRhodriBlack:()=>{
-        uniCancel()
         $('.marchRhodriBlack_selected').removeClass('marchRhodriBlack_selected')
+        uniCancel()
     },
     shieldBash:()=>{
-        uniCancel()
         $('.shieldBash_selected').removeClass('shieldBash_selected')
+        uniCancel()
     },
     swordSlash:()=>uniCancel(),
     swordStrike:()=>uniCancel(),
     deathsDoor:()=>uniCancel(),
     deathWind:()=>{
-        uniCancel()
         $('.deathWind_selected').removeClass('deathWind_selected')
+        uniCancel()
     },
     soulCleave:()=>uniCancel(),
     shadowWard:()=>{
-        uniCancel()
         $('.shadowWard_selected').removeClass('shadowWard_selected')
+        uniCancel()
     },
     protect:()=>uniCancel(),
     shadowSnare:()=>uniCancel(),
     shadowStepWhite:()=>{
-        uniCancel()
         $('.shadowStepWhite').removeClass('shadowStepWhite shadowStepWhite_selected')
+        uniCancel()
+    },
+    shadowStepBlack:()=>{
+        $('.shadowStepBlack').removeClass('shadowStepBlack shadowStepBlack_selected')
+        uniCancel()
     },
     poisedToStrike:()=>uniCancel(),
     shadowWard:()=>{
-        uniCancel()
         $('.shadowWard_selected').removeClass('shadowWard_selected')
+        uniCancel()
     },
     phantomBanners:()=>{
-        uniCancel()
         $('.phantomBanners_selected').removeClass('phantomBanners_selected')
+        uniCancel()
     },
     protect:()=>uniCancel(),
     shadowSnare:()=>uniCancel(),
     frostyGlance:()=>{
-        uniCancel()
         $('.frostyGlance_selected').removeClass('frostyGlance_selected')
+        uniCancel()
     },
     forwardMinionsMorrigan:()=>{
-        uniCancel()
         $('.forwardMinionsMorrigan').removeClass('forwardMinionsMorrigan forwardMinionsMorrigan_selected')
-    },
-    frostyGlance:()=>{
         uniCancel()
-        $('.frostyGlance_selected').removeClass('frostyGlance_selected')
     },
     flashFreeze:()=>uniCancel(),
+    soCoolMistress:()=>{
+        $('.soCoolMistressPanel').remove()
+        uniCancel()
+    },
+    blur:()=>uniCancel(),
+    faryFire_MR:()=>uniCancel(),
+    chillOut:()=>uniCancel(),
+    fieldInstruction:()=>uniCancel(),
+    faryFire:()=>uniCancel(),
+    deathblow:()=>uniCancel(),
+    aim:()=>uniCancel(),
+    fire:()=>uniCancel(),
+    shootAndScoot:()=>{console.log('defied sC')
+        $('.shootAndScoot_selected').removeClass('shootAndScoot_selected')
+        uniCancel()
+    },
+    snipe:()=>uniCancel(),
+    mysticArrow:()=>uniCancel(),
+    piercingShot:()=>uniCancel(),
+    snowbladefight:()=>uniCancel(),
+    intenseCold:()=>uniCancel(),
+    snowballsChance:()=>uniCancel(),
+    iceblade:()=>uniCancel(),
+    icebolt:()=>uniCancel(),
+    voidWeapn:()=>uniCancel(),
+    lifeTrade:()=>uniCancel(),
+    voidWeapon:()=>uniCancel(),
+    lifeBlade:()=>uniCancel(),
+    mirage:()=>{
+        $('.tongueTow_selected').removeClass('tongueTow_selected')
+        uniCancel()
+    },
 
 
 }

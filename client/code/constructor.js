@@ -111,9 +111,9 @@ const rosters =
     ]
 };
 roster = [
-    rosters.slayer[1].champ.name,
-    rosters.guardian[3].champ.name, 
-    rosters.slayer[0].champ.name, 
+    rosters.slayer[2].champ.name,
+    rosters.maelstrom[0].champ.name, 
+    rosters.slayer[3].champ.name, 
 ];
 
 for(let c in rosters){

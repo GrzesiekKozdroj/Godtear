@@ -70,16 +70,27 @@ const check_actions_count = (abilName = false, side = mySide) => {
         abilTruthRead(abilName,side)
         ? true : false
 }
+function checkIfNotMorrigan(target,attriName){
+    const bAttri = Number(target.attr(`data-${attriName}`))
+    const checkWho = target.data('name') === 'Morrigan' && bAttri > 0 ? 2 : bAttri
+    return checkWho
+}
+function slayerPoints(target){
+    if( target.data('type')==="champion" )
+        return target.data('stepsgiven') + 1
+    else 
+        return target.data('stepsgiven')
+}
 
 const onHit = (aim, target) => { console.log('aim roll: ', ...aim)
-    const target_dodge = Number(target.attr('data-dodge')) + Number(target.attr('data-bdodge'))
+    const target_dodge = Number(target.attr('data-dodge')) + checkIfNotMorrigan(target,'bdodge')
     const aim_total = aim.reduce((a,b)=>a+b,0)
     setBoons_Blights($('.selectedModel'),{baim:0})
     setBoons_Blights(target,{bdodge:0})
     return aim_total >= target_dodge
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
 const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
-    const target_protection = Number(target.attr('data-protection')) + Number(target.attr('data-bprotection'))
+    const target_protection = Number(target.attr('data-protection')) + checkIfNotMorrigan(target,'bprotection')
     const hurt_total = hurt.reduce((a,b)=>a+b,0)
     setBoons_Blights($('.selectedModel'),{bdamage:0})
     setBoons_Blights(target,{bprotection:0})
@@ -395,9 +406,14 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
             socket.emit('HH', {color:glowType,dist, hex:h, row:r, river})
         })
     };
-    highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))//was commented out but it cannot work without it
+    if(glowType==='lifeTrade'){
+        lifeTradeRaise()
+    } else { 
+        highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
+        //above was commented out but it cannot work without it
     //if ( !$(`[data-glow="${glowType}"]`).length )prevented me from sending river through server
         socket.emit('HH', {color:glowType,dist, hex, row, river})
+    }//these brackets were not here before
 }
 function blights_spew_declaration ({origin, abilName}){
     const { baim } = extractBoons_Blights(origin)
@@ -487,6 +503,7 @@ function propagate_BB_s($origin,$target){
 function shootAndScoot(){
     highlightHexes({colour:'shootAndScoot',dist:1})
     $('.selectedModel').addClass('shootAndScoot_selected')
+    cancellerName = 'shootAndScoot'
 }
 function buildSkillTrack(roster){//['name','name','name']
     let premadeproduct = {}
@@ -536,4 +553,13 @@ function turn_resetter(skillTracker,phase,team){
             skillTracker[char][phase][s].used = false
         }
     }
+}
+function lifeTradeRaise(){
+    $('[data-glow]').removeAttr('data-glow')
+    let dad = $('.selectedModel').parent('.hexagon')
+    dad.attr('data-glow','recruitGlow')
+    dad.children('.top').attr('data-glow','recruitGlow')
+    dad.children('.bottom').attr('data-glow','recruitGlow')
+    m_.raiseDead({hex:dad.data('hex'),row:dad.data('row'),key:"lifeTrade"})
+    $('[data-glow]').removeAttr('data-glow')
 }

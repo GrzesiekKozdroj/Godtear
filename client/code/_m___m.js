@@ -302,6 +302,7 @@ var _m_ = {
     },
     frostyGlance:thiz=>{
         $('.frostyGlance_selected').removeClass('frostyGlance')
+        $('.frostyGlance_selected').removeClass('frostyGlance_selected')
         current_ability_method = null
         $(`[data-glow]`).removeAttr('data-glow')
     },
@@ -314,6 +315,13 @@ var _m_ = {
         $('[data-glow]').removeAttr('data-glow')
         thiz.removeClass('shadowStepWhite shadowStepWhite_selected')
         if( !$('.shadowStepWhite').length ){
+            current_ability_method = null
+        }
+    },
+    shadowStepBlack:thiz=>{
+        $('[data-glow]').removeAttr('data-glow')
+        thiz.removeClass('shadowStepBlack shadowStepBlack_selected')
+        if( !$('.shadowStepBlack').length ){
             current_ability_method = null
         }
     }

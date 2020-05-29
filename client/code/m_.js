@@ -873,7 +873,6 @@ var m_ = {
             $('[data-glow]').removeAttr('data-glow')
             $target.children('.claimedBanner').addClass('tongueTow_selected')
             highlightHexes({colour:'greenGlow',dist:1},$($target.children('.claimedBanner')[0]))
-             
             add_action_taken('mirage')
             current_ability_method = null
             displayAnimatedNews(`mirage<br/>banner moved`)
@@ -898,7 +897,7 @@ var m_ = {
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken()
             if( onHit(aim, target) ){
-                healLife( $('.selectedModel[data-name="Finvarr"]'), 1)
+                healLife( $('.selectedModel[data-name="Finvarr"][data-tenmodel]'), 1)
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target,1 + target.data('stepsgiven'))
@@ -947,7 +946,6 @@ var m_ = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)[0])
         displayAnimatedNews('Shadow Sentinels<br/>+1 aim')
         add_action_taken('voidWeapon')
-         
         $('[data-glow]').removeAttr('data-glow')
         current_ability_method = null
         setBoons_Blights($target,{baim:Number($target.attr('data-baim'))+1})
@@ -957,22 +955,22 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('lifeTrade')
             if( onHit(aim, target) )
-                if( doDamage(hurt, target) )
+                if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) ){
-                        if( $('.selectedModel').siblings('.smallCard').length < 2 )
-                        rallyActionDeclaration({ 
-                            unitname:"Finvarr", 
-                            side:multiAction, 
-                            type:"champion", 
-                            name:"ShadowSentinels" })
-                        displayAnimatedNews(`dead raise<br/>again`)
+                        if( $('.selectedModel').siblings('.smallCard').length < 2 ){
+                            rallyActionDeclaration({ 
+                                unitname:"Finvarr", 
+                                side:multiAction, 
+                                type:"champion", 
+                                name:"ShadowSentinels" },'lifeTrade')
+                            displayAnimatedNews(`dead raise<br/>again`)
+                        }
                         moveLadder(target, target.data('stepsgiven'))
                     }else null
-                else displayAnimatedNews("no damage!")
+                } else displayAnimatedNews("no damage!")
             else displayAnimatedNews ("missed!")
         }
         current_ability_method = null
@@ -999,7 +997,16 @@ var m_ = {
         })
     },
     shadowStepBlack:function(o){
-
+        const { hex, row } = o
+        $('[data-glow').removeAttr('data-glow')
+        const targetHex = $(`.hex_${hex}_in_${row}`)
+        const team = $('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        if( !$('.shadowStepBlack').length )
+        $(`[data-tenmodel][data-name="ShadowSentinels"].${team}`).each(function(){
+            $(this)
+                .addClass('shadowStepBlack')
+                .attr('data-actionstaken',2)
+        })
     },
     shadowSnare:function(o){
         const { aim, hex, row } = o
@@ -1629,15 +1636,14 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('piercingShot')
             if( onHit(aim, target) ){
                 target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
                 animateDamage(target, -1)
                 shootAndScoot()
                     if( checkIfStillAlive(target) )
-                        moveLadder(target, target.data('stepsgiven'))
+                        moveLadder(target, slayerPoints(target) )
                     else null
             } else displayAnimatedNews ("missed!")
         }
@@ -1648,9 +1654,8 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('mysticArrow')
             if( onHit(aim, target) ){
                 const p = hurt.length > 10 ? 6 : 5
                 const stPunch = hurt.slice(0, p)
@@ -1658,12 +1663,12 @@ var m_ = {
                 if( doDamage(stPunch, target) ){
                     shootAndScoot()
                     if( checkIfStillAlive(target) )
-                        moveLadder(target, target.data('stepsgiven'))
+                        moveLadder(target, slayerPoints(target) )
                     else {
                         setTimeout(()=>{
                             if ( doDamage(ndPunch, target) )
                                 if( checkIfStillAlive(target) )
-                                    moveLadder(target, target.data('stepsgiven'))
+                                    moveLadder(target, slayerPoints(target) )
                                 else null
                         },1550)
                     }
@@ -1677,15 +1682,14 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('snipe')
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) ){
-                    shootAndScoot()
                     if( checkIfStillAlive(target) )
-                        moveLadder(target, target.data('stepsgiven'))
+                        moveLadder(target, slayerPoints(target) )
                     else null
+                    shootAndScoot()
                 }else displayAnimatedNews("no damage!")
             else displayAnimatedNews ("missed!")
         }
@@ -1696,8 +1700,7 @@ var m_ = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         setBoons_Blights($target,{bdamage:Number($target.attr('data-bdamage'))+1})
         displayAnimatedNews(`${$target.data('name')}<br/>+1 damage`)
-         
-        add_action_taken()
+        add_action_taken('fieldInstruction')
         current_ability_method = null
         $('[data-glow]').removeAttr('data-glow')
     },
@@ -1706,9 +1709,8 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('faryFire')
             if( onHit(aim, target) ){
                 setBoons_Blights(target,{bprotection:Number(target.attr('data-bprotection'))-1})
                 displayAnimatedNews(`${target.data('name')}<br/>-1 protection`)
@@ -1721,15 +1723,20 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('legendary')
             if( onHit(aim, target) ){
                 target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-2) )
                 animateDamage(target, -2)
                 shootAndScoot()
+                $(`.miniGameCard.${target.data('side')}[data-name="${target.data('name')}"]`)
+                    .find('.smallCard.health')
+                    .find('.gameCard_num')
+                    .removeClass('normal')
+                    .addClass('blighted')
+                    .text( Number(target.attr('data-healthleft')) )
                     if( checkIfStillAlive(target) )
-                        moveLadder(target, target.data('stepsgiven'))
+                        moveLadder(target, slayerPoints(target) )
                     else null
             } else displayAnimatedNews ("missed!")
         }
@@ -1740,8 +1747,7 @@ var m_ = {
         target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         displayAnimatedNews('Mistwood Rangers<br/>+1 aim')
         setBoons_Blights(target,{baim:Number(target.attr('data-baim'))+1})
-         
-        add_action_taken()
+        add_action_taken('aim')
         current_ability_method = null
     },
     fire: function (o){
@@ -1749,9 +1755,8 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('fire')
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
@@ -2076,16 +2081,15 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('snowballsChance')
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) ){
                     target.attr('data-healthleft', 0 )
                     animateDamage(target, 0-target.data('health'))
                     displayAnimatedNews("snowball's chance<br/>succesful")
                     if( checkIfStillAlive(target) )
-                        moveLadder(target, target.data('stepsgiven'))
+                        moveLadder(target, slayerPoints(target))
                     else null
                 } else displayAnimatedNews("no damage!")
             else displayAnimatedNews ("missed!")
@@ -2097,22 +2101,21 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('iceblade')
             if( onHit(aim, target) ){
                 const { bspeed, baim, bdamage } = extractBoons_Blights(target)
                 const extraWound = bspeed === -1 || baim === -1 || bdamage === -1 ? -1 : 0
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
-                        moveLadder(target, target.data('stepsgiven'))
-                    else if (extraWound===-1){
+                        moveLadder(target, slayerPoints(target))
+                    else if (extraWound ===-1){
                         setTimeout(()=>{
                             target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
                             animateDamage(target, -1)
                             displayAnimatedNews(`${target.data('name')}<br/>iceblade`)
                             if( checkIfStillAlive(target) )
-                                moveLadder(target, target.data('stepsgiven'))
+                                moveLadder(target, slayerPoints(target))
                             else null
                         },1000)
                     }
@@ -2126,15 +2129,14 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('icebolt')
             if( onHit(aim, target) ){
                 setBoons_Blights(target,{baim:Number(target.attr('data-baim'))-1})
                 displayAnimatedNews(`${target.data('name')}<br/>-1 aim`)
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
-                        moveLadder(target, target.data('stepsgiven'))
+                        moveLadder(target, slayerPoints(target) )
                     else null
                 else displayAnimatedNews("no damage!")
             }else displayAnimatedNews ("missed!")
@@ -2162,6 +2164,7 @@ var m_ = {
             if( onHit(aim, target) ){//allow for bonus one hex movement for Halftusk action here
                 highlightHexes({colour:'legendaryGlow',dist:1},$('.selectedModel'))
                 highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
+                setBoons_Blights(target,{bprotection:(Number(target.attr('data-bprotection'))-1) })
                 $('.selectedModel').addClass('frostyGlance_selected')
                 displayAnimatedNews('Morrigan<br/>shambles onward')
                 //as above mentions by doing this skill I need to finish Halftusks tooo
@@ -2185,7 +2188,6 @@ var m_ = {
     },
     intenseCold:function(o){
         const { hex, row } = o
-         
         add_action_taken('intenseCold')
         const target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         setBoons_Blights(target,{bdamage:Number(target.attr('data-bdamage'))+1})
@@ -2216,7 +2218,6 @@ var m_ = {
         current_ability_method = null
         $('[data-glow').removeAttr('data-glow')
         add_action_taken('soCoolMistress')
-         
         setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) + 1 })
         crystalGlare_bb = null
     },
@@ -2225,7 +2226,6 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken('chillOut')
             if( onHit(aim, target) ){

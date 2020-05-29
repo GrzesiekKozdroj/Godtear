@@ -645,7 +645,7 @@ const _m = {
         const aim = [4, 5, 5][unitSize]
         const hurt = [4, 5, 6][unitSize]
         if($target.hasClass(`blackTeam`) )
-        socket.emit('rolloSkill',{ aim:(aim+baim),hurt:(hurt+bdamage),multiAction:mySide,socksMethod:"lifeTrade",hex,row})
+            socket.emit('rolloSkill',{ aim:(aim+baim),hurt:(hurt+bdamage),multiAction:mySide,socksMethod:"lifeTrade",hex,row})
     },
     protect:function(origin,target){
         const { hex, row } = target
@@ -978,8 +978,8 @@ const _m = {
         const unitSize = origin.siblings('.smallCard').length
         const aim = [3, 4, 5][unitSize]
         const hurt = [3, 4, 5][unitSize]
-        const hp = Number(target.attr('data-health'))
-        const hpl = Number(target.attr('data-healthleft'))
+        const hp = Number($target.attr('data-health'))
+        const hpl = Number($target.attr('data-healthleft'))
         const killShot = $target.hasClass('champModel') && hp > hpl ? 1 : 0
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt+bdamage+killShot), socksMethod:"fire", hex, row })

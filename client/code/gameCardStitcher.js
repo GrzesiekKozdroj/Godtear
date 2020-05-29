@@ -83,7 +83,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
                     <div class="roster_description">
                         <div class="roster_abil_name left">${name}</div>
-                        <div class="roster_abil_desc left">${desc ? desc : ''}</div>
+                        <div class="roster_abil_desc ${phase} left">${desc ? desc : ''}</div>
                     </div>
 
                     <div class="roster_abil_stats">
@@ -243,7 +243,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
 
                     <div class="roster_description">
                         <div class="roster_abil_name">${name}</div>
-                        <div class="roster_abil_desc">${desc ? desc : ''}</div>
+                        <div class="roster_abil_desc ${phase}">${desc ? desc : ''}</div>
                     </div>
 
                     <div class="img_${icon}_${phase} ${side}"></div>

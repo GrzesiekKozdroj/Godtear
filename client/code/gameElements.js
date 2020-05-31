@@ -47,6 +47,8 @@ function displayAnimatedNews (message){
     })
 }
 
+const decideOrnament = (bb) => bb > 0 ? 'booned' : bb < 0 ? 'blighted' : ''
+
 function beginFirstPlotPhase(){
     //.append(miniCard(Morrigan,phase,opoSide)
     displayAnimatedNews ('Begin Plot Phase')
@@ -149,7 +151,6 @@ const challengeOptions = (origin, target, socksMethod,curseCount,message) => {
     const { hex, row } = target
     const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
     const { baim, bdamage, bspeed, bdodge, bprotection } = extractBoons_Blights( $target )
-    const decideOrnament = (bb) => bb > 0 ? 'booned' : bb < 0 ? 'blighted' : ''
     return `
         <div class="titusChallenge">
             <div 
@@ -269,3 +270,49 @@ function soCoolMistress({side, name, socksMethod,message}){
         </div>
     `
 }
+function brutalMasterPanel({side, hex, row, socksMethod, message}){
+        return `
+        <div class="brutalMasterPanel">
+            <div 
+                class="brutalMasterCrest" 
+                data-side=${side} 
+                data-hex=${hex} 
+                data-row=${row} 
+                data-socksmethod=${socksMethod}
+              >
+                <div class="message">${message}</div>
+                <div class="boon-blight ${socksMethod} aim booned" data-abil="aim" >  </div>
+                <div class="boon-blight ${socksMethod} confirm" > done </div>
+                <div class="boon-blight ${socksMethod} damage booned" data-abil="damage" >  </div>
+            </div>
+        </div>
+    `
+}
+function stolenTreasure (){
+    let RedBandit = $('.selectedModel[data-name="RedBandits"][data-tenmodel]')
+    if( RedBandit.hasClass('whiteTeam') ){
+    const { hex, row } = RedBandit.parent('.hexagon').data()
+    const $target = RedBandit
+    const { baim, bdamage, bspeed, bdodge, bprotection } = extractBoons_Blights( $target )
+    const socksMethod = 'stolenTreasure'
+    const product = `
+        <div class="titusChallenge">
+            <div 
+                class="titusChallengeCrest" 
+                data-hex=${hex} 
+                data-row=${row} 
+                data-socksmethod=${socksMethod} 
+                data-cursecount=1
+              >
+                <div class="message">give Red Bandits 1 boon</div>
+                <div class="boon-blight stolenTreasure walk ${decideOrnament(bspeed)}" data-abil="bspeed">  </div>
+                <div class="boon-blight stolenTreasure dodge ${decideOrnament(bdodge)}" data-abil="bdodge">  </div>
+                <div class="boon-blight stolenTreasure protection ${decideOrnament(bprotection)}" data-abil="bprotection">  </div>
+                <div class="boon-blight stolenTreasure aim ${decideOrnament(baim)}" data-abil="baim">  </div>
+                <div class="boon-blight stolenTreasure confirm " > done </div>
+                <div class="boon-blight stolenTreasure damage ${decideOrnament(bdamage)}" data-abil="bdamage">  </div>
+            </div>
+        </div>
+    `
+    $('#gameScreen').append(product)
+ }  }

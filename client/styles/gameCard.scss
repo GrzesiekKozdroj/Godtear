@@ -445,7 +445,8 @@ $white: white;
 .img_cogs_black.left,.img_cogs_white.left{
     transform:rotate(180deg);
     .gameCard_name{
-        transform:rotate(-180deg)
+        transform:rotate(-180deg);
+        margin-top:100%;
     }
 }
 .img_cogs_black.right,.img_cogs_whire.right{

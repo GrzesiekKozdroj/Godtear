@@ -37,6 +37,7 @@ const abilTruthChange = (abilName = null,side=mySide) => {
 
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
     const targetos = (abilName, p = phase) => {
+        //console.log(name,p,abilName)
         if(side === mySide)
                 return mySkillTrack[name][p][abilName].used 
         else if(side === opoSide)
@@ -172,17 +173,26 @@ const moveLadder = (target,steps) => {
         direction = mySide === 'left' ? -1 : 1
     } else if( target.hasClass('claimedBanner') && target.hasClass('blackTeam') ){
         direction = mySide === 'left' ? 1 : -1
-    }        
-    const calculus = ((.79*window.innerWidth / 17.23 ) - .01*window.innerWidth)
+    }
+    const calculus = ((.79*km / 17.23 ) - .01*km)
     let adres = origin+steps*direction
     adres = adres < 0 ? 1 : adres > 22 ? 22 : adres > 0 && adres < 23 ? adres : false
     const destination = $(`.block${ adres }`)
     if( adres )
-        $('#coin').animate({
-            left: (steps * direction * calculus)
-        }, 500, ()=>{
-            $('#coin').removeAttr('style').finish().detach().appendTo(destination)
-        })
+        $('#coin')
+            .css('right',`${(steps * direction * calculus)}px`)
+            .detach()
+            .appendTo(destination)
+            .animate({
+                left: 0
+                }, 500, ()=>{
+                $('#coin').removeAttr('style').finish()//.detach().appendTo(destination)
+            })
+        // $('#coin').animate({
+        //     left: (steps * direction * calculus)
+        // }, 500, ()=>{
+        //     $('#coin').removeAttr('style').finish().detach().appendTo(destination)
+        // })
 }
 const extractBoons_Blights = (origin) => {
     const baim = Number(origin.attr('data-baim'))
@@ -247,7 +257,7 @@ function styleStats(a,b,key,thiz){
         $(`[data-name="${thiz.data('name')}"].miniGameCard.${thiz.data('side')}`)
             .find('.skill[data-hurt]')
             .each(function(){
-                if( !$(this).children('.hurtBoon').length && !$(this).children('.hurtBlight').length)
+                if( !$(this).children('.damageBoon').length && !$(this).children('.damageBlight').length)
                 $(this).prepend(b>0?damageBoon:damageBlight)
                 $(this)
                     .children('.gameCard_name')
@@ -464,10 +474,10 @@ function healLife(target, h = 2){
         .text( Number(target.attr('data-healthleft')) )
             
 }
-function march (string, targetHex, thizModel = $('.selectedModel') ){
+function march (string, targetHex, thizModel = $('.selectedModel'), dist=1 ){
     const { hex, row } = targetHex
     thizModel.addClass(`march${string}_selected`)
-    highlightHexes({colour:'legendaryGlow',dist:1},$(`.march${string}_selected`))
+    highlightHexes({colour:'legendaryGlow',dist},$(`.march${string}_selected`))
     socket.emit('forceMove',{h:hex, r:row, klass:"champion", callback:`march${string}`})
 }
 function marchExec(string, aktion){
@@ -553,6 +563,11 @@ function turn_resetter(skillTracker,phase,team){
             skillTracker[char][phase][s].used = false
         }
     }
+    //-------------UNTESTEDO--------------//
+    for(let mj in skillTracker[char].util){
+        if( mj !== 'legendary' && mj )
+            skillTracker[char].util[mj].used = false
+    }
 }
 function lifeTradeRaise(){
     $('[data-glow]').removeAttr('data-glow')
@@ -562,4 +577,103 @@ function lifeTradeRaise(){
     dad.children('.bottom').attr('data-glow','recruitGlow')
     m_.raiseDead({hex:dad.data('hex'),row:dad.data('row'),key:"lifeTrade"})
     $('[data-glow]').removeAttr('data-glow')
+}
+function gangBoss(target){
+    $('[data-glow]').removeAttr('data-glow')
+    highlightHexes({colour:'gangBoss',dist:1},target)
+    let helpers = $('[data-glow]').children('[data-name="SneakyStabbers"][data-tenmodel].whiteTeam').length
+    $('[data-glow]').removeAttr('data-glow')
+    return helpers
+}
+
+function backstab(o){
+    const { aim, hex, row, hurt } = o
+    const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+    if(targets.length){
+        const target = $(targets[0])
+        $('[data-glow]').removeAttr('data-glow')
+        add_action_taken(`backstab${phase==='white'?'White':'Black'}`)
+        if( onHit(aim, target) ){
+            target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
+            animateDamage(target, -1)
+            displayAnimatedNews(`${target.data('name')}<br/>backstabbed`)
+            if( checkIfStillAlive(target) )
+                moveLadder(target, target.data('stepsgiven'))
+            else {
+                setTimeout(()=>{
+                    if ( doDamage(hurt, target) )
+                        if( checkIfStillAlive(target) )
+                            moveLadder(target, target.data('stepsgiven'))
+                        else null
+                },1550)
+            }
+        } else displayAnimatedNews ("missed!")
+    }
+    current_ability_method = null
+}
+function brutalMaste(o){
+    const { hex, row } = o
+    if( myTurn )
+        $('#gameScreen')
+            .append(brutalMasterPanel({
+                            side:mySide, 
+                            hex, row,
+                            socksMethod:'brutalMaster',
+                            message:'choose either bonus'
+                        })    )
+}
+function brutalMaster_h(type){
+    return $(`.whiteTeam.sacrifice.${type}`).length
+//count needed class models, don't hurt them
+}
+function brutalMaster_brutaliser(type){
+    const target = $(`.sacrifice.${type}`)
+    target.removeClass(`sacrifice ${type}`)
+    forceKill(target)
+    //remove classes and kill models here based on class
+}
+function _ambush(origin,target){
+    const { baim } = extractBoons_Blights(origin)
+    const { hex, row } = target
+    const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+    const unitSize = origin.siblings('.smallCard').length
+    const aim = [3, 4, 5][unitSize]
+    let socksMethod = `ambush${phase==='white'?'White':'Black'}`
+    if($target.hasClass(`blackTeam`) )
+        socket.emit('rolloSkill', { aim: (aim + baim), socksMethod, hex, row })
+}
+function ambush_(o){
+    const { aim, hex, row } = o
+    const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+    if(targets.length){
+        const target = $(targets[0])
+         
+        $('[data-glow]').removeAttr('data-glow')
+        add_action_taken(`ambush${phase==='white'?'White':'Black'}`)
+        if( onHit(aim, target) ){
+            stolenTreasure()
+            target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
+            animateDamage(target, -1)
+            displayAnimatedNews(`${target.data('name')}<br/>ambushed`)
+            if( checkIfStillAlive(target) )
+                moveLadder(target, target.data('stepsgiven'))
+            else null
+            } else displayAnimatedNews ("missed!")
+    }
+    current_ability_method = null
+}
+function sT(o){console.log('hi')
+    const { hex, row, cursePackage } = o
+    const bb = cursePackage[0]
+    const target = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel][data-name="RedBandits"]')[0])
+    setBoons_Blights(target,{ [bb]: Number(target.attr(`data-${bb}`))+1 })
+    displayAnimatedNews(`Red Bandits<br/>+1 ${[...bb].slice(1).join('')}`)
+}
+function wildfire(){
+    let blackja = $('.selectedModel[data-tenmodel="Blackjaw"]')
+    let sk = blackja.hasClass('whiteTeam') ? mySkillTrack : opoSkillTrack
+    if ( !sk.Blackjaw.util.wildfire.used ){
+        sk.Blackjaw.util.wildfire.used = true
+        blackja.attr('data-actionstaken',Number(blackja.attr('data-actionstaken'))-1)
+    }
 }

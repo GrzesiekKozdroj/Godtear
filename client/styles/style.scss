@@ -649,7 +649,7 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     }
 }
 
-.niaChallenge, .deadlyCursePanel,.soCoolMistressPanel{
+.niaChallenge, .deadlyCursePanel,.soCoolMistressPanel,.brutalMasterPanel{
     @include instaFlex;
     color:rgba(0, 0, 0, 0.911);
     text-shadow: 0 0 1vh darkorange, 0 0 1.5vh darkorange, 0 0 2vh darkorange, 0 0 2.5vh darkorange, 0 0 3vh darkorange;
@@ -659,7 +659,7 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     z-index:10;
     margin:auto auto;
     text-align: center;
-    .niaChallengeCrest, .deadlyCursePanelCrest, .soCoolMistressPanelCrest{
+    .niaChallengeCrest, .deadlyCursePanelCrest, .soCoolMistressPanelCrest,.brutalMasterCrest{
         width:50vw;
         height:60vh;
         font-family: $coinFont2;
@@ -715,14 +715,14 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
         }
     }
 }
-.deadlyCursePanelCrest,.soCoolMistressPanelCrest{
-    .deadlyCurse.aim,.graspingCurse.dodge,.soCoolMistress.aim{
+.deadlyCursePanelCrest,.soCoolMistressPanelCrest,.brutalMasterCrest{
+    .deadlyCurse.aim,.graspingCurse.dodge,.soCoolMistress.aim,.brutalMaster.aim{
         border-radius: 50% 30% 30% 50%;
     }
-    .deadlyCurse.damage,.graspingCurse.walk,.soCoolMistress.walk{
+    .deadlyCurse.damage,.graspingCurse.walk,.soCoolMistress.walk,.brutalMaster.damage{
         border-radius: 30% 50% 50% 30%;
     }
-    .deadlyCurse.confirm,.graspingCurse.confirm,.soCoolMistress.confirm{
+    .deadlyCurse.confirm,.graspingCurse.confirm,.soCoolMistress.confirm,.brutalMaster.confirm{
         border-radius: 47% 47% 47% 47%;
     }
 }
@@ -974,4 +974,26 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
         rgba(173,173,173,0.35) 73%, 
         rgba(196,196,196,.5) 100%
     ); 
+}
+@mixin sacrificial ($bb){
+    background-image: url("../img/"+$bb+".svg");
+    width: 100%;
+    height: 158%;
+    position: relative;
+    top: -32%;
+    left: 0;
+    background-size: cover;
+    z-index: 4;
+    margin-bottom: -100%;
+    opacity: .7;
+}
+.sacrifice.aim{
+    .bb_HUD{
+        @include sacrificial('aimBoon')
+    }
+}
+.sacrifice.damage{
+    .bb_HUD{
+        @include sacrificial('damageBlight')
+    }
 }

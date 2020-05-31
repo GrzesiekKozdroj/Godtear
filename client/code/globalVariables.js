@@ -27,3 +27,4 @@ var mySkillTrack;
 var current_ability_method = null;
 let waitinInfoAsArray = [roster[0],roster[1],roster[2],nickName,gamePlaceName,"waiting for opponent"];
 let waitingTicker = 0;
+var km = window.innerHeight

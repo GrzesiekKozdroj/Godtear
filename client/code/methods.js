@@ -1661,7 +1661,7 @@ const m =
                 aim:[5],
                 hurt:[5],
                 unused:true,
-                m:"backstab"
+                m:"backstabBlack"
             }
         },
         white:
@@ -1684,7 +1684,7 @@ const m =
                 aim:[5],
                 hurt:[5],
                 unused:true,
-                m:"backstab"
+                m:"backstabWhite"
             }
         },
         util:
@@ -1704,8 +1704,8 @@ const m =
             gangBoss:
             {
                 name:"Gang Boss",
-                desc:`Sneaky Peet's skill have +1${aim} for Sneaky Stabber adjacent to the target.`,
-                m:function(){}
+                desc:`Sneaky Peet's skills have +1 aim for each Sneaky Stabber adjacent to the target.`,
+                m:'gangBoss'
             }
         }
     },
@@ -1744,7 +1744,7 @@ const m =
             },
             letMeDoIt:
             {
-                name:"Let Me Do It!",
+                name:"Let&nbsp;Me Do&nbsp;It!",
                 icon:skull,
                 dist:1,
                 aim:[7,5,3],
@@ -1788,6 +1788,14 @@ const m =
                 hurt:[5],
                 unused:true,
                 m:"whiplash"
+            },
+            brutalMasterBlack:
+            {
+                name:"Brutal Master",
+                desc:"Once per hit roll or damage roll before rolling the dice, you may remove one Red Bandit from a hex within 3 hexes of Rangosh to add 1 die to Rangosh's roll.",
+                dist:3,
+                icon:'cogs',
+                m:"brutalMasterBlack"
             }
         },
         white:
@@ -1809,6 +1817,14 @@ const m =
                 aim:[6],
                 unused:true,
                 m:"breakSpirit"
+            },
+            brutalMasterWhite:
+            {
+                name:"Brutal Master",
+                desc:"Once per hit roll or damage roll before rolling the dice, you may remove one Red Bandit from a hex within 3 hexes of Rangosh to add 1 die to Rangosh's roll.",
+                dist:3,
+                icon:'cogs',
+                m:"brutalMasterWhite"
             }
         },
         util:
@@ -1823,12 +1839,6 @@ const m =
                 legendaryUsed:false,
                 m:"beastlyCharge",
                 preface:"beastlyCharge"
-            },
-            brutalMaster:
-            {
-                name:"Brutal Master",
-                desc:"Once per hit roll or damage roll before rolling the dice, you may remove one Red Bandit from a hex within 3 hexes of Rangosh to add 1 die to Rangosh's roll.",
-                m:function(){}
             }
         }
     },
@@ -1844,7 +1854,7 @@ const m =
                 dist:1,
                 aim:[3,4,5],
                 unused:true,
-                m:"ambush"
+                m:"ambushBlack"
             },
             shoot:
             {
@@ -1875,7 +1885,7 @@ const m =
                 dist:1,
                 aim:[3,4,5],
                 unused:true,
-                m:"ambush"
+                m:"ambushWhite"
             }
         },
         util:
@@ -1884,7 +1894,7 @@ const m =
             {
                 name:"Stolen Treasure",
                 desc:"If the Red Bandits cause an enemy model to gain a wound when they use a skill action, they may gain a boon of your choice.",
-                m:function(){}
+                m:"stolenTreasure"
             }
         }
     },

@@ -851,6 +851,7 @@
 
 .img_cogs_black.left .gameCard_name, .img_cogs_white.left .gameCard_name {
   transform: rotate(-180deg);
+  margin-top: 100%;
 }
 
 .img_cogs_black.right, .img_cogs_whire.right {

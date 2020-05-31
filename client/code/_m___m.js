@@ -243,12 +243,14 @@ var _m_ = {
             $($thiz).removeClass(`annoyed_selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
             current_ability_method = null
-            add_action_taken('annoyed')
+            //add_action_taken('annoyed')
         }
     },
     sprint:$thiz=>{
         if ( $('[data-glow].hexagon').length > 19 ) {
             $('[data-glow]').removeAttr('data-glow')
+            if_moved_end_it()
+            add_action_taken('sprint')
             highlightHexes({colour:'legendaryGlow',dist:2},$thiz)
         } else if( $('[data-glow].hexagon').length > 6 ){
             $('[data-glow]').removeAttr('data-glow')
@@ -323,6 +325,20 @@ var _m_ = {
         thiz.removeClass('shadowStepBlack shadowStepBlack_selected')
         if( !$('.shadowStepBlack').length ){
             current_ability_method = null
+        }
+    },
+    rush:$thiz=>{
+        if( $('[data-glow].hexagon').length > 6 ){
+            $('[data-glow]').removeAttr('data-glow')
+            highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
+        } else {
+            $('[data-glow]').removeAttr('data-glow')
+            $($thiz).removeClass(`rush rush_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            //$('.selectedModel').removeClass('selectedModel')
+            if(!$('.rush[data-tenmodel]').length ){
+                current_ability_method = null
+            }
         }
     }
 }

@@ -271,6 +271,23 @@ $('body').on('click','[data-glow]', function (){
     if(current_ability_method && myTurn)
         current_ability_method(thiz_origin, thiz_target)
 })
+$('body').on('click','.brutalMaster.damage',function(e){
+    e.preventDefault()
+    $('.selected').removeClass('selected')
+    $(this).addClass('selected')
+})
+$('body').on('click','.brutalMaster.aim',function(e){
+    e.preventDefault()
+    $('.selected').removeClass('selected')
+    $(this).addClass('selected')
+})
+$('body').on('click','.brutalMaster.confirm',function(e){
+    e.preventDefault()
+        const { hex, row, socksmethod } = $(this).parent().data()
+        const key = $('.boon-blight.selected').data('abil')
+        socket.emit('rolloSkill',{ socksMethod:socksmethod, key, hex, row })
+        $('.brutalMasterPanel').remove()
+})
 
 $('body').on('click','.multi_choice', function(){
     console.log( $(this).data() )//what are you for??
@@ -372,6 +389,23 @@ $('body').on('click','.boon-blight.confirm.titus', function(e){
     socket.emit('rolloSkill',{ aim: 0, hurt: 0, socksMethod:socksmethod, hex, row, cursePackage })
     $('.titusChallenge').remove()
 })
+
+
+$('body').on('click','.boon-blight.stolenTreasure:not(".confirm")',function(e){
+    e.preventDefault()
+    $('.selected').removeClass('selected')
+    if( !$(this).hasClass('booned') )
+            $(this).addClass('selected') 
+})
+$('body').on('click','.boon-blight.confirm.stolenTreasure', function(e){
+    e.preventDefault()
+    const { socksmethod, hex, row, cursecount } = $(this).parent().data()
+    const cursePackage = $('.boon-blight.selected').map(function(){return $(this).data('abil')}).get()
+    let pack = { socksMethod:socksmethod, hex, row, cursePackage }
+    socket.emit('rolloSkill', pack)
+    $('.titusChallenge').remove()
+})
+
 $('body').on('click','.boon-blight.theGreatTusk.confirm', function(e){
     e.preventDefault()
     const { hex, row } = $(this).parent().data()
@@ -428,6 +462,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('[data-glow="answerTheCall"]').length )
             socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row,key:"answerTheCall"})
         if( $('.shadowStepWhite_selected').length )extraMover('shadowStepWhite',thiz)
+        if( $('.rush_selected').length && onlyOneStep(thiz,$('.rush_selected')) )extraMover('rush',thiz)
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
@@ -474,6 +509,16 @@ $('body').on('click','.marchGuardBlack',function(e){
         highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
     }
 })
+$('body').on('click','.rush[data-tenmodel]',function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    if(myTurn){
+        $(`[data-glow]`).removeAttr('data-glow')
+        $('.rush_selected[data-tenmodel]').removeClass('rush rush_selected')
+        $(this).addClass('rush_selected')
+        highlightHexes({colour:'legendaryGlow',dist:2},$(this))
+    }
+})
 $('body').on('click','.marchGuardWhite',function(e){
     e.preventDefault()
     if(myTurn){
@@ -518,13 +563,20 @@ $('body').on('click','#rallyAction',function(e){
     e.preventDefault()
     if(myTurn)
     rallyActionDeclaration( $(this).data() )
-})
+}) 
 $('body').on('click','[data-glow="recruitGlow"].hexagon',function(e){
     e.preventDefault()
     e.stopPropagation()
     const { hex, row } = $(this).data()
     if(myTurn)
     socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row})
+})
+$('body').on('click','[data-glow="inductGlow"].hexagon',function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    const { hex, row } = $(this).data()
+    if(myTurn)
+        socket.emit('rolloSkill',{ socksMethod:"raiseDead", hex, row, key:'induct'})
 })
 $('body').on('click','[data-glow="newSpewWhite"].hexagon',function(e){
     e.preventDefault()

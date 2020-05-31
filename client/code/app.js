@@ -47,22 +47,28 @@ function beginBattle(){
 const makeAnim = (model,whereTo,callback=false) => {//model, destination
     let ofsetSize = model.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
     MOVINGNOW = true
+    const left = -(whereTo.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * km)- model.offset().left)+'px'
+    const top = -(whereTo.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * km) - model.offset().top)+'px'
     if(whereTo)
-        model.animate({
-            left: whereTo.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * window.innerHeight)- model.offset().left,
-            top: whereTo.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * window.innerHeight) - model.offset().top
-        }, 220, ()=>{
-            const name = model.data('name')
-            const team = model.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
-            model.removeAttr('style').detach().appendTo(whereTo)
-            document.querySelector(`[data-name="${name}"]${team}`).removeAttribute('style')
-            m.universal.stepOnBanner(model,whereTo)//bugs the shit out of phantomBanners
-            if(callback)
-                callback(model)
-            else
-                whereTo.removeAttr('data-glow')
-            MOVINGNOW = false
-        });
+        model
+            .css({ left, top })
+            .detach()
+            .appendTo(whereTo)
+            .animate({
+                left:0,
+                top:0
+            }, 300, ()=>{
+                const name = model.data('name')
+                const team = model.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
+                model.removeAttr('style')
+                document.querySelector(`[data-name="${name}"]${team}`).removeAttribute('style')
+                m.universal.stepOnBanner(model,whereTo)//bugs the shit out of phantomBanners
+                if(callback)
+                    callback(model)
+                else
+                    whereTo.removeAttr('data-glow')
+                MOVINGNOW = false
+            })
 };//anim
 function gameCard (name, roster, color) {
     return `    <div id="${name}" class="game_card"></div>    `
@@ -85,7 +91,7 @@ function makeGameBoard(o,coin){
     beginBattle()
     buildLadder()
     QUICK_DEEPLOY()
-    setTimeout(()=>{phase='black';myNextPhase='black'},1900)
+  //  setTimeout(()=>{phase='black';myNextPhase='black'},1900)
     opoSkillTrack = buildSkillTrack(opoRoster)
     mySkillTrack = buildSkillTrack(roster)
 }

@@ -52,9 +52,10 @@ const _m = {
         const { baim } = extractBoons_Blights(origin)
         const {hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.unitModel.blackTeam')[0])
-        if($target){
+        if($target.length){
             socket.emit('rolloSkill',{aim:6+baim, hurt:0, socksMethod:"evilEye", hex, row})
-        }
+        }else if( !$target.length )
+            displayAnimatedNews('must target<br/>a follower')
     },
     fireStorm:function(origin,taget){
         const {hex, row } = taget
@@ -117,14 +118,8 @@ const _m = {
             socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"cleavingStrike", hex, row })
     },
     rush:function(origin,target){
-        const { hex, row } = target
-        let destination = $(`.hex_${hex}_in_row_${row}`)
-        if( 
-            destination.children(`[data-name="${$('.selectedModel').data('name')}"]`).length ||
-            !destination.children('.smallCard').length &&
-            !destination.hasClass('objectiveGlow') 
-        )
-            socket.emit('rolloSkill',{hex,row,socksMethod:"rush",hurt:0,aim:0})
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill',{hex,row,socksMethod:"rush"})
     },
     intimidation:function(origin,target){
         const { baim } = extractBoons_Blights(origin)
@@ -1007,15 +1002,25 @@ const _m = {
         const { baim } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        let aim = gangBoss($target) + 5 + baim
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (5 + baim), socksMethod:"annoy", hex, row })
+            socket.emit('rolloSkill',{ aim, socksMethod:"annoy", hex, row })
     },
-    backstab:function(origin,target){
+    backstabBlack:function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        let aim = gangBoss($target) + 5 + baim
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(5+bdamage), socksMethod:"backstab", hex, row })
+            socket.emit('rolloSkill',{ aim, hurt:(5+bdamage), socksMethod:"backstabWhite", hex, row })
+    },
+    backstabWhite:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        let aim = gangBoss($target) + 5 + baim
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim, hurt:(5+bdamage), socksMethod:"backstabBlack", hex, row })
     },
     leap:function(origin,target){
         const { hex, row } = target
@@ -1030,8 +1035,10 @@ const _m = {
         const $target = $(daddy.children('.smallCard')[0])
         if( $target.hasClass('blackTeam') && daddy.attr('data-glow') === 'redGlow' )
             socket.emit('rolloSkill',{ socksMethod:"pounce1", hex, row })
-        if( !target.length && daddy.attr('data-glow') === 'legendaryGlow' )
-            socket.emit('rolloSkill',{ socksMethod:"pounce2", hex, row, hurt:(6+bdamage), aim:(6+baim) })
+        if( !target.length && daddy.attr('data-glow') === 'legendaryGlow' ){
+            let aim = gangBoss($('.pounced')) + 6 + baim
+            socket.emit('rolloSkill',{ socksMethod:"pounce2", hex, row, hurt:(6+bdamage), aim })
+        }
     },
     sneak:function(origin,target){
         const { hex, row } = target
@@ -1065,19 +1072,35 @@ const _m = {
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt+bdamage), socksMethod:"letMeDoIt", hex, row })
     },
+    brutalMasterWhite:function(origin,target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.whiteTeam[data-name="RedBandits"]')[0])
+        if($target.hasClass(`whiteTeam`) )
+            socket.emit('rolloSkill',{ socksMethod:"brutalMasterWhite", hex, row })
+    },
+    brutalMasterBlack:function(origin,target){
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.whiteTeam[data-name="RedBandits"]')[0])
+        if($target.hasClass(`whiteTeam`) )
+            socket.emit('rolloSkill',{ socksMethod:"brutalMasterBlack", hex, row })
+    },
     jawbreaker:function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const aim = 3 + baim + brutalMaster_h('aim')
+        const hurt = 7 + bdamage + brutalMaster_h('damage')
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (3 + baim), hurt:(7+bdamage), socksMethod:"jawbreaker", hex, row })
+            socket.emit('rolloSkill',{ aim, hurt, socksMethod:"jawbreaker", hex, row })
     },
     whiplash:function(origin,target){//damage happens before moving, that should not be the case
-        const { baim, bhurt } = extractBoons_Blights(origin)
+        const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const aim = 5 + baim + brutalMaster_h('aim')
+        const hurt = 5 + bdamage + brutalMaster_h('damage')
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(5+bhurt), socksMethod:"whiplash", hex, row })
+            socket.emit('rolloSkill',{ aim, hurt, socksMethod:"whiplash", hex, row })
     },
     channelRage:function(origin,target){
         const { hex, row } = origin.parent('.hexagon').data()
@@ -1087,8 +1110,9 @@ const _m = {
         const { baim } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const aim = 6 + baim + brutalMaster_h('aim')
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (6 + baim), socksMethod:"breakSpirit", hex, row })
+            socket.emit('rolloSkill',{ aim, socksMethod:"breakSpirit", hex, row })
     },
     beastlyCharge:function(origin,target){
         const { hex, row } = target
@@ -1099,15 +1123,7 @@ const _m = {
         }
         socket.emit('rolloSkill',{ socksMethod:"beastlyCharge", hex, row })
     },
-    ambush:function(origin,target){
-        const { baim } = extractBoons_Blights(origin)
-        const { hex, row } = target
-        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        const unitSize = origin.siblings('.smallCard').length
-        const aim = [3, 4, 5][unitSize]
-        if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (aim + baim), socksMethod:"ambush", hex, row })
-    },
+    ambushBlack:_ambush,
     shoot:function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target
@@ -1132,15 +1148,7 @@ const _m = {
             })
         socket.emit( 'rolloSkill', { socksMethod:"induct", hex, row })
     },
-    ambush:function(origin,target){
-        const { baim } = extractBoons_Blights(origin)
-        const { hex, row } = target
-        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        const unitSize = origin.siblings('.smallCard').length
-        const aim = [3, 4, 5][unitSize]
-        if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (aim + baim), socksMethod:"ambush", hex, row })
-    },
+    ambushWhite:_ambush,
     snowballsChance:function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target

@@ -132,10 +132,46 @@ var defy = {
     lifeTrade:()=>uniCancel(),
     voidWeapon:()=>uniCancel(),
     lifeBlade:()=>uniCancel(),
+    backstabWhite:()=>uniCancel(),
+    backstabBlack:()=>uniCancel(),
+    leap:()=>uniCancel(),
+    letMeDoIt:()=>uniCancel(),
+    channelRage:()=>uniCancel(),
+    breakSpirit:()=>uniCancel(),
     mirage:()=>{
         $('.tongueTow_selected').removeClass('tongueTow_selected')
         uniCancel()
     },
+    annoy:()=>{
+        $('.annoyed_selected').removeClass('annoyed_selected')
+        uniCancel()
+    },
+    pounce:()=>{
+        $('.pounced').removeClass('pounced')
+        uniCancel()
+    },
+    sprint:()=>{
+        $('.sprint_selected').removeClass('sprint_selected')
+        uniCancel()
+    },
+    brutalMasterBlack:()=>uniCancel(),
+    brutalMasterWhite:()=>uniCancel(),
+    ambushWhite:()=>uniCancel(),
+    ambushBlack:()=>uniCancel(),
+    induct:()=>uniCancel(),
+    hootfoot:()=>uniCancel(),
+    evilEye:()=>uniCancel(),
+    fireStorm:()=>{
+        $('.destined_for_DOOM').removeClass('destined_for_DOOM')
+        $('#multi_choice_info_panel').remove()
+        uniCancel()
+    },
+    rush:()=>{
+        $('.rush').removeClass('rush rush_selected')
+        $('.rush_selected').removeClass('rush rush_selected')
+        uniCancel()
+    },
+    intimidation:()=>uniCancel(),
 
 
 }

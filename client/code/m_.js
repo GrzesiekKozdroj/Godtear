@@ -19,7 +19,7 @@ var m_ = {
     },
     fieryAxe:function (o){
         const { aim, hurt, hex, row, key, multiAction } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel:not(".death")`)
         if(targets.length){
             const target = $(targets[0])
             $('[data-glow]').removeAttr('data-glow')
@@ -37,7 +37,7 @@ var m_ = {
     },
     fireball:function(o){
         const { aim, hurt, hex, row, key, multiAction } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel:not(".death")`)
         if(targets.length){
             const target = $(targets[0])
             $('[data-glow]').removeAttr('data-glow')
@@ -101,7 +101,6 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         const target = $(targets[0])
         current_ability_method = null
-         
         add_action_taken("warCry")
         setBoons_Blights(target,{ baim: Number(target.attr('data-baim')) + 1 })
         displayAnimatedNews(`${target.data('name')}<br/>+1 aim`)
@@ -111,7 +110,6 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
             add_action_taken("cleavingStrike")
             if( onHit(aim, target) )
@@ -358,6 +356,7 @@ var m_ = {
         propagate_BB_s($brothers,$thiz)
         river = null
         current_ability_method = null
+        $('.selectedModel').removeClass('selectedModel')//untestedo
     },
     fluSpew:function(o){
         blights_spew_recieved({o, blight:"bdamage",m:"fluSpew"})
@@ -1852,25 +1851,28 @@ var m_ = {
     sneak:function(o){
         $('[data-glow]').removeAttr('data-glow')
         const { hex, row } = o
-        const sneaker = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="SneakyStabbers"]')[0])
+        const dad = $(`.hex_${hex}_in_row_${row}`)
+        const sneaker = $(dad.children('[data-name="SneakyStabbers"]')[0])
         const side = sneaker.data('side') === mySide ? mySide : opoSide
         const sneakyPreet = $(`[data-name="SneakyPeet"].${side}`)
         forceKill(sneaker)
         displayAnimatedNews('sneaky<br/>sneak')
+        add_action_taken('sneak')
+        //highlightHexes({colour:'sneak',dist:1},sneakyPreet)
+        setTimeout(()=>{
+            if( !$('.selectedModel').length )
+                $($(`[data-name="SneakyStabbers"][data-tenmodel].${side}:not(".death")`)[0]).addClass('selectedModel')
+            rallyActionDeclaration({unitname:"SneakyPeet",side,type:'unit',name:'SneakyStabbers'},'sneak')
+        },1000)
         current_ability_method = null
-        add_action_taken()
-         
-        highlightHexes({colour:'recruitGlow',dist:1},sneakyPreet)
-        setTimeout(()=>rallyActionDeclaration({ unitname:"SneakyPeet", side, type:'unit', name:'SneakyStabbers'}),1000)
     },
     irritate:function(o){
         const { aim, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('irritate')
             if( onHit(aim, target) ){
                 displayAnimatedNews(`${target.data('name')}<br/>-1 aim`)
                 setBoons_Blights(target,{baim:Number(target.attr('data-baim'))-1})
@@ -1926,7 +1928,7 @@ var m_ = {
             const target = $(targets[0])
              
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken("jawbreaker")
             brutalMaster_brutaliser('aim')
             if( onHit(aim, target) ){
                 brutalMaster_brutaliser('damage')
@@ -1942,28 +1944,43 @@ var m_ = {
                     target.addClass('brokenJaw_selected')
                     highlightHexes({colour:'legendaryGlow',dist:1},target)
                 }
-            } else displayAnimatedNews ("missed!")
+            } else {
+                displayAnimatedNews ("missed!")
+                $('.sacrifice').removeClass('sacrifice damage')
+            }
         }
         current_ability_method=null
     },
     whiplash:function(o){//no damage module
-        const { aim, hex, row } = o
+        const { aim, hurt, hex, row } = o
         const dAD = $(`.hex_${hex}_in_row_${row}`)
         const targets = dAD.children(`.smallCard`)
         if( targets.length ){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('whiplash')
+            brutalMaster_brutaliser('aim')
             if( onHit(aim, target) ){
-                brutalMaster_brutaliser('aim')
-                //enemy pushing here
-                target.addClass('whiplash_selected')
-                highlightHexes({colour:'legendaryGlow',dist:2},target)
-                highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
-                displayAnimatedNews(`${target.data('name')}<br/>whiplashed`)
-                //push ends here
-            } else displayAnimatedNews ("missed!")
+                    brutalMaster_brutaliser('damage')
+                    displayAnimatedNews(`${target.data('name')}<br/>whiplashed`)
+                if( doDamage(hurt, target) ){
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else {
+                        target.addClass('whiplash_selected')
+                        highlightHexes({colour:'legendaryGlow',dist:2},target)
+                        highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
+                    }
+                } else {
+                    target.addClass('whiplash_selected')
+                    highlightHexes({colour:'legendaryGlow',dist:2},target)
+                    highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
+                    displayAnimatedNews("no damage!")
+                }
+            } else {
+                $('.sacrifice').removeClass('sacrifice damage')
+                displayAnimatedNews ("missed!")
+            }
         }
         current_ability_method = null
     },
@@ -1996,6 +2013,7 @@ var m_ = {
         const dad = $(`.hex_${hex}_in_row_${row}`)
         const team = !$('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
         const target = $(dad.children(`.smallCard.${team}`)[0])
+        add_action_taken('legendary')
         if( target.length ){
             $('.beastlyCharge_selected').removeClass(`beastlyCharge_selected`)
             target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-2) )
@@ -2003,7 +2021,6 @@ var m_ = {
                 if( checkIfStillAlive(target) )
                     moveLadder(target, target.data('stepsgiven'))
                 else null
-            add_action_taken('legendary')
             current_ability_method = null
             $('[data-glow]').removeAttr('data-glow')
         }
@@ -2015,9 +2032,8 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken("shoot")
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) ){
                     stolenTreasure()

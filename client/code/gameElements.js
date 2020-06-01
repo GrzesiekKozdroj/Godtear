@@ -85,21 +85,21 @@ function reduceSpeedLeft(){
     } else 
         spedred()
 }
-function highlightHexes ({colour, dist},thiz = $('.selectedModel')){//console.trace()
-    const applyClass = ({colour, row, hex}) => {
-        if(row % 2 === 1) oddRowPosition(row, hex, colour) 
-        else if (row % 2 === 0) evenRowPosition(row, hex, colour)
+function highlightHexes ({colour, dist},thiz = $('.selectedModel'), type = 'glow'){//console.trace()
+    const applyClass = ({colour, row, hex, type}) => {
+        if(row % 2 === 1) oddRowPosition(row, hex, colour, type) 
+        else if (row % 2 === 0) evenRowPosition(row, hex, colour, type)
     }
     const {hex, row} = thiz.parent('.hexagon').data()
     for(let m = 0; m < dist; m++ ){
         if(m === 0) 
-            applyClass({colour, hex, row})
+            applyClass({colour, hex, row, type})
         else
             $(`[data-glow="${colour}"]`).each(
                 function(){
                     let rg = Number( $(this).data('row') )
                     let hg = Number( $(this).data('hex') )
-                    applyClass({row: rg, hex: hg, colour})
+                    applyClass({row: rg, hex: hg, colour, type})
                 })
     }
     if(colour === 'yellowGlow' || colour === 'legendaryGlow'){

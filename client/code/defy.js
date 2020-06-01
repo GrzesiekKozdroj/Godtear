@@ -172,6 +172,29 @@ var defy = {
         uniCancel()
     },
     intimidation:()=>uniCancel(),
+    warCry:()=>uniCancel(),
+    cleavingStrike:()=>uniCancel(),
+    fireball:()=>uniCancel(),
+    fieryAxe:()=>uniCancel(),
+    kick:()=>uniCancel(),
+    shoot:()=>uniCancel(),
+    jawbreaker:()=>{
+        $('.brokenJaw_selected').removeClass('brokenJaw_selected')
+        uniCancel()
+    },
+    whiplash:()=>{
+        $('.whiplash_selected').removeClass('whiplash_selected')
+        uniCancel()
+    },
+    beastlyCharge:()=>{
+        $('.beastlyCharge_selected').removeClass('beastlyCharge_selected')
+        uniCancel()
+    },
+    sneak:()=>{
+        if( $('[data-glow="sneak"]').length )
+            displayAnimatedNews('Recruit<br/>Sneaky<br/>Stabber')
+    },
+    irritate:()=>uniCancel(),
 
 
 }

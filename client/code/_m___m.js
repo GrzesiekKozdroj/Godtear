@@ -269,6 +269,7 @@ var _m_ = {
     brokenJaw:$thiz=>{
         $(`[data-glow]`).removeAttr('data-glow')
         displayAnimatedNews(`${$thiz.data('name')}<br/>broken jaw`)
+        $('.brokenJaw_selected').removeClass('brokenJaw_selected')
     },
     whiplash:thiz=>{
         $('[data-glow]').removeAttr('data-glow')

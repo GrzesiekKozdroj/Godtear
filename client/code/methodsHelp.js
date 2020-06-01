@@ -85,10 +85,11 @@ function slayerPoints(target){
 
 const onHit = (aim, target) => { console.log('aim roll: ', ...aim)
     const target_dodge = Number(target.attr('data-dodge')) + checkIfNotMorrigan(target,'bdodge')
-    const aim_total = aim.reduce((a,b)=>a+b,0)
+    const aim_total = aim.reduce((a,b)=>a+b,0) - (fearsome() ? aim[0] : 0)
     setBoons_Blights($('.selectedModel'),{baim:0})
     setBoons_Blights(target,{bdodge:0})
-    return aim_total >= target_dodge
+    console.log(aim_total)
+    return aim_total  >= target_dodge
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
 const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
     const target_protection = Number(target.attr('data-protection')) + checkIfNotMorrigan(target,'bprotection')
@@ -568,6 +569,7 @@ function turn_resetter(skillTracker,phase,team){
         if( mj !== 'legendary' && mj )
             skillTracker[char].util[mj].used = false
     }
+    $('.sacrifice').removeClass('sacrifice damage aim')
 }
 function lifeTradeRaise(){
     $('[data-glow]').removeAttr('data-glow')
@@ -675,5 +677,20 @@ function wildfire(){
     if ( !sk.Blackjaw.util.wildfire.used ){
         sk.Blackjaw.util.wildfire.used = true
         blackja.attr('data-actionstaken',Number(blackja.attr('data-actionstaken'))-1)
+    }
+}
+function fearsome (){
+    const v = $('.selectedModel')
+    if( v.data('type') === 'unit' && v.siblings('[data-tenmodel]').length < 2 ){
+        const wipe = ()=>$(`[data-shadow="fearsome"]`).removeAttr('data-shadow')
+        highlightHexes({colour:'fearsome',dist:3},$('.selectedModel'),'shadow')
+        const team = !v.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        if( $(`[data-shadow="fearsome"].hexagon`).children(`[data-name="UnburntReavers"].${team}`).length ){
+            wipe()
+            return true
+        } else {
+            wipe()
+            return false
+        }
     }
 }

@@ -17,11 +17,11 @@ const _m = {
             if (doneTimes < modelCount) { 
                 doneTimes++
                 const multiAction = doneTimes === 1 ? true : false
-                socket.emit('rolloSkill',{ aim: (4 + baim), hurt:(5 + bdamage), socksMethod:"fieryAxe", hex, row, multiAction })
-            } else { 
+                socket.emit('rolloSkill',{ aim:(4 + baim), hurt:(5 + bdamage), socksMethod:"fieryAxe", hex, row, multiAction })
+            } else 
                 clearInterval(interval)
-            }
-        }, 1000);
+            
+        }, 1200);
         }
     },
     fireball:function(origin, target){
@@ -39,7 +39,7 @@ const _m = {
             } else { 
                 clearInterval(interval)
             }
-        }, 1000);
+        }, 1200);
         }
     },
     hootfoot:function(origin,target){
@@ -104,8 +104,8 @@ const _m = {
         const {hex, row} = target
         const $target = origin
         const { baim } = extractBoons_Blights( $(`[data-name="${$target.data('name')}"]`) )
-        if( baim < 1 )
-            socket.emit('rolloSkill',{aim:0, hurt: 0, socksMethod:"warCry", hex, row})
+        if( baim < 1 )//is it really needed??
+            socket.emit('rolloSkill',{socksMethod:"warCry", hex, row})
     },
     cleavingStrike: function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)
@@ -1041,7 +1041,7 @@ const _m = {
         }
     },
     sneak:function(origin,target){
-        const { hex, row } = target
+        const { hex, row } = origin.parent('.hexagon').data()
         const sneaker = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="SneakyStabbers"].whiteTeam')[0])
         if( sneaker.length )
             socket.emit('rolloSkill',{ socksMethod:"sneak", hex, row })

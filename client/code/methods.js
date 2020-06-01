@@ -192,8 +192,8 @@ const m =
             fearsome:
             {
                 name: "Fearsome",
-                desc: `If a small enemy is within 3 hexes of one or more Unburnt Reavers and has fewer than three models in its hex, all of its skills have -1 ${aim}.`,
-                m: function () { }
+                desc: `If a small enemy is within 3 hexes of one or more Unburnt Reavers and has fewer than three models in its hex, all of its skills have -1 aim.`,
+                m: "fearsome"
             }
         }
     },
@@ -1644,7 +1644,7 @@ const m =
             },
             annoy:
             {
-                name:"annoy",
+                name:"Annoy",
                 desc:"Hit Effect: Move target up to 2 hexes toward Sneaky Peet.",
                 icon:skull,
                 dist:3,

@@ -578,6 +578,13 @@ $('body').on('click','[data-glow="inductGlow"].hexagon',function(e){
     if(myTurn)
         socket.emit('rolloSkill',{ socksMethod:"raiseDead", hex, row, key:'induct'})
 })
+$('body').on('click','[data-glow="sneak"].hexagon',function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    const { hex, row } = $(this).data()
+    if(myTurn)
+        socket.emit('rolloSkill',{ socksMethod:"raiseDead", hex, row, key:'sneak'})
+})
 $('body').on('click','[data-glow="newSpewWhite"].hexagon',function(e){
     e.preventDefault()
     e.stopPropagation()

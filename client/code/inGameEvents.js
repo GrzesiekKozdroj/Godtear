@@ -134,28 +134,28 @@ const addSelectedColor = (thiz = false) =>
         }
     }
 
-const oddRowPosition = (r,h, colour = 'yellowGlow') => {
-    $(`.hex_${h}_in_row_${r}`).attr('data-glow',colour)
-    $(`.hex_${h - 1}_in_row_${r - 1}`).attr('data-glow',colour)
-    $(`.hex_${h}_in_row_${r - 1}`).attr('data-glow',colour)
-    $(`.hex_${h - 1}_in_row_${r}`).attr('data-glow',colour)
-    $(`.hex_${h + 1}_in_row_${r}`).attr('data-glow',colour)
-    $(`.hex_${h - 1}_in_row_${r + 1}`).attr('data-glow',colour)
-    $(`.hex_${h}_in_row_${r + 1}`).attr('data-glow',colour)
-    $(`[data-glow="${colour}"`).children('.top').attr('data-glow',colour)
-    $(`[data-glow="${colour}"`).children('.bottom').attr('data-glow',colour)
+const oddRowPosition = (r,h, colour = 'yellowGlow', type = 'glow') => {
+    $(`.hex_${h}_in_row_${r}`).attr(`data-${type}`,colour)
+    $(`.hex_${h - 1}_in_row_${r - 1}`).attr(`data-${type}`,colour)
+    $(`.hex_${h}_in_row_${r - 1}`).attr(`data-${type}`,colour)
+    $(`.hex_${h - 1}_in_row_${r}`).attr(`data-${type}`,colour)
+    $(`.hex_${h + 1}_in_row_${r}`).attr(`data-${type}`,colour)
+    $(`.hex_${h - 1}_in_row_${r + 1}`).attr(`data-${type}`,colour)
+    $(`.hex_${h}_in_row_${r + 1}`).attr(`data-${type}`,colour)
+    $(`[data-${type}="${colour}"`).children('.top').attr(`data-${type}`,colour)
+    $(`[data-${type}="${colour}"`).children('.bottom').attr(`data-${type}`,colour)
 }
 
-const evenRowPosition = (r,h, colour = 'yellowGlow') => {
-    $(`.hex_${h}_in_row_${r}`).attr('data-glow',colour)
-    $(`.hex_${h}_in_row_${r - 1}`).attr('data-glow',colour)
-    $(`.hex_${h + 1}_in_row_${r - 1}`).attr('data-glow',colour)
-    $(`.hex_${h - 1}_in_row_${r}`).attr('data-glow',colour)
-    $(`.hex_${h + 1}_in_row_${r}`).attr('data-glow',colour)
-    $(`.hex_${h}_in_row_${r + 1}`).attr('data-glow',colour)
-    $(`.hex_${h + 1}_in_row_${r + 1}`).attr('data-glow',colour)
-    $(`[data-glow="${colour}"`).children('.top').attr('data-glow',colour)
-    $(`[data-glow="${colour}"`).children('.bottom').attr('data-glow',colour)
+const evenRowPosition = (r,h, colour = 'yellowGlow', type = 'glow') => {
+    $(`.hex_${h}_in_row_${r}`).attr(`data-${type}`,colour)
+    $(`.hex_${h}_in_row_${r - 1}`).attr(`data-${type}`,colour)
+    $(`.hex_${h + 1}_in_row_${r - 1}`).attr(`data-${type}`,colour)
+    $(`.hex_${h - 1}_in_row_${r}`).attr(`data-${type}`,colour)
+    $(`.hex_${h + 1}_in_row_${r}`).attr(`data-${type}`,colour)
+    $(`.hex_${h}_in_row_${r + 1}`).attr(`data-${type}`,colour)
+    $(`.hex_${h + 1}_in_row_${r + 1}`).attr(`data-${type}`,colour)
+    $(`[data-${type}="${colour}"`).children('.top').attr(`data-${type}`,colour)
+    $(`[data-${type}="${colour}"`).children('.bottom').attr(`data-${type}`,colour)
 }
 const infectMovementHexesWithYellow = (r,h) => {
     if(r % 2 === 1) oddRowPosition(r,h) 

@@ -1788,8 +1788,7 @@ var m_ = {
         target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         displayAnimatedNews(`${target.data('name')}<br/>+1 aim`)
         setBoons_Blights(target,{baim:Number(target.attr('data-baim'))+1})
-         
-        add_action_taken()
+        add_action_taken('plotRevenge')
         $('[data-glow]').removeAttr('data-glow')
         current_ability_method = null
     },

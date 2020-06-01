@@ -195,6 +195,11 @@ var defy = {
             displayAnimatedNews('Recruit<br/>Sneaky<br/>Stabber')
     },
     irritate:()=>uniCancel(),
+    plotRevenge:()=>uniCancel(),
+    annoy:()=>{
+        $('.annoyed_selected').removeClass('annoyed_selected')
+        uniCancel()
+    }
 
 
 }

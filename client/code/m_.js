@@ -125,7 +125,7 @@ var m_ = {
     rush:function(o){//stepingOnHexWithAnotherUnburntRemoves.rush,.rush_selected and data-glow from one entering occupiedhex
         const { hex, row } = o
         let dad = $('.selectedModel').parent('.hexagon')//$(`.hex_${hex}_in_row_${row}`)
-        if( !$('.rush[data-tenmodel]').length ){console.log('rush m_')
+        if( !$('.rush[data-tenmodel]').length ){
             displayAnimatedNews(`Rush<br/>Unburnt<br/>Reavers`)
             dad.children('[data-name="UnburntReavers"][data-tenmodel]').each(function(){$(this).addClass('rush')})
             $('.selectedModel').addClass('rush_selected')
@@ -348,15 +348,18 @@ var m_ = {
         add_action_taken(key?key:"rallied")
         const thiz = $(`.hex_${hex}_in_row_${row}`)
         $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
-        $('[data-glow]').removeAttr('data-glow')
         displayAnimatedNews(`${river[3]}<br/>recruited`)
         graveyard[river[1]][river[3]].splice(0,1)
         const $thiz = $(thiz.children('.smallCard')[0])
         const $brothers = $($(`[data-name="${$thiz.data('name')}"][data-side=${$thiz.data('side')}]:not( [data-tenmodel="${$thiz.data('tenmodel')}"] )`)[0])
         propagate_BB_s($brothers,$thiz)
-        river = null
-        current_ability_method = null
-        $('.selectedModel').removeClass('selectedModel')//untestedo
+        if(key!=='callTotems' || !graveyard[river[1]][river[3]].length ){     //untestedo
+            $('[data-glow]').removeAttr('data-glow')
+            river = null
+            current_ability_method = null
+            $('#multi_choice_info_panel').remove()
+            $('.selectedModel').removeClass('selectedModel')                                          //untestedo
+        }                                                                                             //untestedo
     },
     fluSpew:function(o){
         blights_spew_recieved({o, blight:"bdamage",m:"fluSpew"})
@@ -448,10 +451,9 @@ var m_ = {
         healLife(target)
         displayAnimatedNews(`${target.data('name')} heals<br/>2 wounds`)
     },
-    onePunch:function(o){console.log('onePunch')
+    onePunch:function(o){
         const { aim, hurt, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
-        console.log('targets length:', targets.length)
         if(targets.length){
             const target = $(targets[0])
             $('[data-glow]').removeAttr('data-glow')
@@ -732,7 +734,7 @@ var m_ = {
         current_ability_method = null
         $('[data-glow]').removeAttr('data-glow')        
     },
-    soulCleave:function(o){console.log('hiw')
+    soulCleave:function(o){
         const { aim, hurt, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
@@ -774,7 +776,7 @@ var m_ = {
             displayAnimatedNews('Knightshades<br/>shamble onwards')
         }
     },
-    graspingDead:function(o){console.log('first')
+    graspingDead:function(o){
         $(`[data-name="Knightshades"].${o.multiAction}[data-tenmodel]`).each(function(){
             forceKill ( $(this) )
         })
@@ -792,7 +794,7 @@ var m_ = {
         ,700)
         current_ability_method = null
     },
-    raiseGraspingDead:function(o){console.log('second')
+    raiseGraspingDead:function(o){
         const { hex, row, multiAction} = o
         const thiz = $(`.hex_${hex}_in_row_${row}`)
         $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
@@ -1525,27 +1527,27 @@ var m_ = {
         const target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard[data-name="Hexlings"]')[0])
         forceKill(target)
         setTimeout(function(){
-        const multiInfo = {
-            name:"Call Totems",
-            count: $targets.length - 1,
-            color:"greenFlame",
-            klass:"callTotems",
-            ability:"callTotems",
-            dedcount: graveyard[side].Hexlings.length
-        }
-        $('body').append(multi_choice_info_panel(multiInfo))
-        $(`[data-name="Hexlings"][data-tenmodel].${side}`)
-            .parent('.hexagon').each(function(){
-                $(this).attr('data-glow','greenGlow')
-                $(this).children('.top').attr('data-glow','greenGlow')
-                $(this).children('.bottom').attr('data-glow','greenGlow')
-            })
+            const multiInfo = {
+                name:"Call Totems",
+                count: $targets.length - 1,
+                color:"greenFlame",
+                klass:"callTotems",
+                ability:"callTotems",
+                dedcount: graveyard[side].Hexlings.length
+            }
+            $('body').append(multi_choice_info_panel(multiInfo))
+            $(`[data-name="Hexlings"][data-tenmodel].${side}`)
+                .parent('.hexagon').each(function(){
+                    $(this).attr('data-glow','greenGlow')
+                    $(this).children('.top').attr('data-glow','greenGlow')
+                    $(this).children('.bottom').attr('data-glow','greenGlow')
+                })
         },900)
     },
     callTotems1:function(){
         const side = $('.selectedModel').hasClass(mySide) ? mySide : opoSide
         $('[data-glow="greenGlow"]').removeAttr('data-glow')
-        rallyActionDeclaration( { unitname:'Rattlebone', side, type:'unit', name:'Hexlings', dist:2 } )
+        rallyActionDeclaration( { unitname:'Rattlebone', side, type:'unit', name:'Hexlings', dist:2 }, 'callTotems' )
     },
     graspingCurse:function(o){
         const { aim, hex, row } = o
@@ -1553,9 +1555,8 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             const { side, name } = target.data()
-             
             $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
+            add_action_taken('graspingCurse')
             if( onHit(aim, target) ){ 
                 if( myTurn )
                     $('#gameScreen').append( dedlyCursePanel( {side,name,socksMethod:'graspingCurse',message:'choose one'} ) )
@@ -1565,6 +1566,14 @@ var m_ = {
         }
         current_ability_method = null
     },
+    hexEaters:function(o){
+        const { side, curseType } = o.cursePackage
+        const $target = $($(`[data-name="Hexlings"][data-side="${side}"]`)[0])
+        setBoons_Blights($target,{[curseType]:Number($target.attr(`data-${curseType}`))+1})
+        displayAnimatedNews(`Hexlings<br/>+1 ${[...curseType[0]].slice(1).join('')}`)
+        current_ability_method = null
+        $('.titusChallenge').remove()
+    },
     powerHex:function(o){
         const team = $('.selectedModel').hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
         const { cursePackage } = o
@@ -1573,11 +1582,17 @@ var m_ = {
         $('[data-glow].hexagon').children(`.champModel.${team}`).each(function(){
             setBoons_Blights($(this),curses)
         })
-         
-        add_action_taken()
+        add_action_taken('legendary')
         current_ability_method = null
+        const infoString = cursePackage.map(el=>`-1 ${el}<br/>`).join(',')
         $('[data-glow]').removeAttr('data-glow')
-        displayAnimatedNews(`champions get<br/>-1 ${cursePackage.join(', ')}`)
+        displayAnimatedNews(`champions get<br/>${infoString}`)
+    },
+    rollTheBonesBlack:rollTheBones_,
+    rollTheBonesWhite:rollTheBones_,
+    rollTheBonesTransfer:function(o){
+        const { hex, row } = o
+        console.log(o)
     },
     purgeMagic:function(o){
         const { hex, row, key } = o
@@ -1593,22 +1608,8 @@ var m_ = {
         add_action_taken()
         current_ability_method = null
     },
-    hexBolt:function(o){
-        const { aim, hex, row } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
-        if(targets.length){
-            const target = $(targets[0])
-            const { side, name } = target.data()
-             
-            $('[data-glow]').removeAttr('data-glow')
-            add_action_taken()
-            if( onHit(aim, target) ){ 
-                if( myTurn )
-                    $('#gameScreen').append(  challengeOptions(target, {hex, row}, "hexBolt2",1,`give 1 blight to ${target.data('name')}`)  )
-            } else displayAnimatedNews ("missed!")
-        }
-        current_ability_method = null
-    },
+    hexBoltBlack:hexBolt_,
+    hexBoltWhite:hexBolt_,
     hexBolt2:function(o){
         const { hex, row, cursePackage } = o
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
@@ -1620,8 +1621,7 @@ var m_ = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Hexlings"]')[0])
         setBoons_Blights($target,{[cursePackage[0]]:Number($target.attr(`data-${cursePackage[0]}`))+1})
         displayAnimatedNews(`Hexlings<br/>+1 ${[...cursePackage[0]].slice(1).join('')}`)
-         
-        add_action_taken()
+        add_action_taken('attuneMagic')
         current_ability_method = null
     },
     piercingShot:function(o){
@@ -1826,7 +1826,7 @@ var m_ = {
         highlightHexes({colour:'legendaryGlow',dist:1},targes)
         displayAnimatedNews('sneaky leap<br/>first')
     },
-    pounce2:function(o){console.log('insider')
+    pounce2:function(o){
         const { hex, row, aim, hurt } = o
         const thiz = $(`[data-name="SneakyPeet"].selectedModel`)
         const that = $(`.hex_${hex}_in_row_${row}`)

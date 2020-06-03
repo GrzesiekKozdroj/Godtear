@@ -112,7 +112,7 @@ const rosters =
 };
 roster = [
     rosters.maelstrom[1].champ.name,
-    rosters.maelstrom[3].champ.name, 
+    rosters.shaper[0].champ.name, 
     rosters.maelstrom[2].champ.name, 
 ];
 

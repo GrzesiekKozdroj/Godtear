@@ -202,7 +202,7 @@ $('body').on('click','.objectiveGlow[data-glow="claimColor"]', function(){
 
 
 //ON CLICKING EACH HEXAGON
-$('body').on('click','.hexagon',function(e){
+$('body').on('click','.hexagon:not([data-glow="callTotems"])',function(e){
     e.preventDefault()
     const thiz = $( $(this).children('.smallCard')[0] )
     if( 
@@ -284,9 +284,13 @@ $('body').on('click','.brutalMaster.aim',function(e){
 $('body').on('click','.brutalMaster.confirm',function(e){
     e.preventDefault()
         const { hex, row, socksmethod } = $(this).parent().data()
-        const key = $('.boon-blight.selected').data('abil')
-        socket.emit('rolloSkill',{ socksMethod:socksmethod, key, hex, row })
-        $('.brutalMasterPanel').remove()
+        const ch = $('.boon-blight.selected')
+        const key = ch.data('abil')
+        if(ch.length){
+            socket.emit('rolloSkill',{ socksMethod:socksmethod, key, hex, row })
+            $('.brutalMasterPanel').remove()
+        }
+
 })
 
 $('body').on('click','.multi_choice', function(){
@@ -339,6 +343,22 @@ $('body').on('click','.boon-blight.confirm.deadlyCurse', function(e){
     const bbname = $('.boon-blight.selected').data('abil')
     crystalGlare_bb = { side, name, curseType:bbname }
     socket.emit('rolloSkill',{ socksMethod:"deadlyCurse2", cursePackage:crystalGlare_bb })
+    $('.deadlyCursePanel').remove()
+})
+
+$('body').on('click','.boon-blight.hexEaters:not(".confirm")',function(e){
+    e.preventDefault()
+    if( !$(this).hasClass('booned') ){
+        $('.selected').removeClass('selected')
+        $(this).addClass('selected')
+    }
+})
+$('body').on('click','.boon-blight.confirm.hexEaters', function(e){
+    e.preventDefault()
+    const { side } = $(this).parent().data()
+    const bbname = $('.boon-blight.selected').data('abil')
+    crystalGlare_bb = { side, curseType:bbname }
+    socket.emit('rolloSkill',{ socksMethod:"hexEaters", cursePackage:crystalGlare_bb })
     $('.deadlyCursePanel').remove()
 })
 
@@ -571,6 +591,13 @@ $('body').on('click','[data-glow="recruitGlow"].hexagon',function(e){
     if(myTurn)
     socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row})
 })
+$('body').on('click','[data-glow="callTotems"].hexagon',function(e){console.log('click on data glow')
+    e.preventDefault()
+    e.stopPropagation()
+    const { hex, row } = $(this).data()
+    if(myTurn)
+    socket.emit('rolloSkill',{ socksMethod:"raiseDead", hex, row, key:'callTotems'})
+})
 $('body').on('click','[data-glow="inductGlow"].hexagon',function(e){
     e.preventDefault()
     e.stopPropagation()
@@ -613,17 +640,16 @@ $('body').on('click','.current',function(e){
         highlightHexes ({colour:'blueGlow', dist:3},$(this))
     }
 })
-$('body').on('click','.fire[data-socksmethod="callTotems"]',function(e){
+$('body').on('click','.fire[data-socksmethod="callTotems"]',function(e){console.log('click on fire')
     e.preventDefault()
     e.stopPropagation()
+        socket.emit('rolloSkill',{socksMethod:'callTotems1'})
+        add_action_taken('callTotems')//added
+        current_ability_method = null
     if( myTurn && graveyard[mySide].Hexlings.length > 1 )
         socket.emit('rolloSkill',{socksMethod:'callTotems1'})
-    else {
-        socket.emit('rolloSkill',{socksMethod:'callTotems1'})
-        current_ability_method = null
-        add_action_taken()
+    else 
         $('#multi_choice_info_panel').remove()
-    }
 })
 
 $(`body`).on('click',`.endTask`,function(e){

@@ -316,3 +316,26 @@ function stolenTreasure (){
     `
     $('#gameScreen').append(product)
  }  }
+function EatHexes({side,socksMethod,message}){
+    //$('.selectedModel'), {hex=Number(), row=Number(), sockMethod:"string"}
+    const heling = $($(`.${side}[data-tenmodel^="Hexlings"]`)[0])
+        const { baim, bdamage, bspeed, bdodge, bprotection } = extractBoons_Blights( heling )
+        return `
+            <div class="titusChallenge">
+                <div 
+                    class="titusChallengeCrest" 
+                    data-socksmethod="${socksMethod}" 
+                    data-side="${side}" 
+                  >
+                    <div class="message">${message}</div>
+                    <div class="boon-blight ${socksMethod} walk ${decideOrnament(bspeed)}" data-abil="bspeed">  </div>
+                    <div class="boon-blight ${socksMethod} dodge ${decideOrnament(bdodge)}" data-abil="bdodge">  </div>
+                    <div class="boon-blight ${socksMethod} protection ${decideOrnament(bprotection)}" data-abil="bprotection">  </div>
+                    <div class="boon-blight ${socksMethod} aim ${decideOrnament(baim)}" data-abil="baim">  </div>
+                    <div class="boon-blight ${socksMethod} confirm " > done </div>
+                    <div class="boon-blight ${socksMethod} damage ${decideOrnament(bdamage)}" data-abil="bdamage">  </div>
+                </div>
+            </div>
+        `
+
+}

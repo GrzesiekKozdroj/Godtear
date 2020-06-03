@@ -34,10 +34,9 @@ const abilTruthChange = (abilName = null,side=mySide) => {
     $('.skilling_declaration').removeClass('skilling_declaration')
     $(`[data-m="${abilName}"].${side}`).removeClass('glow_unused').addClass('usedSkill')
 }
-
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
     const targetos = (abilName, p = phase) => {
-        //console.log(name,p,abilName)
+        console.log(name,p,abilName)
         if(side === mySide)
                 return mySkillTrack[name][p][abilName].used 
         else if(side === opoSide)
@@ -51,7 +50,6 @@ const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('n
     else
         return true
 }
-
 const add_action_taken = (
     abilName = false,
     shallI = false, 
@@ -82,13 +80,11 @@ function slayerPoints(target){
     else 
         return target.data('stepsgiven')
 }
-
 const onHit = (aim, target) => { console.log('aim roll: ', ...aim)
     const target_dodge = Number(target.attr('data-dodge')) + checkIfNotMorrigan(target,'bdodge')
     const aim_total = aim.reduce((a,b)=>a+b,0) - (fearsome() ? aim[0] : 0)
     setBoons_Blights($('.selectedModel'),{baim:0})
     setBoons_Blights(target,{bdodge:0})
-    console.log(aim_total)
     return aim_total  >= target_dodge
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
 const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
@@ -290,8 +286,6 @@ function styleStats(a,b,key,thiz){
         })
     }
 }
-
-
 const placeMark = ({hex, row, multiInfo, target, key}) => {
     target.addClass('destined_for_DOOM')
     target.attr('data-DOOMqueue', key)
@@ -409,7 +403,7 @@ function leave_only_selected_path(){
 function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowType = 'recruitGlow'){
     const { hex, row } = $(`[data-name="${unitname}"].${side}`).parent('.hexagon').data()
     river = [unitname,side,type,name]
-    if(name==="Retchlings"){console.log('retchlings recruitment')
+    if(name==="Retchlings"){
         $(`[data-name="${name}"].${side}`).each(function(){
             const h = $(this).parent('.hexagon').data('hex')
             const r = $(this).parent('.hexagon').data('row')
@@ -496,12 +490,10 @@ function rallyChampion(thiz){
 function _target({ hex, row }){//UNFINISHED, not annoyed enuff yet
     return $(`.hex_`)
 }
-
 function moveContentsOfHex(stringz,thiz){//"string for callback name" and $(thestinationHex)
     const { hex, row } = thiz.data()
     socket.emit('rolloSkill',{ hex, row, socksMethod:stringz })
 }
-
 function propagate_BB_s($origin,$target){
     const origin = extractBoons_Blights( $origin )
     const { baim, bdamage, bspeed, bdodge, bprotection } = origin
@@ -587,7 +579,6 @@ function gangBoss(target){
     $('[data-glow]').removeAttr('data-glow')
     return helpers
 }
-
 function backstab(o){
     const { aim, hex, row, hurt } = o
     const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
@@ -664,7 +655,7 @@ function ambush_(o){
     }
     current_ability_method = null
 }
-function sT(o){console.log('hi')
+function sT(o){
     const { hex, row, cursePackage } = o
     const bb = cursePackage[0]
     const target = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel][data-name="RedBandits"]')[0])
@@ -692,5 +683,51 @@ function fearsome (){
             wipe()
             return false
         }
+    }
+}
+function _hexBolt(origin,target){
+    const { baim } = extractBoons_Blights(origin)
+    const { hex, row } = target
+    const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+    const unitSize = origin.siblings('.smallCard').length
+    const aim = [2, 4, 6][unitSize]
+    const socksMethod = "hexBolt" + (phase==='white'?'White':'Black')
+    if($target.hasClass(`blackTeam`) )
+        socket.emit('rolloSkill',{ aim: (aim + baim), socksMethod, hex, row })
+}
+function hexBolt_(o){
+    const { aim, hex, row } = o
+    const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+    if(targets.length){
+        const target = $(targets[0])
+        const { side, name } = target.data()
+        const at = 'hexBolt' + (phase==='white'?'White':'Black')
+        $('[data-glow]').removeAttr('data-glow')
+        add_action_taken(at)
+        if( onHit(aim, target) ){ 
+            if( myTurn )
+                $('#gameScreen').append(  challengeOptions(target, {hex, row}, "hexBolt2",1,`give 1 blight to ${target.data('name')}`)  )
+        } else displayAnimatedNews ("missed!")
+    }
+    current_ability_method = null
+}
+function rollTheBones_(o){
+    const { aim, hex, row } = o
+    const rattlebone = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard[data-tenmodel="Rattlebone"]')[0])
+    const dist = aim[0]
+    const side = rattlebone.data('side') === mySide ? mySide : opoSide
+    if(!dist){
+        if ( myTurn )
+            $('#gameScreen').append( EatHexes( {side,socksMethod:'hexEaters',message:'Hexlings gain 1 boon'} ) )
+        else
+            displayAnimatedNews('Hex<br/>Eaters')
+    }else{
+        $(`[data-glow]`).removeAttr('data-glow')
+        highlightHexes({colour:'blueGlow',dist},rattlebone)
+        current_ability_method = _m.rollTheBonesTransfer
+        //first determine if target has more than one of either boons or blights
+        //if only one he gainst class instantly
+        //if more than one, sadly display options of posessed bb's
+        //to choose from, each button 
     }
 }

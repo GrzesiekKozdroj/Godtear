@@ -199,6 +199,27 @@ var defy = {
     annoy:()=>{
         $('.annoyed_selected').removeClass('annoyed_selected')
         uniCancel()
+    },
+    hexBoltWhite:()=>{
+        $('.titusChallenge').remove()
+        uniCancel()
+    },
+    hexBoltBlack:()=>{
+        $('.titusChallenge').remove()
+        uniCancel()
+    },
+    attuneMagic:()=>{
+        $('.titusChallenge').remove()
+        uniCancel()
+    },
+    callTotems:()=>displayAnimatedNews('click green flame<br/>to call<br/>totems back'),
+    graspingCurse:()=>{
+        $('.deadlyCursePanel').remove()
+        uniCancel()
+    },
+    powerHex:()=>{
+        $('.titusChallenge').remove()
+        uniCancel()
     }
 
 

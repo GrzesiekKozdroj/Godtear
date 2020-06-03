@@ -862,17 +862,14 @@ const _m = {
         const { hex, row } = target
         const $targets = $(`[data-name="Hexlings"][data-tenmodel].${mySide}`)
         const $target = $($(`.hex_${hex}_in_row_${row}`).children(`[data-name="Hexlings"][data-tenmodel].${mySide}`)[0])
-
-        if( $target.length ) 
-            socket.emit('rolloSkill',{hex, row, socksMethod:'callTotems'})
-
         $(`[data-name="Hexlings"][data-tenmodel].${mySide}`)
             .parent('.hexagon').each(function(){
                 $(this).attr('data-glow','greenGlow')
                 $(this).children('.top').attr('data-glow','greenGlow')
                 $(this).children('.bottom').attr('data-glow','greenGlow')
             })
-
+        if( $target.length ) 
+            socket.emit('rolloSkill',{hex, row, socksMethod:'callTotems'})
         const multiInfo = {
             name:"Call Totems",
             count: $targets.length,
@@ -901,21 +898,28 @@ const _m = {
                     curseCount,
                     `apply ${curseCount} blight${curseCount>1?'s':''} to enemy champions`))
     },
+    rollTheBonesWhite:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill', { aim: 1, socksMethod: 'rollTheBonesWhite', hex, row} )
+        //here I only 
+    },
+    rollTheBonesBlack:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill', { aim: 1, socksMethod: 'rollTheBonesBlack', hex, row} )
+        //here I only 
+    },
+    rollTheBonesTransfer:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill', { socksMethod: 'rollTheBonesTransfer', hex, row} )
+    },
     purgeMagic:function(origin,target){
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.whiteTeam')[0])
         if( $target.length )
             socket.emit('rolloSkill',{ socksMethod:"purgeMagic", hex, row, key:mySide })
     },
-    hexBolt:function(origin,target){
-        const { baim } = extractBoons_Blights(origin)
-        const { hex, row } = target
-        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        const unitSize = origin.siblings('.smallCard').length
-        const aim = [2, 4, 6][unitSize]
-        if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (aim + baim), socksMethod:"hexBolt", hex, row })
-    },
+    hexBoltBlack:_hexBolt,
+    hexBoltWhite:_hexBolt,
     attuneMagic:function(origin,target){
         const { hex, row } = origin.parent('.hexagon').data()
         $('#gameScreen')

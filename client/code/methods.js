@@ -1399,6 +1399,13 @@ const m =
                 hurt: [6],
                 unused: true,
                 m: "deadlyCurse"
+            },
+            rollTheBonesBlack:
+            {
+                name: "Roll the Bones",
+                desc: "At the end of Rattlebone's activation, roll one die. If you roll a 1 or 2, you may remove a boon or blight from a model within that many exes of Rattlebone and place it on a different model within that many hexes.",
+                icon:'cogs',
+                m: 'rollTheBonesBlack'
             }
         },
         white:
@@ -1420,6 +1427,13 @@ const m =
                 icon:skull,
                 unused: true,
                 m: "graspingCurse"
+            },
+            rollTheBonesWhite:
+            {
+                name: "Roll the Bones",
+                desc: "At the end of Rattlebone's activation, roll one die. If you roll a 1 or 2, you may remove a boon or blight from a model within that many exes of Rattlebone and place it on a different model within that many hexes.",
+                icon:'cogs',
+                m: 'rollTheBonesWhite'
             }
         },
         util:
@@ -1433,12 +1447,6 @@ const m =
                 unused: true,
                 legendaryUsed: false,
                 m: "powerHex"
-            },
-            rollTheBones:
-            {
-                name: "Roll the Bones",
-                desc: "At the end of Rattlebone's activation, roll one die. If you roll a 1 or 2, you may remove a boon or blight from a model within that many exes of Rattlebone and place it on a different model within that many hexes.",
-                m: function () { }
             }
         }
     },
@@ -1463,7 +1471,7 @@ const m =
                 dist: 2,
                 aim: [2, 4, 6],
                 unused: true,
-                m: "hexBolt"
+                m: "hexBoltBlack"
             }
         },
         white:
@@ -1484,7 +1492,7 @@ const m =
                 dist: 2,
                 aim: [2, 4, 6],
                 unused: true,
-                m: "hexBolt"
+                m: "hexBoltWhite"
             }
         },
         util:
@@ -1492,7 +1500,8 @@ const m =
             hexEaters:
             {
                 name: "Hex Eaters",
-                desc: "When Rattlebone rolls a blank on her Roll the Bones roll, the Hexlings may gain the boon of your choice."
+                desc: "When Rattlebone rolls a blank on her Roll the Bones roll, the Hexlings may gain the boon of your choice.",
+                m:'hexEaters'
             }
         }
     },

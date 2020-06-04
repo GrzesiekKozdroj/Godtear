@@ -1592,7 +1592,49 @@ var m_ = {
     rollTheBonesWhite:rollTheBones_,
     rollTheBonesTransfer:function(o){
         const { hex, row } = o
-        console.log(o)
+        //continue here
+        const dad = $(`.hex_${hex}_in_row_${row}`)
+        const target = $(dad.children('[data-tenmodel]')[0])
+        if( !$('.the_donor').length ){
+            const { baim ,bdamage, bprotection, bdodge, bspeed } = extractBoons_Blights(target)
+            const arr = [baim ,bdamage, bprotection, bdodge, bspeed]
+            if( arr.some(el=>el!==0) ){
+                displayAnimatedNews('now choose<br/>reciever')
+                target.addClass('the_donor')
+            } else 
+                displayAnimatedNews('choose model<br/>with<br/>boons or blights')
+        } else if ( $('.the_donor').length ){
+            const { baim ,bdamage, bprotection, bdodge, bspeed } = extractBoons_Blights( $('.the_donor') )
+            const bebes = { baim ,bdamage, bprotection, bdodge, bspeed }
+            const arr = [baim ,bdamage, bprotection, bdodge, bspeed]
+            if( arr.some(el=>el!==0) ){
+                let bbCount = 0
+                arr.forEach(el=>{if(el!==0)bbCount++})
+                if(bbCount===1){
+                    let k
+                    for(let kej in bebes){if(bebes[kej]!==0)k = kej}
+                    setBoons_Blights(  $('.the_donor'), { [k]:0 }  )
+                    setBoons_Blights(  target,{ [k]: Number( target.attr(`data-${k}`) ) + bebes[k] }  )
+                    displayAnimatedNews(`${target.data('name')}<br/>${bebes[k]} to ${[...k].slice(1).join('')}`)
+                    $('[data-glow]').removeAttr('data-glow')
+                } else if( myTurn ){
+                    $('#gameScreen').append( rTB_Transfer( {hex,row,socksMethod:'rTB_End',message:'take one'} ) )
+                }
+            } else displayAnimatedNews('choose model<br/>with<br/>boons or blights')
+        }
+    },
+    rollTheBones__End:function(o){
+        const { hex, row, curseType } = o.cursePackage
+        const recepient = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        let value = Number(recepient.attr(`data-${curseType}`))+Number($('.the_donor').attr(`data-${curseType}`))
+        setBoons_Blights(recepient,{ [curseType]: (value > 1 ? 1 : value < -1 ? -1 : value) })
+        setBoons_Blights( $('.the_donor'), {[curseType]:0} )
+        displayAnimatedNews(`${recepient.data('name')}
+            <br/>takes ${Number(recepient.attr(`data-${curseType}`))} ${curseType} from<br/>
+            ${$('.donor').data('name')}`)
+        $('.the_donor').removeClass('the_donor')
+        $('[data-glow]').removeAttr('data-glow')
+        current_ability_method = null
     },
     purgeMagic:function(o){
         const { hex, row, key } = o

@@ -362,6 +362,20 @@ $('body').on('click','.boon-blight.confirm.hexEaters', function(e){
     $('.deadlyCursePanel').remove()
 })
 
+$('body').on('click','.boon-blight.rTB_End:not(".confirm")',function(e){
+    e.preventDefault()
+    $('.selected').removeClass('selected')
+    $(this).addClass('selected')
+})
+$('body').on('click','.boon-blight.confirm.rTB_End', function(e){
+    e.preventDefault()
+    const { hex, row } = $(this).parent().data()
+    const bbname = $('.boon-blight.selected').data('abil')
+    crystalGlare_bb = { hex, row, curseType:bbname }
+    socket.emit('rolloSkill',{ socksMethod:"rollTheBones__End", cursePackage:crystalGlare_bb })
+    $('.titusChallenge').remove()
+})
+
 $('body').on('click','.boon-blight.blighted.graspingCurse',function(e){
     e.preventDefault()
     $('.selected').removeClass('selected')

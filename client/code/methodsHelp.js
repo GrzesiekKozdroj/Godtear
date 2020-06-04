@@ -716,6 +716,8 @@ function rollTheBones_(o){
     const rattlebone = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard[data-tenmodel="Rattlebone"]')[0])
     const dist = aim[0]
     const side = rattlebone.data('side') === mySide ? mySide : opoSide
+    //still needs add_action_take and change attr data-actionstaken=2
+    rattlebone.attr('data-actionstaken',2)
     if(!dist){
         if ( myTurn )
             $('#gameScreen').append( EatHexes( {side,socksMethod:'hexEaters',message:'Hexlings gain 1 boon'} ) )
@@ -724,10 +726,7 @@ function rollTheBones_(o){
     }else{
         $(`[data-glow]`).removeAttr('data-glow')
         highlightHexes({colour:'blueGlow',dist},rattlebone)
+        displayAnimatedNews('choose<br/>donor')
         current_ability_method = _m.rollTheBonesTransfer
-        //first determine if target has more than one of either boons or blights
-        //if only one he gainst class instantly
-        //if more than one, sadly display options of posessed bb's
-        //to choose from, each button 
     }
 }

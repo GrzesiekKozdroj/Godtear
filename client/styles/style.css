@@ -2690,3 +2690,7 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   margin-bottom: -100%;
   opacity: .7;
 }
+
+.rTB_End.blighted {
+  opacity: 1 !important;
+}

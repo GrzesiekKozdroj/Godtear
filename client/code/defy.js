@@ -220,6 +220,11 @@ var defy = {
     powerHex:()=>{
         $('.titusChallenge').remove()
         uniCancel()
+    },
+    rollTheBones:()=>{
+        $('.the_donor').removeClass('the_donor')
+        $('.titusChallenge').remove()
+        uniCancel()
     }
 
 

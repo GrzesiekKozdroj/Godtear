@@ -997,3 +997,6 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
         @include sacrificial('damageBlight')
     }
 }
+.rTB_End.blighted{
+    opacity:1!important;
+}

@@ -337,5 +337,53 @@ function EatHexes({side,socksMethod,message}){
                 </div>
             </div>
         `
-
+}
+function rTB_Transfer( {hex,row,socksMethod,message} ){
+    const { baim, bdamage, bspeed, bdodge, bprotection } = extractBoons_Blights( $('.the_donor') )
+    const bebes = { baim, bdamage, bspeed, bdodge, bprotection }
+    let elements = []
+    const itemPrep = ({socksMethod,abilVal,abilName}) => {
+        let klazx
+        switch (abilName) {
+            case 'bspeed':
+                klazx = 'walk'
+                break;
+                case 'baim':
+                    klazx = 'aim'
+                    break;
+                    case 'bdamage':
+                        klazx = 'damage'
+                        break;
+                        case 'bdodge':
+                            klazx = 'dodge'
+                            break;
+                            case 'bprotection':
+                                klazx = 'protection'
+                                break;
+        
+            default:
+                break;
+        }
+        elements = [ ...elements,`
+                <div class="boon-blight ${socksMethod} ${klazx} ${decideOrnament(abilVal)}" data-abil="${abilName}">  </div>
+            `]
+    }
+    for(let k in bebes){
+        if(bebes[k]!==0)
+            itemPrep({socksMethod, abilVal:bebes[k],abilName:k})
+    } 
+    return `
+        <div class="titusChallenge">
+            <div 
+                class="titusChallengeCrest" 
+                data-socksmethod="${socksMethod}" 
+                data-hex=${hex} 
+                data-row=${row} 
+              >
+                <div class="message">${message}</div>
+                ${ elements.join('') }
+                <div class="boon-blight ${socksMethod} confirm " > done </div>
+            </div>
+        </div>
+    `
 }

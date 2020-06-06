@@ -1,5 +1,5 @@
 const uniCancel = ()=>{
-    $('[data-glow]').removeAttr('data-glow')
+    un_glow()
     $('.skilling_declaration').removeClass('skilling_declaration')
     current_ability_method = null
     canceller = null
@@ -224,6 +224,19 @@ var defy = {
     rollTheBones:()=>{
         $('.the_donor').removeClass('the_donor')
         $('.titusChallenge').remove()
+        uniCancel()
+    },
+    slipAndSlide:()=>uniCancel(),
+    newSpewBlack:()=>displayAnimatedNews('deploy all<br/>Retchlings'),
+    newSpewWhite:()=>displayAnimatedNews('deploy all<br/>Retchlings'),
+    fluSpew:()=>uniCancel(),
+    gooSpew:()=>uniCancel(),
+    roarOfBattle:()=>{
+        $('.roarOfBattle_selected').removeClass('roarOfBattle_selected')
+        uniCancel()
+    },
+    outflank:()=>{
+        $('.outflank').removeClass('outflank outflank_selected')
         uniCancel()
     }
 

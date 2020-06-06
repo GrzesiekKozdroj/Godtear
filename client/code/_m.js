@@ -233,7 +233,7 @@ const _m = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         const unitSize = origin.siblings('.smallCard').length
         let skillBonus = 0
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         highlightHexes ({colour:'blueGlow', dist:1}, $target)
         $('[data-glow="blueGlow"]')
             .each(function(){
@@ -255,16 +255,16 @@ const _m = {
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         if( $target.hasClass(`champModel`) )
-            socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"roarOfBattle", hex, row })
+            socket.emit('rolloSkill',{ socksMethod:"roarOfBattle", hex, row })
     },
     outflank:function(origin,target){
         const { baim } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         const unitSize = origin.siblings('.smallCard').length
-        const aim = [6, 6, 6][unitSize]
+        const aim = [6, 6, 6][unitSize] + baim
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (aim+ baim), hurt:0, socksMethod:"outflank", hex, row })
+            socket.emit('rolloSkill',{ aim, socksMethod:"outflank", hex, row })
     },
     roll:function(origin,target){
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"roll"})
@@ -419,7 +419,7 @@ const _m = {
         const $target = $(`.hex_${hex}_in_row_${row}`)
         if( $target.children('.claimedBanner.whiteTeam').length ){
             displayAnimatedNews('reposition your banner')
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'greenGlow',dist:1},$($target.children('.claimedBanner')[0]))
             $target.children('.claimedBanner').addClass('tongueTow_selected')
             highlight_closest_path(origin.parent('.hexagon').data(),target)
@@ -434,7 +434,7 @@ const _m = {
         const $target = $(`.hex_${hex}_in_row_${row}`)
         if( $target.children('.smallCard.blackTeam').length ){
             displayAnimatedNews('reposition model')
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'greenGlow',dist:1},$($target.children('.smallCard')[0]))
             $target.children('.claimedBanner').addClass('tongueLash_selected')
             socket.emit('rolloSkill',{aim:(baim+aim), hurt:0, socksMethod:"tongueLash", hex, row})
@@ -483,7 +483,7 @@ const _m = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.unitModel.whiteTeam')[0])
         const { name, unitsize, side, type, unitname } = $target.data()
         if( $(`[data-name="${name}"].whiteTeam`).length < unitsize ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             setTimeout(()=>rallyActionDeclaration({ unitname, side, type, name }, 'answerTheCall'),800)
             displayAnimatedNews(`${name} answers<br/>the call of Rhodri`)
         } else 
@@ -545,7 +545,7 @@ const _m = {
     },
     graveSummons:function(origin,target){
         const {hex,row}=target
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"graveSummons", hex, row})
     },
     forwardMinions:function(origin,target){
@@ -593,7 +593,7 @@ const _m = {
         const $target = $(`.hex_${hex}_in_row_${row}`)
         if( $target.children('.claimedBanner.whiteTeam').length ){
             displayAnimatedNews('reposition your banner')
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'greenGlow',dist:1},$($target.children('.claimedBanner')[0]))
             $target.children('.claimedBanner').addClass('tongueTow_selected')
             socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"tongueTow", hex, row})
@@ -761,7 +761,7 @@ const _m = {
         if( !$target.length ) march('lungingStrikeMove',target)
         if(  $target.hasClass(`blackTeam`)  ){
             pocketBox = { hex, row }
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1})
             highlight_closest_path(origin.parent('.hexagon').data(),target)
         }
@@ -777,7 +777,7 @@ const _m = {
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         if( $target.length ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:3},$target)
             pocketBox = $target
         }
@@ -1028,7 +1028,7 @@ const _m = {
     },
     leap:function(origin,target){
         const { hex, row } = target
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         highlightHexes({colour:'legendaryGlow',dist:2})
         socket.emit('rolloSkill',{ socksMethod:"leap", hex, row })
     },
@@ -1122,7 +1122,7 @@ const _m = {
         const { hex, row } = target
         origin.addClass('beastlyCharge_selected')
         if( $('[data-glow="greenGlow"]').length ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:2})
         }
         socket.emit('rolloSkill',{ socksMethod:"beastlyCharge", hex, row })

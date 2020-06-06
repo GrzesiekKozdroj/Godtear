@@ -34,13 +34,22 @@ const abilTruthChange = (abilName = null,side=mySide) => {
     $('.skilling_declaration').removeClass('skilling_declaration')
     $(`[data-m="${abilName}"].${side}`).removeClass('glow_unused').addClass('usedSkill')
 }
+const causeOfRetchlings = (skill) => {
+    if( skill.length ){
+        const { hex, row } = $('.selectedModel').parent('.hexagon').data()
+        if( skill[0] !== hex || skill[1] !== row ){
+            return false
+        } else { return true }
+    } else { return skill }
+}
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
     const targetos = (abilName, p = phase) => {
-        console.log(name,p,abilName)
+        let prod;
         if(side === mySide)
-                return mySkillTrack[name][p][abilName].used 
+                prod = causeOfRetchlings(  mySkillTrack[name][p][abilName].used )
         else if(side === opoSide)
-                return opoSkillTrack[name][p][abilName].used 
+                prod = causeOfRetchlings( opoSkillTrack[name][p][abilName].used )
+        return prod
     }
 
     if (abilName === "legendary")
@@ -59,7 +68,7 @@ const add_action_taken = (
         const actionstaken = Number($('.selectedModel').attr('data-actionstaken'))
     if( abilTruthRead(abilName, side, name) && !shallI ){
         $(`[data-name=${name}].${side}[data-tenmodel]`).each(function(){
-            $(this).attr('data-actionstaken', (Number(actionstaken) + 1) )
+            $(this).attr('data-actionstaken', (actionstaken + 1) )
         })
     }
     abilTruthChange(abilName,side)
@@ -146,7 +155,7 @@ const forceKill = (target) => {//$()
                 graveyard[target.data('side')][target.data('name')] = [target.removeClass('.death').detach()]
         else if( target.data('type')==='champion' ){
             //gotta emit champ death
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'deathMove',dist:2},target)
             //resurrect Mournblade
             if(Number($(`[data-name="Mournblade"].${mySide}[data-tenmodel]`).attr('data-healthleft')) === 0 &&
@@ -404,7 +413,7 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
     const { hex, row } = $(`[data-name="${unitname}"].${side}`).parent('.hexagon').data()
     river = [unitname,side,type,name]
     if(name==="Retchlings"){
-        $(`[data-name="${name}"].${side}`).each(function(){
+        $(`[data-tenmodel^="${name}"].${side}`).each(function(){
             const h = $(this).parent('.hexagon').data('hex')
             const r = $(this).parent('.hexagon').data('row')
             highlightHexes({colour:glowType,dist},$(this))
@@ -414,9 +423,10 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
     if(glowType==='lifeTrade'){
         lifeTradeRaise()
     } else { 
-        highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
+        // highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
+        //commented out once again: newSpew and graspingDead
         //above was commented out but it cannot work without it
-    //if ( !$(`[data-glow="${glowType}"]`).length )prevented me from sending river through server
+        //if ( !$(`[data-glow="${glowType}"]`).length )prevented me from sending river through server
         socket.emit('HH', {color:glowType,dist, hex, row, river})
     }//these brackets were not here before
 }
@@ -431,7 +441,7 @@ function blights_spew_declaration ({origin, abilName}){
             socket.emit('rolloSkill',{ aim: (4 + baim), hurt:0, socksMethod:abilName, hex, row })
         }
     })
-    $('[data-glow]').removeAttr('data-glow')
+    un_glow()
     current_ability_method = null
     add_action_taken()
      
@@ -441,12 +451,12 @@ function blights_spew_recieved({o, blight, m}){
     const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
     if(targets.length){
         const target = $(targets[0])
-         
-        $('[data-glow]').removeAttr('data-glow')
+         console.log(hex,row)
+        un_glow()
         add_action_taken(m)
         if( onHit(aim, target) ){
             setBoons_Blights(target,{[blight]:-1})
-            displayAnimatedNews (`${target.data('name')} <br/> -1 ${blight.splice(0,1)}`)
+            displayAnimatedNews (`${target.data('name')} <br/> -1 ${[...blight].slice(1).join('')}`)
         } else 
             displayAnimatedNews ("missed!")
     }
@@ -479,7 +489,7 @@ function marchExec(string, aktion){
     current_ability_method = null
     add_action_taken(aktion)
      
-    $('[data-glow]').removeAttr('data-glow')
+    un_glow()
     $(`.march${string}_selected`).removeClass(`march${string}_selected`)
     displayAnimatedNews('marching')
 }
@@ -564,19 +574,19 @@ function turn_resetter(skillTracker,phase,team){
     $('.sacrifice').removeClass('sacrifice damage aim')
 }
 function lifeTradeRaise(){
-    $('[data-glow]').removeAttr('data-glow')
+    un_glow()
     let dad = $('.selectedModel').parent('.hexagon')
     dad.attr('data-glow','recruitGlow')
     dad.children('.top').attr('data-glow','recruitGlow')
     dad.children('.bottom').attr('data-glow','recruitGlow')
     m_.raiseDead({hex:dad.data('hex'),row:dad.data('row'),key:"lifeTrade"})
-    $('[data-glow]').removeAttr('data-glow')
+    un_glow()
 }
 function gangBoss(target){
-    $('[data-glow]').removeAttr('data-glow')
+    un_glow()
     highlightHexes({colour:'gangBoss',dist:1},target)
     let helpers = $('[data-glow]').children('[data-name="SneakyStabbers"][data-tenmodel].whiteTeam').length
-    $('[data-glow]').removeAttr('data-glow')
+    un_glow()
     return helpers
 }
 function backstab(o){
@@ -584,7 +594,7 @@ function backstab(o){
     const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
     if(targets.length){
         const target = $(targets[0])
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         add_action_taken(`backstab${phase==='white'?'White':'Black'}`)
         if( onHit(aim, target) ){
             target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
@@ -641,7 +651,7 @@ function ambush_(o){
     if(targets.length){
         const target = $(targets[0])
          
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         add_action_taken(`ambush${phase==='white'?'White':'Black'}`)
         if( onHit(aim, target) ){
             stolenTreasure()
@@ -702,7 +712,7 @@ function hexBolt_(o){
         const target = $(targets[0])
         const { side, name } = target.data()
         const at = 'hexBolt' + (phase==='white'?'White':'Black')
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         add_action_taken(at)
         if( onHit(aim, target) ){ 
             if( myTurn )
@@ -728,5 +738,29 @@ function rollTheBones_(o){
         highlightHexes({colour:'blueGlow',dist},rattlebone)
         displayAnimatedNews('choose<br/>donor')
         current_ability_method = _m.rollTheBonesTransfer
+    }
+}
+function newSpew_ (o){//TRIGGERS TWICE
+    const phejs = phase==='white'?'White':'Black'
+    add_action_taken(`newSpew${phejs}`)
+    displayAnimatedNews('Retchlings<br/>respawn')
+    $(`[data-tenmodel^="Retchlings"].${o.multiAction}`).each(function(){
+        if( !$(this).hasClass('miniGameCard') )
+            forceKill ( $(this) )
+    })
+    setTimeout(
+        ()=>{rallyActionDeclaration({ 
+            unitname:"Grimgut", 
+            side:o.multiAction, 
+            type:"champion", 
+            name:"Retchlings" }, `newSpew${phejs}`)}
+    ,700)
+    current_ability_method = null
+}
+function rapidDeployment(thiz){
+    if( thiz.data('name')==='GlorySeekers' ){
+        displayAnimatedNews('Rapid<br/>Deployment')
+        thiz.addClass('rapidDeployment_selected')
+        highlightHexes({colour:'legendaryGlow', dist:2}, thiz)
     }
 }

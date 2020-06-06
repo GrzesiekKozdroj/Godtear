@@ -185,7 +185,7 @@ $('body').on('click','#claimAction',function(e){
         if( check_actions_count("claimed",mySide) ){
             e.preventDefault()
             let claimsize = $('.selectedModel').data('name') === 'Mournblade' ? 3 : 1
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'claimColor',dist:claimsize})
             socket.emit('HH', {color:'claimColor',dist:claimsize})
         }
@@ -224,8 +224,9 @@ $('body').on('click','.hexagon:not([data-glow="callTotems"])',function(e){
             $(`[data-glow="yellowGlow"]`).removeAttr(`data-glow`)
         }
         cancellerName ? socket.emit('camcel',{m:cancellerName}) : cancelMove()
+        $('.rapidDeployment_selected').removeClass('rapidDeployment_selected')
       //  current_ability_method = null
-      //  $('[data-glow]').removeAttr('data-glow')
+      //  un_glow()
     }
 
     //display appropriate card if needed
@@ -245,13 +246,13 @@ for(let K in m){
                 const data = $(this).data()
                 let modo = ['white','black'].includes(P) ? P === phase ? true : false : true
                 if_moved_end_it()
-                    if(modo && myTurn && $(this).hasClass(mySide) && check_actions_count(S,mySide)){
+                    if(modo && myTurn && $(this).hasClass(mySide) && (check_actions_count(S,mySide) || SKILL.zero )){
                         $(this).children('#smallCardParagraph').addClass('skilling_declaration')
                         let glow = data.icon === "skull" ? 'redGlow' :
                                    data.icon === "cogs"  ? 'blueGlow' :
                                    data.icon === "self"  ? 'legendaryGlow' :
                                    data.icon === "star" ? 'greenGlow' : ''
-                        $('[data-glow]').removeAttr('data-glow')
+                        un_glow()
                         highlightHexes({colour:glow,dist:data.dist})
                         current_ability_method = _m[data.m]
                         canceller = defy[SKILL.m] ? defy[SKILL.m] : ()=>{return 0}
@@ -453,7 +454,8 @@ $('body').on('click','[data-glow].hexagon',function(e){
     const { hex, row } = thiz.data()
     if(myTurn){
         extraMover('illKillYouAll',thiz)
-        extraMover('outflank',thiz)
+        if( $('.outflank_selected').length )extraMover('outflank',thiz)
+        if( $('.roarOfBattle_selected').length )extraMover('roarOfBattle',thiz)
         if( $('.tongueTow_selected').length && thiz.hasClass('objectiveGlow'))extraMover('tongueTow',thiz)
         if( $('.tongueLash_selected').length )extraMover('tongueLash',thiz)
         if( $('.marchRhodriBlack_selected').length )extraMover('marchRhodriBlack',thiz)
@@ -497,6 +499,8 @@ $('body').on('click','[data-glow].hexagon',function(e){
             socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row,key:"answerTheCall"})
         if( $('.shadowStepWhite_selected').length )extraMover('shadowStepWhite',thiz)
         if( $('.rush_selected').length && onlyOneStep(thiz,$('.rush_selected')) )extraMover('rush',thiz)
+        if( $('.rapidDeployment_selected').length && onlyOneStep(thiz,$('.rapidDeployment_selected')))
+            extraMover('rapidDeployment',thiz)
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
@@ -522,7 +526,7 @@ $('body').on('click','.illKillYouAll',function(e){
     if(myTurn){
         $('.illKillYouAll_selected').removeClass('illKillYouAll_selected')
         $(this).addClass('illKillYouAll_selected')
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
     }
 })
@@ -539,7 +543,7 @@ $('body').on('click','.marchGuardBlack',function(e){
         $('.selectedModel').removeClass('selectedModel')
         $('.marchGuardBlack_selected').removeClass('marchGuardBlack_selected')
         $(this).addClass('marchGuardBlack_selected')
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
     }
 })
@@ -559,7 +563,7 @@ $('body').on('click','.marchGuardWhite',function(e){
         $('.selectedModel').removeClass('selectedModel')
         $('.marchGuardWhite_selected').removeClass('marchGuardWhite_selected')
         $(this).addClass('marchGuardWhite_selected')
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
     }
 })
@@ -569,7 +573,7 @@ $('body').on('click','.forwardMinions',function(e){
     if(myTurn){
         $('.forwardMinions_selected').removeClass('forwardMinions_selected')
         thiz.addClass('forwardMinions_selected')//.removeClass('forwardMinions')
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         highlightHexes ({colour:'legendaryGlow', dist:2},$(this))
     }
 })
@@ -579,7 +583,7 @@ $('body').on('click','.forwardMinionsMorrigan',function(e){
     if(myTurn){
         $('.forwardMinionsMorrigan_selected').removeClass('forwardMinionsMorrigan_selected')
         thiz.addClass('forwardMinionsMorrigan_selected')//.removeClass('forwardMinionsMorrigan')
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         highlightHexes ({colour:'legendaryGlow', dist:2},$(this))
     }
 })
@@ -589,14 +593,18 @@ $('body').on('click','.earthquake_moveable',function(e){
     if(myTurn){
         $('.earthquake_selected').removeClass('earthquake_selected')
         thiz.addClass('earthquake_selected')
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         highlightHexes ({colour:'legendaryGlow', dist:2},$(this))
     }
 })
 $('body').on('click','#rallyAction',function(e){
     e.preventDefault()
-    if(myTurn)
-    rallyActionDeclaration( $(this).data() )
+    const th = $(this)
+    if(myTurn){
+        un_glow()
+        highlightHexes({colour:'recruitGlow',dist:1},$(`[data-tenmodel^=${th.data('unitname')}][data-side=${th.data('side')}]`))
+        rallyActionDeclaration( th.data() )
+    }
 }) 
 $('body').on('click','[data-glow="recruitGlow"].hexagon',function(e){
     e.preventDefault()
@@ -650,7 +658,7 @@ $('body').on('click','.current',function(e){
         $('.selectedModel').removeClass('selectedModel')
         $('.current_selected').removeClass('current_selected')
         $(this).addClass('current_selected')
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         highlightHexes ({colour:'blueGlow', dist:3},$(this))
     }
 })

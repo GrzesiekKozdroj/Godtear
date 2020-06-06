@@ -5,17 +5,21 @@ var _m_ = {
         thiz.removeClass('illKillYouAll illKillYouAll_selected outflank').removeAttr('style')
         if( !$('.illKillYouAll').length && !$('.outflank').length )
         {
-             
             add_action_taken(`illKillYouAll`)
             current_ability_method = null
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
         }
     },
-    outflank: () => {
-        $('.outflank_selected').removeClass('outflank_selected outflank')
+    roarOfBattle:()=>{
+        $('.roarOfBattle_selected').removeClass('roarOfBattle_selected')
+        add_action_taken("roarOfBattle")
+        uniCancel()
+    },
+    outflank: thiz => {
+        thiz.removeClass('outflank_selected outflank')
         if( !$('.outflank').length )
             {
-                $('[data-glow]').removeAttr('data-glow')
+                un_glow()
                 current_ability_method = null
             }
     },
@@ -42,14 +46,14 @@ var _m_ = {
     },
     tongueTow:()=>{
         if( $('.tongueTow_selected').length ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $('.tongueTow_selected').removeClass('tongueTow_selected')
             current_ability_method = null
         }
     },
     tongueLash:()=>{
         if( $('.tongueLash_selected').length ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $('.tongueLash_selected').removeClass('tongueLash_selected')
             current_ability_method = null
         }
@@ -62,25 +66,25 @@ var _m_ = {
     },
     shieldBash:()=>{
         if( $('[data-glow].hexagon').length > 6 ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$('.shieldBash_selected'))
         } else {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $('.shieldBash_selected').removeClass(`shieldBash_selected`)
             setTimeout(()=>$('.shieldBash_selected').removeAttr('style'),100)
             current_ability_method = null
         }
     },
     marchGuardBlack:($thiz)=>{
-            $('[data-glow]').removeAttr('data-glow')
-            $($thiz).removeClass('marchGuardBlack').removeClass(`marchGuardBlack_selected`)
-            setTimeout(()=>$thiz.removeAttr('style'),100)
+        un_glow()
+        $($thiz).removeClass('marchGuardBlack').removeClass(`marchGuardBlack_selected`)
+        setTimeout(()=>$thiz.removeAttr('style'),100)
         if(!$('.marchGuardBlack').length ){
             current_ability_method = null
         }
     },
     marchGuardWhite:($thiz)=>{
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         $($thiz).removeClass('marchGuardWhite').removeClass(`marchGuardWhite_selected`)
         setTimeout(()=>$thiz.removeAttr('style'),100)
         if(!$('.marchGuardWhite').length ){
@@ -90,17 +94,16 @@ var _m_ = {
     deathWind:($thiz)=>{
         current_ability_method = null
         add_action_taken('deathWind')
-         
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         $(`.deathWind_selected`).removeClass(`deathWind_selected`)
     },
     forwardMinions:($thiz)=>{
         add_action_taken('forwardMinions')
         if( $('[data-glow].hexagon').length > 6 ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
         } else {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $($thiz).removeClass('forwardMinions').removeClass(`forwardMinions_selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
             if(!$('.forwardMinions').length ){
@@ -110,10 +113,10 @@ var _m_ = {
     },
     wheresMaster:($thiz)=>{
         if( $('[data-glow].hexagon').length > 6 ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
         } else {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $($thiz).removeClass(`wheresMaster_selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
             if(!$('.wheresMaster_selected').length ){
@@ -122,7 +125,7 @@ var _m_ = {
         }
     },
     shadowWard:($thiz)=>{
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         $(`.shadowWard_selected`).removeClass(`shadowWard_selected`)
     },
     phantomBanners:()=>{
@@ -133,7 +136,7 @@ var _m_ = {
     },
     headbutt:()=>{
         current_ability_method = null
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         $('.headbutt_selected').removeClass('headbutt_selected')
     },
     marchlungingStrikeMove:(o)=>{
@@ -141,19 +144,19 @@ var _m_ = {
             marchExec('lungingStrikeMove')
             const { baim, bdamage } = extractBoons_Blights($('.selectedModel'))
             const { hex, row } = pocketBox
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             socket.emit('rolloSkill',{ aim: (6 + baim), hurt:(4 + bdamage), socksMethod:"lungingStrikeHit", hex, row })
         }
     },
     marchjet:($thiz)=>{
         if ( $('[data-glow].hexagon').length > 19 ) {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:2},$thiz)
         } else if( $('[data-glow].hexagon').length > 6 ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
         } else {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $($thiz).removeClass(`marchjet_selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
             if(!$('.marchjet_selected').length ){
@@ -164,22 +167,21 @@ var _m_ = {
     },
     tsunami:()=>{
         add_action_taken('tsunami')
-         
         displayAnimatedNews('tsunami<br/>move models')
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         highlightHexes({colour:'blueGlow', dist: 2})
         const team = $('.selectedModel').hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
         $('[data-glow].hexagon').children(`.${team}`).each(function(){
             $(this).addClass('tsunami-moveable')
         })
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
     },
     tsunamiMove:($thiz)=>{
         if( $('[data-glow].hexagon').length > 6 ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
         } else {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $($thiz).removeClass(`tsunami-selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
             if(!$('.tsunami-moveable').length ){
@@ -189,27 +191,26 @@ var _m_ = {
         }
     },
     current:($thiz)=>{
-            $('[data-glow]').removeAttr('data-glow')
-            $($thiz).removeClass('current').removeClass(`current_selected`)
-            setTimeout(()=>$thiz.removeAttr('style'),100)
+        un_glow()
+        $($thiz).removeClass('current').removeClass(`current_selected`)
+        setTimeout(()=>$thiz.removeAttr('style'),100)
         if(!$('.current').length ){
             current_ability_method = null
             add_action_taken('current')
         }
     },
     tide:($thiz)=>{
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         $('.tide_selected').removeClass('tide_selected')
-         
         add_action_taken()
         current_ability_method = null
     },
     earthquake:($thiz)=>{
         if( $('[data-glow].hexagon').length > 6 ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
         } else {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $($thiz).removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
             if(!$('.earthquake_moveable').length ){
@@ -219,27 +220,26 @@ var _m_ = {
         }
     },
     shootAndScoot:($thiz)=>{
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         $('.shootAndScoot_selected').removeClass('shootAndScoot_selected')
         displayAnimatedNews('Lorsann<br/>Shoot & Scoot')
     },
     leap:$thiz=>{
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         displayAnimatedNews('sneaky<br/>leap')
         add_action_taken('leap')
-         
         current_ability_method = null
     },
     annoyed:($thiz)=>{
         if( $('[data-glow].hexagon').length > 2 ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
             let o = {}
             o.hex = $thiz.parent('.hexagon').data('hex')
             o.row = $thiz.parent('.hexagon').data('row')
             highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
         } else {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $($thiz).removeClass(`annoyed_selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
             current_ability_method = null
@@ -248,15 +248,15 @@ var _m_ = {
     },
     sprint:$thiz=>{
         if ( $('[data-glow].hexagon').length > 19 ) {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             if_moved_end_it()
             add_action_taken('sprint')
             highlightHexes({colour:'legendaryGlow',dist:2},$thiz)
         } else if( $('[data-glow].hexagon').length > 6 ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
         } else {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $($thiz).removeClass(`sprint_selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
             if(!$('.sprint_selected').length ){
@@ -267,21 +267,21 @@ var _m_ = {
         }
     },
     brokenJaw:$thiz=>{
-        $(`[data-glow]`).removeAttr('data-glow')
+        un_glow()
         displayAnimatedNews(`${$thiz.data('name')}<br/>broken jaw`)
         $('.brokenJaw_selected').removeClass('brokenJaw_selected')
     },
     whiplash:thiz=>{
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         $(thiz).removeClass(`whiplash_selected`)
         setTimeout(()=>thiz.removeAttr('style'),100)
     },
     beastlyCharge:thiz=>{
         if( $('[data-glow="legendaryGlow"].hexagon').length > 6 ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},thiz)
         } else {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $(thiz).removeClass(`beastlyCharge_selected`)
             setTimeout(()=>thiz.removeAttr('style'),100)
             if(!$('.beastlyCharge_selected').length ){
@@ -291,10 +291,10 @@ var _m_ = {
     },
     forwardMinionsMorrigan:($thiz)=>{
         if( $('[data-glow].hexagon').length > 6 ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
         } else {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $($thiz).removeClass('forwardMinionsMorrigan').removeClass(`forwardMinionsMorrigan_selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
             if(!$('.forwardMinionsMorrigan').length ){
@@ -307,22 +307,22 @@ var _m_ = {
         $('.frostyGlance_selected').removeClass('frostyGlance')
         $('.frostyGlance_selected').removeClass('frostyGlance_selected')
         current_ability_method = null
-        $(`[data-glow]`).removeAttr('data-glow')
+        un_glow()
     },
     twoPunch:thiz=>{
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         $(thiz).removeClass(`twoPunch_selected`)
         setTimeout(()=>thiz.removeAttr('style'),100)
     },
     shadowStepWhite:thiz=>{
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         thiz.removeClass('shadowStepWhite shadowStepWhite_selected')
         if( !$('.shadowStepWhite').length ){
             current_ability_method = null
         }
     },
     shadowStepBlack:thiz=>{
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         thiz.removeClass('shadowStepBlack shadowStepBlack_selected')
         if( !$('.shadowStepBlack').length ){
             current_ability_method = null
@@ -330,16 +330,27 @@ var _m_ = {
     },
     rush:$thiz=>{
         if( $('[data-glow].hexagon').length > 6 ){
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
         } else {
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             $($thiz).removeClass(`rush rush_selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
             //$('.selectedModel').removeClass('selectedModel')
             if(!$('.rush[data-tenmodel]').length ){
                 current_ability_method = null
             }
+        }
+    },
+    rapidDeployment:thiz=>{
+        if( $('[data-glow].hexagon').length > 6 ){
+            un_glow()
+            highlightHexes({colour:'legendaryGlow',dist:1},thiz)
+        } else {
+            un_glow()
+            $($thiz).removeClass(`rapidDeployment_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            displayAnimatedNews('Rapid<br/>Deployment<br/>Ends')
         }
     }
 }
@@ -358,7 +369,7 @@ var __m = {//only on da otha sajd
     beastlyCharge:function(){
         displayAnimatedNews('beastly<br/>charge')
         $(`[data-name="Rangosh"].${opoSide}`).addClass('beastlyCharge_selected')
-        $('[data-glow]').removeAttr('data-glow')
+        un_glow()
         highlightHexes({colour:'legendaryGlow',dist:2})
     }
 }

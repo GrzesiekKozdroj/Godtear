@@ -70,8 +70,8 @@ socket.on('HH',p=>{
     const r = p.row ? p.row   : false
     const m = p.m   ? p.m     : false
     const specimen = r && h ? $($(`.hex_${h}_in_row_${r}`).children()[0]) : $('.selectedModel')
-    if(!river)$('[data-glow]').removeAttr('data-glow')
-    $('[data-glow]').removeAttr('data-glow')//added cause graspingDead double aura
+    if(!river)un_glow()
+    //un_glow()//added cause graspingDead double aura
     highlightHexes({colour:p.color,dist:p.dist}, specimen)
     if( m )__m[m]()
 })

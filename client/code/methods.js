@@ -57,7 +57,7 @@ const m =
         },
         claim: function (thiz, teamColor, key = "claimed") {//console.log(key), key = "claimed"
             thiz.append(placeBanner(teamColor))
-            $('[data-glow]').removeAttr('data-glow')
+            un_glow()
             add_action_taken(key)
             if(phase==='white')
                 moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
@@ -318,7 +318,7 @@ const m =
             {
                 name: "Rapid Deployment",
                 desc: "After using a recruit action, the Glory Seeker returned to the battlefield moves up to 2 hexes.",
-                m: function () { }
+                m: "rapidDeployment"
             }
         }
     },
@@ -1405,7 +1405,8 @@ const m =
                 name: "Roll the Bones",
                 desc: "At the end of Rattlebone's activation, roll one die. If you roll a 1 or 2, you may remove a boon or blight from a model within that many exes of Rattlebone and place it on a different model within that many hexes.",
                 icon:'cogs',
-                m: 'rollTheBonesBlack'
+                m: 'rollTheBonesBlack',
+                zero:true
             }
         },
         white:
@@ -1433,7 +1434,8 @@ const m =
                 name: "Roll the Bones",
                 desc: "At the end of Rattlebone's activation, roll one die. If you roll a 1 or 2, you may remove a boon or blight from a model within that many exes of Rattlebone and place it on a different model within that many hexes.",
                 icon:'cogs',
-                m: 'rollTheBonesWhite'
+                m: 'rollTheBonesWhite',
+                zero:true
             }
         },
         util:
@@ -1804,7 +1806,8 @@ const m =
                 desc:"Once per hit roll or damage roll before rolling the dice, you may remove one Red Bandit from a hex within 3 hexes of Rangosh to add 1 die to Rangosh's roll.",
                 dist:3,
                 icon:'cogs',
-                m:"brutalMasterBlack"
+                m:"brutalMasterBlack",
+                zero:true
             }
         },
         white:
@@ -1833,7 +1836,8 @@ const m =
                 desc:"Once per hit roll or damage roll before rolling the dice, you may remove one Red Bandit from a hex within 3 hexes of Rangosh to add 1 die to Rangosh's roll.",
                 dist:3,
                 icon:'cogs',
-                m:"brutalMasterWhite"
+                m:"brutalMasterWhite",
+                zero:true
             }
         },
         util:

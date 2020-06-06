@@ -387,3 +387,9 @@ function rTB_Transfer( {hex,row,socksMethod,message} ){
         </div>
     `
 }
+function un_glow(p=false){
+    if (!p)
+        $('[data-glow]').removeAttr('data-glow')
+    else
+        $(`[data-glow=${p}]`).removeAttr('data-glow')
+}

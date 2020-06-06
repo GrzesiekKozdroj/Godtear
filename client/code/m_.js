@@ -1526,7 +1526,7 @@ var m_ = {
     },
     callTotems1:function(){
         const side = $('.selectedModel').hasClass(mySide) ? mySide : opoSide
-        $('[data-glow="greenGlow"]').removeAttr('data-glow')
+        un_glow()
         rallyActionDeclaration( { unitname:'Rattlebone', side, type:'unit', name:'Hexlings', dist:2 }, 'callTotems' )
     },
     graspingCurse:function(o){

@@ -417,17 +417,18 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
             const h = $(this).parent('.hexagon').data('hex')
             const r = $(this).parent('.hexagon').data('row')
             highlightHexes({colour:glowType,dist},$(this))
-            socket.emit('HH', {color:glowType,dist, hex:h, row:r, river})
+            socket.emit('HH', {color:glowType,dist, hex:h, row:r, river, n:nickName})
         })
     };
     if(glowType==='lifeTrade'){
         lifeTradeRaise()
-    } else { 
+    } else if( myTurn ){
         // highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
         //commented out once again: newSpew and graspingDead
         //above was commented out but it cannot work without it
         //if ( !$(`[data-glow="${glowType}"]`).length )prevented me from sending river through server
-        socket.emit('HH', {color:glowType,dist, hex, row, river})
+       
+        socket.emit('HH', {color:glowType,dist, hex, row, river, n:nickName})
     }//these brackets were not here before
 }
 function blights_spew_declaration ({origin, abilName}){

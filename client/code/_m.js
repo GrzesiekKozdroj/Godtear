@@ -411,7 +411,7 @@ const _m = {
         if(phase==='white'){
             $('#gameScreen').append(greatTuskBoons(origin, "theGreatTusk",1,`apply one boon to friends within 2 hexes`))
             highlightHexes({colour:'claimColor',dist:2},origin)
-            socket.emit('HH', {color:'claimColor',dist:2})
+            socket.emit('HH', {color:'claimColor',dist:2, n:nickName})
         }
     },
     tongueTow:function(origin,target){

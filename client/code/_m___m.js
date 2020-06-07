@@ -3,6 +3,7 @@ var _m_ = {
     illKillYouAll: (thiz) => {//Utterlu brokenos, keeps glow and bad blood on the recieving end
         //$('.illKillYouAll_selected').removeClass('illKillYouAll illKillYouAll_selected outflank')<----WAS THIS, NOW ITS BELOW
         thiz.removeClass('illKillYouAll illKillYouAll_selected outflank').removeAttr('style')
+        un_glow()
         if( !$('.illKillYouAll').length && !$('.outflank').length )
         {
             add_action_taken(`illKillYouAll`)

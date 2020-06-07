@@ -91,14 +91,15 @@ function slayerPoints(target){
 }
 const onHit = (aim, target) => { console.log('aim roll: ', ...aim)
     const target_dodge = Number(target.attr('data-dodge')) + checkIfNotMorrigan(target,'bdodge')
-    const aim_total = aim.reduce((a,b)=>a+b,0) - (fearsome() ? aim[0] : 0)
+    const aim_total = aim.reduce((a,b)=>a+b,0) - (fearsome() || superiority(target) ? aim[0] : 0)
     setBoons_Blights($('.selectedModel'),{baim:0})
     setBoons_Blights(target,{bdodge:0})
+    console.log(aim_total)
     return aim_total  >= target_dodge
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
 const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
     const target_protection = Number(target.attr('data-protection')) + checkIfNotMorrigan(target,'bprotection')
-    const hurt_total = hurt.reduce((a,b)=>a+b,0)
+    const hurt_total = hurt.reduce((a,b)=>a+b,0) - ( superiority(target) ? hurt[0] : 0 )
     setBoons_Blights($('.selectedModel'),{bdamage:0})
     setBoons_Blights(target,{bprotection:0})
         if(hurt_total > target_protection){
@@ -770,4 +771,10 @@ function callTotems1(){
     un_glow()
     console.log('totems1')
     rallyActionDeclaration( { unitname:'Rattlebone', side, type:'unit', name:'Hexlings', dist:2 }, 'callTotems' )
+}
+function superiority(target){
+    if( target.data('name') === 'Titus' && $('.selectedModel').hasClass('unitModel') )
+        return true
+    else
+        return false
 }

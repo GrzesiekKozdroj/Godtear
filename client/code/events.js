@@ -453,7 +453,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
     const thiz = $(this)
     const { hex, row } = thiz.data()
     if(myTurn){
-        extraMover('illKillYouAll',thiz)
+        if( $('.illKillYouAll_selected').length )extraMover('illKillYouAll',thiz)
         if( $('.outflank_selected').length )extraMover('outflank',thiz)
         if( $('.roarOfBattle_selected').length )extraMover('roarOfBattle',thiz)
         if( $('.tongueTow_selected').length && thiz.hasClass('objectiveGlow'))extraMover('tongueTow',thiz)
@@ -523,7 +523,7 @@ $('body').on('click','.shadowStepWhite',function(e){
 })
 $('body').on('click','.illKillYouAll',function(e){
     e.preventDefault()
-    if(myTurn){
+    if(myTurn && !$(this).parent('.hexagon').attr('data-glow') ){
         $('.illKillYouAll_selected').removeClass('illKillYouAll_selected')
         $(this).addClass('illKillYouAll_selected')
         un_glow()

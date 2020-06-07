@@ -242,6 +242,15 @@ var defy = {
     rapidDeployment:()=>{
         $('.rapidDeployment_selected').removeClass('rapidDeployment_selected')
         uniCancel()
+    },
+    challenge:()=>{
+        if( myTurn ) 
+            $('.titusChallenge').remove()
+        uniCancel()
+    },
+    illKillYouAll:()=>{
+        $('.illKillYouAll').removeClass('illKillYouAll illKillYouAll_selected')
+        uniCancel()
     }
 
 

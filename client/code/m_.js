@@ -193,7 +193,7 @@ var m_ = {
         const { hex, row , cursePackage, curseCount } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         const target = $(targets[0])
-         
+         add_action_taken('challenge')
         if( curseCount && !cursePackage && target.hasClass('whiteTeam')){
             let paybacked = $('.selectedModel').parent('.hexagon').data()
             $('#gameScreen').append(challengeOptions(target, paybacked, "challenge",1,"apply one blight to Titus"))
@@ -201,7 +201,6 @@ var m_ = {
             let curses = {}
             cursePackage.forEach( el=> curses[el]=-1 )
             setBoons_Blights(target,curses)
-            add_action_taken("challenge")
             current_ability_method = null
             un_glow()
             displayAnimatedNews(`${target.data('name')}<br/>-1 ${cursePackage.join(', ')}`)

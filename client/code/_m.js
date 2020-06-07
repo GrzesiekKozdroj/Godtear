@@ -209,7 +209,7 @@ const _m = {
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         if($target.hasClass(`blackTeam`) && $target.hasClass('unitModel') )
-            socket.emit('rolloSkill',{ aim: (6 + baim), hurt:0, socksMethod:"illKillYouAll", hex, row })
+            socket.emit('rolloSkill',{ aim: (6 + baim), socksMethod:"illKillYouAll", hex, row })
     },//NEEDS SKILL USE VALIDATION TO BE FINISHED!!!!!
     pathOfDestruction:function(origin,target){
         // desc: "Titus may make a skill action. Then he may move 1 hex. Then he may make another skill action",

@@ -347,10 +347,10 @@ var _m_ = {
             un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},thiz)
         } else {
-            un_glow()
-            $($thiz).removeClass(`rapidDeployment_selected`)
-            setTimeout(()=>$thiz.removeAttr('style'),100)
             displayAnimatedNews('Rapid<br/>Deployment<br/>Ends')
+            un_glow()
+            $(thiz).removeClass(`rapidDeployment_selected`)
+            setTimeout(()=>thiz.removeAttr('style'),100)
         }
     }
 }

@@ -72,6 +72,7 @@ socket.on('HH',p=>{
     const specimen = r && h ? $($(`.hex_${h}_in_row_${r}`).children()[0]) : $('.selectedModel')
     if(!river)un_glow()
     //un_glow()//added cause graspingDead double aura
+     console.log(p.dist)
     highlightHexes({colour:p.color,dist:p.dist}, specimen)
     if( m )__m[m]()
 })

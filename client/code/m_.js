@@ -324,7 +324,7 @@ var m_ = {
         const $thiz = $(thiz.children('.smallCard')[0])
         const $brothers = $($(`[data-name="${$thiz.data('name')}"][data-side=${$thiz.data('side')}]:not( [data-tenmodel="${$thiz.data('tenmodel')}"] )`)[0])
         propagate_BB_s($brothers,$thiz)
-        rapidDeployment($thiz)
+        setTimeout(()=>rapidDeployment($thiz),700)
         if(key!=='callTotems' || !graveyard[river[1]][river[3]].length ){     //untestedo
             un_glow()
             river = null
@@ -1523,11 +1523,6 @@ var m_ = {
                     $(this).children('.bottom').attr('data-glow','greenGlow')
                 })
         },900)
-    },
-    callTotems1:function(){
-        const side = $('.selectedModel').hasClass(mySide) ? mySide : opoSide
-        un_glow()
-        rallyActionDeclaration( { unitname:'Rattlebone', side, type:'unit', name:'Hexlings', dist:2 }, 'callTotems' )
     },
     graspingCurse:function(o){
         const { aim, hex, row } = o

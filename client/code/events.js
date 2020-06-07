@@ -611,7 +611,7 @@ $('body').on('click','[data-glow="recruitGlow"].hexagon',function(e){
     e.stopPropagation()
     const { hex, row } = $(this).data()
     if(myTurn)
-    socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row})
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row})
 })
 $('body').on('click','[data-glow="callTotems"].hexagon',function(e){console.log('click on data glow')
     e.preventDefault()
@@ -665,11 +665,11 @@ $('body').on('click','.current',function(e){
 $('body').on('click','.fire[data-socksmethod="callTotems"]',function(e){console.log('click on fire')
     e.preventDefault()
     e.stopPropagation()
-        socket.emit('rolloSkill',{socksMethod:'callTotems1'})
-        add_action_taken('callTotems')//added
-        current_ability_method = null
+  //  socket.emit('rolloSkill',{socksMethod:'callTotems1'})
+    add_action_taken('callTotems')//added
+    current_ability_method = null
     if( myTurn && graveyard[mySide].Hexlings.length > 1 )
-        socket.emit('rolloSkill',{socksMethod:'callTotems1'})
+            callTotems1()
     else 
         $('#multi_choice_info_panel').remove()
 })

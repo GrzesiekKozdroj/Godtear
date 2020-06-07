@@ -238,6 +238,10 @@ var defy = {
     outflank:()=>{
         $('.outflank').removeClass('outflank outflank_selected')
         uniCancel()
+    },
+    rapidDeployment:()=>{
+        $('.rapidDeployment_selected').removeClass('rapidDeployment_selected')
+        uniCancel()
     }
 
 

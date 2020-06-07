@@ -420,15 +420,14 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
             socket.emit('HH', {color:glowType,dist, hex:h, row:r, river, n:nickName})
         })
     };
-    if(glowType==='lifeTrade'){
-        lifeTradeRaise()
+    if (glowType==='callTotems') un_glow()
+    if(glowType==='lifeTrade'){lifeTradeRaise()
     } else if( myTurn ){
-        // highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
+        highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
         //commented out once again: newSpew and graspingDead
         //above was commented out but it cannot work without it
         //if ( !$(`[data-glow="${glowType}"]`).length )prevented me from sending river through server
-       
-        socket.emit('HH', {color:glowType,dist, hex, row, river, n:nickName})
+        socket.emit('HH', {color:glowType, dist, hex, row, river, n:nickName})
     }//these brackets were not here before
 }
 function blights_spew_declaration ({origin, abilName}){
@@ -763,5 +762,12 @@ function rapidDeployment(thiz){
         displayAnimatedNews('Rapid<br/>Deployment')
         thiz.addClass('rapidDeployment_selected')
         highlightHexes({colour:'legendaryGlow', dist:2}, thiz)
+        cancellerName = 'rapidDeployment'
     }
+}
+function callTotems1(){
+    const side = $('.selectedModel').hasClass(mySide) ? mySide : opoSide
+    un_glow()
+    console.log('totems1')
+    rallyActionDeclaration( { unitname:'Rattlebone', side, type:'unit', name:'Hexlings', dist:2 }, 'callTotems' )
 }

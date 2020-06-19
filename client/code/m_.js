@@ -156,9 +156,8 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
-            add_action_taken("piercingStrike",multiAction)
+            tituulti_addaction("piercingStrike",multiAction)
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
@@ -175,9 +174,8 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             target.removeClass('destined_for_DOOM')
-             
             un_glow()
-            add_action_taken("sweepingSlash",multiAction)
+            tituulti_addaction("sweepingSlash",multiAction)
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
@@ -193,7 +191,7 @@ var m_ = {
         const { hex, row , cursePackage, curseCount } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         const target = $(targets[0])
-         add_action_taken('challenge')
+        tituulti_addaction('challenge')
         if( curseCount && !cursePackage && target.hasClass('whiteTeam')){
             let paybacked = $('.selectedModel').parent('.hexagon').data()
             $('#gameScreen').append(challengeOptions(target, paybacked, "challenge",1,"apply one blight to Titus"))
@@ -220,6 +218,14 @@ var m_ = {
             displayAnimatedNews('Missed!')
     },//NEEDS SKILL USE VALIDATION TO BE FINISHED!!!!!
     pathOfDestruction:function(o){
+        const { hex, row } = o
+        const side = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel^="Titus"]')[0]).data('side')
+        for(let SKILL_KEY in tituulti[side]){
+            tituulti[side][SKILL_KEY] = true
+        }
+        titustepper[side] = true
+        displayAnimatedNews('Titus<br/>Path of<br/>Destruction')
+        add_action_taken('legendary', true)
         // name: "Path of Destruction",
         // desc: "Titus may make a skill action. Then he may move 1 hex. Then he may make another skill action",
         // icon: self,
@@ -227,12 +233,23 @@ var m_ = {
         // legendaryUsed: false,
         // m: "pathOfDestruction"
     },
+    titusStep_m:function(o){
+        const { hex, row } = o
+        const tajtus = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel="Titus"]')[0])
+        const side = tajtus.data('side')
+        if( loop_tituulti()===3 && titustepper[side] ){
+            displayAnimatedNews('move<br/>Titus')
+            un_glow()
+            cancellerName = 'pathof_cancelledStep'
+            tajtus.addClass('pathof_selected')
+            highlightHexes({colour:'legendaryGlow',dist:1})
+        }
+    },
     hack:function(o){
         const { aim, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
             add_action_taken("hack")
             if( onHit(aim, target) ){
@@ -249,7 +266,6 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
             const target = $(targets[0])
-             
             add_action_taken("surroundPound")
             un_glow()
             if( onHit(aim, target) )
@@ -292,8 +308,6 @@ var m_ = {
             displayAnimatedNews('Missed!')
     },
     roll:function(o){
-         
-        add_action_taken("roll")
         if( !$('[data-glow]').length )
             highlightDirectPaths({origin: $('.selectedModel').parent('.hexagon').data(), distance:3, colour:'straitPaths'})
             $('.selectedModel').addClass('roll_selected')
@@ -361,9 +375,8 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             target.removeClass('destined_for_DOOM')
-             
             un_glow()
-            add_action_taken("buffet",multiAction)
+            add_action_taken("legendary",multiAction)
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
@@ -380,9 +393,8 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
-            add_action_taken("slimed",multiAction)
+            retchlings_adagio("slimed",multiAction)
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
@@ -397,18 +409,8 @@ var m_ = {
         const { hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         const target = $(targets[0])
-        const team = $('.selectedModel').hasClass('whiteTeam') ? mySkillTrack : opoSkillTrack
-        const teamColor = $('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
         displayAnimatedNews(`${target.data('name')}<br/>+1 speed`)
-        if(typeof team.Retchlings.white.slipAndSlide.used === 'object' ){
-            add_action_taken("slipAndSlide")
-        }else if( team.Retchlings.white.slipAndSlide.used === false ){
-            let selModl = $('.selectedModel').parent('.hexagon').data()
-            team.Retchlings.white.slipAndSlide.used = [ selModl.hex, selModl.row ]
-            $(`[data-tenmodel^="Retchlings"].${teamColor}`).each(function(){
-                $(this).attr('data-actionstaken',(Number($(this).attr('data-actionstaken'))+1))
-            })
-        }
+        retchlings_adagio('slipAndSlide',false)
         current_ability_method = null
         setBoons_Blights(target,{bspeed:Number(target.attr('data-bspeed'))+1})
         un_glow()
@@ -417,7 +419,6 @@ var m_ = {
         const { hex, row } = o
         const target = $(`.hex_${hex}_in_row_${row}`).children('.smallCard')
         current_ability_method = null
-         
         add_action_taken("regenerateWhite")
         displayAnimatedNews(`${target.data('name')} heals<br/>2 wounds`)
         healLife(target)
@@ -1448,9 +1449,10 @@ var m_ = {
          
         current_ability_method = null
     },
-    cursedGround:function(o){//no endphase yet
+    cursedGround:function(o){//no endphase yet, marks generated hexes with data-kill="side"
         const { hex, row } = o
         const target = $(`.hex_${hex}_in_row_${row}.hexagon`)
+        add_action_taken('cursedGround')
         if( 
             $(`[data-kill="${ $('.selectedModel').data('side') }"]`).length < 2 && 
             target.children().length < 3 && 
@@ -1460,10 +1462,7 @@ var m_ = {
             target.attr( 'data-kill', $('.selectedModel').data('side') )
             displayAnimatedNews('cursed<br/>ground')
         } else displayAnimatedNews('target<br/>empty hex')
-
         if ( $('[data-kill]').length > 1 ){
-            add_action_taken()
-             
             current_ability_method = null
             un_glow()
         }
@@ -1474,9 +1473,8 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             const { side, name } = target.data()
-             
             un_glow()
-            add_action_taken()
+            add_action_taken('deadlyCurse')
             if( onHit(aim, target) ){ 
                 if( myTurn )
                     $('#gameScreen').append(  dedlyCursePanel( {side,name,socksMethod:'deadlyCurse',message:'choose one'} )  )
@@ -1620,8 +1618,7 @@ var m_ = {
         setBoons_Blights( $hexlings, { baim:0, bdamage:0, bspeed:0, bdodge:0, bprotection:0})
         un_glow()
         displayAnimatedNews(`Hexlings<br/>pure magic`)
-         
-        add_action_taken()
+        add_action_taken('purgeMagic')
         current_ability_method = null
     },
     hexBoltBlack:hexBolt_,

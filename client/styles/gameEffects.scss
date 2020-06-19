@@ -168,7 +168,7 @@ $glowDensity:.25;
         rgba(218, 165, 32, $glowDensity)
     )
 }
-[data-glow="recruitGlow"],[data-glow="claimColor"],[data-glow="newSpewWhite"],[data-glow="graspingDead"],[data-glow="answerTheCall"],[data-glow="inductGlow"],[data-glow="sneak"],[data-glow="callTotems"]{
+[data-glow="recruitGlow"],[data-glow="claimColor"],[data-glow^="newSpew"],[data-glow="graspingDead"],[data-glow="answerTheCall"],[data-glow="inductGlow"],[data-glow="sneak"],[data-glow="callTotems"]{
     @include makeGlow('white', 
         rgba(245, 245, 245, $glowDensity), 
         rgba(194, 197, 194, $glowDensity), 

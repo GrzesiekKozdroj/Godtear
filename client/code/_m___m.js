@@ -1,15 +1,21 @@
-
 var _m_ = {
+    pathof:thiz=>{
+        titustepper[$('.selectedModel').data('side')] = false
+        $('.pathof_selected').removeClass('pathof_selected')
+        displayAnimatedNews('use another<br/>ability')
+        uniCancel()
+    },
     illKillYouAll: (thiz) => {//Utterlu brokenos, keeps glow and bad blood on the recieving end
         //$('.illKillYouAll_selected').removeClass('illKillYouAll illKillYouAll_selected outflank')<----WAS THIS, NOW ITS BELOW
         thiz.removeClass('illKillYouAll illKillYouAll_selected outflank').removeAttr('style')
         un_glow()
-        if( !$('.illKillYouAll').length && !$('.outflank').length )
-        {
-            add_action_taken(`illKillYouAll`)
-            current_ability_method = null
-            un_glow()
-        }
+        tituulti_addaction('illKillYouAll')
+    if( !$('.illKillYouAll').length && !$('.outflank').length )
+    {
+        current_ability_method = null
+        un_glow()
+    }
+
     },
     roarOfBattle:()=>{
         $('.roarOfBattle_selected').removeClass('roarOfBattle_selected')
@@ -25,6 +31,7 @@ var _m_ = {
             }
     },
     roll:(that)=>{
+        add_action_taken("roll")
        $('[data-glow^="str"].hexagon').each(function(){
           if ( $(this).attr('data-glow') !== $('.selectedModel').parent('.hexagon').attr('data-glow') ) {
               $(this).removeAttr('data-glow')

@@ -137,15 +137,15 @@ const _m = {
         if($target.hasClass(`blackTeam`) ) {
             let modelCount = $(`.hex_${hex}_in_row_${row}`).children('.smallCard').length
             let doneTimes = 0
-        const interval = setInterval(function() {
-            if (doneTimes < modelCount && doneTimes < 2) { 
-                doneTimes++
-                const multiAction = doneTimes === 1 ? false : true
-                socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(6 + bdamage), socksMethod:"piercingStrike", hex, row, multiAction })
-            } else { 
-                clearInterval(interval)
-            }
-        }, 1000);
+            const interval = setInterval(function() {
+                if (doneTimes < modelCount && doneTimes < 2) { 
+                    doneTimes++
+                    const multiAction = doneTimes === 1 ? false : true
+                    socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(6 + bdamage), socksMethod:"piercingStrike", hex, row, multiAction })
+                } else { 
+                    clearInterval(interval)
+                }
+            }, 1000);
         }
     },
     sweepingSlash:function(origin,taget){
@@ -212,6 +212,8 @@ const _m = {
             socket.emit('rolloSkill',{ aim: (6 + baim), socksMethod:"illKillYouAll", hex, row })
     },//NEEDS SKILL USE VALIDATION TO BE FINISHED!!!!!
     pathOfDestruction:function(origin,target){
+        const { hex, row } = origin.parent('.hexagon').data()
+        socket.emit('rolloSkill', {hex,row,socksMethod:'pathOfDestruction'})
         // desc: "Titus may make a skill action. Then he may move 1 hex. Then he may make another skill action",
         // icon: self,
         // unused: true,
@@ -225,7 +227,7 @@ const _m = {
             const unitSize = origin.siblings('.smallCard').length
             const aim = [5, 5, 6][unitSize]
             if($target.hasClass(`blackTeam`) )
-                socket.emit('rolloSkill',{ aim: (aim + baim), hurt:0, socksMethod:"hack", hex, row })
+                socket.emit('rolloSkill',{ aim: (aim + baim), socksMethod:"hack", hex, row })
     },
     surroundPound:function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)
@@ -330,15 +332,6 @@ const _m = {
                 doneTimes++
             }, 1100);
         }
-            // name: "Buffet",
-            // desc: "Must target followers. This skill may target up to three followers on any hexes within range.",
-            // icon:skull,
-            // dist: 1,
-            // aim: [7],
-            // hurt: [7],
-            // unused: true,
-            // legendaryUsed: false,
-            // m: "buffet"
     },
     slimed:function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)

@@ -246,7 +246,10 @@ for(let K in m){
                 const data = $(this).data()
                 let modo = ['white','black'].includes(P) ? P === phase ? true : false : true
                 if_moved_end_it()
-                    if(modo && myTurn && $(this).hasClass(mySide) && (check_actions_count(S,mySide) || SKILL.zero )){
+                if(loop_tituulti()===3&&titustepper[$('.selectedModel').data('side')]){
+                    const { hex, row } = $('.selectedModel').parent('.hexagon').data()
+                    socket.emit('rolloSkill', { hex, row, socksMethod:"titusStep_m" })
+                } else if(modo && myTurn && $(this).hasClass(mySide) && (check_actions_count(S,mySide) || SKILL.zero )){
                         $(this).children('#smallCardParagraph').addClass('skilling_declaration')
                         let glow = data.icon === "skull" ? 'redGlow' :
                                    data.icon === "cogs"  ? 'blueGlow' :
@@ -501,6 +504,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.rush_selected').length && onlyOneStep(thiz,$('.rush_selected')) )extraMover('rush',thiz)
         if( $('.rapidDeployment_selected').length && onlyOneStep(thiz,$('.rapidDeployment_selected')))
             extraMover('rapidDeployment',thiz)
+        if( $('.pathof_selected').length )extraMover('pathof',thiz)
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
@@ -634,7 +638,7 @@ $('body').on('click','[data-glow="sneak"].hexagon',function(e){
     if(myTurn)
         socket.emit('rolloSkill',{ socksMethod:"raiseDead", hex, row, key:'sneak'})
 })
-$('body').on('click','[data-glow="newSpewWhite"].hexagon',function(e){
+$('body').on('click','[data-glow^="newSpew"].hexagon',function(e){
     e.preventDefault()
     e.stopPropagation()
     const { hex, row } = $(this).data()

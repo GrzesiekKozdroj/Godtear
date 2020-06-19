@@ -221,7 +221,12 @@ var defy = {
         $('.titusChallenge').remove()
         uniCancel()
     },
-    rollTheBones:()=>{
+    rollTheBonesWhite:()=>{
+        $('.the_donor').removeClass('the_donor')
+        $('.titusChallenge').remove()
+        uniCancel()
+    },
+    rollTheBonesBlack:()=>{
         $('.the_donor').removeClass('the_donor')
         $('.titusChallenge').remove()
         uniCancel()
@@ -251,7 +256,42 @@ var defy = {
     illKillYouAll:()=>{
         $('.illKillYouAll').removeClass('illKillYouAll illKillYouAll_selected')
         uniCancel()
-    }
+    },
+    pathof_cancelledStep:()=>{
+        titustepper[$('.selectedModel').data('side')] = false
+        $('.pathof_selected').removeClass('pathof_selected')
+        displayAnimatedNews('movement<br/>cancelled')
+        uniCancel()
+    },
+    piercingStrike:()=>uniCancel(),
+    sweepingSlash:()=>{
+        $('.destined_for_DOOM').removeClass('destined_for_DOOM')
+        $('[data-DOOMqueue]').removeAttr('data-DOOMqueue')
+        $('#multi_choice_info_panel').remove()
+        uniCancel()
+    },
+    hack:()=>uniCancel(),
+    surroundPound:()=>uniCancel(),
+    roll:()=>{
+        displayAnimatedNews('Roll<br/>ended')
+        $('.roll_selected').removeClass('roll_selected')
+        uniCancel()
+    },
+    nomNomNom:()=>uniCancel(),
+    buffet:()=>{
+        $('.destined_for_DOOM').removeClass('destined_for_DOOM')
+        $('[data-DOOMqueue]').removeAttr('data-DOOMqueue')
+        $('#multi_choice_info_panel').remove()
+        uniCancel()
+    },
+    slimed:()=>uniCancel(),
+    slipAndSlide:()=>uniCancel(),
+    cursedGround:()=>uniCancel(),
+    deadlyCurse:()=>{
+        $('.deadlyCursePanel').remove()
+        uniCancel()
+    },
+    purgeMagic:()=>uniCancel(),
 
 
 }

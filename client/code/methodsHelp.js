@@ -420,7 +420,7 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
             highlightHexes({colour:glowType,dist},$(this))
             socket.emit('HH', {color:glowType,dist, hex:h, row:r, river, n:nickName})
         })
-    };
+    }
     if (glowType==='callTotems') un_glow()
     if(glowType==='lifeTrade'){lifeTradeRaise()
     } else if( myTurn ){
@@ -430,6 +430,14 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
         //if ( !$(`[data-glow="${glowType}"]`).length )prevented me from sending river through server
         socket.emit('HH', {color:glowType, dist, hex, row, river, n:nickName})
     }//these brackets were not here before
+    if(name==="Retchlings"){
+        $(`[data-tenmodel^="${name}"].${side}`).each(function(){
+            const h = $(this).parent('.hexagon').data('hex')
+            const r = $(this).parent('.hexagon').data('row')
+            highlightHexes({colour:glowType,dist},$(this))
+            socket.emit('HH', {color:glowType,dist, hex:h, row:r, river, n:nickName})
+        })
+    }
 }
 function blights_spew_declaration ({origin, abilName}){
     const { baim } = extractBoons_Blights(origin)
@@ -729,6 +737,7 @@ function rollTheBones_(o){
     const side = rattlebone.data('side') === mySide ? mySide : opoSide
     //still needs add_action_take and change attr data-actionstaken=2
     rattlebone.attr('data-actionstaken',2)
+    add_action_taken(`rollTheBones${phase==='white'?'White':'Black'}`,true)
     if(!dist){
         if ( myTurn )
             $('#gameScreen').append( EatHexes( {side,socksMethod:'hexEaters',message:'Hexlings gain 1 boon'} ) )
@@ -777,4 +786,41 @@ function superiority(target){
         return true
     else
         return false
+}
+function retchlings_adagio( aN, mA = false ){
+    const team = $('.selectedModel').hasClass('whiteTeam') ? mySkillTrack : opoSkillTrack
+    if( typeof team.Retchlings[phase][aN].used === 'object' && !mA ){
+        add_action_taken(aN)
+    }else if( team.Retchlings[phase][aN].used === false && !mA ){
+        const teamColor = $('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        let selModl = $('.selectedModel').parent('.hexagon').data()
+        team.Retchlings[phase][aN].used = [ selModl.hex, selModl.row ]
+        $(`[data-tenmodel^="Retchlings"].${teamColor}`).each(function(){
+            $(this).attr('data-actionstaken',(Number($(this).attr('data-actionstaken'))+1))
+        })
+    }
+}
+function tituulti_addaction (actionName, multiAction = false){
+    if( !tituulti[$('.selectedModel').data('side')][actionName] )
+        add_action_taken(actionName,multiAction)
+    else {
+        add_action_taken(actionName, tituulti[$('.selectedModel').data('side')][actionName] )
+        tituulti[$('.selectedModel').data('side')][actionName] = false
+        if ( loop_tituulti() === 2 ){
+            $('.selectedModel[data-tenmodel="Titus"]')
+                .attr('data-actionstaken', 1 + Number($('.selectedModel[data-tenmodel="Titus"]').attr('data-actionstaken') ))
+            displayAnimatedNews('Titus<br/>legendary<br/>ends')
+        }
+    }
+}
+function loop_tituulti(){
+    let x = 0
+    for(c in tituulti[$('.selectedModel[data-tenmodel="Titus"]').data('side')]){
+        x += tituulti[ [$('.selectedModel[data-tenmodel="Titus"]').data('side')] ][ c ]
+    }
+    return x
+}
+function tituStep({hex, row}){
+    socket.emit('rolloSkill',{hex,row,socksMethod:'tituStep'})
+    cancellerName = 'tituStep'
 }

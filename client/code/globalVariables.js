@@ -27,4 +27,22 @@ var mySkillTrack;
 var current_ability_method = null;
 let waitinInfoAsArray = [roster[0],roster[1],roster[2],nickName,gamePlaceName,"waiting for opponent"];
 let waitingTicker = 0;
-var km = window.innerHeight
+var km = window.innerHeight;
+const tituulti = {
+    left:{
+        challenge:false,
+        illKillYouAll:false,
+        piercingStrike:false,
+        sweepingSlash:false
+    },
+    right:{
+        challenge:false,
+        illKillYouAll:false,
+        piercingStrike:false,
+        sweepingSlash:false
+    }
+}
+var titustepper = {
+    left:false,
+    right:false
+}

@@ -112,4 +112,4 @@ socket.on('tt',p=>{//{current:myTurn, next:phase}
         console.log('TURN END TURN END TURN END TURN END TURN END TURN END')
     myTurn?displayAnimatedNews('Your<br/>turn'):0
 })
-socket.on('camcel',p=>defy[p.m]())
+socket.on('camcel',p=>defy[p.m](p.c))

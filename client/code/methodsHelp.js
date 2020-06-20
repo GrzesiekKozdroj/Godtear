@@ -824,3 +824,27 @@ function tituStep({hex, row}){
     socket.emit('rolloSkill',{hex,row,socksMethod:'tituStep'})
     cancellerName = 'tituStep'
 }
+function _earthquake(origin,target){
+    const { baim } = extractBoons_Blights(origin)
+    const { hex, row } = target
+    const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+    if($target.hasClass(`blackTeam`) )
+        socket.emit('rolloSkill',{ aim:(4 + baim), socksMethod:`earthquake${phase==='white'?"White":"Black"}`, hex, row })
+}
+function earthquake_(o){
+    const { aim, hex, row } = o
+    const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+    if(targets.length){
+        const target = $(targets[0])
+        const team = target.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
+        un_glow()
+        add_action_taken(`earthquake${phase==='white'?"White":"Black"}`)
+        if( onHit(aim, target) && !$('.earthquake_selected').length ){
+            displayAnimatedNews(`earthquake<br/>${target.data('name')} moving`)
+            $(`[data-name="${target.data('name')}"]${team}`).addClass('earthquake_moveable')
+            target.addClass('earthquake_selected')
+            highlightHexes({colour:'legendaryGlow',dist:2},target)
+        } else displayAnimatedNews ("missed!")
+    }
+    current_ability_method = null
+}

@@ -223,7 +223,7 @@ $('body').on('click','.hexagon:not([data-glow="callTotems"])',function(e){
             if( $(`[data-glow="yellowGlow"]`).length )
             $(`[data-glow="yellowGlow"]`).removeAttr(`data-glow`)
         }
-        cancellerName ? socket.emit('camcel',{m:cancellerName}) : cancelMove()
+        cancellerName ? socket.emit('camcel',{m:cancellerName,c:false}) : cancelMove()
         $('.rapidDeployment_selected').removeClass('rapidDeployment_selected')
       //  current_ability_method = null
       //  un_glow()
@@ -242,7 +242,7 @@ for(let K in m){
         for(let S in PHASE_PLAY){
             let SKILL = PHASE_PLAY[S]
             $('body').on('click',`[data-m="${SKILL.m}"]`,function(){
-                if( typeof canceller === 'function') canceller()//untestedo HERE
+                if( typeof canceller === 'function') canceller(true)//untestedo HERE
                 const data = $(this).data()
                 let modo = ['white','black'].includes(P) ? P === phase ? true : false : true
                 if_moved_end_it()
@@ -595,7 +595,7 @@ $('body').on('click','.earthquake_moveable',function(e){
     e.preventDefault()
     const thiz = $(this)
     if(myTurn){
-        $('.earthquake_selected').removeClass('earthquake_selected')
+        $('.earthquake_selected').removeClass('earthquake_selected earthquake_moveable')
         thiz.addClass('earthquake_selected')
         un_glow()
         highlightHexes ({colour:'legendaryGlow', dist:2},$(this))

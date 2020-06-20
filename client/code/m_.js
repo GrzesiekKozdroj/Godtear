@@ -1313,26 +1313,24 @@ var m_ = {
     },
     stoneStrenght:function(o){
         const { hex, row } = o
-        const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Landslide"]')[0])
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel^="Landslide"]')[0])
         const { bprotection, bdamage } = extractBoons_Blights($target)
         setBoons_Blights($target,{bprotection:bprotection+1,bdamage:bdamage+1})
         displayAnimatedNews('stone strength<br/>+1 shield and damage')
         un_glow()
-         
-        add_action_taken()
+        add_action_taken('stoneStrenght')
         current_ability_method = null
     },
     runeweaving:function(o){
-        const { aim, hurt, hex, row } = o
+        const { aim, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
-            add_action_taken()
+            add_action_taken('runeweaving')
             if( onHit(aim, target) ){
                 displayAnimatedNews('runeweaving')
                 if ( myTurn )
-                    $('#gameScreen').append(crystalGlareOptions(origin, { hex, row }, "runeweaving2",1,`choose one boon`))
+                    $('#gameScreen').append(crystalGlareOptions(o, { hex, row }, "runeweaving2",1,`choose one boon`))
             } else displayAnimatedNews ("missed!")
         }
     },
@@ -1340,12 +1338,10 @@ var m_ = {
         const { hex, row, cursePackage } = o
         const { curseType, origin } = cursePackage
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        const $origin = $($(`.hex${origin.hex}_in_row_${origin.row}`).children('.smallCard')[0])
+        const $origin = $($(`.hex_${origin.hex}_in_row_${origin.row}`).children('.smallCard')[0])
         setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) + 1 })
         setBoons_Blights($origin,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) - 1 })
         displayAnimatedNews(`${$target.data('name')}<br/>+1 ${[...curseType].slice(1).join('')}`)
-         
-        add_action_taken()
         current_ability_method = null
         $('[data-glow').removeAttr('data-glow')
         crystalGlare_bb = null
@@ -1356,7 +1352,7 @@ var m_ = {
             const { hex, row } = o
             const $shayle = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Shayle"]')[0])
             const team = $shayle.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
-            highlightHexes({colour:'greenGlow',dist:3},$(`[data-name="Landslide"]${team}`))
+            highlightHexes({colour:'greenGlow',dist:3},$(`[data-tenmodel^="Landslide"]${team}`))
             $('[data-glow].objectiveGlow').addClass('avalanche_moveable')
             un_glow()
             current_ability_method = null
@@ -1385,31 +1381,13 @@ var m_ = {
         } 
         else 
             displayAnimatedNews(`must target<br/>empty hex`)
-
         if( !$('.avalanche_selected').length ){
             current_ability_method = null
-             
             add_action_taken()
         }
     },
-    earthquake:function(o){
-        const { aim, hex, row } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
-        if(targets.length){
-            const target = $(targets[0])
-            const team = target.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
-             
-            un_glow()
-            add_action_taken()
-            if( onHit(aim, target) && !$('.earthquake_selected').length ){
-                displayAnimatedNews(`earthquake<br/>${target.data('name')} moving`)
-                $(`[data-name="${target.data('name')}"]${team}`).addClass('earthquake_moveable')
-                target.addClass('earthquake_selected')
-                highlightHexes({colour:'legendaryGlow',dist:2},target)
-            } else displayAnimatedNews ("missed!")
-        }
-        current_ability_method = null
-    },
+    earthquakeWhite:earthquake_,
+    earthquakeBlack:earthquake_,
     boulderBash:function(o){
         const { aim, hurt, hex, row, key } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
@@ -1433,20 +1411,17 @@ var m_ = {
         current_ability_method = null
     },
     eruption:function(o){//each loop such as this one executes for each model, b_B'ing teams more than once SOLVED!!! :]
-        const coin = Math.random()
-        const plus = 1, minus = -1
-        const addo = coin > .5 ? plus : minus
-        const team = $('.selectedModel').hasClass('whiteTeam') ? '.blackTeam' : '.whiteTeam'
+        const addo = -1
+        const team = !$('.selectedModel').hasClass('whiteTeam') ? '.blackTeam' : '.whiteTeam'
         displayAnimatedNews(`eruption<br/>${addo} protection`)
-        const ARR = [...$($(`[data-glow].hexagon`).children('.smallCard')) ].map(el=>$(el).data('name'))
+        const ARR = [...$($(`[data-glow].hexagon`).children(`.smallCard:not([data-tenmodel="Landslide0"]${team})`)) ].map(el=>$(el).data('name'))
         const uniqSet = [...new Set(ARR)]
         uniqSet.forEach(el=>{
-            const thiz = $(`[data-name="${el}"]${team}`)
+            const thiz = $(`[data-name="${el}"][data-tenmodel]`)
             setBoons_Blights(thiz,{ bprotection: (Number(thiz.attr('data-bprotection')) + addo) })
         })
-        $(`[data-glow]`).removeAttr('data-glow')
-        add_action_taken()
-         
+        un_glow()
+        add_action_taken('eruption')
         current_ability_method = null
     },
     cursedGround:function(o){//no endphase yet, marks generated hexes with data-kill="side"

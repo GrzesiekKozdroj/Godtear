@@ -292,6 +292,29 @@ var defy = {
         uniCancel()
     },
     purgeMagic:()=>uniCancel(),
-
+    eruption:()=>uniCancel(),
+    earthquakeWhite:( condition )=>{console.log(condition)
+        if( !condition )
+            $('.earthquake_selected').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
+        else
+            $('.earthquake_moveable').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
+        uniCancel()
+    },
+    earthquakeBlack:( condition )=>{console.log(condition)
+        if( !condition )
+            $('.earthquake_selected').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
+        else
+            $('.earthquake_moveable').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
+        uniCancel()
+    },
+    stoneStrenght:()=>uniCancel(),
+    runeweaving:()=>{
+        crystalGlare_bb = null
+        $('.niaChallenge').remove()
+        uniCancel()
+    },
+    avalanche:()=>{
+        uniCancel()
+    }
 
 }

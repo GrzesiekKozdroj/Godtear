@@ -223,7 +223,6 @@ var _m_ = {
             setTimeout(()=>$thiz.removeAttr('style'),100)
             if(!$('.earthquake_moveable').length ){
                 current_ability_method = null
-                add_action_taken('earthquake')
             }
         }
     },

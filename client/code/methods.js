@@ -1330,7 +1330,7 @@ const m =
                 dist: 2,
                 aim: [4],
                 unused: true,
-                m: "earthquake"
+                m: "earthquakeBlack"
             },
             boulderBash:
             {
@@ -1363,7 +1363,7 @@ const m =
                 dist: 2,
                 aim: [4],
                 unused: true,
-                m: "earthquake"
+                m: "earthquakeWhite"
             }
         },
         util:
@@ -1372,7 +1372,7 @@ const m =
             {
                 name: "Rubble",
                 desc: "When Landslide is knocked out, replace it with an objective hex.",
-                m: "earthquakeWhite"
+                m: "rubble"
             }
         }
     },

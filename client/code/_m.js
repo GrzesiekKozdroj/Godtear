@@ -806,7 +806,11 @@ const _m = {
     },
     stoneStrenght:function(origin,target){
         const { hex, row } = target
-        socket.emit('rolloSkill',{aim:0,hurt:0,hex,row,socksMethod:"stoneStrenght"})
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel^="Landslide"].whiteTeam')[0])
+        if( $target.length )
+            socket.emit('rolloSkill',{aim:0,hurt:0,hex,row,socksMethod:"stoneStrenght"})
+        else
+            displayAnimatedNews('click on<br/>Landslide')
     },
     runeweaving:function(origin,target){
         const { baim } = extractBoons_Blights(origin)
@@ -821,13 +825,9 @@ const _m = {
         const { hex, row } = origin.parent('.hexagon').data()
         socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"avalanche", hex, row})
     },
-    earthquake:function(origin,target){
-        const { baim } = extractBoons_Blights(origin)
-        const { hex, row } = target
-        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim:(4 + baim), socksMethod:"earthquake", hex, row })
-    },
+    earthquakeWhite:_earthquake,
+    earthquakeBlack:_earthquake,
+    rubble:_earthquake,
     boulderBash:function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target

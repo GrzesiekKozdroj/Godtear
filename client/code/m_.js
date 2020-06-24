@@ -1247,36 +1247,12 @@ var m_ = {
         un_glow()
         highlightHexes({colour:'legendaryGlow',dist:2},$target)
     },
-    current:function(o){
-        const {  hex, row } = o
-        const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
-        if(!$('.current').length){
-            add_action_taken('current')
-             
-            $(`[data-name="${singleSpecimen.data('name')}"].${team}`).addClass('current')
-            un_glow()
-            displayAnimatedNews('current')
-        }
-    },
-    tide:function(o){
-        const { aim, hex, row } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
-        if(targets.length){
-            const target = $(targets[0])
-             
-            un_glow()
-            add_action_taken('tide')
-            if( onHit(aim, target) ){
-                displayAnimatedNews('tide')
-                un_glow()
-                target.addClass('tide_selected')
-                highlightHexes({colour:"legendaryGlow",dist:1},target)
-                //movement of a victim herree
-            }else displayAnimatedNews ("missed!")
-        }
-        current_ability_method = null
-    },
+    currentBlack:current_,
+    currentWhite:current_,
+    tideBlack:tide_,
+    tideWhite:tide_,
+    likeWaterWhite:likeWater_,
+    likeWaterBlack:likeWater_,
     tremor:function(o){
         team = $('.selectedModel').hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
         $('[data-glow]').children('.'+team).each(function(){
@@ -1301,7 +1277,6 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
             add_action_taken()
             if( onHit(aim, target) ){
@@ -1319,6 +1294,7 @@ var m_ = {
         displayAnimatedNews('stone strength<br/>+1 shield and damage')
         un_glow()
         add_action_taken('stoneStrenght')
+        shayle_takes_action()
         current_ability_method = null
     },
     runeweaving:function(o){
@@ -1327,6 +1303,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             add_action_taken('runeweaving')
+            shayle_takes_action()
             if( onHit(aim, target) ){
                 displayAnimatedNews('runeweaving')
                 if ( myTurn )
@@ -1371,6 +1348,8 @@ var m_ = {
         const origin = $('.avalanche_selected')
         const destination = $(`.hex_${hex}_in_row_${row}`)
         if(!destination.children('.smallCard').length && !destination.hasClass('objectiveGlow') ){
+            add_action_taken('legendary')
+            shayle_takes_action()
             origin.children('.whiteTeam').detach().appendTo(destination)
             origin.children('.blackTeam').detach().appendTo(destination)
             removeObjectiveHex( origin.data('row'), origin.data('hex') )
@@ -1383,8 +1362,24 @@ var m_ = {
             displayAnimatedNews(`must target<br/>empty hex`)
         if( !$('.avalanche_selected').length ){
             current_ability_method = null
-            add_action_taken()
         }
+    },
+    runecaller:function(o){
+        const { hex, row } = o
+        console.log('landsliding')
+        const kid = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel^="Landslide"]')[0])
+        highlightHexes({colour:'landSlideGlow', dist:2}, kid )
+    },
+    landSlideGlow1:function(o){
+        const { hex, row } = o
+        const targetLocation = $(`.hex_${hex}_in_row_${row}`)
+        const landS = $($(`[data-tenmodel^="Landslide"].${ myTurn ? "white" : "black"}Team`)[0])
+        displayAnimatedNews('Landslide<br/>moves')
+        if(landS.attr('data-landstepper') == '1')
+            makeAnim(landS,targetLocation,()=>{
+                un_glow()
+                landS.attr('data-landstepper',0)
+            })
     },
     earthquakeWhite:earthquake_,
     earthquakeBlack:earthquake_,

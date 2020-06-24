@@ -314,7 +314,34 @@ var defy = {
         uniCancel()
     },
     avalanche:()=>{
+        displayAnimatedNews('Avalanche<br/>Ends')
+        $('.avalanche_moveable').removeClass('avalanche_moveable avalanche_selected')
         uniCancel()
-    }
+    },
+    runecaller:()=>{
+        displayAnimatedNews('Runecaller<br/>cancelled')
+        $('[data-tenmodel^="Landslide"]').each(function(){
+            $(this).attr('data-landstepper', 0)
+        })
+        uniCancel()
+    },
+    currentWhite:currentDefy,
+    currentBlack:currentDefy,
+    tideBlack:()=>{
+        $('.tide_selected').removeClass('tide_selected')
+        uniCancel()
+    },
+    tideWhite:()=>{
+        $('.tide_selected').removeClass('tide_selected')
+        uniCancel()
+    },
 
+
+}
+function currentDefy ( condition ){
+        if( !condition )
+            $('.current_selected').removeClass(`current current_selected`)
+        else
+            $('.current').removeClass(`current current_selected`)
+        uniCancel()
 }

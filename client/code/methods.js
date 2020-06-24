@@ -59,6 +59,7 @@ const m =
             thiz.append(placeBanner(teamColor))
             un_glow()
             add_action_taken(key)
+            shayle_takes_action()
             if(phase==='white')
                 moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
             displayAnimatedNews(`${ $('.selectedModel').data('name') }<br/>claims objective`)
@@ -1209,7 +1210,7 @@ const m =
                 desc: "You may place each Splashling in a hex up to 3 hexes from its current hex.",
                 icon: 'self',
                 unused: true,
-                m: "current"
+                m: "currentBlack"
             },
             tideBlack:
             {
@@ -1219,7 +1220,15 @@ const m =
                 aim: [5, 6, 7],
                 icon: skull,
                 unused: true,
-                m: "tide"
+                m: "tideBlack"
+            },
+            likeWaterBlack:
+            {
+                name: "Like Water",
+                desc: "Once per phase during the Splashlings' activation, you may choose a boon on Raith'Marid. The Splashlings gain that boon.",
+                m: "likeWaterBlack",
+                icon:cogs,
+                zero:true
             }
         },
         white:
@@ -1230,7 +1239,7 @@ const m =
                 desc: "You may place each Splashling in a hex up to 3 hexes from its current hex.",
                 icon: 'self',
                 unused: true,
-                m: "current"
+                m: "currentWhite"
             },
             tideWhite:
             {
@@ -1240,17 +1249,19 @@ const m =
                 aim: [5, 6, 7],
                 icon: skull,
                 unused: true,
-                m: "tide"
+                m: "tideWhite"
+            },
+            likeWaterWhite:
+            {
+                name: "Like Water",
+                desc: "Once per phase during the Splashlings' activation, you may choose a boon on Raith'Marid. The Splashlings gain that boon.",
+                m: "likeWaterWhite",
+                icon:cogs,
+                zero:true
             }
         },
         util:
         {
-            likeWater:
-            {
-                name: "Like Water",
-                desc: "Once per phase during the Splashlings' activation, you may choose a boon on Raith'Marid. The Splashlings gain that boon.",
-                m: function () { }
-            }
         }
     },
     shayle:

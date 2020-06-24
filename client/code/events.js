@@ -178,6 +178,12 @@ $('body').on('click','.hexagon[data-glow="yellowGlow"]', function(e){
     if(myTurn && !MOVINGNOW)
         m.universal.walk(e,$(this))
 })
+$('body').on('click','[data-glow="landSlideGlow"]',function(e){
+    e.preventDefault()
+    const { hex, row } = $(this).data()
+    if ( myTurn )
+        socket.emit( "rolloSkill", { hex, row, socksMethod:"landSlideGlow1" })
+})
 
 $('body').on('click','#claimAction',function(e){
     if( phase==='white' && myTurn ){
@@ -214,6 +220,8 @@ $('body').on('click','.hexagon:not([data-glow="callTotems"])',function(e){
         addSelectedColor(thiz)
         //add movement aura
         displayMovementAura(thiz)
+        //ladnslide case
+        land_sliding( $(this) )
     } else if (
         !$(this).children('.smallCard').length &&
         !$(this).attr('data-glow') && 
@@ -508,7 +516,6 @@ $('body').on('click','[data-glow].hexagon',function(e){
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
-    console.log('step3')
     e.preventDefault()
     e.stopPropagation()
     const { hex, row } = $(this).data()
@@ -686,6 +693,8 @@ $(`body`).on('click',`.endTask`,function(e){
         socket.emit('rolloSkill',{    socksMethod:'phaseEnd',key: { phase, next: myNextPhase, name, side:mySide }   })
     }
 })
+
+
 
 
 

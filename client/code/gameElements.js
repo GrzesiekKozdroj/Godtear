@@ -387,6 +387,27 @@ function rTB_Transfer( {hex,row,socksMethod,message} ){
         </div>
     `
 }
+function showLikeWater( RaithMarid ){
+    const { baim, bdamage, bdodge, bprotection, bspeed } = extractBoons_Blights( RaithMarid )
+    console.log( RaithMarid )
+    return `
+        <div class="titusChallenge">
+            <div 
+                class="titusChallengeCrest" 
+                data-socksmethod= "likeWaterPost" 
+                data-cursecount= 1 
+              >
+                <div class="message">Splashlings gain one</div>
+                <div class="boon-blight challengeTitus walk ${decideOrnament(bspeed)}" data-abil="bspeed">  </div>
+                <div class="boon-blight challengeTitus dodge ${decideOrnament(bdodge)}" data-abil="bdodge">  </div>
+                <div class="boon-blight challengeTitus protection ${decideOrnament(bprotection)}" data-abil="bprotection">  </div>
+                <div class="boon-blight challengeTitus aim ${decideOrnament(baim)}" data-abil="baim">  </div>
+                <div class="boon-blight titus confirm " > done </div>
+                <div class="boon-blight challengeTitus damage ${decideOrnament(bdamage)}" data-abil="bdamage">  </div>
+            </div>
+        </div>
+    `
+}
 function un_glow(p=false){
     if (!p)
         $('[data-glow]').removeAttr('data-glow')

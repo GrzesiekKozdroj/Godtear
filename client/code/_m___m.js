@@ -202,10 +202,8 @@ var _m_ = {
         un_glow()
         $($thiz).removeClass('current').removeClass(`current_selected`)
         setTimeout(()=>$thiz.removeAttr('style'),100)
-        if(!$('.current').length ){
+        if(!$('.current').length )
             current_ability_method = null
-            add_action_taken('current')
-        }
     },
     tide:($thiz)=>{
         un_glow()

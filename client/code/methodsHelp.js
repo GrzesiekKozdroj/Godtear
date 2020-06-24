@@ -1,4 +1,4 @@
-const if_moved_end_it  = () => {
+const if_moved_end_it  = () => {//should take argument to end movement of custom guy
     const name = $('.selectedModel').attr('data-name')
     const side = $('.selectedModel').attr('data-side')
     const actionstaken = $('.selectedModel').attr('data-actionstaken')
@@ -45,6 +45,7 @@ const causeOfRetchlings = (skill) => {
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
     const targetos = (abilName, p = phase) => {
         let prod;
+        //console.log(name,p,abilName)
         if(side === mySide)
                 prod = causeOfRetchlings(  mySkillTrack[name][p][abilName].used )
         else if(side === opoSide)
@@ -845,6 +846,69 @@ function earthquake_(o){
             target.addClass('earthquake_selected')
             highlightHexes({colour:'legendaryGlow',dist:2},target)
         } else displayAnimatedNews ("missed!")
+    }
+    current_ability_method = null
+}
+function shayle_takes_action(){
+    if ( $('.selectedModel').data('name') === 'Shayle' ){
+        $(`[data-tenmodel^="Landslide"][data-side="${$('.selectedModel').data('side')}"]`).attr('data-landstepper',1)
+    }
+}
+function land_sliding( $thiz ){
+    const kid = $($thiz.children(`[data-tenmodel^="Landslide"].whiteTeam`)[0])
+    const { hex, row } = $thiz.data()
+    if( kid.attr('data-landstepper') == '1' ){
+        cancellerName = 'runecaller'
+        socket.emit('rolloSkill',{ hex, row, socksMethod:'runecaller'})
+    }
+}
+function _likeWater(origin,target){
+    socket.emit('rolloSkill', { key:mySide, socksMethod:`likeWater${phase==='white'?'White':'Black'}` })
+}
+function likeWater_(o){ console.log('once', o.key === mySide)
+    if ( mySide === o.key )
+        $('#gameScreen').append(  showLikeWater( $(`[data-tenmodel^="RaithMarid"][data-side="${o.key}"]`) )  )
+    else 
+        displayAnimatedNews('Splashlings<br/>like water')
+}
+function _current(origin,target){
+    const { hex, row } = target
+    socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:`current${phase==='white'?'White':'Black'}`, hex, row})
+}
+function current_(o){
+    const {  hex, row } = o
+    const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+    const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+    if(!$('.current').length){
+        add_action_taken(`current${phase==='white'?'White':'Black'}`)
+        $(`[data-name="${singleSpecimen.data('name')}"].${team}`).addClass('current')
+        un_glow()
+        displayAnimatedNews('current')
+    }
+}
+function _tide(origin,target){
+    const { baim } = extractBoons_Blights(origin)
+    const { hex, row } = target
+    const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+    const unitSize = origin.siblings('.smallCard').length
+    const aim = [5, 6, 7][unitSize]
+    if($target.hasClass(`blackTeam`) )
+        socket.emit('rolloSkill',{ aim: (aim + baim), socksMethod:`tide${phase==='white'?'White':'Black'}`, hex, row })
+}
+function tide_(o){
+    const { aim, hex, row } = o
+    const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+    if(targets.length){
+        const target = $(targets[0])
+        un_glow()
+        add_action_taken(`tide${phase==='white'?'White':'Black'}`)
+        if( onHit(aim, target) ){
+            displayAnimatedNews('tide')
+            un_glow()
+            target.addClass('tide_selected')
+            highlightHexes({colour:"legendaryGlow",dist:1},target)
+            //movement of a victim herree
+        }else displayAnimatedNews ("missed!")
     }
     current_ability_method = null
 }

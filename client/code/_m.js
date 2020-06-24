@@ -781,21 +781,14 @@ const _m = {
         const { hex, row } = target
         socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"tsunami", hex, row })
     },
-    current:function(origin,target){
-        const { hex, row } = target
-        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"current", hex, row})
-    },
-    tide:function(origin,target){
-        const { baim } = extractBoons_Blights(origin)
-        const { hex, row } = target
-        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        const unitSize = origin.siblings('.smallCard').length
-        const aim = [5, 6, 7][unitSize]
-        if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:0, socksMethod:"tide", hex, row })
-    },
+    currentBlack:_current,
+    currentWhite:_current,
+    tideBlack:_tide,
+    tideWhite:_tide,
+    likeWaterWhite:_likeWater,
+    likeWaterBlack:_likeWater,
     tremor:function(origin,target){
-        socket.emit('rolloSkill',{aim:0,hurt:0,socksMethod:'tremor'})
+        socket.emit('rolloSkill',{ socksMethod:'tremor' })
     },
     stoneSpikes:function(origin,target){
         const { baim } = extractBoons_Blights(origin)

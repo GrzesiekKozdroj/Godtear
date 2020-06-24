@@ -46,3 +46,7 @@ var titustepper = {
     left:false,
     right:false
 }
+var landstepper = {
+    left:false,
+    right:false
+}

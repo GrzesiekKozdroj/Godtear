@@ -160,7 +160,7 @@ $glowDensity:.25;
         rgba(73, 187, 8, $glowDensity)
     )
 }
-[data-glow="legendaryGlow"],[data-glow="shootAndScoot"]{
+[data-glow="legendaryGlow"],[data-glow="shootAndScoot"],[data-glow="landSlideGlow"]{
     @include makeGlow('goldenrod', 
         rgba(218, 165, 32, $glowDensity), 
         rgba(218, 165, 32, $glowDensity), 

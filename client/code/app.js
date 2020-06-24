@@ -61,12 +61,15 @@ const makeAnim = (model,whereTo,callback=false) => {//model, destination
                 const name = model.data('name')
                 const team = model.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
                 model.removeAttr('style')
-                document.querySelector(`[data-name="${name}"]${team}`).removeAttribute('style')
+                document
+                    .querySelector(`[data-name="${name}"]${team}`)
+                    .removeAttribute('style')
                 m.universal.stepOnBanner(model,whereTo)//bugs the shit out of phantomBanners
                 if(callback)
                     callback(model)
                 else
                     whereTo.removeAttr('data-glow')
+                shayle_takes_action()
                 MOVINGNOW = false
             })
 };//anim

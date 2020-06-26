@@ -335,6 +335,14 @@ var defy = {
         $('.tide_selected').removeClass('tide_selected')
         uniCancel()
     },
+    likeWaterWhite:()=>{
+        $('.showLikeWaterC').remove()
+        uniCancel()
+    },
+    likeWaterBlack:()=>{
+        $('.showLikeWaterC').remove()
+        uniCancel()
+    },
 
 
 }

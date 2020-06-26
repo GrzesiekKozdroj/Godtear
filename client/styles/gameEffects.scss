@@ -504,3 +504,9 @@ $partSize: 5em;
 .smallCard:active,#claimAction:active{@include click(.9);}
 .hexagon:active{@include click(.9);}
 .hexEaters.blighted.boon-blight{opacity:1;}
+.current{
+    filter: saturate(4);
+}
+.current_selected{
+    filter:saturate(8);
+}

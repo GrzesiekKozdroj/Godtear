@@ -1253,6 +1253,17 @@ var m_ = {
     tideWhite:tide_,
     likeWaterWhite:likeWater_,
     likeWaterBlack:likeWater_,
+    likeWaterPost:function(o){
+        const { cursePackage } = o
+        const curseType  = cursePackage[0]
+        const $target = $($(`[data-tenmodel^="Splashlings"].${myTurn?'whiteTeam':'blackTeam'}`)[0])
+        setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) + 1 })
+        displayAnimatedNews(`${$target.data('name')}<br/>+1 ${[...curseType].slice(1).join('')}`)
+        add_action_taken(`likeWater${phase==='white'?'White':'Black'}`)
+        current_ability_method = null
+        $('[data-glow').removeAttr('data-glow')
+        crystalGlare_bb = null
+    },
     tremor:function(o){
         team = $('.selectedModel').hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
         $('[data-glow]').children('.'+team).each(function(){

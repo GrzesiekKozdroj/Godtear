@@ -436,6 +436,20 @@ $('body').on('click','.boon-blight.confirm.titus', function(e){
     $('.titusChallenge').remove()
 })
 
+$('body').on('click','.boon-blight.showLikeWater:not(".confirm")',function(e){
+    e.preventDefault()
+    if( !$(this).hasClass('blighted') && !$(this).hasClass('nooner') ){
+            $('.selected').removeClass('selected')
+            $(this).addClass('selected') 
+        }
+})
+$('body').on('click','.boon-blight.confirm.showLikeWater', function(e){
+    e.preventDefault()
+    const { socksmethod } = $(this).parent().data()
+    const cursePackage = $('.boon-blight.selected').map(function(){return $(this).data('abil')}).get()
+    socket.emit('rolloSkill',{ socksMethod:socksmethod, cursePackage })
+    $('.showLikeWaterC').remove()
+})
 
 $('body').on('click','.boon-blight.stolenTreasure:not(".confirm")',function(e){
     e.preventDefault()

@@ -51,7 +51,8 @@ const m =
         },
         stepOnBanner: function (model,whereTo){
             if( whereTo.children(`.claimedBanner`).length && model.hasClass('smallCard') ){
-                whereTo.children(`.claimedBanner`).remove()
+                rockFormation(whereTo,()=>{whereTo.children(`.claimedBanner`).remove()})
+                //this ought to be thing functionalised
                 moveLadder(model,-1)
             }
         },
@@ -1110,7 +1111,7 @@ const m =
             {
                 name: "Rock Formation",
                 desc: "When Nia's banner is removed from battlefield, the Quartzlings may immediately make a recruit action, even if its the end phase.",
-                m: function () { }
+                m: "rockFormation"
             }
         }
     },
@@ -1125,7 +1126,7 @@ const m =
                 icon: 'self',
                 dist: 3,
                 unused: true,
-                m: "kerSplash"
+                m: "kerSplashBlack"
             },
             headbutt:
             {
@@ -1168,7 +1169,7 @@ const m =
                 icon: 'self',
                 dist: 3,
                 unused: true,
-                m: "kerSplash"
+                m: "kerSplashWhite"
             },
             jet:
             {
@@ -1196,7 +1197,7 @@ const m =
             {
                 name: "Rippling Scales",
                 desc: "When a splashling leaves the battlefield, Raith'Marid may gain the boon of your choice.",
-                m: function () { }
+                m: "ripplingScales"
             }
         },
     },

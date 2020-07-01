@@ -451,6 +451,25 @@ $('body').on('click','.boon-blight.confirm.showLikeWater', function(e){
     $('.showLikeWaterC').remove()
 })
 
+$('body').on('click','.boon-blight.ripplingChoices:not(".confirm")',function(e){
+    e.preventDefault()
+    if( !$(this).hasClass('booned') ){
+            $('.selected').removeClass('selected')
+            $(this).addClass('selected') 
+        }
+})
+$('body').on('click','.boon-blight.confirm.ripplingChoices', function(e){
+    e.preventDefault()
+    if( !$(this).hasClass('cancel') ){
+        const { socksmethod, sajd } = $(this).parent().data()
+        cursePackage = {}
+        cursePackage.pack = $('.boon-blight.selected').map(function(){return $(this).data('abil')}).get()
+        cursePackage.side = sajd
+        socket.emit('rolloSkill',{ socksMethod:socksmethod, cursePackage })
+    }
+    $('.ripplingChoicesC').remove()
+})
+
 $('body').on('click','.boon-blight.stolenTreasure:not(".confirm")',function(e){
     e.preventDefault()
     $('.selected').removeClass('selected')
@@ -527,6 +546,8 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.rapidDeployment_selected').length && onlyOneStep(thiz,$('.rapidDeployment_selected')))
             extraMover('rapidDeployment',thiz)
         if( $('.pathof_selected').length )extraMover('pathof',thiz)
+        if( $('.marchjet_selected').length && onlyOneStep(thiz,$('.marchjet_selected')))
+            extraMover('jet',thiz)
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
@@ -638,6 +659,14 @@ $('body').on('click','[data-glow="recruitGlow"].hexagon',function(e){
     if(myTurn)
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row})
 })
+$('body').on('click',`[data-glow^="rockFormation"].hexagon`,function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    const { hex, row } = $(this).data()
+    console.log('glow clicked')
+    if ( $(this).attr('data-glow').includes(mySide))
+        socket.emit('rolloSkill',{socksMethod:"raiseDead", hex, row})
+})
 $('body').on('click','[data-glow="callTotems"].hexagon',function(e){console.log('click on data glow')
     e.preventDefault()
     e.stopPropagation()
@@ -675,7 +704,7 @@ $('body').on('click','[data-glow="graspingDead"].hexagon',function(e){
 })
 $('body').on('click','.tsunami-moveable',function(e){
     const { hex, row } = $(this).parent('.hexagon').data()
-    socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"tsunamiMoveDeclaration", hex, row})
+    socket.emit('rolloSkill',{ socksMethod:"tsunamiMoveDeclaration", hex, row})
 })
 $('body').on('click','.current',function(e){
     e.preventDefault()

@@ -408,9 +408,31 @@ function showLikeWater( RaithMarid ){
         </div>
     `
 }
-function un_glow(p=false){
+function un_glow(p=false){//console.trace()
     if (!p)
         $('[data-glow]').removeAttr('data-glow')
     else
         $(`[data-glow=${p}]`).removeAttr('data-glow')
+}
+
+function ripplingChoices(side) {
+    const { bspeed, bdodge, bprotection, baim, bdamage } = $(`[data-tenmodel^="RaithMarid"][data-side="${side}"]`)
+    return `
+    <div class="ripplingChoicesC">
+        <div 
+            class="ripplingChoicesCrest" 
+            data-socksmethod="ripplingScalesChosen" 
+            data-sajd="${side}" 
+          >
+            <div class="message">Give a boon to Raith'Marid</div>
+            <div class="boon-blight ripplingChoices walk ${decideOrnament(bspeed)}" data-abil="bspeed">  </div>
+            <div class="boon-blight ripplingChoices dodge ${decideOrnament(bdodge)}" data-abil="bdodge">  </div>
+            <div class="boon-blight ripplingChoices protection ${decideOrnament(bprotection)}" data-abil="bprotection">  </div>
+            <div class="boon-blight ripplingChoices aim ${decideOrnament(baim)}" data-abil="baim">  </div>
+            <div class="boon-blight ripplingChoices confirm " > done </div>
+            <div class="boon-blight ripplingChoices confirm cancel " > cancel </div>
+            <div class="boon-blight ripplingChoices damage ${decideOrnament(bdamage)}" data-abil="bdamage">  </div>
+        </div>
+    </div>
+    `
 }

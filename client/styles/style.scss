@@ -582,7 +582,7 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     color:rgb(168, 156, 156);
     text-shadow: 0 0 1vh rgb(18, 18, 24), 0 0 .5vh rgb(18, 18, 24), 0 0 .75vh rgb(18, 18, 24), 0 0 1.5vh rgb(18, 18, 24);
 }
-.titusChallenge, .showLikeWaterC{
+.titusChallenge, .showLikeWaterC, .ripplingChoicesC{
     @include instaFlex;
     color:rgba(0, 0, 0, 0.911);
     text-shadow: 0 0 1vh darkorange, 0 0 1.5vh darkorange, 0 0 2vh darkorange, 0 0 2.5vh darkorange, 0 0 3vh darkorange;
@@ -592,7 +592,7 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     z-index:10;
     margin:auto auto;
     text-align: center;
-    .titusChallengeCrest,.showLikeWaterCrest{
+    .titusChallengeCrest,.showLikeWaterCrest,.ripplingChoicesCrest{
         width:40vw;
         height:60vh;
         font-family: $coinFont2;
@@ -659,7 +659,8 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     z-index:10;
     margin:auto auto;
     text-align: center;
-    .niaChallengeCrest, .deadlyCursePanelCrest, .soCoolMistressPanelCrest,.brutalMasterCrest,.showLikeWaterCrest{
+    .niaChallengeCrest, .deadlyCursePanelCrest, .soCoolMistressPanelCrest,.brutalMasterCrest,.showLikeWaterCrest,
+    .ripplingChoicesCrest{
         width:50vw;
         height:60vh;
         font-family: $coinFont2;
@@ -726,8 +727,12 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
         border-radius: 47% 47% 47% 47%;
     }
 }
-.showLikeWater.blighted,.nooner.showLikeWater{ opacity: 0; }
-
+.showLikeWater.blighted,.nooner.showLikeWater, .ripplingChoices.booned{ opacity: 0; }
+.ripplingChoices.confirm,.ripplingChoices.cancel{
+    width:6vw!important;
+    height:5vw!important;
+}
+.ripplingChoicesCrest{justify-content: center;}
 .bb_HUD{
     width: 133%;
     height: 1%;

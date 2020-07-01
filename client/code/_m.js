@@ -726,7 +726,7 @@ const _m = {
     },
     calcify:function(origin,target){
         const { hex, row } = origin.parent('.hexagon').data()
-        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"calcify", hex, row })
+        socket.emit('rolloSkill',{ socksMethod:"calcify", hex, row })
     },
     shimmer:function(origin,target){
         const { baim } = extractBoons_Blights(origin)
@@ -737,7 +737,11 @@ const _m = {
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim + baim), hurt:0, socksMethod:"shimmer", hex, row })
     },
-    kerSplash:function(origin,target){
+    kerSplashBlack:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"kerSplash", hex, row, multiAction:mySide })
+    },
+    kerSplashWhite:function(origin,target){
         const { hex, row } = target
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"kerSplash", hex, row, multiAction:mySide })
     },
@@ -768,14 +772,13 @@ const _m = {
     },
     jet:function (origin, target){
         const { hex, row } = target
-        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        if( $target.length ){
-            un_glow()
-            highlightHexes({colour:'legendaryGlow',dist:3},$target)
-            pocketBox = $target
+        const $target = $(
+            $(`.hex_${hex}_in_row_${row}`)
+                .children('.smallCard[data-tenmodel^="Splashlings"].whiteTeam:not(".marchjet_selected")')[0]
+            )
+        if( $target.length && !$('.marchjet_selected').length ){
+            socket.emit('rolloSkill',{ socksMethod: 'jet', hex, row })
         }
-        if( !$target.length )
-            march('jet',target,pocketBox)
     },
     tsunami:function(origin,target){
         const { hex, row } = target

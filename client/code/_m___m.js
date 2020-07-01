@@ -156,25 +156,24 @@ var _m_ = {
             socket.emit('rolloSkill',{ aim: (6 + baim), hurt:(4 + bdamage), socksMethod:"lungingStrikeHit", hex, row })
         }
     },
-    marchjet:($thiz)=>{
-        if ( $('[data-glow].hexagon').length > 19 ) {
+    marchjet:($thiz)=>{console.log($('[data-glow].hexagon').length)
+        if ( $('[data-glow].hexagon').length > 19 ) {console.log('glow 2')
             un_glow()
             highlightHexes({colour:'legendaryGlow',dist:2},$thiz)
-        } else if( $('[data-glow].hexagon').length > 6 ){
+        } else if( $('[data-glow].hexagon').length > 6 ){console.log('glow 1')
             un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
-        } else {
+        } else { console.log('bye bye')
             un_glow()
             $($thiz).removeClass(`marchjet_selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
-            if(!$('.marchjet_selected').length ){
+            if( !$('.marchjet_selected').length ){
                 current_ability_method = null
                 pocketBox = null
             }
         }
     },
     tsunami:()=>{
-        add_action_taken('tsunami')
         displayAnimatedNews('tsunami<br/>move models')
         un_glow()
         highlightHexes({colour:'blueGlow', dist: 2})

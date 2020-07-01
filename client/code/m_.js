@@ -329,7 +329,6 @@ var m_ = {
     },
     raiseDead:function(o){
         const { hex, row, key } = o
-        add_action_taken(key?key:"rallied")
         const thiz = $(`.hex_${hex}_in_row_${row}`)
         $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
         displayAnimatedNews(`${river[3]}<br/>recruited`)
@@ -345,6 +344,7 @@ var m_ = {
             $('#multi_choice_info_panel').remove()
             $('.selectedModel').removeClass('selectedModel')                                          //untestedo
         }                                                                                             //untestedo
+        add_action_taken(key?key:"rallied")
     },
     fluSpew:function(o){
         blights_spew_recieved({o, blight:"bdamage",m:"fluSpew"})
@@ -1105,33 +1105,38 @@ var m_ = {
     calcify:function(o){
         const { hex, row } = o
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Quartzlings"]')[0])
+        console.log('calcify', hex, row )
         if ( $target.length && !$target.siblings('.smallCard').length ){
-            highlightHexes({colour:'greenGlow',dist:1},$target)
-            $('[data-glow].hexagon').each(function(){
-                const thiz = $(this)
-                if( thiz.hasClass('objectiveGlow') ){
+            // highlightHexes({colour:'greenGlow',dist:1},$target)
+            // $('[data-glow].hexagon').each(function(){
+            //     const thiz = $(this)
+            //     if( thiz.hasClass('objectiveGlow') ){
                     makeObjectiveHex(row,hex)
                     forceKill($target)
                     displayAnimatedNews('calcify')
-                    return false
-                }
-            })
-            add_action_taken()
-             
+            //        return false
+            //    }
+            //})
+            add_action_taken('calcify')
         }
         current_ability_method=null
         un_glow()
+    },
+    rockFormation1:function(o){
+        const { key } = o
+        const nija = $(`[data-tenmodel="Nia"][data-side="${key}"].smallCard`)
+        if( key === mySide )
+            highlightHexes({colour:`rockFormation${key}`, dist:1}, nija )
     },
     shimmer: function (o) {
         const { aim, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
-            add_action_taken()
+            add_action_taken('shimmer')
             if( onHit(aim, target) ){
-                displayAnimatedNews(`${target.data('name')}<br/>-1 speed`)
+                displayAnimatedNews(`Shimmer<br/>${target.data('name')}<br/>-1 speed`)
                 setBoons_Blights(target,{bspeed:Number(target.attr('data-bspeed'))-1})
             }else displayAnimatedNews ("missed!")
         }
@@ -1145,8 +1150,7 @@ var m_ = {
             displayAnimatedNews("Ker-splash!")
             forceKill($target)
             makeAnim($(`[data-name="RaithMarid"].${team}`),$(`.hex_${hex}_in_row_${row}`))
-            add_action_taken()
-             
+            add_action_taken(`kerSplash${phase==='white'?'White':'Black'}`)
         }
         current_ability_method=null
         un_glow()
@@ -1202,34 +1206,37 @@ var m_ = {
         if ( !pocketBox ){
             removeObjectiveHex(row,hex)
             pocketBox = true
+            add_action_taken('underthrow')
         }
     },
     underthrowM:function(o){
         const { hex, row } = o
-        if ( pocketBox ){
+        const hexagon = $(`.hex_${hex}_in_row_${row}`)
+        if ( pocketBox && hexagon.children().length < 3 && !hexagon.hasClass('objectiveGlow') ){
             makeObjectiveHex(row,hex)
             un_glow()
             pocketBox = null
-            add_action_taken()
-             
             current_ability_method = null
             displayAnimatedNews('underthrow')
-        }
+        } else 
+            displayAnimatedNews('hex is<br/>not empty')
     },
-    marchjet:function (o){
+    jet:function (o){
         const { hex, row } = o
-        const $mourn = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Splashlings"]')[0])
-        un_glow()
+        const $mourn = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel^="Splashlings"]')[0])
         displayAnimatedNews('Splashling<br/>jet')
-        $mourn.addClass('marchjet_selected')
-        highlightHexes({colour:'legendaryGlow',dist: 3}, $mourn)
-        current_ability_method = null
-         
-        add_action_taken()
+        if( !$('.marchjet_selected').length ){
+            $mourn.addClass('marchjet_selected')
+            un_glow()
+            highlightHexes({colour:'legendaryGlow',dist: 3}, $mourn)
+            add_action_taken('jet')
+        }
     },
     tsunami:function(o){
         const { hex, row } = o
         const $targetHex = $(`.hex_${hex}_in_row_${row}`)
+        //un_glow()
+        add_action_taken('legendary')
         if ( $targetHex.attr('data-glow') === 'greenGlow' )
             makeAnim($('.selectedModel'),$targetHex,_m_.tsunami)
         if ( 
@@ -1241,11 +1248,22 @@ var m_ = {
     },
     tsunamiMoveDeclaration:function(o){
         const { hex, row } = o
+        const hexagon = $(`.hex_${hex}_in_row_${row}`)
+        if( !hexagon.attr('data-glow') ){
         $('.tsunami-selected').removeClass('tsunami-selected')
-        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.tsunami-moveable')[0])
+        const $target = $(hexagon.children('.tsunami-moveable')[0])
         $target.removeClass('tsunami-moveable').addClass('tsunami-selected')
         un_glow()
         highlightHexes({colour:'legendaryGlow',dist:2},$target)
+        }
+    },
+    ripplingScalesChosen:function(o){
+        const { cursePackage } = o
+        const curseType  = cursePackage.pack[0]
+        const side = cursePackage.side
+        const $target = $($(`[data-tenmodel^="RaithMarid"][data-side="${side}"]`)[0])
+        setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) + 1 })
+        displayAnimatedNews(`${$target.data('name')}<br/>+1 ${[...curseType].slice(1).join('')}`)
     },
     currentBlack:current_,
     currentWhite:current_,

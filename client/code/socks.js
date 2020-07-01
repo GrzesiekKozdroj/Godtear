@@ -90,7 +90,12 @@ socket.on('fM',p=>{
     const children = $(`.hex_${klass.h}_in_row_${klass.r}`).children('.smallCard').length ? 
             $(`.hex_${klass.h}_in_row_${klass.r}`).children('.smallCard')[0] :
             $(`.hex_${klass.h}_in_row_${klass.r}`).children('.claimedBanner')[0]
-    makeAnim( $(children), $(`.hex_${h}_in_row_${r}`), _m_[callback] )
+    //UNTESTEDO BADLY
+    const child = klass.className && $($(`.hex_${klass.h}_in_row_${klass.r}`).children(klass.className)[0]).length ? 
+        $($(`.hex_${klass.h}_in_row_${klass.r}`).children(klass.className)[0])
+        :
+        children
+    makeAnim( $(child), $(`.hex_${h}_in_row_${r}`), _m_[callback] )
 })
 socket.on('tt',p=>{//{current:myTurn, next:phase}
     const { current, next } = p

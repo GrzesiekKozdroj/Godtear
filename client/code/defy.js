@@ -293,18 +293,12 @@ var defy = {
     },
     purgeMagic:()=>uniCancel(),
     eruption:()=>uniCancel(),
-    earthquakeWhite:( condition )=>{console.log(condition)
-        if( !condition )
-            $('.earthquake_selected').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
-        else
-            $('.earthquake_moveable').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
+    earthquakeWhite:( condition )=>{
+        $('.earthquake_moveable').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
         uniCancel()
     },
-    earthquakeBlack:( condition )=>{console.log(condition)
-        if( !condition )
-            $('.earthquake_selected').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
-        else
-            $('.earthquake_moveable').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
+    earthquakeBlack:( condition )=>{
+        $('.earthquake_moveable').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
         uniCancel()
     },
     stoneStrenght:()=>uniCancel(),
@@ -343,13 +337,33 @@ var defy = {
         $('.showLikeWaterC').remove()
         uniCancel()
     },
-
-
+    kerSplashBlack:()=>uniCancel(),
+    kerSplashWhite:()=>uniCancel(),
+    jet:()=>{
+        $('.marchjet_selected').removeClass('marchjet_selected')
+        uniCancel()
+    },
+    underthrow:()=>{
+        if ( !pocketBox )
+            uniCancel()
+        else if ( myTurn )
+            displayAnimatedNews('you have<br/>to place<br/>objective hex')
+    },
+    tsunami:()=>{
+        if( !$('.tsunami-selected').length ){
+            un_glow()
+            $('.tsunami-moveable').removeClass('tsunami-moveable')
+        }
+        if( !$('.tsunami-moveable').length ){
+            displayAnimatedNews('Tsunami<br/>ends')
+            uniCancel()
+        }
+        $('.tsunami-selected').removeClass('tsunami-moveable tsunami-selected')
+    },
+    shimmer:()=>uniCancel(),
+    calcify:()=>uniCancel(),
 }
 function currentDefy ( condition ){
-        if( !condition )
-            $('.current_selected').removeClass(`current current_selected`)
-        else
-            $('.current').removeClass(`current current_selected`)
+        $('.current').removeClass(`current current_selected`)
         uniCancel()
 }

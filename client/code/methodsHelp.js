@@ -141,9 +141,11 @@ const forceKill = (target) => {//$()
     target.attr('data-bprotection',0)
     target.attr('data-bdodge',0)
     target.attr('data-bspeed',0)
-    if(target.data('type')==='unit')
+    if(target.data('type')==='unit'){
         target.attr('data-healthleft',target.data('health'))
-    else
+        if(target.data('name')==='Splashlings')
+            ripplingScales(target)
+    } else
         target.attr('data-healthleft',0)
     setTimeout(()=>{
         if( target.data('type')==='unit' )
@@ -382,12 +384,14 @@ const highlightDirectPaths = ( { origin, distance, colour } ) => {
     $(`[data-glow^="${colour}"`).children('.bottom').attr('data-glow',colour)
 }
 function extraMover(methodName,thiz,conditions=true){//<----needs another props: conditions to be considered
-    if($('.'+methodName+'_selected').length && myTurn && conditions){//tioed to a bug with IllKillYouAll
+    const className = ( '.' + methodName + '_selected' )
+    if($(className).length && myTurn && conditions){//tioed to a bug with IllKillYouAll
         const h = thiz.data('hex')
         const r = thiz.data('row')
         const klass = { 
             h:$('.'+methodName+'_selected').parent('.hexagon').data('hex'), 
-            r:$('.'+methodName+'_selected').parent('.hexagon').data('row')
+            r:$('.'+methodName+'_selected').parent('.hexagon').data('row'),
+            className
         }
         if(h !== klass.h || r !==klass.r){
             makeAnim( $('.'+methodName+'_selected'), thiz, _m_[methodName] )
@@ -423,8 +427,11 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
         })
     }
     if (glowType==='callTotems') un_glow()
-    if(glowType==='lifeTrade'){lifeTradeRaise()
-    } else if( myTurn ){
+    if(glowType==='lifeTrade')
+        lifeTradeRaise()
+    else if ( glowType.includes(`rockFormation`) )
+        socket.emit('rolloSkill', { socksMethod: 'rockFormation1', key: side })//<--make that skill
+    else if( myTurn ){console.log(glowType, side, unitname, type)
         highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
         //commented out once again: newSpew and graspingDead
         //above was commented out but it cannot work without it
@@ -911,4 +918,26 @@ function tide_(o){
         }else displayAnimatedNews ("missed!")
     }
     current_ability_method = null
+}
+function ripplingScales(t){
+    const side = t.data('side')
+    if (side === mySide)
+        $('#gameScreen').append( ripplingChoices(side) )
+    else
+        displayAnimatedNews('Rippling<br/>scales<br/>triggered')
+}
+function rockFormation(whereTo,callback){
+    const baner = $( whereTo.children('.claimedBanner')[0] )
+    if ( baner.data('name') === 'Nia' ){
+        displayAnimatedNews('Quartzlings<br/>Rock Formation')
+        if( baner.hasClass('whiteTeam') )
+            rallyActionDeclaration({ 
+                unitname:'Nia', 
+                side: mySide, 
+                type:'unit', 
+                name:'Quartzlings', 
+                dist:1 
+            },`rockFormation${mySide}`)
+    }
+    callback()
 }

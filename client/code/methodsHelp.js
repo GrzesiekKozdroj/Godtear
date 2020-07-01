@@ -930,10 +930,10 @@ function rockFormation(whereTo,callback){
     const baner = $( whereTo.children('.claimedBanner')[0] )
     if ( baner.data('name') === 'Nia' ){
         displayAnimatedNews('Quartzlings<br/>Rock Formation')
-        if( baner.hasClass('whiteTeam') )
+        const saiid = baner.hasClass('whiteTeam') ? mySide : opoSide
             rallyActionDeclaration({ 
                 unitname:'Nia', 
-                side: mySide, 
+                side: saiid, 
                 type:'unit', 
                 name:'Quartzlings', 
                 dist:1 

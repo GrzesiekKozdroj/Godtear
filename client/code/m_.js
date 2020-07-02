@@ -1051,8 +1051,7 @@ var m_ = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         setBoons_Blights($target,{ [curseType]: Number( $target.attr(`data-${curseType}`) ) + 1 })
         displayAnimatedNews(`${$target.data('name')}<br/>+1 ${[...curseType].slice(1).join('')}`)
-         
-        add_action_taken()
+        add_action_taken('crystalMirror')
         current_ability_method = null
         $('[data-glow').removeAttr('data-glow')
         crystalGlare_bb = null
@@ -1062,13 +1061,24 @@ var m_ = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)[0])
         setBoons_Blights($target,{baim:Number($target.attr('data-baim'))+1})
         displayAnimatedNews('Nia<br/>+1 aim')
-        add_action_taken()
-         
+        add_action_taken('meditation')
         un_glow()
         current_ability_method = null
     },
     marchNia:function(o){
         displayAnimatedNews('Nia<br/>marching')
+    },
+    geodeZ:function(o){
+            const { key } = o
+            un_glow()
+            displayAnimatedNews('choose<br/>lone<br/>quartzling')
+            const quartzlings = $(`[data-tenmodel^="Quartzlings"][data-side="${key}"]`)
+            quartzlings.each(function(){
+                if( $(this).siblings().length < 3 )
+                    $(this).parent('.hexagon').attr('data-glow','greenGlow')
+                    $(this).siblings().attr('data-glow','greenGlow')
+            })
+            current_ability_method = _m.geodeX
     },
     geode:function(o){
         const { hex, row } = o
@@ -1082,20 +1092,23 @@ var m_ = {
             const niahere = $(this)
             if ( niahere.children(`[data-name="Nia"].${team}`).length ){
                 un_glow()
+                current_ability_method = _m.niaMinus
                 highlightHexes({colour:'claimColor',dist:2},$(niahere.children(`[data-name="Nia"].${team}`)[0]))
                 $('[data-glow]').each(function(){
                     const notThat = $(this)
                     if( notThat.data('hex') !== hex || notThat.data('row')!==row )
                         notThat.removeAttr('data-glow')
+                    else
+                        notThat.addClass('niaMinus')
                 })
                 return false
             }
         })
-        add_action_taken()
-         
+        add_action_taken('legendary', true)
         current_ability_method=null
-        displayAnimatedNews('Geode')
+        displayAnimatedNews('Geode<br/>place banner<br/>there')
     },
+    rockConcert:rockConcert_,
     rollingStones:function(o){
         displayAnimatedNews('rolling<br/>stones')
         if( !$('[data-glow]').length )

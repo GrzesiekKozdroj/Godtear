@@ -686,17 +686,16 @@ const _m = {
         if ( !crystalGlare_bb ){
             $('#gameScreen').append(crystalGlareOptions(origin, target, "crystalMirror",1,`choose one boon`))
         } else if ( crystalGlare_bb )
-            socket.emit('rolloSkill',{ aim: 0, hurt: 0, socksMethod:"crystalMirror", hex, row, cursePackage:crystalGlare_bb })
+            socket.emit('rolloSkill',{ socksMethod:"crystalMirror", hex, row, cursePackage:crystalGlare_bb })
     },
     meditation:function(origin,target){
         const { hex, row } = origin.parent('.hexagon').data()
-        socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"meditation", hex, row})
+        socket.emit('rolloSkill',{ socksMethod:"meditation", hex, row })
     },
     marchNia:function(origin,target){
         march('Nia',target)
     },
-    geode:function(origin,target){
-        if( phase === "white" ){
+    geodeX:function(origin,target){
             const { hex, row } = target
             const thizQuartz = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.whiteTeam')[0])
             if( !thizQuartz.siblings(`[data-name="Quartzlings"].${mySide}`).length ){
@@ -704,13 +703,19 @@ const _m = {
                 $('[data-glow].hexagon').each(function(){
                     const thisObj = $(this)
                     if(thisObj.hasClass('objectiveGlow')){
-                        socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"geode", hex, row})
+                        un_glow()
+                        socket.emit('rolloSkill', { socksMethod:'geode', hex, row })
                         return false
                     }
                 })
             }
-        }
     },
+    geode:function(origin,target){
+        if( phase === "white" )
+            socket.emit('rolloSkill',{ socksMethod:"geodeZ", key:mySide })
+    },
+    rockConcertWhite:_rockConcert,
+    rockConcertBlack:_rockConcert,
     rollingStones:function(origin,target){
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"rollingStones"})
     },

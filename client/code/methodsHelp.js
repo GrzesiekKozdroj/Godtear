@@ -941,3 +941,25 @@ function rockFormation(whereTo,callback){
     }
     callback()
 }
+function _rockConcert(o,t){
+    const { hex, row } = o.parent('.hexagon').data()
+    socket.emit('rolloSkill', { hex, row, socksMethod:'rockConcert' })
+}
+function rockConcert_(o){
+    const { hex, row } = o
+    const dad = $(`.hex_${hex}_in_row_${row}`)
+    const nija = $(dad.children('[data-tenmodel^="Nia"]')[0])
+    const team = nija.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+    const quarzlings = $(`[data-tenmodel^="Quartzlings"].${team}`)
+    const actionsTaken = Number( nija.attr('data-actionstaken') )
+    if( !actionsTaken && quarzlings.length === 3 ){
+        un_glow()
+        displayAnimatedNews('Rock Concert<br/>extra action')
+        nija.attr('data-actionstaken', -1)
+        add_action_taken(`rockConcert${phase==='white'?'White':'Black'}`, true)
+        current_ability_method = null
+    } else if ( quarzlings.length !== 3 )
+        displayAnimatedNews('Missing<br/>Quartzlings')
+    else if ( actionsTaken )
+        displayAnimatedNews("Its no longer<br/>beginning<br/>of activation")
+}

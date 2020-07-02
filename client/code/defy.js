@@ -362,6 +362,16 @@ var defy = {
     },
     shimmer:()=>uniCancel(),
     calcify:()=>uniCancel(),
+    crystalMirror:()=>{
+        $('.niaChallengeCrest').remove()
+        uniCancel()
+    },
+    meditation:()=>uniCancel(),
+    marchNia:()=>{
+        $('.marchNia_selected').removeClass('marchNia_selected')
+        uniCancel()
+    },
+    geode:()=>uniCancel()
 }
 function currentDefy ( condition ){
         $('.current').removeClass(`current current_selected`)

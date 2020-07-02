@@ -1011,6 +1011,14 @@ const m =
                 hurt: [5],
                 unused: true,
                 m: "blindingLight"
+            },
+            rockConcertBlack://not yet madeable, no activation validation structure to give such a boon
+            {
+                name: "Rock Concert",
+                desc: "If all 3 Quartzlings are on the battlefield when Nia activates, she may make a bonus action that activation.",
+                m: "rockConcertBlack",
+                icon: cogs,
+                unused:true
             }
         },
         white:
@@ -1039,6 +1047,14 @@ const m =
                 icon: 'self',
                 unused: true,
                 m: "marchNia"
+            },
+            rockConcertWhite://not yet madeable, no activation validation structure to give such a boon
+            {
+                name: "Rock Concert",
+                desc: "If all 3 Quartzlings are on the battlefield when Nia activates, she may make a bonus action that activation.",
+                m: "rockConcertWhite",
+                icon: cogs,
+                unused:true
             }
         },
         util:
@@ -1049,15 +1065,8 @@ const m =
                 desc: "Plot Phase only. Choose a Quartzling that is the only model in its hex and is adjacent to an objective hex, and replace it with an objective hex. If it is within 2 hexes of Nia, she may make a claim action on that hex.",
                 icon:star,
                 unused: true,
-                dist:13,
                 legendaryUsed: false,
                 m: "geode"
-            },
-            rockConcert://not yet madeable, no activation validation structure to give such a boon
-            {
-                name: "Rock Concert",
-                desc: "If all 3 Quartzlings are on the battlefield when Nia activates, she may make a bonus action that activation.",
-                m: function () { }
             }
         }
     },

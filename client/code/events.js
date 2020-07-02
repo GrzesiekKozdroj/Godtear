@@ -201,7 +201,7 @@ $('body').on('click','.objectiveGlow[data-glow="claimColor"]', function(){
     if(phase==='white' && myTurn){
         m.universal.claim( $(this), 'whiteTeam' )
         const {hex, row} = $(this).data()
-        socket.emit('stakeClaim',{hex: hex, row: row})
+        socket.emit('stakeClaim',{ hex: hex, row: row })
     }
 })
 

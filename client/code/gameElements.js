@@ -207,12 +207,12 @@ const crystalGlareOptions = (origin, target, socksMethod,curseCount,message) => 
                 data-cursecount=${curseCount}
               >
                 <div class="message">${message}</div>
-                <div class="boon-blight ${socksMethod} walk ${decideOrnament(bspeed)}" data-abil="bwalk">  </div>
+                <div class="boon-blight ${socksMethod} walk ${decideOrnament(bspeed)}" data-abil="bspeed">  </div>
                 <div class="boon-blight ${socksMethod} dodge ${decideOrnament(bdodge)}" data-abil="bdodge">  </div>
                 <div class="boon-blight ${socksMethod} protection ${decideOrnament(bprotection)}" data-abil="bprotection">  </div>
-                <div class="boon-blight ${socksMethod} aim ${decideOrnament(bdamage)}" data-abil="baim">  </div>
+                <div class="boon-blight ${socksMethod} aim ${decideOrnament(baim)}" data-abil="baim">  </div>
                 <div class="boon-blight nia confirm" > done </div>
-                <div class="boon-blight ${socksMethod} damage ${decideOrnament(baim)}" data-abil="bdamage">  </div>
+                <div class="boon-blight ${socksMethod} damage ${decideOrnament(bdamage)}" data-abil="bdamage">  </div>
                 <div class="boon-blight nia confirm cancel" > cancel </div>
             </div>
         </div>
@@ -414,7 +414,6 @@ function un_glow(p=false){//console.trace()
     else
         $(`[data-glow=${p}]`).removeAttr('data-glow')
 }
-
 function ripplingChoices(side) {
     const { bspeed, bdodge, bprotection, baim, bdamage } = $(`[data-tenmodel^="RaithMarid"][data-side="${side}"]`)
     return `

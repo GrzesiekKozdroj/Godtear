@@ -371,9 +371,33 @@ var defy = {
         $('.marchNia_selected').removeClass('marchNia_selected')
         uniCancel()
     },
-    geode:()=>uniCancel()
+    geode:()=>uniCancel(),
+    erosion:()=>uniCancel(),
+    blindingLight:()=>uniCancel(),
+    crystalGlare:()=>{
+        $('.niaChallenge').remove()
+        crystalGlare_bb = null
+        uniCancel()
+    },
+    rollingStones:()=>{
+        un_glow()
+        multiMovement_procedure('roll','roll_selected',"Roll<br/>ends")
+    },
+    stoneThrow:()=>uniCancel()
 }
 function currentDefy ( condition ){
         $('.current').removeClass(`current current_selected`)
         uniCancel()
+}
+function multiMovement_procedure(c,c_s,strng){
+    if( !$('.' + c_s).length ){
+        un_glow()
+        $('.' + c).removeClass(c)
+    }
+    if( !$('.' + c).length ){
+        displayAnimatedNews(strng)
+        uniCancel()
+    }
+    $('.' + c_s).removeClass(c + ' ' +c_s)
+
 }

@@ -492,6 +492,12 @@ $('body').on('click','.boon-blight.theGreatTusk.confirm', function(e){
     socket.emit('rolloSkill',{ aim: 0, hurt: 0, socksMethod:"theGreatTusk", hex, row, cursePackage })
     $('.titusChallenge').remove()
 })
+$('body').on('click','.roll',function(e){
+    e.preventDefault()
+    e.stopPropagation()
+    const { hex, row } = $(this).parent('.hexagon').data()
+    socket.emit('rolloSkill', { socksMethod:'rollingStones_', hex, row })
+})
 $('body').on('click','[data-glow].hexagon',function(e){
     e.preventDefault()
     const thiz = $(this)

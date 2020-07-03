@@ -45,7 +45,7 @@ const causeOfRetchlings = (skill) => {
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
     const targetos = (abilName, p = phase) => {
         let prod;
-        //console.log(name,p,abilName)
+        console.log(name,p,abilName)
         if(side === mySide)
                 prod = causeOfRetchlings(  mySkillTrack[name][p][abilName].used )
         else if(side === opoSide)
@@ -962,4 +962,17 @@ function rockConcert_(o){
         displayAnimatedNews('Missing<br/>Quartzlings')
     else if ( actionsTaken )
         displayAnimatedNews("Its no longer<br/>beginning<br/>of activation")
+}
+function kerSplash_(o){
+    const { hex, row, multiAction } = o
+    const team = multiAction === mySide ? 'whiteTeam' : 'blackTeam'
+    const $target = $($(`.hex_${hex}_in_row_${row}`).children(`[data-name="Splashlings"].${team}`)[0])
+    if( $target.length && !$target.siblings('.smallCard').length ){
+        displayAnimatedNews("Ker-splash!")
+        forceKill($target)
+        makeAnim($(`[data-name="RaithMarid"].${team}`),$(`.hex_${hex}_in_row_${row}`))
+        add_action_taken(`kerSplash${phase==='white'?'White':'Black'}`)
+    }
+    current_ability_method=null
+    un_glow()
 }

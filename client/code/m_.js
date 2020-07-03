@@ -1003,7 +1003,6 @@ var m_ = {
         const { curseType } = cursePackage
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         displayAnimatedNews(`${$target.data('name')}<br/>-1 ${[...curseType].slice(1).join('')}`)
-         
         add_action_taken('crystalGlare')
         current_ability_method = null
         $('[data-glow').removeAttr('data-glow')
@@ -1013,7 +1012,6 @@ var m_ = {
     erosion:function(o){
         const { aim, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
-         
         un_glow()
         add_action_taken('erosion')
         current_ability_method = null
@@ -1030,7 +1028,6 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
             add_action_taken('blindingLight')
             if( onHit(aim, target) ){
@@ -1109,11 +1106,41 @@ var m_ = {
         displayAnimatedNews('Geode<br/>place banner<br/>there')
     },
     rockConcert:rockConcert_,
+    rollingStones_:function(o){
+        const { hex, row } = o
+        $('.roll_selected').removeClass('roll_selected roll')
+        un_glow()
+        const rollabel = $($(`.hex_${hex}_in_row_${row}`).children('.roll')[0])
+        $('.selectedModel').removeClass('selectedModel')
+        rollabel.addClass('roll_selected selectedModel')
+        if(rollabel.length)
+            highlightDirectPaths({origin: $(`.hex_${hex}_in_row_${row}`).data(), distance:3, colour:'straitPaths'})
+    },
     rollingStones:function(o){
         displayAnimatedNews('rolling<br/>stones')
         if( !$('[data-glow]').length )
             highlightDirectPaths({origin: $('.selectedModel').parent('.hexagon').data(), distance:3, colour:'straitPaths'})
-            $('.selectedModel').addClass('roll_selected')
+        const team = $('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        $('.selectedModel').addClass('roll_selected')
+        $(`[data-tenmodel^="Quartzlings"].${team}`).addClass('roll')
+        current_ability_method = ()=>{}
+    },
+    stoneThrow: function (o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            un_glow()
+            add_action_taken("stoneThrow")
+            if( onHit(aim, target) )
+                if( doDamage(hurt, target) )
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target, target.data('stepsgiven'))
+                    else null
+                else displayAnimatedNews("no damage!")
+            else displayAnimatedNews ("missed!")
+        }
+        current_ability_method = null
     },
     calcify:function(o){
         const { hex, row } = o
@@ -1155,19 +1182,8 @@ var m_ = {
         }
         current_ability_method = null
     },
-    kerSplash:function(o){
-        const { hex, row, multiAction } = o
-        const team = multiAction === mySide ? 'whiteTeam' : 'blackTeam'
-        const $target = $($(`.hex_${hex}_in_row_${row}`).children(`[data-name="Splashlings"].${team}`)[0])
-        if( $target.length && !$target.siblings('.smallCard').length ){
-            displayAnimatedNews("Ker-splash!")
-            forceKill($target)
-            makeAnim($(`[data-name="RaithMarid"].${team}`),$(`.hex_${hex}_in_row_${row}`))
-            add_action_taken(`kerSplash${phase==='white'?'White':'Black'}`)
-        }
-        current_ability_method=null
-        un_glow()
-    },
+    kerSplashWhite:kerSplash_,
+    kerSplashBlack:kerSplash_,
     headbutt:function(o){//if champ killed he should be able to push 3 inches instead
         const { aim, hurt, hex, row } = o
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)

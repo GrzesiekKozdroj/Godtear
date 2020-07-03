@@ -717,7 +717,7 @@ const _m = {
     rockConcertWhite:_rockConcert,
     rockConcertBlack:_rockConcert,
     rollingStones:function(origin,target){
-        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"rollingStones"})
+        socket.emit('rolloSkill',{ socksMethod:"rollingStones" })
     },
     stoneThrow:function(origin,target){//endpoint is cleaving strike
         const { baim, bdamage } = extractBoons_Blights(origin)
@@ -727,7 +727,7 @@ const _m = {
         const aim = [4, 5, 5][unitSize]
         const hurt = [4, 4, 5][unitSize]
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"cleavingStrike", hex, row })
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"stoneThrow", hex, row })
     },
     calcify:function(origin,target){
         const { hex, row } = origin.parent('.hexagon').data()
@@ -744,11 +744,11 @@ const _m = {
     },
     kerSplashBlack:function(origin,target){
         const { hex, row } = target
-        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"kerSplash", hex, row, multiAction:mySide })
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"kerSplashBlack", hex, row, multiAction:mySide })
     },
     kerSplashWhite:function(origin,target){
         const { hex, row } = target
-        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"kerSplash", hex, row, multiAction:mySide })
+        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"kerSplashWhite", hex, row, multiAction:mySide })
     },
     headbutt:function (origin, target) {
         const { baim, bdamage } = extractBoons_Blights(origin)

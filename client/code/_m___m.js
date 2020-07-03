@@ -31,8 +31,8 @@ var _m_ = {
             }
     },
     roll:(that)=>{
-        add_action_taken("roll")
-       $('[data-glow^="str"].hexagon').each(function(){
+        add_action_taken("rollingStones")
+        $('[data-glow^="str"].hexagon').each(function(){
           if ( $(this).attr('data-glow') !== $('.selectedModel').parent('.hexagon').attr('data-glow') ) {
               $(this).removeAttr('data-glow')
               $(this).children('.top').removeAttr('data-glow')
@@ -48,8 +48,9 @@ var _m_ = {
         $('.selectedModel').siblings('.top').removeAttr('data-glow')
         $('.selectedModel').siblings('.bottom').removeAttr('data-glow')
         if( !$('[data-glow="straitPaths"]').length ){
-            current_ability_method = null
-            $('.roll_selected').removeClass('roll_selected')
+            $('.roll_selected').removeClass('roll_selected roll')
+            if( !$('.roll').length )
+                current_ability_method = null
         }
     },
     tongueTow:()=>{

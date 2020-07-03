@@ -1128,7 +1128,7 @@ const m =
     {
         black:
         {
-            kerSplash:
+            kerSplashBlack:
             {
                 name: "Ker-Splash",
                 desc: "Choose a hex within range containing one Splashling. Remove the Splashling and place Raith'Marid in that hex.",
@@ -2064,7 +2064,7 @@ const m =
             {
                 name:"Brain Freeze",
                 desc:`After an enemy model uses a skill to knock out one or more Cold Bones, the enemy model gains ${dodgeBlight}.`,
-                m:function(){}
+                m:'brainFreeze'
             }
         }
     }

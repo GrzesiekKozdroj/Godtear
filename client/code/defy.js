@@ -383,8 +383,24 @@ var defy = {
         un_glow()
         multiMovement_procedure('roll','roll_selected',"Roll<br/>ends")
     },
-    stoneThrow:()=>uniCancel()
+    stoneThrow:()=>uniCancel(),
+    headbutt:()=>{
+        $('.headbutt_selected').removeClass('headbutt_selected')
+        uniCancel()
+    },
+    lungingStrike:()=>{
+        pocketBox = null
+        uniCancel()
+    },
+    tremor:()=>uniCancel(),
+    stoneSpikes:()=>uniCancel(),
+
+
 }
+
+
+
+
 function currentDefy ( condition ){
         $('.current').removeClass(`current current_selected`)
         uniCancel()

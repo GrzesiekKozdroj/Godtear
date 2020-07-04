@@ -1189,9 +1189,8 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
-            add_action_taken()
+            add_action_taken('headbutt')
             const hedbut = (n='')=>{
                 un_glow()
                 highlightHexes({colour:'legendaryGlow',dist:1},target)
@@ -1216,9 +1215,8 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
-            add_action_taken()
+            add_action_taken('lungingStrike')
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
@@ -1313,20 +1311,19 @@ var m_ = {
     },
     tremor:function(o){
         team = $('.selectedModel').hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
-        $('[data-glow]').children('.'+team).each(function(){
+        $('[data-glow]').children('[data-tenmodel].'+team).each(function(){
             const thiz = $(this)
             const { baim, bdamage, bspeed, bdodge, bprotection } = extractBoons_Blights(thiz)
             const setUp = {}
-            if(baim>0)setUp.baim=0
-            if(bdamage>0)setUp.bdamage=0
-            if(bspeed>0)setUp.bspeed=0
-            if(bdodge>0)setUp.bdodge=0
-            if(bprotection>0)setUp.brpotection=0
+            if ( baim > 0 ) setUp.baim = 0
+            if ( bdamage > 0 ) setUp.bdamage = 0
+            if ( bspeed > 0 ) setUp.bspeed = 0
+            if ( bdodge > 0 ) setUp.bdodge = 0
+            if ( bprotection > 0 ) setUp.bprotection = 0
             setBoons_Blights(thiz,setUp)
         })
         un_glow()
-        add_action_taken()
-         
+        add_action_taken('tremor')
         current_ability_method = null
         displayAnimatedNews('tremor<br/>boons removed')
     },
@@ -1336,7 +1333,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             un_glow()
-            add_action_taken()
+            add_action_taken('stoneSpikes')
             if( onHit(aim, target) ){
                 setBoons_Blights(target, { bspeed: Number(target.attr('data-bspeed')) - 1 })
                 displayAnimatedNews('stone spikes<br/>-1 speed')

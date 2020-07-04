@@ -505,7 +505,6 @@ function march (string, targetHex, thizModel = $('.selectedModel'), dist=1 ){
 function marchExec(string, aktion){
     current_ability_method = null
     add_action_taken(aktion)
-     
     un_glow()
     $(`.march${string}_selected`).removeClass(`march${string}_selected`)
     displayAnimatedNews('marching')
@@ -858,6 +857,7 @@ function earthquake_(o){
 }
 function shayle_takes_action(){
     if ( $('.selectedModel').data('name') === 'Shayle' ){
+        if_moved_end_it()
         $(`[data-tenmodel^="Landslide"][data-side="${$('.selectedModel').data('side')}"]`).attr('data-landstepper',1)
     }
 }

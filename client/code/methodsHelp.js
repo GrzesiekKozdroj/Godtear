@@ -148,7 +148,8 @@ const forceKill = (target) => {//$()
     } else
         target.attr('data-healthleft',0)
     setTimeout(()=>{
-        if( target.data('type')==='unit' )
+        if( target.data('type')==='unit' ){
+            rubble(target)
             if(
                 graveyard[target.data('side')][target.data('name')] && 
                 graveyard[target.data('side')][target.data('name')].length
@@ -157,7 +158,7 @@ const forceKill = (target) => {//$()
                     [...graveyard[target.data('side')][target.data('name')], target.removeClass('.death').detach()]
             else
                 graveyard[target.data('side')][target.data('name')] = [target.removeClass('.death').detach()]
-        else if( target.data('type')==='champion' ){
+            } else if( target.data('type')==='champion' ){
             //gotta emit champ death
             un_glow()
             highlightHexes({colour:'deathMove',dist:2},target)
@@ -835,7 +836,7 @@ function _earthquake(origin,target){
     const { baim } = extractBoons_Blights(origin)
     const { hex, row } = target
     const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-    if($target.hasClass(`blackTeam`) )
+    if( $target.hasClass(`blackTeam`) )
         socket.emit('rolloSkill',{ aim:(4 + baim), socksMethod:`earthquake${phase==='white'?"White":"Black"}`, hex, row })
 }
 function earthquake_(o){
@@ -855,9 +856,10 @@ function earthquake_(o){
     }
     current_ability_method = null
 }
-function shayle_takes_action(){
+function shayle_takes_action(strng = false){
     if ( $('.selectedModel').data('name') === 'Shayle' ){
-        if_moved_end_it()
+        if(!strng) if_moved_end_it()
+        else add_action_taken(strng)
         $(`[data-tenmodel^="Landslide"][data-side="${$('.selectedModel').data('side')}"]`).attr('data-landstepper',1)
     }
 }
@@ -975,4 +977,11 @@ function kerSplash_(o){
     }
     current_ability_method=null
     un_glow()
+}
+function rubble(target){
+    if( target.data('name') === 'Landslide' ){
+        displayAnimatedNews('rubble')
+        const { hex, row } = target.parent('.hexagon').data()
+        makeObjectiveHex(row,hex)
+    }
 }

@@ -766,6 +766,10 @@ const _m = {
             un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1})
             highlight_closest_path(origin.parent('.hexagon').data(),target)
+            if( !$('[data-glow]').length ){
+                const { baim, bdamage } = extractBoons_Blights($('.selectedModel'))
+                socket.emit('rolloSkill',{ aim: (6 + baim), hurt:(4 + bdamage), socksMethod:"lungingStrikeHit", hex, row })
+            }
         }
     },
     underthrow:function (origin, target){
@@ -828,7 +832,6 @@ const _m = {
     },
     earthquakeWhite:_earthquake,
     earthquakeBlack:_earthquake,
-    rubble:_earthquake,
     boulderBash:function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target

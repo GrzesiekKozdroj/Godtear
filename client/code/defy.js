@@ -293,14 +293,6 @@ var defy = {
     },
     purgeMagic:()=>uniCancel(),
     eruption:()=>uniCancel(),
-    earthquakeWhite:( condition )=>{
-        $('.earthquake_moveable').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
-        uniCancel()
-    },
-    earthquakeBlack:( condition )=>{
-        $('.earthquake_moveable').removeClass('earthquake_moveable').removeClass(`earthquake_selected`)
-        uniCancel()
-    },
     stoneStrenght:()=>uniCancel(),
     runeweaving:()=>{
         crystalGlare_bb = null
@@ -394,6 +386,9 @@ var defy = {
     },
     tremor:()=>uniCancel(),
     stoneSpikes:()=>uniCancel(),
+    earthquakeWhite:()=>multiMovement_procedure('earthquake_moveable','earthquake_selected','earthquake<br/>cancelled'),
+    earthquakeBlack:()=>multiMovement_procedure('earthquake_moveable','earthquake_selected','earthquake<br/>cancelled'),
+    boulderBash:()=>uniCancel(),
 
 
 }

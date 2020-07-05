@@ -642,11 +642,11 @@ $('body').on('click','.forwardMinionsMorrigan',function(e){
 $('body').on('click','.earthquake_moveable',function(e){
     e.preventDefault()
     const thiz = $(this)
-    if(myTurn){
+    if(myTurn && !thiz.hasClass('earthquake_selected') ){
         $('.earthquake_selected').removeClass('earthquake_selected earthquake_moveable')
         thiz.addClass('earthquake_selected')
         un_glow()
-        highlightHexes ({colour:'legendaryGlow', dist:2},$(this))
+        highlightHexes ({colour:'legendaryGlow', dist:2}, thiz )
     }
 })
 $('body').on('click','#rallyAction',function(e){

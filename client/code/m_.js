@@ -1323,7 +1323,7 @@ var m_ = {
             setBoons_Blights(thiz,setUp)
         })
         un_glow()
-        add_action_taken('tremor')
+        shayle_takes_action('tremor')
         current_ability_method = null
         displayAnimatedNews('tremor<br/>boons removed')
     },
@@ -1333,7 +1333,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             un_glow()
-            add_action_taken('stoneSpikes')
+            shayle_takes_action('stoneSpikes')
             if( onHit(aim, target) ){
                 setBoons_Blights(target, { bspeed: Number(target.attr('data-bspeed')) - 1 })
                 displayAnimatedNews('stone spikes<br/>-1 speed')
@@ -1348,8 +1348,7 @@ var m_ = {
         setBoons_Blights($target,{bprotection:bprotection+1,bdamage:bdamage+1})
         displayAnimatedNews('stone strength<br/>+1 shield and damage')
         un_glow()
-        add_action_taken('stoneStrenght')
-        shayle_takes_action()
+        shayle_takes_action('stoneStrenght')
         current_ability_method = null
     },
     runeweaving:function(o){
@@ -1357,8 +1356,7 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-            add_action_taken('runeweaving')
-            shayle_takes_action()
+            shayle_takes_action('runeweaving')
             if( onHit(aim, target) ){
                 displayAnimatedNews('runeweaving')
                 if ( myTurn )
@@ -1403,8 +1401,7 @@ var m_ = {
         const origin = $('.avalanche_selected')
         const destination = $(`.hex_${hex}_in_row_${row}`)
         if(!destination.children('.smallCard').length && !destination.hasClass('objectiveGlow') ){
-            add_action_taken('legendary')
-            shayle_takes_action()
+            shayle_takes_action('legendary')
             origin.children('.whiteTeam').detach().appendTo(destination)
             origin.children('.blackTeam').detach().appendTo(destination)
             removeObjectiveHex( origin.data('row'), origin.data('hex') )
@@ -1443,9 +1440,8 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
-            add_action_taken()
+            add_action_taken('boulderBash')
             if( onHit(aim, target) ){
                 setBoons_Blights(target,{bdodge:Number(target.attr('data-bdodge'))-1})
                 let completeness = false

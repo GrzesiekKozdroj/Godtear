@@ -384,9 +384,23 @@ const highlightDirectPaths = ( { origin, distance, colour } ) => {
     $(`[data-glow^="${colour}"`).children('.top').attr('data-glow',colour)
     $(`[data-glow^="${colour}"`).children('.bottom').attr('data-glow',colour)
 }
-function extraMover(methodName,thiz,conditions=true){//<----needs another props: conditions to be considered
+function extraMover(methodName,thiz,moveType,rules='empty string'){//<----needs another props: conditions to be considered
     const className = ( '.' + methodName + '_selected' )
-    if($(className).length && myTurn && conditions){//tioed to a bug with IllKillYouAll
+    const $model = $(className)
+    const checker = { $model, $destination: thiz, rules } 
+    //---------to--work--with----------
+    const eligible_to_move = 
+        moveType === 'walk' ? 
+            standardWalk(checker) : 
+        moveType === 'push' ? 
+            standardPush(checker) : 
+        moveType === 'bannerWalk' ? 
+            validateBannerPlacement() :
+        moveType === 'push avalanche' ? 
+            validateAvalanchePlacement() :
+        false
+    //---------------------------------
+    if(model.length && myTurn && eligible_to_move ){//tioed to a bug with IllKillYouAll
         const h = thiz.data('hex')
         const r = thiz.data('row')
         const klass = { 
@@ -984,4 +998,64 @@ function rubble(target){
         const { hex, row } = target.parent('.hexagon').data()
         makeObjectiveHex(row,hex)
     }
+}
+function shieldWall (){
+    //if next to rhodri, household can't be moved
+}
+function unyielding (){
+    // if next to banner rhodri cannot be moved
+}
+function brainFreeze (){
+    //killing coldBones impairs attacker with dodgeBlight
+}
+function smallAndSneaky (){
+    //needs more than just a function, needs whole, previous hex history or just possibility if glow is bigger than 6 hexagons
+    //and let players be honest
+}
+//_______CONDITIONS__FOR__MOVEMENT__
+function standardWalk ({ $model, $destination, rules }){// rules is a array ['onlyOneStep','checkActionsCount']
+    const { type, name, side } = $model.data()
+    const team = $model.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+    const ONTO_OBJECTIVE_HEX = ()=>{
+        return (
+            !$destination.hasClass('objectiveGlow') || 
+            type !== 'unit' || 
+            ( name === 'Froglodytes' && 
+            !$destination.children(`.claimedBanner`).length )
+        )
+    }
+    const ONTO_EMPTY_HEX = ()=>{
+        return (
+            !$destination.children(`.smallCard`).length || 
+            ( 
+                name === $destination.children(`.smallCard[data-side="${side}"]`).first().data('name') && 
+                $destination.children(`.smallCard`).length < 3
+            )
+        )
+    } 
+    const OPTIONAL_RULES = ()=>{
+        const ONE_STEP = rules.includes('onlyOneStep') ? onlyOneStep($destination, $model) : true
+        const ACTIONS_C = rules.includes('checkActionsCount') ? check_actions_count() : true
+        return ONE_STEP && ACTIONS_C
+    }
+    const NOT_ON_MY_BANNER = ()=> !$destination.children(`.claimedBanner.${team}`).length
+    return ( ONTO_OBJECTIVE_HEX() && ONTO_EMPTY_HEX() && OPTIONAL_RULES() && NOT_ON_MY_BANNER() )
+    //so that if its a champ he can stomp enemy banners and stand on empty hexes and objective hexes
+    //or if its a follower he can stand on hexes with its fellows but cannot occupy banners or objectives
+    //needs correction for froglodytes and sneaky stabbers exceptions
+}
+
+function validateBannerPlacement(){
+    return true
+}
+
+function validateAvalanchePlacement(){
+    return true
+}
+
+function standardPush ($model,$destination){
+    //so that only champs and froglodytes can be pushed on empty objective hexes
+    //minions can be pushed onto hexes with their fellows only
+    //nobody can be pushed onto banners
+    //household guard and rhodri exceptions from pushing
 }

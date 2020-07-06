@@ -255,7 +255,7 @@ const _m = {
     },
     roarOfBattle:function(origin,target){
         const { hex, row } = target
-        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard.whiteTeam')[0])
         if( $target.hasClass(`champModel`) )
             socket.emit('rolloSkill',{ socksMethod:"roarOfBattle", hex, row })
     },

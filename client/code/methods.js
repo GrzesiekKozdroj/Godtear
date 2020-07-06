@@ -25,26 +25,17 @@ const m =
 {
     universal:
     {
-        walk: function (e, thiz) { 
-            const { type, name } = $('.selectedModel.whiteTeam').data()
-            if( 
-              (
-                !thiz.hasClass('objectiveGlow') || 
-                type !== 'unit' || 
-                ( name === 'Froglodytes' && !thiz.children(`.claimedBanner`).length )
-              ) &&
-              (
-                  !thiz.children(`.smallCard`).length || 
-                ( 
-                  name === thiz.children(`.smallCard.whiteTeam`).first().data('name') && 
-                  thiz.children(`.smallCard`).length < 3
-                )
-              ) && onlyOneStep(thiz) && check_actions_count() && !thiz.children(`.claimedBanner.whiteTeam`).length
+        walk: function (e, thiz) { // thiz is hext to step on
+            if( standardWalk ({ 
+                    $model: $('.selectedModel'), 
+                    $destination: thiz, 
+                    rules: [ 'onlyOneStep', 'checkActionsCount' ] 
+                })
             )
             {
                 const h = thiz.data('hex')
                 const r = thiz.data('row')
-                socket.emit('modelMoving',{h:h,r:r})
+                socket.emit('modelMoving', { h, r })
                 reduceSpeedLeft()
                 makeAnim( $('.selectedModel.whiteTeam'), thiz, displayMovementAura )
             }

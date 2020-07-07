@@ -210,7 +210,9 @@ $('body').on('click','.objectiveGlow[data-glow="claimColor"]', function(){
 //ON CLICKING EACH HEXAGON
 $('body').on('click','.hexagon:not([data-glow="callTotems"])',function(e){
     e.preventDefault()
-    const thiz = $( $(this).children('.smallCard')[0] )
+    const S_Stabber = $( $(this).children('.smallCard[data-tenmodel^="SneakyStabbers"]')[0] )
+    const normal_model = $( $(this).children('.smallCard')[0] )
+    const thiz = S_Stabber.length ? S_Stabber : normal_model
     if( 
         $(this).children('.smallCard.whiteTeam').length && 
         myTurn && phase !== 'deployment' && 

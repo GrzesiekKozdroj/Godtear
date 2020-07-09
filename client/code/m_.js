@@ -2252,6 +2252,7 @@ var m_ = {
         }
         current_ability_method = null
     },
+    stolenTreasure:sT,
     phaseEnd:function(o){
         const { next, name, side } = o.key//o.phase
         let strajng = ''
@@ -2262,7 +2263,6 @@ var m_ = {
         $(`[data-glow]`).removeAttr('data-glow')
         current_ability_method = null
         strajng+=`${name}<br/>activated`
-        //need to add deifer and ultra resetter here
         if(phase==='white'&&$('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length){
             socket.emit('turnEnd',{current:'white', next:'black'})
             strajng+="<br/>turn end"
@@ -2272,5 +2272,4 @@ var m_ = {
         }
         displayAnimatedNews(strajng)
     },
-    stolenTreasure:sT,
 }

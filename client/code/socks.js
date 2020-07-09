@@ -24,7 +24,8 @@ socket.on('betaTime',
                     .addClass('scale-in-up mui-enter mui-enter-active')
                 
                 buildScenarioLayout(scenarios[p.scenario].layout)
-
+                GAME_SCENARIO = scenarios[p.scenario]
+                makeWarbandTokens(GAME_SCENARIO.warbandTokens)
                 setTimeout(()=>$('body').append(  displayDeploymentInfo(scenarios[p.scenario])  ),600)
                 
                 $(`.ladderBlock.block${p.coin}`).append( makeCoin() )
@@ -98,7 +99,7 @@ socket.on('fM',p=>{
     makeAnim( $(child), $(`.hex_${h}_in_row_${r}`), _m_[callback] )
 })
 socket.on('tt',p=>{//{current:myTurn, next:phase}
-    const { current, next } = p
+    const { current, next, dieRoll } = p
     myTurn = myTurn ? false : true
     $('.activatingShow').removeClass('activatingShow').addClass('nonActivShow')
     $('.nonActivShow').removeClass('nonActivShow').addClass('activatingShow')
@@ -113,8 +114,21 @@ socket.on('tt',p=>{//{current:myTurn, next:phase}
         turn_resetter(mySkillTrack,'white','whiteTeam')
         myNextPhase='black'
     }
-    if(phase==='black'&&$('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length)
+    if(phase==='black'&&$('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length){
+        myTurn = false
+        let myBanners = removeAllBanners('whiteteam')
+        let opBanners = removeAllBanners('blackTeam')
+        moveLadder($($('[data-tenmodel].whiteTeam')[0]), myBanners - opBanners)
+        I_WON_LOST(dieRoll)
+        //no need to pass anything through server at this point, each player can calculate independently the ammount of points 
+        //they have and allocate score according to turn number (need to track it), thn still without server knowledge
+        //apply scenario rules, this time with through server declaration, once that done, loosing player declares first
+        //player once again through server.
+        //here also is the place to check if there is a winner, once the godtears have been allocated.
         console.log('TURN END TURN END TURN END TURN END TURN END TURN END')
-    myTurn?displayAnimatedNews('Your<br/>turn'):0
+    }
+    if( myTurn )
+        displayAnimatedNews('Your<br/>turn')
+    //need to add deifer and ultra resetter here
 })
 socket.on('camcel',p=>defy[p.m](p.c))

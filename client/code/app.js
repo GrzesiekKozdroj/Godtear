@@ -5,6 +5,14 @@ function buildLadder(){
         `);
     }
 }
+function makeWarbandTokens ({left,right}){
+    const warbandToken = (side) => `
+        <div class="warbandToken ${side===mySide?'white':'black'} ${side}" >
+            ${side===mySide ? myTurn ? 1 : 2 : myTurn ? 2 : 1 }
+        </div>` //    ^^one line to show 1st or 2nd depending on who started game ^^
+    $(`.ladderBlock.block${left}`).append(warbandToken('left'))
+    $(`.ladderBlock.block${right}`).append(warbandToken('right'))
+}
 function buildRosters(o,coin){
     //o={nickName:{roster,nickName,opoName,gamePlace,socket.id,side},opoName:{roster,nickName,opoName,gamePlace,socket.id}}
     if(o) for (let key in o){
@@ -94,7 +102,7 @@ function makeGameBoard(o,coin){
     beginBattle()
     buildLadder()
     QUICK_DEEPLOY()
-    setTimeout(()=>{phase='black';myNextPhase='black'},2900)
+    //setTimeout(()=>{phase='black';myNextPhase='black'},2900)
     opoSkillTrack = buildSkillTrack(opoRoster)
     mySkillTrack = buildSkillTrack(roster)
 }

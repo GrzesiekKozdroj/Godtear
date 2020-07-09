@@ -136,17 +136,24 @@ const scenarios = [
             greenHexes:[ [11,'row'], [12,'row'] ],
             redHexes:[ [1,'row'], [2, 'row'] ],
             objectiveHexes:[ [6, 7], [6, 8], [7, 7], [7, 8] ]
+        },
+        warbandTokens:{ left: 1, right: 22 },
+        ruleset:function(dieRoll){
+            const roll = dieRoll[0]
+            
         }
     },
     {
         name:"Death",
         desc:`In the end phase of each turn, the player who lost the turn removes any two objective hexes of their choice. 
-            If there are any models onan objective hex when it is removed, they remain on the hex.`,
+            If there are any models on that objective hex when it is removed, they remain on the hex.`,
         layout:{
             greenHexes:[ [12,'row']],
             redHexes:[ [1,'row'] ],
             objectiveHexes:[ [6, 2], [7, 2], [7, 3], [6, 7], [6, 8], [7, 7], [7, 8], [6, 12], [6, 13], [7, 13] ]
-        }
+        },
+        warbandTokens:{ left: 1, right: 22 },
+        ruleset:function(){}
     },
     {
         name:"Change",
@@ -157,7 +164,9 @@ const scenarios = [
             greenHexes:[ [12,'row']],
             redHexes:[ [1,'row'] ],
             objectiveHexes:[ [6, 2], [7, 2], [6, 7], [6, 8], [7, 7], [7, 8], [6, 13], [7, 13] ]
-        }
+        },
+        warbandTokens:{ left: 2, right: 21 },
+        ruleset:function(){}
     },
     {
         name:"Knowledge",
@@ -166,7 +175,9 @@ const scenarios = [
             greenHexes:[ [12,'row']],
             redHexes:[ [1,'row'] ],
             objectiveHexes:[ [5, 5], [6, 4], [7, 4], [8, 3],  [5, 12], [6, 11], [7, 11], [8, 10] ]
-        }
+        },
+        warbandTokens:{ left: 3, right: 20 },
+        ruleset:function(){}
     },
     {
         name:"Quest",
@@ -178,7 +189,9 @@ const scenarios = [
             greenHexes:[ [12,'row'], [11, 'row']],
             redHexes:[ [1,'row'], [2, 'row'] ],
             objectiveHexes:[ [4, 3], [4, 4], [4, 11], [4, 12], [9, 3], [9, 4], [9, 11], [9, 12] ]
-        }
+        },
+        warbandTokens:{ left: 4, right: 19 },
+        ruleset:function(){}
     },
     {
         name:"Chaos",
@@ -193,6 +206,15 @@ const scenarios = [
                 [5, 1], [5, 2], [5, 13], [5, 14], [6, 1], [6, 2], [6, 13], [6, 14]
             ],
             objectiveHexes:[ [6, 5], [6, 10], [7, 5], [7, 10] ]
-        }
+        },
+        warbandTokens:{ left: 4, right: 19 },
+        ruleset:function(){}
     }
 ]
+//life: d+2 new obj hexes in empty adjacent hexes, by looser
+//death: looser removes any 2 obj hexes classess
+//chANge: 4*d obj hexes moved with content one field onto empty hex by looser
+//knowledge: winner moves warand token closer to the middle
+//quest: only banners on opo half score steps in the end phase, looser places one obj hex into empty hex adjacent to obj hex
+//chaos: looser places one obj hex onto empty hex anywhere on the battlefield
+//what is warband token??

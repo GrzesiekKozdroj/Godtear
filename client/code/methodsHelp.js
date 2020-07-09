@@ -145,6 +145,8 @@ const forceKill = (target) => {//$()
         target.attr('data-healthleft',target.data('health'))
         if(target.data('name')==='Splashlings')
             ripplingScales(target)
+        else if ( target.data('name') === 'ColdBones' )
+            brainFreeze()
     } else
         target.attr('data-healthleft',0)
     setTimeout(()=>{
@@ -187,7 +189,9 @@ const moveLadder = (target,steps) => {
     }
     const calculus = ((.79*km / 17.23 ) - .01*km)
     let adres = origin+steps*direction
-    adres = adres < 0 ? 1 : adres > 22 ? 22 : adres > 0 && adres < 23 ? adres : false
+    const _L = GAME_SCENARIO.warbandTokens.left
+    const R_ = GAME_SCENARIO.warbandTokens.right
+    adres = adres <= _L ? (_L + 1) : adres >= R_ ? (R_ - 1) : adres > _L && adres < R_ ? adres : false
     const destination = $(`.block${ adres }`)
     if( adres )
         $('#coin')
@@ -395,7 +399,7 @@ function extraMover(methodName,thiz,moveType,rules='empty string'){//<----needs 
         moveType === 'push' ? 
             standardPush(checker) : 
         moveType === 'bannerWalk' ? 
-            validateBannerPlacement() :
+            validateBannerPlacement(checker) :
         moveType === 'push avalanche' ? 
             validateAvalanchePlacement() :
         false
@@ -1018,11 +1022,24 @@ function unyielding ($R){//takes_in_rhodri
     // if next to banner rhodri cannot be moved
     return product
 }
-function brainFreeze (){
+function brainFreeze(){
     //killing coldBones impairs attacker with dodgeBlight
+    const victim = $('.selectedModel')
+    displayAnimatedNews(`${victim.data('name')}<br/>brain freeze<br/>-1 dodge`)
+    setBoons_Blights(victim, { bdodge:(Number(victim.attr('data-bdodge')) -1) })
 }
 function validateBannerPlacement({ $model, $destination, rules }){
-    return true
+    //tongue tow:    //"Move a friendly banner that is within range up to 1 hex toward this froglodyte"
+    //death wind:    //"If Mournblade's banner is within range, place it on an objective hex within range."
+    //phantom banners:    //"Choose any number of friendly banners within range. Place them on objective hexes within range."
+    //summary:    //I nned it to be empty objective hex, thats all
+    const product = ( $destination.children().length < 3 && $destination.hasClass('objectiveGlow') )
+    if ( product ) 
+        return true
+    else {
+        displayAnimatedNews('place on<br/>empty<br/>objective hex')
+        return false
+    }
 }
 function validateAvalanchePlacement(){
     return true
@@ -1057,49 +1074,56 @@ function standardWalk ({ $model, $destination, rules }){// rules is a array ['on
     }
     const NOT_ON_MY_BANNER = ()=> !$destination.children(`.claimedBanner.${team}`).length
     return ( ONTO_OBJECTIVE_HEX() && ONTO_EMPTY_HEX() && OPTIONAL_RULES() && NOT_ON_MY_BANNER() )
-    //so that if its a champ he can stomp enemy banners and stand on empty hexes and objective hexes
-    //or if its a follower he can stand on hexes with its fellows but cannot occupy banners or objectives
-    //needs correction for froglodytes and sneaky stabbers exceptions
 }
 function standardPush ({$model,$destination,rules}){// rules is a array ['onlyOneStep','checkActionsCount']
-const { type, name, side } = $model.data()
-const team = $model.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
-const ONTO_OBJECTIVE_HEX = ()=>{
-    return (
-        !$destination.hasClass('objectiveGlow') || 
-        type !== 'unit' &&//|| 
-        //( // name === 'Froglodytes' &&  //<-----------------CAN FROGLODYTES BE PUSHED ONTO OBJECTIVE HEXES??
-        !$destination.children(`.claimedBanner`).length //)
-    )
-}
-const ONTO_EMPTY_HEX = ()=>{
-    return (
-        !$destination.children(`.smallCard`).length || 
-        (
-            name === $destination.children(`.smallCard[data-side="${side}"]`).first().data('name') && 
-            $destination.children(`.smallCard`).length < 3
+    const { type, name, side } = $model.data()
+    const ONTO_OBJECTIVE_HEX = ()=>{
+        return (
+            !$destination.hasClass('objectiveGlow') || 
+            type !== 'unit' && 
+            !$destination.children(`.claimedBanner`).length //)
         )
-    )
-} 
-const OPTIONAL_RULES = ()=>{
-    const ONE_STEP = rules.includes('onlyOneStep') ? onlyOneStep($destination, $model) : true
-    const NOT_UMOVABLES = ( $model.data('name') === "Rhodri") ?
-            !unyielding($model) :
-        $model.data('name') === "HouseholdGuard" ?
-            !shieldWall($model) : //if can't push 'em functions return true
-            true
-    //Rhodri and his followers here
-    return ONE_STEP && NOT_UMOVABLES
+    }
+    const ONTO_EMPTY_HEX = ()=>{
+        return (
+            !$destination.children(`.smallCard`).length || 
+            (
+                name === $destination.children(`.smallCard[data-side="${side}"]`).first().data('name') && 
+                $destination.children(`.smallCard`).length < 3
+            )
+        )
+    } 
+    const OPTIONAL_RULES = ()=>{
+        const ONE_STEP = rules.includes('onlyOneStep') ? onlyOneStep($destination, $model) : true
+        const NOT_UMOVABLES = ( $model.data('name') === "Rhodri") ?
+                !unyielding($model) : //need to check for death thores
+            $model.data('name') === "HouseholdGuard" ?
+                !shieldWall($model) : 
+                true
+        return ONE_STEP && NOT_UMOVABLES
+    }
+    return ( ONTO_OBJECTIVE_HEX() && ONTO_EMPTY_HEX() && OPTIONAL_RULES() )
 }
-//const NOT_ON_MY_BANNER = ()=> !$destination.children(`.claimedBanner.${team}`).length <--modified ONTO_OBJECTVE_HEX covers it
-return ( ONTO_OBJECTIVE_HEX() && ONTO_EMPTY_HEX() && OPTIONAL_RULES() /*&& NOT_ON_MY_BANNER()*/ )
-//so that if its a champ he can stomp enemy banners and stand on empty hexes and objective hexes
-//or if its a follower he can stand on hexes with its fellows but cannot occupy banners or objectives
-//needs correction for froglodytes and sneaky stabbers exceptions
+function update_basket(){
+    //update scores seen on board, make flashy animatoin
+}
+function calc_score(){
+    let product = GAME_TURN === 1 ? 1 :
+        GAME_TURN === 2 ? 2 :
+        GAME_TURN === 3 ? 3 :
+        GAME_TURN === 4 ? 2 :
+        1
+    return product
+}
+function I_WON_LOST(dieRoll){
+    //see if i won:
+    if( 
+        mySide === 'left' && $('#coin').parent('.ladderBlock').data('block') < 12 || 
+        mySide === 'right' && $('#coin').parent('.ladderBlock').data('block') > 11
+    ) 
+    //-------------------------------
 
-
-    //so that only champs and froglodytes can be pushed on empty objective hexes
-    //minions can be pushed onto hexes with their fellows only
-    //nobody can be pushed onto banners
-    //household guard and rhodri exceptions from pushing
+    MY_SCORE += calc_score()
+    GAME_SCENARIO.ruleset(dieRoll)
+    update_basket()
 }

@@ -1006,3 +1006,17 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
 .rTB_End.blighted{
     opacity:1!important;
 }
+.warbandToken{
+    border-radius:50%;
+    width:90%;
+    height:90%;
+    color: white;
+    font-family: $coinFont2;
+    @include instaFlex;
+    &.white{
+        background: radial-gradient(circle, rgba(39,5,66,0.8519608527004552) 0%, rgba(18,4,60,1) 26%, rgba(48,37,52,1) 29%, rgba(57,37,3,0.767927239255077) 29%, rgba(171,175,20,0.8967787798713235) 54%, rgba(52,56,2,0.8743698162858894) 56%, rgba(56,2,10,0.7539216370141807) 66%, rgba(70,3,3,0.87156869583771) 100%);
+    }
+    &.black{
+        background: radial-gradient(circle, rgba(39,5,66,0.8519608527004552) 0%, rgba(18,4,60,1) 27%, rgba(57,37,3,0.767927239255077) 41%, rgba(171,175,20,0.8967787798713235) 55%, rgba(46,2,56,0.8743698162858894) 58%, rgba(56,2,10,0.7539216370141807) 90%, rgba(70,3,3,0.87156869583771) 100%);
+    }
+}

@@ -28,6 +28,10 @@ var current_ability_method = null;
 let waitinInfoAsArray = [roster[0],roster[1],roster[2],nickName,gamePlaceName,"waiting for opponent"];
 let waitingTicker = 0;
 var km = window.innerHeight;
+let GAME_SCENARIO;
+let GAME_TURN = 1
+let MY_SCORE = 0
+let OP_SCORE = 0
 const tituulti = {
     left:{
         challenge:false,

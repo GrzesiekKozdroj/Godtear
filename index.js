@@ -106,7 +106,7 @@ io.sockets.on('connection', (socket) => {
     socket.on('markedMan',p=>loopRoom({socket:socket,pack:p,stringEmit:'markedMan',callback:o=>o,twoWay:false}))
     socket.on('rolloSkill',p=>loopRoom({socket:socket,pack:p,stringEmit:p.socksMethod,callback:roll,twoWay:true}))
     socket.on('forceMove',p=>loopRoom({socket:socket,pack:p,stringEmit:'fM',callback:o=>o,twoWay:false}))
-    socket.on('turnEnd',p=>loopRoom({socket:socket,pack:p,stringEmit:'tt',callback:o=>o,twoWay:true}))
+    socket.on('turnEnd',p=>loopRoom({socket:socket,pack:p,stringEmit:'tt',callback:turnTransit,twoWay:true}))
     socket.on('camcel',p=>loopRoom({socket:socket,pack:p,stringEmit:'camcel',callback:o=>o,twoWay:true}))
 
 
@@ -156,6 +156,10 @@ function loopRoom (options) {
 const DICE = () => {
     let r = (Math.ceil(Math.random() * 6))
     return r < 3 ? 0 : r < 6 ? 1 : 2
+}
+function turnTransit(o){
+    o.dieRoll = [ DICE(), DICE(), DICE(), DICE(), ]
+    return o
 }
 function roll(o){
     const { aim, hurt, socksMethod, hex, row, multiAction, cursePackage, curseCount, key } = o

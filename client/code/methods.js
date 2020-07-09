@@ -40,11 +40,12 @@ const m =
                 makeAnim( $('.selectedModel.whiteTeam'), thiz, displayMovementAura )
             }
         },
-        stepOnBanner: function (model,whereTo){
+        stepOnBanner: function (model,whereTo, points = true){
             if( whereTo.children(`.claimedBanner`).length && model.hasClass('smallCard') ){
                 rockFormation(whereTo,()=>{whereTo.children(`.claimedBanner`).remove()})
                 //this ought to be thing functionalised
-                moveLadder(model,-1)
+                if( points )
+                    moveLadder(model,-1)
             }
         },
         claim: function (thiz, teamColor, key = "claimed") {//console.log(key), key = "claimed"

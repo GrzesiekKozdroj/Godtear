@@ -210,7 +210,7 @@ $('body').on('click','.objectiveGlow[data-glow="claimColor"]', function(){
 //ON CLICKING EACH HEXAGON
 $('body').on('click','.hexagon:not([data-glow="callTotems"])',function(e){
     e.preventDefault()
-    const S_Stabber = $( $(this).children('.smallCard[data-tenmodel^="SneakyStabbers"]')[0] )
+    const S_Stabber = $( $(this).children('.smallCard[data-tenmodel^="SneakyStabbers"].whiteTeam')[0] )
     const normal_model = $( $(this).children('.smallCard')[0] )
     const thiz = S_Stabber.length ? S_Stabber : normal_model
     if( 
@@ -506,17 +506,15 @@ $('body').on('click','[data-glow].hexagon',function(e){
     const { hex, row } = thiz.data()
     if(myTurn){
         if( $('.mournblade_raisins').length )
-            socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDeadChamps", hex, row })
+            socket.emit('rolloSkill',{ socksMethod:"raiseDeadChamps", hex, row })
         if( $('[data-glow="answerTheCall"]').length )
-            socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row,key:"answerTheCall"})
+            socket.emit('rolloSkill',{ socksMethod:"raiseDead", hex, row, key:"answerTheCall"})
 
-        if( $('.tongueTow_selected').length && thiz.hasClass('objectiveGlow'))
+        if( $('.tongueTow_selected').length )
             extraMover('tongueTow',thiz,'bannerWalk')
-        if( $('.deathWind_selected').length && thiz.hasClass('objectiveGlow') )
+        if( $('.deathWind_selected').length )
             extraMover('deathWind',thiz,'bannerWalk')
-        else if ( $('.deathWind_selected').length )
-            displayAnimatedNews('must be placed<br/>on objective')
-        if( $('.phantomBanners_selected').length && thiz.hasClass('objectiveGlow') )
+        if( $('.phantomBanners_selected').length )
             extraMover('phantomBanners',thiz,'bannerWalk')
 
         if( $('.avalanche_selected').length )moveContentsOfHex('avalanche3',thiz)

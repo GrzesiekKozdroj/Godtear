@@ -213,7 +213,10 @@ $('body').on('click','.hexagon:not([data-glow="callTotems"])',function(e){
     const S_Stabber = $( $(this).children('.smallCard[data-tenmodel^="SneakyStabbers"].whiteTeam')[0] )
     const normal_model = $( $(this).children('.smallCard')[0] )
     const thiz = S_Stabber.length ? S_Stabber : normal_model
-    if( 
+    if (phase === 'end' && !am_I_winner() ){
+        const { hex, row } = $(this).data()
+        socket.emit('epp', { hex, row })
+    } else if ( 
         $(this).children('.smallCard.whiteTeam').length && 
         myTurn && phase !== 'deployment' && 
         current_ability_method === null
@@ -554,6 +557,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.marchjet_selected').length )extraMover('jet',thiz,'walk',['onlyOneStep'])
         if( $('.beastlyCharge_selected').length && !thiz.children('.smallCard').length )
             extraMover('beastlyCharge',thiz,'walk',['onlyOneStep'])
+        if( $('.leap_selected').length )extraMover('leap',thiz,'walk')
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){

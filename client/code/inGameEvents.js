@@ -231,11 +231,11 @@ const onlyOneStep = (thiz, origin = $('.selectedModel') ) => {
 function removeAllBanners(team){
     let B_S = 0
     $(`.claimedBanner.${team}`).each(function(){
-        if ( $(this).data('color') === 1 )
+        if ( $(this).data('banKol') === 'blue' )
             B_S += 5
         else
             B_S += 4
-        m.universal.stepOnBanner($($(`[data-tenmodel].${team}`)[0]), $(this.parent('.hexagon')), false)
+        m.universal.stepOnBanner($($(`[data-tenmodel].${team}`)[0]), $(this).parent('.hexagon'), false)
     })
     return B_S
 }

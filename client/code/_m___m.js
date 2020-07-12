@@ -85,6 +85,7 @@ var _m_ = {
         }
     },
     marchGuardBlack:($thiz)=>{
+        add_action_taken('marchGuardBlack')
         un_glow()
         $($thiz).removeClass('marchGuardBlack').removeClass(`marchGuardBlack_selected`)
         setTimeout(()=>$thiz.removeAttr('style'),100)
@@ -93,6 +94,7 @@ var _m_ = {
         }
     },
     marchGuardWhite:($thiz)=>{
+        add_action_taken('marchGuardWhite')
         un_glow()
         $($thiz).removeClass('marchGuardWhite').removeClass(`marchGuardWhite_selected`)
         setTimeout(()=>$thiz.removeAttr('style'),100)

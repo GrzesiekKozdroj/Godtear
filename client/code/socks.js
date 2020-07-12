@@ -98,28 +98,44 @@ socket.on('fM',p=>{
         children
     makeAnim( $(child), $(`.hex_${h}_in_row_${r}`), _m_[callback] )
 })
-socket.on('tt',p=>{//{current:myTurn, next:phase}
+socket.on('tt',p=>{//key: { phase, next: myNextPhase, name, side:mySide }
+    console.log('inside TT')//each time one of belows happens up to TT_II, and while in black phase
     const { current, next, dieRoll } = p
     myTurn = myTurn ? false : true
     $('.activatingShow').removeClass('activatingShow').addClass('nonActivShow')
     $('.nonActivShow').removeClass('nonActivShow').addClass('activatingShow')
     //p1 && p2 starts black
-    if(phase==='white'&&myNextPhase==='black'){
+    if(phase==='white'&&myNextPhase==='black'){console.log('TT_I')//into black phase
         phase='black'
         turn_resetter(opoSkillTrack,'black','blackTeam')
         turn_resetter(mySkillTrack,'black','whiteTeam')
     }
-    if(phase==='white'&&myNextPhase==='white'){
+    if(phase==='white'&&myNextPhase==='white'){console.log('TT_II')//one white phase ends another begins
         turn_resetter(opoSkillTrack,'white','blackTeam')
         turn_resetter(mySkillTrack,'white','whiteTeam')
         myNextPhase='black'
     }
-    if(phase==='black'&&$('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length){
+    if( 
+        phase==='black' && 
+        $('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length && 
+        $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length
+    ){console.log('TT_III')
         myTurn = false
-        let myBanners = removeAllBanners('whiteteam')
+        let myBanners = removeAllBanners('whiteTeam')
         let opBanners = removeAllBanners('blackTeam')
         moveLadder($($('[data-tenmodel].whiteTeam')[0]), myBanners - opBanners)
-        I_WON_LOST(dieRoll)
+        phase='end' 
+        myNextPhase = 'white'
+        GAME_SCENARIO.dieRoll = dieRoll
+        const skor = calc_score()
+        //see if i won:
+        if ( am_I_winner() ){
+            MY_SCORE += skor
+        } else {
+            OP_SCORE += skor
+        }
+        GAME_TURN++
+        displayAnimatedNews(GAME_SCENARIO.turnEndMessage(dieRoll))
         //no need to pass anything through server at this point, each player can calculate independently the ammount of points 
         //they have and allocate score according to turn number (need to track it), thn still without server knowledge
         //apply scenario rules, this time with through server declaration, once that done, loosing player declares first
@@ -132,3 +148,7 @@ socket.on('tt',p=>{//{current:myTurn, next:phase}
     //need to add deifer and ultra resetter here
 })
 socket.on('camcel',p=>defy[p.m](p.c))
+socket.on('epp',(o)=>{
+    GAME_SCENARIO.ruleset(o)
+
+})

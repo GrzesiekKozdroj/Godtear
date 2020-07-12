@@ -119,6 +119,7 @@ function placeBanner(teamColor){
     return `
         <img class="claimedBanner ${teamColor}"
         src='./img/${color}Flag.png' data-color=${steps} 
+        data-banKol=${color} 
         data-name="${name}"  />
     `
 }

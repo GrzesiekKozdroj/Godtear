@@ -108,6 +108,7 @@ io.sockets.on('connection', (socket) => {
     socket.on('forceMove',p=>loopRoom({socket:socket,pack:p,stringEmit:'fM',callback:o=>o,twoWay:false}))
     socket.on('turnEnd',p=>loopRoom({socket:socket,pack:p,stringEmit:'tt',callback:turnTransit,twoWay:true}))
     socket.on('camcel',p=>loopRoom({socket:socket,pack:p,stringEmit:'camcel',callback:o=>o,twoWay:true}))
+    socket.on('epp',p=>loopRoom({socket:socket,pack:p,stringEmit:'epp',callback:o=>o,twoWay:true}))
 
 
     //FOR QUICK SETUP GAME DEV PURPOSES ONLY:

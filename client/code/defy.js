@@ -28,12 +28,11 @@ var defy = {
     marchRhodriWhite:()=>{uniCancel()},
     hold:()=>uniCancel(),
     marchGuardWhite:()=>{
-        $('.marchGuardWhite')
-            .removeClass('marchGuardWhite marchGuardWhite_selected')
+        multiMovement_procedure('marchGuardWhite','marchGuardWhite_selected','Guards<br/>end march')
         uniCancel()
     },
     marchGuardBlack:()=>{
-        $('.marchGuardBlack').removeClass('marchGuardBlack').removeClass('marchGuardBlack_selected')
+        multiMovement_procedure('marchGuardBlack','marchGuardBlack_selected','Guards<br/>end march')
         uniCancel()
     },
     feelThePoweer:()=>uniCancel(),

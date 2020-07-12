@@ -137,10 +137,38 @@ const scenarios = [
             redHexes:[ [1,'row'], [2, 'row'] ],
             objectiveHexes:[ [6, 7], [6, 8], [7, 7], [7, 8] ]
         },
+        dieRoll:0,
+        turnEndMessage:(r)=>`LIFE<br/>looser places<br/>${r[0]+2} objectives`,
         warbandTokens:{ left: 1, right: 22 },
-        ruleset:function(dieRoll){
-            const roll = dieRoll[0]
-            
+        ruleset:function({ hex, row }){
+            const roll = GAME_SCENARIO.dieRoll[0] + 2
+            console.log('endphase function activated',roll)
+            if ( roll > 0 ){
+                const dad = $(`.hex_${hex}_in_row_${row}`)
+                console.log('life scenario condition fulfilled')
+                un_glow()
+                highlightHexes( {colour:'whiteGlow', dist: 1}, dad.children('.top') )
+                if( $('[data-glow].objectiveGlow').length && dad.children().length < 3 ){
+                    makeObjectiveHex(row, hex)
+                    GAME_SCENARIO.dieRoll[0]--
+                    if(GAME_SCENARIO.dieRoll[0] < -1){
+                        GAME_SCENARIO.dieRoll = 0
+                        if ( !am_I_winner() )
+                            display_who_starts_next_phase()
+                        turn_resetter(opoSkillTrack,'black','blackTeam')
+                        turn_resetter(mySkillTrack,'black','whiteTeam')
+                        turn_resetter(opoSkillTrack,'white','blackTeam')
+                        turn_resetter(mySkillTrack,'white','whiteTeam')
+                    }
+                } else 
+                    displayAnimatedNews('must target<br/>empty hexes<br/>adjacent to objective hexes')
+                un_glow()
+            }
+            // need way to track how many hexes been moved
+            // need way to only allow looser to move hexes
+            // need to verify if hex is empty
+            // need to check if there are adjacent obj hexes
+            // need to place new hex and tell other player about it
         }
     },
     {

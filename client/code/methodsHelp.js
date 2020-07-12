@@ -45,7 +45,7 @@ const causeOfRetchlings = (skill) => {
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
     const targetos = (abilName, p = phase) => {
         let prod;
-        console.log(name,p,abilName)
+     //   console.log(name,p,abilName)
         if(side === mySide)
                 prod = causeOfRetchlings(  mySkillTrack[name][p][abilName].used )
         else if(side === opoSide)
@@ -600,11 +600,11 @@ function turn_resetter(skillTracker,phase,team){
         for(let s in skillTracker[char][phase]){
             skillTracker[char][phase][s].used = false
         }
-    }
-    //-------------UNTESTEDO--------------//
-    for(let mj in skillTracker[char].util){
-        if( mj !== 'legendary' && mj )
-            skillTracker[char].util[mj].used = false
+        //-------------UNTESTEDO--------------//
+        for(let mj in skillTracker[char].util){
+            if( mj && mj !== 'legendary' )
+                skillTracker[char].util[mj].used = false
+        }
     }
     $('.sacrifice').removeClass('sacrifice damage aim')
 }
@@ -1115,15 +1115,13 @@ function calc_score(){
         1
     return product
 }
-function I_WON_LOST(dieRoll){
-    //see if i won:
-    if( 
+function am_I_winner(){
+    return ( 
         mySide === 'left' && $('#coin').parent('.ladderBlock').data('block') < 12 || 
         mySide === 'right' && $('#coin').parent('.ladderBlock').data('block') > 11
-    ) 
-    //-------------------------------
-
-    MY_SCORE += calc_score()
-    GAME_SCENARIO.ruleset(dieRoll)
-    update_basket()
+    )
+}
+function display_who_starts_next_phase(){
+    console.log('if I see this message, then BRAVO, I can carry on :D')
+    //stil TODO
 }

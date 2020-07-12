@@ -652,7 +652,6 @@ var m_ = {
         const {  hex, row } = o
         const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
-        add_action_taken('marchGuardBlack')
         if(!$('.marchGuardBlack').length){
             $(`[data-name="${singleSpecimen.data('name')}"].${team}`).addClass('marchGuardBlack')
             un_glow()
@@ -870,7 +869,7 @@ var m_ = {
             const target = $(targets[0])
             if_moved_end_it('lifeBlade')
             un_glow()
-            add_action_taken()
+            add_action_taken('lifeBlade')
             if( onHit(aim, target) ){
                 healLife( $('.selectedModel[data-name="Finvarr"][data-tenmodel]'), 1)
                 if( doDamage(hurt, target) )
@@ -1847,10 +1846,10 @@ var m_ = {
     backstabWhite:(o)=>backstab(o),
     backstabBlack:(o)=>backstab(o),
     leap:function(o){
-        const { hex, row } = o
-        const thiz = $(`[data-name="SneakyPeet"].selectedModel`)
-        const that = $(`.hex_${hex}_in_row_${row}`)
-        makeAnim(thiz,that,_m_.leap)
+        const modl = $(`[data-name="SneakyPeet"].selectedModel`)
+        modl.addClass('leap_selected')
+        un_glow()
+        highlightHexes({ colour:'legendaryGlow', dist:2 }, modl)
     },
     pounce1:function(o){
         const { hex, row } = o
@@ -1928,9 +1927,8 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
-            add_action_taken()
+            add_action_taken('letMeDoIt')
             if( onHit(aim, target) )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )

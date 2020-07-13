@@ -230,12 +230,16 @@ const onlyOneStep = (thiz, origin = $('.selectedModel') ) => {
 
 function removeAllBanners(team){
     let B_S = 0
-    $(`.claimedBanner.${team}`).each(function(){
-        if ( $(this).data('banKol') === 'blue' )
-            B_S += 5
-        else
-            B_S += 4
-        m.universal.stepOnBanner($($(`[data-tenmodel].${team}`)[0]), $(this).parent('.hexagon'), false)
-    })
-    return B_S
+    if( GAME_SCENARIO.name !== "Quest" ){
+        $(`.claimedBanner.${team}`).each(function(){
+            if ( $(this).data('banKol') === 'blue' )
+                B_S += 5
+            else
+                B_S += 4
+            m.universal.stepOnBanner($($(`[data-tenmodel].${team}`)[0]), $(this).parent('.hexagon'), false)
+        })
+        return B_S
+    } else {
+        //here need to add quest scenario banner counting queerkinyess
+    }
 }

@@ -180,8 +180,24 @@ const scenarios = [
             redHexes:[ [1,'row'] ],
             objectiveHexes:[ [6, 2], [7, 2], [7, 3], [6, 7], [6, 8], [7, 7], [7, 8], [6, 12], [6, 13], [7, 13] ]
         },
+        dieRoll:0,
+        turnEndMessage:(r)=>`DEATH<br/>looser removes<br/>2 objectives`,
         warbandTokens:{ left: 1, right: 22 },
-        ruleset:function(){}
+        ruleset:function({ hex, row}){
+            if( typeof GAME_SCENARIO.dieRoll === "object" ){
+                GAME_SCENARIO = 1
+                removeObjectiveHex(row,hex)
+            } else if (GAME_SCENARIO.dieRoll === 1){
+                GAME_SCENARIO.dieRoll = 0
+                removeObjectiveHex(row,hex)
+                if ( !am_I_winner() )
+                    display_who_starts_next_phase()
+                turn_resetter(opoSkillTrack,'black','blackTeam')
+                turn_resetter(mySkillTrack,'black','whiteTeam')
+                turn_resetter(opoSkillTrack,'white','blackTeam')
+                turn_resetter(mySkillTrack,'white','whiteTeam')
+            }
+        }
     },
     {
         name:"Change",
@@ -193,8 +209,61 @@ const scenarios = [
             redHexes:[ [1,'row'] ],
             objectiveHexes:[ [6, 2], [7, 2], [6, 7], [6, 8], [7, 7], [7, 8], [6, 13], [7, 13] ]
         },
+        instaCall:true,
+        dieRoll:0,
+        turnEndMessage:(r)=>`CHANGE<br/>looser moves<br/>${typeof r === 'number' ? r : r.reduce((a,c)=>a+c)} objectives`,
         warbandTokens:{ left: 2, right: 21 },
-        ruleset:function(){}
+        ruleset:function({ hex, row }){
+            GAME_SCENARIO.dieRoll = GAME_SCENARIO.dieRoll.reduce((a,c)=>a+c)
+            if( !GAME_SCENARIO.dieRoll ){
+                //end the skill here
+                GAME_SCENARIO.dieRoll = 0
+                turn_resetter(opoSkillTrack,'black','blackTeam')
+                turn_resetter(mySkillTrack,'black','whiteTeam')
+                turn_resetter(opoSkillTrack,'white','blackTeam')
+                turn_resetter(mySkillTrack,'white','whiteTeam')
+                $('.objMoveableEndPh').removeClass('objMoveableEndPh')
+                $('.objMoved').removeClass('objMoved')
+                un_glow()
+                if ( !am_I_winner() )
+                    display_who_starts_next_phase()
+            } else if ( hex && row ){
+                const dad = $(`.hex_${hex}_in_row_${row}`)
+                if(!dad.hasClass('objMoved') && dad.hasClass('objectiveGlow')){
+                    $('.objMoveableEndPh').removeClass('objMoveableEndPh')
+                    dad.addClass('objMoveableEndPh')
+                    un_glow()
+                    highlightHexes({colour:'legendaryGlow',dist:1},$(dad.children()[0]))
+                }else if( dad.attr('data-glow') === 'legendaryGlow' && dad.children().length < 3){
+                    removeObjectiveHex($('.objMoveableEndPh').data('row'),$('.objMoveableEndPh').data('hex'))
+                    un_glow()
+                    $('.objMoveableEndPh')
+                        .removeClass('objMoveableEndPh')
+                        .children('[data-tenmodel]')
+                        .detach()
+                        .appendTo(dad)
+                    dad.addClass('objMoved')
+                    makeObjectiveHex(row, hex)
+                    GAME_SCENARIO.dieRoll--
+                    if( !GAME_SCENARIO.dieRoll ){
+                        //end it all here again
+                        GAME_SCENARIO.dieRoll = 0
+                        turn_resetter(opoSkillTrack,'black','blackTeam')
+                        turn_resetter(mySkillTrack,'black','whiteTeam')
+                        turn_resetter(opoSkillTrack,'white','blackTeam')
+                        turn_resetter(mySkillTrack,'white','whiteTeam')
+                        $('.objMoveableEndPh').removeClass('objMoveableEndPh')
+                        $('.objMoved').removeClass('objMoved')
+                        un_glow()
+                        if ( !am_I_winner() )
+                            display_who_starts_next_phase()
+                    }
+                } else {
+                    $('.objMoveableEndPh').removeClass('objMoveableEndPh')
+                    un_glow()
+                }
+            }
+        }
     },
     {
         name:"Knowledge",
@@ -204,8 +273,55 @@ const scenarios = [
             redHexes:[ [1,'row'] ],
             objectiveHexes:[ [5, 5], [6, 4], [7, 4], [8, 3],  [5, 12], [6, 11], [7, 11], [8, 10] ]
         },
+        instaCall:true,
+        dieRoll:0,
+        turnEndMessage:(r)=>`KNOWLEDGE<br/>wealth<br/>is burden`,
         warbandTokens:{ left: 3, right: 20 },
-        ruleset:function(){}
+        ruleset:function({ hex, row }){
+            GAME_SCENARIO.dieRoll = 0
+            turn_resetter(opoSkillTrack,'black','blackTeam')
+            turn_resetter(mySkillTrack,'black','whiteTeam')
+            turn_resetter(opoSkillTrack,'white','blackTeam')
+            turn_resetter(mySkillTrack,'white','whiteTeam')
+            if ( !am_I_winner() ){
+                const opoWarbandToken = $(`.warbandToken.${opoSide}`)
+                const dadNum = opoWarbandToken.parent('.ladderBlock').data('block')
+                opoWarbandToken.detach().appendTo(`.ladderBlock[data-block="${
+                    opoSide === 'right' ? dadNum - (
+                        GAME_TURN - 1 === 1 ? 1 :
+                        GAME_TURN - 1 === 2 ? 2 :
+                        GAME_TURN - 1 === 3 ? 3 :
+                        GAME_TURN - 1 === 4 ? 2 :
+                        1) 
+                        : 
+                        dadNum + (
+                            GAME_TURN - 1 === 1 ? 1 :
+                            GAME_TURN - 1 === 2 ? 2 :
+                            GAME_TURN - 1 === 3 ? 3 :
+                            GAME_TURN - 1 === 4 ? 2 :
+                            1)
+                }"]`)
+                display_who_starts_next_phase()
+            } else {
+                const myWarbandToken = $(`.warbandToken.${mySide}`)
+                const dadNum = myWarbandToken.parent('.ladderBlock').data('block')
+                myWarbandToken.detach().appendTo(`.ladderBlock[data-block="${
+                    opoSide === 'right' ? dadNum - (
+                        GAME_TURN - 1 === 1 ? 1 :
+                        GAME_TURN - 1 === 2 ? 2 :
+                        GAME_TURN - 1 === 3 ? 3 :
+                        GAME_TURN - 1 === 4 ? 2 :
+                        1) 
+                        : 
+                        dadNum + (
+                            GAME_TURN - 1 === 1 ? 1 :
+                            GAME_TURN - 1 === 2 ? 2 :
+                            GAME_TURN - 1 === 3 ? 3 :
+                            GAME_TURN - 1 === 4 ? 2 :
+                            1)
+                }"]`)
+            }
+        }
     },
     {
         name:"Quest",
@@ -219,7 +335,21 @@ const scenarios = [
             objectiveHexes:[ [4, 3], [4, 4], [4, 11], [4, 12], [9, 3], [9, 4], [9, 11], [9, 12] ]
         },
         warbandTokens:{ left: 4, right: 19 },
-        ruleset:function(){}
+        instaCall:false,
+        dieRoll:0,
+        turnEndMessage:(r)=>`QUEST<br/>looser place<br/>1 objective<br/> on empty hex`,
+        ruleset:function({ hex, row }){
+            if( $(`.hex_${hex}_in_row_${row}`). children().length < 3 ){
+                GAME_SCENARIO.dieRoll = 0
+                makeObjectiveHex(row, hex)
+                turn_resetter(opoSkillTrack,'black','blackTeam')
+                turn_resetter(mySkillTrack,'black','whiteTeam')
+                turn_resetter(opoSkillTrack,'white','blackTeam')
+                turn_resetter(mySkillTrack,'white','whiteTeam')
+                if ( !am_I_winner() )
+                    display_who_starts_next_phase()
+            }
+        }
     },
     {
         name:"Chaos",

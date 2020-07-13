@@ -2270,4 +2270,31 @@ var m_ = {
         }
         displayAnimatedNews(strajng)
     },
+    dwhnt:function(o){console.log('inside dwhnt')
+        const { key } = o
+        if( key === mySide ){console.log('mySide is tru ', key)
+            myTurn = true
+            displayAnimatedNews('You go<br/>first')
+            $(`.warbandToken.${mySide}`).text('1')
+            $(`.warbandToken.${opoSide}`).text('2')
+            if(mySide === 'left' )
+                $('#coin').detach().appendTo('.block11')
+            else
+                $('#coin').detach().appendTo('.block12')
+        } else {console.log('mySide is tru ', key)
+            myTurn = false
+            $(`.warbandToken.${mySide}`).text('2')
+            $(`.warbandToken.${opoSide}`).text('1')
+            displayAnimatedNews('You go<br/>second')
+            if(mySide === 'left' )
+                $('#coin').detach().appendTo('.block12')
+            else
+                $('#coin').detach().appendTo('.block11')
+        }
+        phase = 'white'
+        myNextPhase = 'white'
+        update_basket()
+        turn_resetter(opoSkillTrack,'white','blackTeam')
+        turn_resetter(mySkillTrack,'white','whiteTeam')
+    }
 }

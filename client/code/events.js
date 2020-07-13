@@ -747,6 +747,15 @@ $(`body`).on('click',`.endTask`,function(e){
     }
 })
 
+$('body').on('click','.chnt',function(e){
+    e.preventDefault()
+    if ( $(this).hasClass('ch1nt') )
+        socket.emit('rolloSkill',{ socksMethod:'dwhnt', key:mySide })
+    else if ( $(this).hasClass('ch2nt') )
+        socket.emit('rolloSkill', { socksMethod:'dwhnt', key:opoSide })
+    $('.soCoolMistressPanel').remove()
+})
+
 
 
 

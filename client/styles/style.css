@@ -2778,3 +2778,20 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
 .warbandToken.black {
   background: radial-gradient(circle, rgba(39, 5, 66, 0.851961) 0%, #12043c 27%, rgba(57, 37, 3, 0.767927) 41%, rgba(171, 175, 20, 0.896779) 55%, rgba(46, 2, 56, 0.87437) 58%, rgba(56, 2, 10, 0.753922) 90%, rgba(70, 3, 3, 0.871569) 100%);
 }
+
+.chnt {
+  font-family: "Shojumaru", cursive;
+  font-size: 200%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, rgba(69, 176, 255, 0.87437) 6%, rgba(18, 54, 143, 0.891177) 50%, #050d42 74%, rgba(2, 6, 56, 0.941597) 100%);
+  border-radius: 50%;
+  border-color: #020638 !important;
+}
+
+.chnt sub {
+  margin-top: -20%;
+  font-size: 50%;
+  font-family: "Shojumaru", cursive;
+}

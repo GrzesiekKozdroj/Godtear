@@ -439,11 +439,21 @@ function treasureBox(side){
     let s = side === mySide ? 'my' : 'opo'
     return `
         <div class="treasureBox ${side}">
-            <img class="gem1 nope" src="../img/tear-${s}-1.svg" />
-            <img class="gem2 nope" src="../img/tear-${s}-2.svg" />
-            <img class="gem3 nope" src="../img/tear-${s}-3.svg" />
-            <img class="gem4 nope" src="../img/tear-${s}-4.svg" />
-            <img class="gem5 nope" src="../img/tear-${s}-2.svg" />
+            <img class="gem1 ${checkPOINTS({side, num:1})}" src="../img/tear-${s}-1.svg" />
+            <img class="gem2 ${checkPOINTS({side, num:2})}" src="../img/tear-${s}-2.svg" />
+            <img class="gem3 ${checkPOINTS({side, num:3})}" src="../img/tear-${s}-3.svg" />
+            <img class="gem4 ${checkPOINTS({side, num:4})}" src="../img/tear-${s}-4.svg" />
+            <img class="gem5 ${checkPOINTS({side, num:5})}" src="../img/tear-${s}-2.svg" />
         </div>
     `
+}
+function checkPOINTS({side, num}){
+    if(side === mySide){
+        if(MY_SCORE<num)
+            return 'nope'
+    }else{
+        if(OP_SCORE<num)
+            return 'nope'
+    }
+     
 }

@@ -436,3 +436,19 @@ function ripplingChoices(side) {
     </div>
     `
 }
+function display_who_starts_next_phase(){
+    if( !am_I_winner() )
+        $('#gameScreen').append(`
+            <div class="soCoolMistressPanel">
+                <div 
+                    class="soCoolMistressPanelCrest" 
+                  >
+                    <div class="message">choose to go first or second</div>
+                    <div class="boon-blight ch1nt chnt" > 1<sub>st</sub> </div>
+                    <div class="boon-blight ch2nt chnt" > 2<sub>nd</sub> </div>
+                </div>
+            </div>
+        `)
+    console.log('if I see this message, then BRAVO, I can carry on :D')
+    //stil TODO
+}

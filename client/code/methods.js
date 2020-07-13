@@ -42,7 +42,7 @@ const m =
         },
         stepOnBanner: function (model,whereTo, points = true){
             if( whereTo.children(`.claimedBanner`).length && model.hasClass('smallCard') ){
-                rockFormation(whereTo,()=>{whereTo.children(`.claimedBanner`).remove()})
+                rockFormation(whereTo,()=>{whereTo.find(`.claimedBanner`).remove()})
                 //this ought to be thing functionalised
                 if( points )
                     moveLadder(model,-1)

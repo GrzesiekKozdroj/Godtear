@@ -136,6 +136,8 @@ socket.on('tt',p=>{//key: { phase, next: myNextPhase, name, side:mySide }
         }
         GAME_TURN++
         displayAnimatedNews(GAME_SCENARIO.turnEndMessage(dieRoll))
+        if( GAME_SCENARIO.instaCall )
+            GAME_SCENARIO.ruleset(0,0)
         //no need to pass anything through server at this point, each player can calculate independently the ammount of points 
         //they have and allocate score according to turn number (need to track it), thn still without server knowledge
         //apply scenario rules, this time with through server declaration, once that done, loosing player declares first

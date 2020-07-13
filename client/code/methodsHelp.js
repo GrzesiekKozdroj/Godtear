@@ -1105,6 +1105,12 @@ function standardPush ({$model,$destination,rules}){// rules is a array ['onlyOn
     return ( ONTO_OBJECTIVE_HEX() && ONTO_EMPTY_HEX() && OPTIONAL_RULES() )
 }
 function update_basket(){
+    for(let i = 1; i <= OP_SCORE; i++){
+        $(`.treasureBox.${opoSide}`).children(`.gem${i}`).removeClass('none')
+    }
+    for(let i = 1; i<= MY_SCORE; i++){
+        $(`.treasureBox.${mySide}`).children(`.gem${i}`).removeClass('none')
+    }
     //update scores seen on board, make flashy animatoin
 }
 function calc_score(){
@@ -1120,8 +1126,4 @@ function am_I_winner(){
         mySide === 'left' && $('#coin').parent('.ladderBlock').data('block') < 12 || 
         mySide === 'right' && $('#coin').parent('.ladderBlock').data('block') > 11
     )
-}
-function display_who_starts_next_phase(){
-    console.log('if I see this message, then BRAVO, I can carry on :D')
-    //stil TODO
 }

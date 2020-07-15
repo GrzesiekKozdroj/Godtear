@@ -111,6 +111,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  z-index: -13;
 }
 
 .shelf {
@@ -365,6 +366,7 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
+  z-index: -13;
 }
 
 .elevator {
@@ -2004,6 +2006,31 @@ body {
 }
 
 .champModel {
+  transform: scale(0.675);
+  -ms-transform: scale(0.675);
+  /* Internet Explorer */
+  -moz-transform: scale(0.675);
+  /* Firefox */
+  -webkit-transform: scale(0.675);
+  /* Safari and Chrome */
+  -o-transform: scale(0.675);
+  /* Opera */
+  position: relative;
+  top: -1%;
+  left: 0%;
+  z-index: 4;
+}
+
+.largeUnitModel {
+  transform: scale(0.535);
+  -ms-transform: scale(0.535);
+  /* Internet Explorer */
+  -moz-transform: scale(0.535);
+  /* Firefox */
+  -webkit-transform: scale(0.535);
+  /* Safari and Chrome */
+  -o-transform: scale(0.535);
+  /* Opera */
   position: relative;
   top: -1%;
   left: 0%;
@@ -2127,6 +2154,19 @@ body {
   }
   100% {
     transform: scale(45%);
+  }
+}
+
+.selectedModel.hexagrama-24.unitModel {
+  animation: 2s alternate infinite pulseg;
+}
+
+@keyframes pulseg {
+  0% {
+    transform: scale(45%);
+  }
+  100% {
+    transform: scale(75%);
   }
 }
 
@@ -2794,4 +2834,63 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   margin-top: -20%;
   font-size: 50%;
   font-family: "Shojumaru", cursive;
+}
+
+#weaponContainer {
+  width: .00001px;
+  height: .00001px;
+}
+
+#weaponContainer #factualWeapon {
+  width: 200%;
+  height: 200%;
+  z-index: 5;
+}
+
+.row1 {
+  z-index: -1;
+}
+
+.row2 {
+  z-index: -2;
+}
+
+.row3 {
+  z-index: -3;
+}
+
+.row4 {
+  z-index: -4;
+}
+
+.row5 {
+  z-index: -5;
+}
+
+.row6 {
+  z-index: -6;
+}
+
+.row7 {
+  z-index: -7;
+}
+
+.row8 {
+  z-index: -8;
+}
+
+.row9 {
+  z-index: -9;
+}
+
+.row10 {
+  z-index: -10;
+}
+
+.row11 {
+  z-index: -11;
+}
+
+.row12 {
+  z-index: -12;
 }

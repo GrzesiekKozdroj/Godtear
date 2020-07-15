@@ -73,7 +73,9 @@ const __canIBePlacedOnHex = (thiz, modelClass) =>
       thiz.children(`.smallCard`).length < 3
     ) ? true : false
 function deployTrayToBoard(modelClass, thiz, deployment){
-    let className = $('.'+modelClass).data('type') === 'unit' ? 30 : 14;
+    let classType = $('.'+modelClass).data('type')
+    let stepsgiven = $('.'+modelClass).data('stepsgiven')
+    let className = stepsgiven === 2 ? 24 : classType === 'unit' ? 30 : 14;
     let modeOfControl  = deployment ? $('.'+modelClass).parent(`.teamBox.${mySide}`).hasClass(myDeployment) : true
     if
     ( 
@@ -82,8 +84,9 @@ function deployTrayToBoard(modelClass, thiz, deployment){
       modeOfControl
     )
         $('.'+modelClass)
-            .removeClass( `${modelClass} hexagrama-${ className === 30 ? 14 : 7}`)
-            .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : 'champModel'}`)
+            .removeClass( `${modelClass} hexagrama-${ className === 30 ? 14 : 24 ? 10 : 7}`)
+            .addClass(`hexagrama-${className} 
+                    ${className===30?'unitModel':className===24?'unitModel largeUnitModel':'champModel'}`)
             .detach()
             .appendTo( thiz )
 
@@ -241,5 +244,19 @@ function removeAllBanners(team){
         return B_S
     } else {
         //here need to add quest scenario banner counting queerkinyess
+        //right side is always on bottom, left side is always on top
+        // if first model with ${team} color has data-side left and banner dad has row < 7, then give pts
+        const extraCondid = (t,$B)=>{return(
+            $($(`[data-tenmodel].${t}`)[0]).data('side') === 'left' && $B.parent('.hexagon').data('row') < 7 ||
+            $($(`[data-tenmodel].${t}`)[0]).data('side') === 'right' && $B.parent('.hexagon').data('row') > 6
+        )}
+        $(`.claimedBanner.${team}`).each(function(){
+            if ( $(this).data('banKol') === 'blue'  && extraCondid(team,$(this)))
+                B_S += 5
+            else if ( extraCondid(team,$(this)) )
+                B_S += 4
+            m.universal.stepOnBanner($($(`[data-tenmodel].${team}`)[0]), $(this).parent('.hexagon'), false)
+        })
+        return B_S
     }
 }

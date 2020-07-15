@@ -447,7 +447,7 @@ $partSize: 5em;
     content: '';
 }
 .activated{
-    filter:grayscale(.65) opacity(.8);
+    filter:grayscale(.9) opacity(.8);
 }
 
 @mixin barwyZespolu ($a,$b,$c,$d,$e,$f,$g,$h,$i){

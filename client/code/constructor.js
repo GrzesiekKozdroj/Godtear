@@ -29,7 +29,10 @@ class Character{
     this.bDamage = 0;
 
     //this.doing = 'not used';
-    this.stepsGiven = name !== "Mournblade" && role === "champion" ? 4 : name === "Retchlings" ? 0 : 1;
+    this.stepsGiven = name !== "Mournblade" && role === "champion" ? 4 : 
+        name === "Retchlings" ? 0 :
+        name === "Landslide" || name === "youngDragons" ? 2 :
+        1;
     }
 //methods
 }
@@ -112,8 +115,8 @@ const rosters =
 };
 roster = [
     rosters.slayer[2].champ.name,
-    rosters.guardian[1].champ.name, 
-    rosters.slayer[0].champ.name, 
+    rosters.maelstrom[1].champ.name, 
+    rosters.shaper[3].champ.name, 
 ];
 
 for(let c in rosters){
@@ -137,6 +140,7 @@ const scenarios = [
             redHexes:[ [1,'row'], [2, 'row'] ],
             objectiveHexes:[ [6, 7], [6, 8], [7, 7], [7, 8] ]
         },
+        instaCall:false,
         dieRoll:0,
         turnEndMessage:(r)=>`LIFE<br/>looser places<br/>${r[0]+2} objectives`,
         warbandTokens:{ left: 1, right: 22 },
@@ -180,6 +184,7 @@ const scenarios = [
             redHexes:[ [1,'row'] ],
             objectiveHexes:[ [6, 2], [7, 2], [7, 3], [6, 7], [6, 8], [7, 7], [7, 8], [6, 12], [6, 13], [7, 13] ]
         },
+        instaCall:false,
         dieRoll:0,
         turnEndMessage:(r)=>`DEATH<br/>looser removes<br/>2 objectives`,
         warbandTokens:{ left: 1, right: 22 },
@@ -214,7 +219,8 @@ const scenarios = [
         turnEndMessage:(r)=>`CHANGE<br/>looser moves<br/>${typeof r === 'number' ? r : r.reduce((a,c)=>a+c)} objectives`,
         warbandTokens:{ left: 2, right: 21 },
         ruleset:function({ hex, row }){
-            GAME_SCENARIO.dieRoll = GAME_SCENARIO.dieRoll.reduce((a,c)=>a+c)
+            GAME_SCENARIO.dieRoll = typeof GAME_SCENARIO.dieRoll !== 'number' ? 
+                GAME_SCENARIO.dieRoll.reduce((a,c)=>a+c) : GAME_SCENARIO.dieRoll
             if( !GAME_SCENARIO.dieRoll ){
                 //end the skill here
                 GAME_SCENARIO.dieRoll = 0
@@ -278,12 +284,11 @@ const scenarios = [
         turnEndMessage:(r)=>`KNOWLEDGE<br/>wealth<br/>is burden`,
         warbandTokens:{ left: 3, right: 20 },
         ruleset:function({ hex, row }){
-            GAME_SCENARIO.dieRoll = 0
             turn_resetter(opoSkillTrack,'black','blackTeam')
             turn_resetter(mySkillTrack,'black','whiteTeam')
             turn_resetter(opoSkillTrack,'white','blackTeam')
             turn_resetter(mySkillTrack,'white','whiteTeam')
-            if ( !am_I_winner() ){
+            if ( !am_I_winner() && GAME_SCENARIO.dieRoll ){
                 const opoWarbandToken = $(`.warbandToken.${opoSide}`)
                 const dadNum = opoWarbandToken.parent('.ladderBlock').data('block')
                 opoWarbandToken.detach().appendTo(`.ladderBlock[data-block="${
@@ -302,7 +307,7 @@ const scenarios = [
                             1)
                 }"]`)
                 display_who_starts_next_phase()
-            } else {
+            } else if ( GAME_SCENARIO.dieRoll ){
                 const myWarbandToken = $(`.warbandToken.${mySide}`)
                 const dadNum = myWarbandToken.parent('.ladderBlock').data('block')
                 myWarbandToken.detach().appendTo(`.ladderBlock[data-block="${
@@ -321,6 +326,7 @@ const scenarios = [
                             1)
                 }"]`)
             }
+            GAME_SCENARIO.dieRoll = 0
         }
     },
     {
@@ -339,7 +345,7 @@ const scenarios = [
         dieRoll:0,
         turnEndMessage:(r)=>`QUEST<br/>looser place<br/>1 objective<br/> on empty hex`,
         ruleset:function({ hex, row }){
-            if( $(`.hex_${hex}_in_row_${row}`). children().length < 3 ){
+            if( $(`.hex_${hex}_in_row_${row}`). children().length < 3 && GAME_SCENARIO.dieRoll ){
                 GAME_SCENARIO.dieRoll = 0
                 makeObjectiveHex(row, hex)
                 turn_resetter(opoSkillTrack,'black','blackTeam')
@@ -366,7 +372,20 @@ const scenarios = [
             objectiveHexes:[ [6, 5], [6, 10], [7, 5], [7, 10] ]
         },
         warbandTokens:{ left: 4, right: 19 },
-        ruleset:function(){}
+        instaCall:false,
+        dieRoll:0,
+        ruleset:function({ hex, row }){
+            if( $(`.hex_${hex}_in_row_${row}`). children().length < 3 && GAME_SCENARIO.dieRoll){
+                GAME_SCENARIO.dieRoll = 0
+                makeObjectiveHex(row, hex)
+                turn_resetter(opoSkillTrack,'black','blackTeam')
+                turn_resetter(mySkillTrack,'black','whiteTeam')
+                turn_resetter(opoSkillTrack,'white','blackTeam')
+                turn_resetter(mySkillTrack,'white','whiteTeam')
+                if ( !am_I_winner() )
+                    display_who_starts_next_phase()
+            }
+        }
     }
 ]
 //life: d+2 new obj hexes in empty adjacent hexes, by looser

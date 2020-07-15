@@ -207,11 +207,11 @@ function QUICK_DEEPLOY() {
     let roow = 5;
     let heex = 1;
     $(`.teamBox.left`).children(`.smallCard`).each(function(){
-        let className = $(this).data('type') === 'unit' ? 30 : 14 
+        let className = $(this).data('stepsgiven') === 2 ? 24 : $(this).data('type') === 'unit' ? 30 : 14 
         $(this)
             .detach()
-            .removeClass( `hexagrama-${ className === 30 ? 14 : 7}`)
-            .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : 'champModel'}`)
+            .removeClass( `hexagrama-${ className === 30 ? 14 : className === 24 ? 10 : 7}`)
+            .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : className === 24 ? 'unitModel largeUnitModel' : 'champModel'}`)
             .appendTo(`.hex_${heex}_in_row_${roow}`)
         roow += heex <14 ? 0 : 1;
         heex += heex < 14 ? 1 : -13;
@@ -219,11 +219,11 @@ function QUICK_DEEPLOY() {
     roow = 8 
     heex = 14
     $(`.teamBox.right`).children(`.smallCard`).each(function(){
-        let className = $(this).data('type') === 'unit' ? 30 : 14 
+        let className = $(this).data('stepsgiven') === 2 ? 24 : $(this).data('type') === 'unit' ? 30 : 14 
         $(this)
             .detach()
-            .removeClass( `hexagrama-${ className === 30 ? 14 : 7}`)
-            .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : 'champModel'}`)
+            .removeClass( `hexagrama-${ className === 30 ? 14 : className === 24 ? 10 : 7}`)
+            .addClass(`hexagrama-${className} ${ className === 30 ? 'unitModel' : className === 24 ? 'unitModel largeUnitModel' : 'champModel'}`)
             .appendTo(`.hex_${heex}_in_row_${roow}`)
         roow -= heex > 0 ? 0 : 1;
         heex -= heex > 0 ? 1 : -14;

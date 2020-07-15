@@ -195,6 +195,7 @@ $colorFillHex: transparent;
     display:flex;
     flex-wrap:wrap;
     justify-content: space-evenly;
+    z-index: -13;
 }
 
 
@@ -286,6 +287,7 @@ body{
     display:flex;
     align-items: center;
     flex-direction:column;
+    z-index:-13;
 }
 
 
@@ -432,18 +434,28 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
     width:90%;
     max-width:90%;
 }
-.unitModel{
-    $s:.4;
+@mixin scalatore($s){
     transform:scale($s);
     -ms-transform: scale($s); /* Internet Explorer */
     -moz-transform: scale($s); /* Firefox */
     -webkit-transform: scale($s); /* Safari and Chrome */
     -o-transform: scale($s); /* Opera */
+}
+.unitModel{
+    @include scalatore(.4);
     z-index:4;
     margin:auto -47%!important;
 
 }
 .champModel{
+    @include scalatore(.675);
+    position:relative;
+    top: -1%;
+    left: 0%;
+    z-index:4;
+}
+.largeUnitModel{
+    @include scalatore(.535);
     position:relative;
     top: -1%;
     left: 0%;
@@ -552,6 +564,9 @@ $sizes:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,30;
 }
 .selectedModel.hexagrama-30.unitModel{
     @include pulseGrunt(25%,45%);
+}
+.selectedModel.hexagrama-24.unitModel{
+    @include pulseGrunt(45%,75%);
 }
 .hexagon .claimedBanner{
     border-radius: 50%;
@@ -1030,5 +1045,19 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
         margin-top:-20%;
         font-size: 50%;
         font-family: $coinFont2;
+    }
+}
+#weaponContainer{
+    width:.00001px;
+    height:.00001px;
+    #factualWeapon{
+        width:200%;
+        height:200%;
+        z-index:5;
+    }
+}
+@for $i from 1 through 12 {
+    .row#{$i} {
+        z-index: (-1 * $i);
     }
 }

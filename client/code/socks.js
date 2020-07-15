@@ -134,6 +134,7 @@ socket.on('tt',p=>{//key: { phase, next: myNextPhase, name, side:mySide }
         } else {
             OP_SCORE += skor
         }
+        end_GAME_check()
         GAME_TURN++
         displayAnimatedNews(GAME_SCENARIO.turnEndMessage(dieRoll))
         if( GAME_SCENARIO.instaCall )

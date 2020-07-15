@@ -96,6 +96,7 @@ const onHit = (aim, target) => { console.log('aim roll: ', ...aim)
     setBoons_Blights($('.selectedModel'),{baim:0})
     setBoons_Blights(target,{bdodge:0})
     console.log(aim_total)
+    animateWeapon(target)
     return aim_total  >= target_dodge
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
 const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
@@ -1060,8 +1061,11 @@ function standardWalk ({ $model, $destination, rules }){// rules is a array ['on
             !$destination.children(`.smallCard`).length || 
             ( 
                 (
-                    name === $destination.children(`.smallCard[data-side="${side}"]`).first().data('name') ||
-                    name === 'SneakyStabbers'
+                    (
+                        name === $destination.children(`.smallCard[data-side="${side}"]`).first().data('name') && 
+                        !$model.hasClass('largeUnitModel')
+                    ) ||
+                    ( name === 'SneakyStabbers' && $('[data-glow].hexagon').length > 6 )//data.glow count is bad fix
                 ) && 
                 $destination.children(`.smallCard`).length < 3
             )
@@ -1089,7 +1093,8 @@ function standardPush ({$model,$destination,rules}){// rules is a array ['onlyOn
             !$destination.children(`.smallCard`).length || 
             (
                 name === $destination.children(`.smallCard[data-side="${side}"]`).first().data('name') && 
-                $destination.children(`.smallCard`).length < 3
+                $destination.children(`.smallCard`).length < 3 &&
+                !$model.hasClass('largeUnitModel')
             )
         )
     } 
@@ -1126,4 +1131,16 @@ function am_I_winner(){
         mySide === 'left' && $('#coin').parent('.ladderBlock').data('block') < 12 || 
         mySide === 'right' && $('#coin').parent('.ladderBlock').data('block') > 11
     )
+}
+function end_GAME_check(){
+    if(OP_SCORE>4){
+        $('body').empty().text('You LOST')
+    }else if(MY_SCORE>4){
+        $('body').empty().text('You WON')
+    }
+}
+function animateWeapon($target){
+    const agro = $('.selectedModel')
+    const sucket = agro.parent('.hexagon')
+    sucket.append(`<div id="weaponContainer" ><img id="factualWeapon" src="./img/arrow-whiteTeam.svg" /></div>`)
 }

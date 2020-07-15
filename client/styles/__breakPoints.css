@@ -453,6 +453,302 @@
     margin: 0 30%;
     margin-top: 4vh;
   }
+  .shelf:nth-child(2n+1) {
+    margin-right: 1.9vh;
+    margin-left: -1.9vh;
+    margin-top: -.2vh;
+    margin-bottom: -.2vh;
+  }
+  .shelf:nth-child(2n) {
+    margin-left: 1.9vh;
+    margin-right: -1.9vh;
+    margin-top: -.2vh;
+    margin-bottom: -.2vh;
+  }
+  .shelf .hexagon {
+    position: relative;
+    width: 6.25vh;
+    height: 3.60875vh;
+    margin: 1.11688vh 0;
+    background-size: auto 6.20651vh;
+    background-position: center;
+    border-left: solid 0.4375vh;
+    border-right: solid 0.4375vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -6%;
+    margin-right: -6%;
+  }
+  .shelf .hexagon:after {
+    content: "";
+    position: absolute;
+    top: 0.25259vh;
+    left: 0;
+    width: 5.375vh;
+    height: 3.10312vh;
+    z-index: 2;
+    background: inherit;
+  }
+  .shelf .hexagon img {
+    height: 7.29156vh;
+    width: 6.5625vh;
+    position: relative;
+    top: -2.14125vh;
+    left: -0.55859vh;
+    z-index: 2;
+  }
+  .shelf .hexagon .top, .shelf .hexagon .bottom {
+    position: absolute;
+    z-index: 1;
+    width: 4.41937vh;
+    height: 4.41937vh;
+    overflow: hidden;
+    -webkit-transform: scaleY(0.5774) rotate(-45deg);
+    -ms-transform: scaleY(0.5774) rotate(-45deg);
+    transform: scaleY(0.5774) rotate(-45deg);
+    background: inherit;
+    left: 0.4775vh;
+  }
+  .shelf .hexagon .top:before, .shelf .hexagon .top:after, .shelf .hexagon .bottom:before, .shelf .hexagon .bottom:after {
+    content: "";
+    position: absolute;
+    width: 5.375vh;
+    height: 3.10312vh;
+    -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-1.55163vh);
+    -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-1.55163vh);
+    transform: rotate(45deg) scaleY(1.7321) translateY(-1.55163vh);
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background: inherit;
+  }
+  .shelf .hexagon .top {
+    top: -2.20971vh;
+    border-top: solid 0.61872vh;
+    border-right: solid 0.61872vh;
+  }
+  .shelf .hexagon .top:after {
+    background-position: center top;
+  }
+  .shelf .hexagon .bottom {
+    bottom: -2.20971vh;
+    border-bottom: solid 0.61872vh;
+    border-left: solid 0.61872vh;
+  }
+  .shelf .hexagon .bottom:after {
+    background-position: center bottom;
+  }
+  .shelf .hexagon .hexagrama-14 {
+    position: relative;
+    width: 5.98802vh;
+    height: 3.45749vh;
+    margin: 1.07006vh 0;
+    background-size: auto 5.94636vh;
+    background-position: center;
+    /* offset-x | offset-y | blur-radius | spread-radius | color */
+    border-left: solid 0.41916vh #333333;
+    border-right: solid 0.41916vh #333333;
+  }
+  .shelf .hexagon .hexagrama-14:after {
+    content: "";
+    position: absolute;
+    top: 0.24201vh;
+    left: 0;
+    width: 5.1497vh;
+    height: 2.97305vh;
+    z-index: 2;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-14 img {
+    height: 6.98593vh;
+    width: 6.28743vh;
+    position: relative;
+    top: -2.0515vh;
+    left: -0.53517vh;
+    z-index: 2;
+  }
+  .shelf .hexagon .hexagrama-14 .top, .shelf .hexagon .hexagrama-14 .bottom {
+    position: absolute;
+    z-index: 1;
+    width: 4.23413vh;
+    height: 4.23413vh;
+    overflow: hidden;
+    -webkit-transform: scaleY(0.5774) rotate(-45deg);
+    -ms-transform: scaleY(0.5774) rotate(-45deg);
+    transform: scaleY(0.5774) rotate(-45deg);
+    background: inherit;
+    left: 0.45749vh;
+  }
+  .shelf .hexagon .hexagrama-14 .top:before, .shelf .hexagon .hexagrama-14 .top:after, .shelf .hexagon .hexagrama-14 .bottom:before, .shelf .hexagon .hexagrama-14 .bottom:after {
+    content: "";
+    position: absolute;
+    width: 5.1497vh;
+    height: 2.97305vh;
+    -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-1.48659vh);
+    -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-1.48659vh);
+    transform: rotate(45deg) scaleY(1.7321) translateY(-1.48659vh);
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-14 .top {
+    top: -2.11708vh;
+    border-top: solid 0.59278vh #333333;
+    border-right: solid 0.59278vh #333333;
+  }
+  .shelf .hexagon .hexagrama-14 .top:after {
+    background-position: center top;
+  }
+  .shelf .hexagon .hexagrama-14 .bottom {
+    bottom: -2.11708vh;
+    border-bottom: solid 0.59278vh #333333;
+    border-left: solid 0.59278vh #333333;
+  }
+  .shelf .hexagon .hexagrama-14 .bottom:after {
+    background-position: center bottom;
+  }
+  .shelf .hexagon .hexagrama-24 {
+    position: relative;
+    width: 5.55556vh;
+    height: 3.20778vh;
+    margin: 0.99278vh 0;
+    background-size: auto 5.5169vh;
+    background-position: center;
+    /* offset-x | offset-y | blur-radius | spread-radius | color */
+    border-left: solid 0.38889vh #333333;
+    border-right: solid 0.38889vh #333333;
+  }
+  .shelf .hexagon .hexagrama-24:after {
+    content: "";
+    position: absolute;
+    top: 0.22453vh;
+    left: 0;
+    width: 4.77778vh;
+    height: 2.75833vh;
+    z-index: 2;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-24 img {
+    height: 6.48139vh;
+    width: 5.83333vh;
+    position: relative;
+    top: -1.90333vh;
+    left: -0.49652vh;
+    z-index: 2;
+  }
+  .shelf .hexagon .hexagrama-24 .top, .shelf .hexagon .hexagrama-24 .bottom {
+    position: absolute;
+    z-index: 1;
+    width: 3.92833vh;
+    height: 3.92833vh;
+    overflow: hidden;
+    -webkit-transform: scaleY(0.5774) rotate(-45deg);
+    -ms-transform: scaleY(0.5774) rotate(-45deg);
+    transform: scaleY(0.5774) rotate(-45deg);
+    background: inherit;
+    left: 0.42444vh;
+  }
+  .shelf .hexagon .hexagrama-24 .top:before, .shelf .hexagon .hexagrama-24 .top:after, .shelf .hexagon .hexagrama-24 .bottom:before, .shelf .hexagon .hexagrama-24 .bottom:after {
+    content: "";
+    position: absolute;
+    width: 4.77778vh;
+    height: 2.75833vh;
+    -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-1.37923vh);
+    -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-1.37923vh);
+    transform: rotate(45deg) scaleY(1.7321) translateY(-1.37923vh);
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-24 .top {
+    top: -1.96418vh;
+    border-top: solid 0.54997vh #333333;
+    border-right: solid 0.54997vh #333333;
+  }
+  .shelf .hexagon .hexagrama-24 .top:after {
+    background-position: center top;
+  }
+  .shelf .hexagon .hexagrama-24 .bottom {
+    bottom: -1.96418vh;
+    border-bottom: solid 0.54997vh #333333;
+    border-left: solid 0.54997vh #333333;
+  }
+  .shelf .hexagon .hexagrama-24 .bottom:after {
+    background-position: center bottom;
+  }
+  .shelf .hexagon .hexagrama-30 {
+    position: relative;
+    width: 5.26316vh;
+    height: 3.03895vh;
+    margin: 0.94053vh 0;
+    background-size: auto 5.22654vh;
+    background-position: center;
+    /* offset-x | offset-y | blur-radius | spread-radius | color */
+    border-left: solid 0.36842vh #333333;
+    border-right: solid 0.36842vh #333333;
+  }
+  .shelf .hexagon .hexagrama-30:after {
+    content: "";
+    position: absolute;
+    top: 0.21271vh;
+    left: 0;
+    width: 4.52632vh;
+    height: 2.61316vh;
+    z-index: 2;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-30 img {
+    height: 6.14026vh;
+    width: 5.52632vh;
+    position: relative;
+    top: -1.80316vh;
+    left: -0.47039vh;
+    z-index: 2;
+  }
+  .shelf .hexagon .hexagrama-30 .top, .shelf .hexagon .hexagrama-30 .bottom {
+    position: absolute;
+    z-index: 1;
+    width: 3.72158vh;
+    height: 3.72158vh;
+    overflow: hidden;
+    -webkit-transform: scaleY(0.5774) rotate(-45deg);
+    -ms-transform: scaleY(0.5774) rotate(-45deg);
+    transform: scaleY(0.5774) rotate(-45deg);
+    background: inherit;
+    left: 0.40211vh;
+  }
+  .shelf .hexagon .hexagrama-30 .top:before, .shelf .hexagon .hexagrama-30 .top:after, .shelf .hexagon .hexagrama-30 .bottom:before, .shelf .hexagon .hexagrama-30 .bottom:after {
+    content: "";
+    position: absolute;
+    width: 4.52632vh;
+    height: 2.61316vh;
+    -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-1.30664vh);
+    -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-1.30664vh);
+    transform: rotate(45deg) scaleY(1.7321) translateY(-1.30664vh);
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-30 .top {
+    top: -1.86081vh;
+    border-top: solid 0.52103vh #333333;
+    border-right: solid 0.52103vh #333333;
+  }
+  .shelf .hexagon .hexagrama-30 .top:after {
+    background-position: center top;
+  }
+  .shelf .hexagon .hexagrama-30 .bottom {
+    bottom: -1.86081vh;
+    border-bottom: solid 0.52103vh #333333;
+    border-left: solid 0.52103vh #333333;
+  }
+  .shelf .hexagon .hexagrama-30 .bottom:after {
+    background-position: center bottom;
+  }
 }
 
 @media (max-aspect-ratio: 1000 / 721) and (min-aspect-ratio: 1000 / 780) {
@@ -766,6 +1062,308 @@
     margin: 0 30%;
     margin-top: 4vh;
   }
+  .shelf:nth-child(2n+1) {
+    margin-right: 1.5vh;
+    margin-left: -1.5vh;
+    margin-top: -2.2vh;
+    margin-bottom: -1.2vh;
+  }
+  .shelf:nth-child(2n) {
+    margin-left: 1.5vh;
+    margin-right: -1.5vh;
+    margin-top: -1.2vh;
+    margin-bottom: -.2vh;
+  }
+  .shelf .hexagon {
+    position: relative;
+    width: 4.7619vh;
+    height: 2.74952vh;
+    margin: 0.85095vh 0;
+    background-size: auto 4.72877vh;
+    background-position: center;
+    border-left: solid 0.33333vh;
+    border-right: solid 0.33333vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -6%;
+    margin-right: -6%;
+  }
+  .shelf .hexagon:after {
+    content: "";
+    position: absolute;
+    top: 0.19245vh;
+    left: 0;
+    width: 4.09524vh;
+    height: 2.36429vh;
+    z-index: 2;
+    background: inherit;
+  }
+  .shelf .hexagon img {
+    height: 5.55548vh;
+    width: 5vh;
+    position: relative;
+    top: -1.63143vh;
+    left: -0.42559vh;
+    z-index: 2;
+  }
+  .shelf .hexagon .top, .shelf .hexagon .bottom {
+    position: absolute;
+    z-index: 1;
+    width: 3.36714vh;
+    height: 3.36714vh;
+    overflow: hidden;
+    -webkit-transform: scaleY(0.5774) rotate(-45deg);
+    -ms-transform: scaleY(0.5774) rotate(-45deg);
+    transform: scaleY(0.5774) rotate(-45deg);
+    background: inherit;
+    left: 0.36381vh;
+  }
+  .shelf .hexagon .top:before, .shelf .hexagon .top:after, .shelf .hexagon .bottom:before, .shelf .hexagon .bottom:after {
+    content: "";
+    position: absolute;
+    width: 4.09524vh;
+    height: 2.36429vh;
+    -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-1.1822vh);
+    -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-1.1822vh);
+    transform: rotate(45deg) scaleY(1.7321) translateY(-1.1822vh);
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background: inherit;
+  }
+  .shelf .hexagon .top {
+    top: -1.68359vh;
+    border-top: solid 0.4714vh;
+    border-right: solid 0.4714vh;
+  }
+  .shelf .hexagon .top:after {
+    background-position: center top;
+  }
+  .shelf .hexagon .bottom {
+    bottom: -1.68359vh;
+    border-bottom: solid 0.4714vh;
+    border-left: solid 0.4714vh;
+  }
+  .shelf .hexagon .bottom:after {
+    background-position: center bottom;
+  }
+  .shelf .hexagon .hexagrama-14 {
+    position: relative;
+    width: 5.98802vh;
+    height: 3.45749vh;
+    margin: 1.07006vh 0;
+    background-size: auto 5.94636vh;
+    background-position: center;
+    /* offset-x | offset-y | blur-radius | spread-radius | color */
+    border-left: solid 0.41916vh #333333;
+    border-right: solid 0.41916vh #333333;
+  }
+  .shelf .hexagon .hexagrama-14:after {
+    content: "";
+    position: absolute;
+    top: 0.24201vh;
+    left: 0;
+    width: 5.1497vh;
+    height: 2.97305vh;
+    z-index: 2;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-14 img {
+    height: 6.98593vh;
+    width: 6.28743vh;
+    position: relative;
+    top: -2.0515vh;
+    left: -0.53517vh;
+    z-index: 2;
+  }
+  .shelf .hexagon .hexagrama-14 .top, .shelf .hexagon .hexagrama-14 .bottom {
+    position: absolute;
+    z-index: 1;
+    width: 4.23413vh;
+    height: 4.23413vh;
+    overflow: hidden;
+    -webkit-transform: scaleY(0.5774) rotate(-45deg);
+    -ms-transform: scaleY(0.5774) rotate(-45deg);
+    transform: scaleY(0.5774) rotate(-45deg);
+    background: inherit;
+    left: 0.45749vh;
+  }
+  .shelf .hexagon .hexagrama-14 .top:before, .shelf .hexagon .hexagrama-14 .top:after, .shelf .hexagon .hexagrama-14 .bottom:before, .shelf .hexagon .hexagrama-14 .bottom:after {
+    content: "";
+    position: absolute;
+    width: 5.1497vh;
+    height: 2.97305vh;
+    -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-1.48659vh);
+    -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-1.48659vh);
+    transform: rotate(45deg) scaleY(1.7321) translateY(-1.48659vh);
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-14 .top {
+    top: -2.11708vh;
+    border-top: solid 0.59278vh #333333;
+    border-right: solid 0.59278vh #333333;
+  }
+  .shelf .hexagon .hexagrama-14 .top:after {
+    background-position: center top;
+  }
+  .shelf .hexagon .hexagrama-14 .bottom {
+    bottom: -2.11708vh;
+    border-bottom: solid 0.59278vh #333333;
+    border-left: solid 0.59278vh #333333;
+  }
+  .shelf .hexagon .hexagrama-14 .bottom:after {
+    background-position: center bottom;
+  }
+  .shelf .hexagon .hexagrama-24 {
+    position: relative;
+    width: 5.55556vh;
+    height: 3.20778vh;
+    margin: 0.99278vh 0;
+    background-size: auto 5.5169vh;
+    background-position: center;
+    /* offset-x | offset-y | blur-radius | spread-radius | color */
+    border-left: solid 0.38889vh #333333;
+    border-right: solid 0.38889vh #333333;
+  }
+  .shelf .hexagon .hexagrama-24:after {
+    content: "";
+    position: absolute;
+    top: 0.22453vh;
+    left: 0;
+    width: 4.77778vh;
+    height: 2.75833vh;
+    z-index: 2;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-24 img {
+    height: 6.48139vh;
+    width: 5.83333vh;
+    position: relative;
+    top: -1.90333vh;
+    left: -0.49652vh;
+    z-index: 2;
+  }
+  .shelf .hexagon .hexagrama-24 .top, .shelf .hexagon .hexagrama-24 .bottom {
+    position: absolute;
+    z-index: 1;
+    width: 3.92833vh;
+    height: 3.92833vh;
+    overflow: hidden;
+    -webkit-transform: scaleY(0.5774) rotate(-45deg);
+    -ms-transform: scaleY(0.5774) rotate(-45deg);
+    transform: scaleY(0.5774) rotate(-45deg);
+    background: inherit;
+    left: 0.42444vh;
+  }
+  .shelf .hexagon .hexagrama-24 .top:before, .shelf .hexagon .hexagrama-24 .top:after, .shelf .hexagon .hexagrama-24 .bottom:before, .shelf .hexagon .hexagrama-24 .bottom:after {
+    content: "";
+    position: absolute;
+    width: 4.77778vh;
+    height: 2.75833vh;
+    -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-1.37923vh);
+    -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-1.37923vh);
+    transform: rotate(45deg) scaleY(1.7321) translateY(-1.37923vh);
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-24 .top {
+    top: -1.96418vh;
+    border-top: solid 0.54997vh #333333;
+    border-right: solid 0.54997vh #333333;
+  }
+  .shelf .hexagon .hexagrama-24 .top:after {
+    background-position: center top;
+  }
+  .shelf .hexagon .hexagrama-24 .bottom {
+    bottom: -1.96418vh;
+    border-bottom: solid 0.54997vh #333333;
+    border-left: solid 0.54997vh #333333;
+  }
+  .shelf .hexagon .hexagrama-24 .bottom:after {
+    background-position: center bottom;
+  }
+  .shelf .hexagon .hexagrama-30 {
+    position: relative;
+    width: 4.7619vh;
+    height: 2.74952vh;
+    margin: 0.85095vh 0;
+    background-size: auto 4.72877vh;
+    background-position: center;
+    /* offset-x | offset-y | blur-radius | spread-radius | color */
+    border-left: solid 0.33333vh #333333;
+    border-right: solid 0.33333vh #333333;
+  }
+  .shelf .hexagon .hexagrama-30:after {
+    content: "";
+    position: absolute;
+    top: 0.19245vh;
+    left: 0;
+    width: 4.09524vh;
+    height: 2.36429vh;
+    z-index: 2;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-30 img {
+    height: 5.55548vh;
+    width: 5vh;
+    position: relative;
+    top: -1.63143vh;
+    left: -0.42559vh;
+    z-index: 2;
+  }
+  .shelf .hexagon .hexagrama-30 .top, .shelf .hexagon .hexagrama-30 .bottom {
+    position: absolute;
+    z-index: 1;
+    width: 3.36714vh;
+    height: 3.36714vh;
+    overflow: hidden;
+    -webkit-transform: scaleY(0.5774) rotate(-45deg);
+    -ms-transform: scaleY(0.5774) rotate(-45deg);
+    transform: scaleY(0.5774) rotate(-45deg);
+    background: inherit;
+    left: 0.36381vh;
+  }
+  .shelf .hexagon .hexagrama-30 .top:before, .shelf .hexagon .hexagrama-30 .top:after, .shelf .hexagon .hexagrama-30 .bottom:before, .shelf .hexagon .hexagrama-30 .bottom:after {
+    content: "";
+    position: absolute;
+    width: 4.09524vh;
+    height: 2.36429vh;
+    -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-1.1822vh);
+    -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-1.1822vh);
+    transform: rotate(45deg) scaleY(1.7321) translateY(-1.1822vh);
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background: inherit;
+  }
+  .shelf .hexagon .hexagrama-30 .top {
+    top: -1.68359vh;
+    border-top: solid 0.4714vh #333333;
+    border-right: solid 0.4714vh #333333;
+  }
+  .shelf .hexagon .hexagrama-30 .top:after {
+    background-position: center top;
+  }
+  .shelf .hexagon .hexagrama-30 .bottom {
+    bottom: -1.68359vh;
+    border-bottom: solid 0.4714vh #333333;
+    border-left: solid 0.4714vh #333333;
+  }
+  .shelf .hexagon .hexagrama-30 .bottom:after {
+    background-position: center bottom;
+  }
+  .treasureBox.right {
+    margin-left: 3vh;
+  }
+  #app {
+    padding-top: 5vh;
+  }
 }
 
 @media (max-aspect-ratio: 1000 / 781) and (min-aspect-ratio: 1000 / 1000) {
@@ -1058,4 +1656,52 @@
   .card_hex_big .bottom:after {
     background-position: center bottom;
   }
+}
+
+.shelf .hexagon.deployPhase {
+  border-color: transparent rgba(208, 209, 155, 0.637) transparent rgba(245, 231, 152, 0.829);
+}
+
+.shelf .hexagon.deployPhase .top {
+  border-color: #f4f5c2e5 #e7e7b9cb transparent transparent;
+}
+
+.shelf .hexagon.deployPhase .bottom {
+  border-color: transparent transparent rgba(158, 153, 127, 0.582) rgba(165, 161, 124, 0.767);
+}
+
+.shelf .hexagon.plotPhase {
+  border-color: transparent rgba(216, 216, 216, 0.637) transparent rgba(255, 255, 255, 0.829);
+}
+
+.shelf .hexagon.plotPhase .top {
+  border-color: #f8f8f8e5 #ffffffcb transparent transparent;
+}
+
+.shelf .hexagon.plotPhase .bottom {
+  border-color: transparent transparent rgba(255, 255, 255, 0.582) rgba(194, 194, 194, 0.767);
+}
+
+.shelf .hexagon.clashPhase {
+  border-color: transparent rgba(208, 160, 160, 0.96) transparent rgba(187, 133, 133, 0.829);
+}
+
+.shelf .hexagon.clashPhase .top {
+  border-color: #a55d5de5 #b36d6dcb transparent transparent;
+}
+
+.shelf .hexagon.clashPhase .bottom {
+  border-color: transparent transparent rgba(145, 129, 129, 0.582) rgba(128, 96, 96, 0.767);
+}
+
+.shelf .hexagon.endPhase {
+  border-color: transparent rgba(134, 191, 196, 0.637) transparent rgba(149, 203, 207, 0.829);
+}
+
+.shelf .hexagon.endPhase .top {
+  border-color: rgba(161, 209, 205, 0.898) rgba(131, 189, 190, 0.796) transparent transparent;
+}
+
+.shelf .hexagon.endPhase .bottom {
+  border-color: transparent transparent rgba(129, 173, 170, 0.582) rgba(97, 129, 129, 0.767);
 }

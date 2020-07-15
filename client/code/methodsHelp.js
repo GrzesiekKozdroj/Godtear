@@ -90,13 +90,13 @@ function slayerPoints(target){
     else 
         return target.data('stepsgiven')
 }
-const onHit = (aim, target) => { console.log('aim roll: ', ...aim)
+const onHit = (aim, target, weapon) => { console.log('aim roll: ', ...aim)
     const target_dodge = Number(target.attr('data-dodge')) + checkIfNotMorrigan(target,'bdodge')
     const aim_total = aim.reduce((a,b)=>a+b,0) - (fearsome() || superiority(target) ? aim[0] : 0)
     setBoons_Blights($('.selectedModel'),{baim:0})
     setBoons_Blights(target,{bdodge:0})
     console.log(aim_total)
-    animateWeapon(target)
+    animateWeapon(target, weapon)
     return aim_total  >= target_dodge
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
 const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
@@ -491,7 +491,7 @@ function blights_spew_recieved({o, blight, m}){
          console.log(hex,row)
         un_glow()
         add_action_taken(m)
-        if( onHit(aim, target) ){
+        if( onHit(aim, target,'spell') ){
             setBoons_Blights(target,{[blight]:-1})
             displayAnimatedNews (`${target.data('name')} <br/> -1 ${[...blight].slice(1).join('')}`)
         } else 
@@ -632,9 +632,11 @@ function backstab(o){
         const target = $(targets[0])
         un_glow()
         add_action_taken(`backstab${phase==='white'?'White':'Black'}`)
-        if( onHit(aim, target) ){
-            target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
-            animateDamage(target, -1)
+        if( onHit(aim, target,'sword') ){
+            if( target.hasClass('champModel')){
+                target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
+                animateDamage(target, -1)
+            }
             displayAnimatedNews(`${target.data('name')}<br/>backstabbed`)
             if( checkIfStillAlive(target) )
                 moveLadder(target, target.data('stepsgiven'))
@@ -689,7 +691,7 @@ function ambush_(o){
          
         un_glow()
         add_action_taken(`ambush${phase==='white'?'White':'Black'}`)
-        if( onHit(aim, target) ){
+        if( onHit(aim, target,'axe') ){
             stolenTreasure()
             target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
             animateDamage(target, -1)
@@ -750,7 +752,7 @@ function hexBolt_(o){
         const at = 'hexBolt' + (phase==='white'?'White':'Black')
         un_glow()
         add_action_taken(at)
-        if( onHit(aim, target) ){ 
+        if( onHit(aim, target,'spell') ){ 
             if( myTurn )
                 $('#gameScreen').append(  challengeOptions(target, {hex, row}, "hexBolt2",1,`give 1 blight to ${target.data('name')}`)  )
         } else displayAnimatedNews ("missed!")
@@ -866,7 +868,7 @@ function earthquake_(o){
         const team = target.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
         un_glow()
         add_action_taken(`earthquake${phase==='white'?"White":"Black"}`)
-        if( onHit(aim, target) && !$('.earthquake_selected').length ){
+        if( onHit(aim, target,'spell') && !$('.earthquake_selected').length ){
             displayAnimatedNews(`earthquake<br/>${target.data('name')} moving`)
             $(`[data-name="${target.data('name')}"]${team}`).addClass('earthquake_moveable')
             target.addClass('earthquake_selected')
@@ -930,7 +932,7 @@ function tide_(o){
         const target = $(targets[0])
         un_glow()
         add_action_taken(`tide${phase==='white'?'White':'Black'}`)
-        if( onHit(aim, target) ){
+        if( onHit(aim, target,'spell') ){
             displayAnimatedNews('tide')
             un_glow()
             target.addClass('tide_selected')
@@ -1139,8 +1141,51 @@ function end_GAME_check(){
         $('body').empty().text('You WON')
     }
 }
-function animateWeapon($target){
-    const agro = $('.selectedModel')
-    const sucket = agro.parent('.hexagon')
-    sucket.append(`<div id="weaponContainer" ><img id="factualWeapon" src="./img/arrow-whiteTeam.svg" /></div>`)
+function animateWeapon($target, weapon){
+    const agroDad = $('.selectedModel').parent('.hexagon')
+    const sucket = $target.parent('.hexagon')
+    //weapondad has to be model with higher hex && row
+
+    //weapon hes to have left-right versions:
+    //odd origin -> even target ROW
+    //even origin  <- odd target ROW
+
+    let ofsetSize = $target.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
+    const left = -(sucket.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * km) - $('.selectedModel').offset().left)+'px'
+    const top = -(sucket.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * km) - $('.selectedModel').offset().top )+'px'
+    const team = $target.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
+    const randomisoro = Math.floor( Math.random () * (10000 - 1 + 1)) + 1
+    const specialKlazz = () => {
+        const SM_d = agroDad.data()
+        const VM_d = sucket.data()
+        if( SM_d.hex > VM_d.hex ){
+            return 'weaponSpinToLeft'
+        } else if ( SM_d.hex < VM_d.hex ){
+            return 'weaponSpinToRight'
+        } else if ( SM_d.hex === VM_d.hex ){
+            //theyre even
+            if( SM_d.row % 2 === 0 ){
+                return 'weaponSpinToLeft'
+            } else {
+                return 'weaponSpinToRight'
+            }
+        }
+    }
+    agroDad.append(`
+        <img id="factualWeapon" class="${randomisoro}" src="./img/${weapon}-${team}.svg" />
+    `)
+    setTimeout(()=>{
+        //$('#factualWeapon')
+        agroDad.find('#factualWeapon')
+        .addClass( specialKlazz() )
+            .css({ left, top })
+            .detach()
+            .appendTo(sucket)
+            .animate({
+                left:0,
+                top:0
+            }, 400,()=>{
+                setTimeout(()=>$(`#factualWeapon.${randomisoro}`).remove(),250)
+            })
+        },400)
 }

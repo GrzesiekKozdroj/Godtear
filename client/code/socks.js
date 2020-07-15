@@ -52,6 +52,7 @@ socket.on('d-o-h',p=>{
 socket.on('horn',p=>{
     phase = p
     beginFirstPlotPhase()
+    $('.deployPhase').removeClass('deployPhase').addClass('plotPhase')
 })
 
 socket.on('sM',p=>{
@@ -107,6 +108,7 @@ socket.on('tt',p=>{//key: { phase, next: myNextPhase, name, side:mySide }
     //p1 && p2 starts black
     if(phase==='white'&&myNextPhase==='black'){console.log('TT_I')//into black phase
         phase='black'
+        $('.plotPhase').removeClass('plotPhase').addClass('clashPhase')
         turn_resetter(opoSkillTrack,'black','blackTeam')
         turn_resetter(mySkillTrack,'black','whiteTeam')
     }
@@ -125,6 +127,7 @@ socket.on('tt',p=>{//key: { phase, next: myNextPhase, name, side:mySide }
         let opBanners = removeAllBanners('blackTeam')
         moveLadder($($('[data-tenmodel].whiteTeam')[0]), myBanners - opBanners)
         phase='end' 
+        $('.clashPhase').removeClass('clashPhase').addClass('endPhase')
         myNextPhase = 'white'
         GAME_SCENARIO.dieRoll = dieRoll
         const skor = calc_score()

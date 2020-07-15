@@ -41,7 +41,7 @@ function beginBattle(){
 
         for (let h = 1; h < 15; h++) {
             const tester_paragraph = `<p>${h} | ${r}</p>`
-            let hexClass = "hexagon hex_" + h + "_in_row_" + r;
+            let hexClass = "hexagon deployPhase hex_" + h + "_in_row_" + r;
             let hex = `
             <div class="${hexClass}" data-row=${r} data-hex=${h}>
                 <div class="top"></div>
@@ -228,6 +228,7 @@ function QUICK_DEEPLOY() {
         roow -= heex > 0 ? 0 : 1;
         heex -= heex > 0 ? 1 : -14;
     })
+    $('.deployPhase').removeClass('deployPhase').addClass('plotPhase')
     socket.emit('beginBattle')
 }
 

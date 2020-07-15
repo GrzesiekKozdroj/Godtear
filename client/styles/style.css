@@ -111,7 +111,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  z-index: -13;
 }
 
 .shelf {
@@ -366,7 +365,6 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  z-index: -13;
 }
 
 .elevator {
@@ -2836,61 +2834,53 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   font-family: "Shojumaru", cursive;
 }
 
-#weaponContainer {
+#factualWeapon {
   width: .00001px;
   height: .00001px;
-}
-
-#weaponContainer #factualWeapon {
-  width: 200%;
-  height: 200%;
+  position: absolute;
+  z-index: 7;
+  pointer-events: none;
+  pointer-events: none;
+  width: 5vh;
+  height: 5vh;
   z-index: 5;
 }
 
-.row1 {
-  z-index: -1;
+.weaponSpinToRight {
+  transform-origin: bottom left;
+  position: relative;
+  top: -6vh;
+  left: 0;
+  animation: 0.7s infinite forwards swingGun-right;
 }
 
-.row2 {
-  z-index: -2;
+@keyframes swingGun-right {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.row3 {
-  z-index: -3;
+.weaponSpinToLeft {
+  transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+  /* Internet Explorer */
+  -moz-transform: scaleX(-1);
+  /* Firefox */
+  -webkit-transform: scaleX(-1);
+  /* Safari and Chrome */
+  -o-transform: scaleX(-1);
+  /* Opera */
+  animation: 0.7s infinite forwards swingGun-left;
 }
 
-.row4 {
-  z-index: -4;
-}
-
-.row5 {
-  z-index: -5;
-}
-
-.row6 {
-  z-index: -6;
-}
-
-.row7 {
-  z-index: -7;
-}
-
-.row8 {
-  z-index: -8;
-}
-
-.row9 {
-  z-index: -9;
-}
-
-.row10 {
-  z-index: -10;
-}
-
-.row11 {
-  z-index: -11;
-}
-
-.row12 {
-  z-index: -12;
+@keyframes swingGun-left {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
 }

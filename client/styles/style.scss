@@ -195,7 +195,6 @@ $colorFillHex: transparent;
     display:flex;
     flex-wrap:wrap;
     justify-content: space-evenly;
-    z-index: -13;
 }
 
 
@@ -287,7 +286,6 @@ body{
     display:flex;
     align-items: center;
     flex-direction:column;
-    z-index:-13;
 }
 
 
@@ -1047,17 +1045,43 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
         font-family: $coinFont2;
     }
 }
-#weaponContainer{
+@mixin scalatoreX($s){
+    transform:scaleX($s);
+    -ms-transform: scaleX($s); /* Internet Explorer */
+    -moz-transform: scaleX($s); /* Firefox */
+    -webkit-transform: scaleX($s); /* Safari and Chrome */
+    -o-transform: scaleX($s); /* Opera */
+}
+@mixin swingGun($a,$b,$c){
+        @keyframes swingGun-#{$c}{
+        0%{
+        transform:rotate($a),
+        }
+        100%{
+        transform:rotate($b),
+        }
+    }
+    animation: .7s infinite forwards swingGun-#{$c};
+}
+#factualWeapon{
     width:.00001px;
     height:.00001px;
-    #factualWeapon{
-        width:200%;
-        height:200%;
+    position:absolute;
+    z-index:7;
+    pointer-events: none;
+        pointer-events: none;
+        width:5vh;
+        height:5vh;
         z-index:5;
-    }
 }
-@for $i from 1 through 12 {
-    .row#{$i} {
-        z-index: (-1 * $i);
-    }
+.weaponSpinToRight{
+    transform-origin: bottom left;
+    position: relative;
+    top:-6vh;
+    left:0;
+    @include swingGun(0deg,360deg,'right')
+}
+.weaponSpinToLeft{
+    @include scalatoreX(-1);
+    @include swingGun(0deg,-360deg,'left')
 }

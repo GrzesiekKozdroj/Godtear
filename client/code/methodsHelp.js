@@ -90,21 +90,39 @@ function slayerPoints(target){
     else 
         return target.data('stepsgiven')
 }
-const onHit = (aim, target, weapon) => { console.log('aim roll: ', ...aim)
+const onHit = (aim, target, weapon, skillName) => { console.log('aim roll: ', ...aim)
     const target_dodge = Number(target.attr('data-dodge')) + checkIfNotMorrigan(target,'bdodge')
     const aim_total = aim.reduce((a,b)=>a+b,0) - (fearsome() || superiority(target) ? aim[0] : 0)
     setBoons_Blights($('.selectedModel'),{baim:0})
     setBoons_Blights(target,{bdodge:0})
     console.log(aim_total)
     animateWeapon(target, weapon)
-    return aim_total  >= target_dodge
+    const product = aim_total  >= target_dodge
+    displayAnimatedNews({
+        dieRoll:aim,
+        templateType:'attack',
+        rollOutcome:product,
+        $victim:target,
+        $attacker:$('.selectedModel'),
+        skillName,
+        skillIcon:'skull'
+    })
+    return product
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
 const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
     const target_protection = Number(target.attr('data-protection')) + checkIfNotMorrigan(target,'bprotection')
     const hurt_total = hurt.reduce((a,b)=>a+b,0) - ( superiority(target) ? hurt[0] : 0 )
     setBoons_Blights($('.selectedModel'),{bdamage:0})
     setBoons_Blights(target,{bprotection:0})
-        if(hurt_total > target_protection){
+    const product = hurt_total > target_protection
+    displayAnimatedNews({
+        dieRoll:hurt,
+        templateType:'damage',
+        rollOutcome:product,
+        hurtTotal: target_protection - hurt_total,
+        $victim:target
+    })
+        if( product ){
             let target_health = target.attr('data-healthleft')
             let pain = target_health - (hurt_total - target_protection)
             target.attr( 'data-healthleft', pain )
@@ -178,6 +196,11 @@ const forceKill = (target) => {//$()
 }//<---killed units and champs need to give up their boons and blights, what about resurrected units??
 const moveLadder = (target,steps) => {
     const origin = $($('#coin').parent('.ladderBlock')).data('block')
+    displayAnimatedNews({
+        templateType:'points',
+        steps,
+        $victim:target
+    })
     let direction = 0 //1   <--> 22
     if( target.hasClass('blackTeam') && target.hasClass('smallCard') ){
         direction = mySide === 'left' ? -1 : 1
@@ -491,11 +514,12 @@ function blights_spew_recieved({o, blight, m}){
          console.log(hex,row)
         un_glow()
         add_action_taken(m)
-        if( onHit(aim, target,'spell') ){
+        if( onHit(aim, target,'spell',m) ){
             setBoons_Blights(target,{[blight]:-1})
-            displayAnimatedNews (`${target.data('name')} <br/> -1 ${[...blight].slice(1).join('')}`)
-        } else 
-            displayAnimatedNews ("missed!")
+            displayAnimatedNews({
+                blight:`-1 ${[...blight].slice(1).join('')}`
+            })
+        }
     }
     current_ability_method = null
 }
@@ -632,19 +656,11 @@ function backstab(o){
         const target = $(targets[0])
         un_glow()
         add_action_taken(`backstab${phase==='white'?'White':'Black'}`)
-        if( onHit(aim, target,'sword') ){
+        if( onHit(aim, target,'sword','Backstab') ){
             if( target.hasClass('champModel')){
                 target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
                 animateDamage(target, -1)
             }
-            displayAnimatedNews({
-                $attacker:$('.selectedModel'),
-                $victim:target,
-                skillName:'backstab',
-                skillIcon:'skull',
-                dieRoll:aim,
-                rollOutcome:true,
-                templateType:'attack'})
             if( checkIfStillAlive(target) )
                 moveLadder(target, target.data('stepsgiven'))
             else {
@@ -695,10 +711,9 @@ function ambush_(o){
     const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
     if(targets.length){
         const target = $(targets[0])
-         
         un_glow()
         add_action_taken(`ambush${phase==='white'?'White':'Black'}`)
-        if( onHit(aim, target,'axe') ){
+        if( onHit(aim, target,'axe','Ambush') ){
             stolenTreasure()
             target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
             animateDamage(target, -1)
@@ -759,7 +774,7 @@ function hexBolt_(o){
         const at = 'hexBolt' + (phase==='white'?'White':'Black')
         un_glow()
         add_action_taken(at)
-        if( onHit(aim, target,'spell') ){ 
+        if( onHit(aim, target,'spell','Hex Bolt') ){ 
             if( myTurn )
                 $('#gameScreen').append(  challengeOptions(target, {hex, row}, "hexBolt2",1,`give 1 blight to ${target.data('name')}`)  )
         } else displayAnimatedNews ("missed!")
@@ -875,7 +890,7 @@ function earthquake_(o){
         const team = target.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
         un_glow()
         add_action_taken(`earthquake${phase==='white'?"White":"Black"}`)
-        if( onHit(aim, target,'spell') && !$('.earthquake_selected').length ){
+        if( !$('.earthquake_selected').length && onHit(aim, target,'spell','Earthquake') ){
             displayAnimatedNews(`earthquake<br/>${target.data('name')} moving`)
             $(`[data-name="${target.data('name')}"]${team}`).addClass('earthquake_moveable')
             target.addClass('earthquake_selected')
@@ -939,7 +954,7 @@ function tide_(o){
         const target = $(targets[0])
         un_glow()
         add_action_taken(`tide${phase==='white'?'White':'Black'}`)
-        if( onHit(aim, target,'spell') ){
+        if( onHit(aim, target,'spell','Tide') ){
             displayAnimatedNews('tide')
             un_glow()
             target.addClass('tide_selected')

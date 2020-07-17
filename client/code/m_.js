@@ -6,14 +6,14 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken("kick")
-            if( onHit(aim, target, 'axe') )
+            if( onHit(aim, target, 'axe','Kick') ){
                 if( doDamage(hurt, target) ){
                     wildfire()
-                    if( checkIfStillAlive(target) )
+                    if( checkIfStillAlive(target) ){
                         moveLadder(target,1 + target.data('stepsgiven'))
-                    else null
-                } else displayAnimatedNews("no damage!")
-            else displayAnimatedNews ("missed!")
+                    } else null
+                }
+            }
         }
         current_ability_method = null
     },
@@ -24,14 +24,14 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken("fieryAxe",multiAction)
-            if( onHit(aim, target, 'axe') )
+            if( onHit(aim, target, 'axe','Fiery Axe') ){
                 if( doDamage(hurt, target) ){
                     wildfire()
                     if( checkIfStillAlive(target) )
                         moveLadder(target,1 + target.data('stepsgiven'))
                     else null
-            }else displayAnimatedNews ('no damage!')
-            else displayAnimatedNews ('missed!')
+                }
+            }
         }
         current_ability_method = null
     },
@@ -42,14 +42,14 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken("fireball",multiAction)
-            if( onHit(aim, target, 'spell') )
+            if( onHit(aim, target, 'spell','Fireball') ){
                 if( doDamage(hurt, target) ){
                     wildfire()
                     if( checkIfStillAlive(target) )
                         moveLadder(target,1 + target.data('stepsgiven'))
                     else null
-                }else displayAnimatedNews ('no damage!')
-            else displayAnimatedNews ('missed')
+                }
+            }
         }
         current_ability_method = null
     },
@@ -69,7 +69,7 @@ var m_ = {
         const target = $(targets[0])
         add_action_taken("evilEye")
         current_ability_method = null
-        if( onHit(aim, target, 'spell') ){
+        if( onHit(aim, target, 'spell','Evil Eye') ){
             displayAnimatedNews(`${target.data('name')}<br/>-1 protection`)
             setBoons_Blights(target,{bprotection:Number(target.attr('data-bprotection'))-1})
         } else 
@@ -84,15 +84,15 @@ var m_ = {
             target.removeClass('destined_for_DOOM')
             un_glow()
             add_action_taken("legendary",multiAction)
-            if( onHit(aim, target, 'axe') )
+            if( onHit(aim, target, 'axe','Firestorm') ){
                 if( doDamage(hurt, target) ){
                     wildfire()
                     if( checkIfStillAlive(target) )
                         moveLadder(target,1 + target.data('stepsgiven'))
                     else null
-                } else displayAnimatedNews ('no damage!')
-            else displayAnimatedNews ('missed')
-        } 
+                }
+            }
+        }
         if( !$(`.destined_for_DOOM`).length ) $('#multi_choice_info_panel').remove()
         current_ability_method = null
     },
@@ -112,13 +112,13 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken("cleavingStrike")
-            if( onHit(aim, target, 'axe') )
-                if( doDamage(hurt, target) )
+            if( onHit(aim, target, 'axe','Cleaving Strike') ){
+                if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
                     else null
-                else displayAnimatedNews("no damage!")
-            else displayAnimatedNews ("missed!")
+                }
+            }
         }
         current_ability_method = null
     },
@@ -139,15 +139,13 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
             add_action_taken("intimidation")
-            if( onHit(aim, target, 'axe') )
+            if( onHit(aim, target, 'axe', 'Intimidation') )
             {
-                displayAnimatedNews(`${target.data('name')}<br/>-1 dodge`)
+                displayAnimatedNews({  blight:'-1 dodge'    })
                 setBoons_Blights(target,{bdodge:Number(target.attr('data-bdodge'))-1})
             }
-            else displayAnimatedNews("missed!")
         }
         current_ability_method = null
     },
@@ -158,13 +156,13 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             tituulti_addaction("piercingStrike",multiAction)
-            if( onHit(aim, target, 'sword') )
-                if( doDamage(hurt, target) )
+            if( onHit(aim, target, 'sword','Piercing Strike') ){
+                if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
                         moveLadder(target, (target.data('type') === 'unit' ? 1 : 0) + target.data('stepsgiven'))
                     else null
-                else displayAnimatedNews ('no damage!')
-            else displayAnimatedNews ('missed')
+                }
+            }
         }
         current_ability_method = null
     },
@@ -176,13 +174,13 @@ var m_ = {
             target.removeClass('destined_for_DOOM')
             un_glow()
             tituulti_addaction("sweepingSlash",multiAction)
-            if( onHit(aim, target, 'sword') )
-                if( doDamage(hurt, target) )
+            if( onHit(aim, target, 'sword', 'Sweeping Slash') ){
+                if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
                         moveLadder(target,(target.data('type') === 'unit' ? 1 : 0) + target.data('stepsgiven'))
                     else null
-                else displayAnimatedNews ('no damage!')
-            else displayAnimatedNews ('missed')
+                }
+            }
         } 
         if( !$(`.destined_for_DOOM`).length ) $('#multi_choice_info_panel').remove()
             current_ability_method = null
@@ -208,15 +206,13 @@ var m_ = {
         const { aim, hex, row } = o
         const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         current_ability_method = null
-        if( onHit(aim, singleSpecimen,'spell') && !$('.illKillYouAll').length ){
+        if(  !$('.illKillYouAll').length && onHit(aim, singleSpecimen,'spell',"I'll Kill You All")){
             const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
             const allInRange = $('[data-glow]')
                         .children(`[data-name="${singleSpecimen.data('name')}"].${team}`)
             allInRange.addClass('illKillYouAll')
             un_glow()
-            displayAnimatedNews('Titus can<br/>reposition enemies')
-        } else if( !onHit(aim, singleSpecimen, 'sword') )
-            displayAnimatedNews('Missed!')
+        } 
     },//NEEDS SKILL USE VALIDATION TO BE FINISHED!!!!!
     pathOfDestruction:function(o){
         const { hex, row } = o
@@ -253,12 +249,10 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken("hack")
-            if( onHit(aim, target,'sword') ){
+            if( onHit(aim, target,'sword','Hack') ){
                 setBoons_Blights(target,{bprotection:-1})
-                displayAnimatedNews (`${target.data('name')} <br/>-1 protection`)
+                displayAnimatedNews({           blight:'-1 protection'         })
             }
-            else 
-                displayAnimatedNews ("missed!")
         }
         current_ability_method = null
     },
@@ -269,13 +263,13 @@ var m_ = {
             const target = $(targets[0])
             add_action_taken("surroundPound")
             un_glow()
-            if( onHit(aim, target, 'sword') )
-                if( doDamage(hurt, target) )
+            if( onHit(aim, target, 'sword','Surround Pound') ){
+                if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
                     else null
-                else displayAnimatedNews("no damage!")
-            else displayAnimatedNews ("missed!")
+                } 
+            }
         }
         current_ability_method = null
     },
@@ -294,7 +288,7 @@ var m_ = {
         const { aim, hex, row } = o
         const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         add_action_taken("outflank")
-        if( onHit(aim, singleSpecimen, 'sword') && !$('.outflank').length ){
+        if( !$('.outflank').length && onHit(aim, singleSpecimen, 'sword','Outflank') ){
             const team = singleSpecimen.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
             un_glow()
             $('.selectedModel').removeClass('selectedModel')
@@ -304,9 +298,9 @@ var m_ = {
                     let thix = $(this)
                     thix.children(`[data-name="GlorySeekers"].${team}`).addClass('outflank')
                 })
-            displayAnimatedNews('reposition<br/>Glory Seekers')
-        } else if( !onHit(aim, singleSpecimen, 'sword') )
-            displayAnimatedNews('Missed!')
+            displayAnimatedNews({addInfo:'reposition',$attacker:$($('.outflank')[0]),templateType:'info'})
+        }
+        current_ability_method = null
     },
     roll:function(o){
         if( !$('[data-glow]').length )
@@ -332,7 +326,7 @@ var m_ = {
         const { hex, row, key } = o
         const thiz = $(`.hex_${hex}_in_row_${row}`)
         $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
-        displayAnimatedNews(`${river[3]}<br/>recruited`)
+        displayAnimatedNews({addInfo:'recruited',$attacker:$(thiz.children('[data-tenmodel]')[0]),templateType:'info'})
         graveyard[river[1]][river[3]].splice(0,1)
         const $thiz = $(thiz.children('.smallCard')[0])
         const $brothers = $($(`[data-name="${$thiz.data('name')}"][data-side=${$thiz.data('side')}]:not( [data-tenmodel="${$thiz.data('tenmodel')}"] )`)[0])
@@ -360,13 +354,13 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken("nomNomNom")
-            if( onHit(aim, target, 'scythe') )
-                if( doDamage(hurt, target) )
+            if( onHit(aim, target, 'scythe','Nom nom nom') ){
+                if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
                         moveLadder(target,1 + target.data('stepsgiven'))
                     else null
-                else displayAnimatedNews("no damage!")
-            else displayAnimatedNews ("missed!")
+                }
+            }
         }
         current_ability_method = null
     },
@@ -378,13 +372,13 @@ var m_ = {
             target.removeClass('destined_for_DOOM')
             un_glow()
             add_action_taken("legendary",multiAction)
-            if( onHit(aim, target, 'scythe') )
-                if( doDamage(hurt, target) )
+            if( onHit(aim, target, 'scythe','Buffet') ){
+                if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
                         moveLadder(target,1 + target.data('stepsgiven'))
                     else null
-                else displayAnimatedNews ('no damage!')
-            else displayAnimatedNews ('missed')
+                }
+            }
         } 
         if( !$(`.destined_for_DOOM`).length ) $('#multi_choice_info_panel').remove()
         current_ability_method = null
@@ -396,13 +390,13 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             retchlings_adagio("slimed",multiAction)
-            if( onHit(aim, target, 'spell') )
-                if( doDamage(hurt, target) )
+            if( onHit(aim, target, 'spell','Slimed') ){
+                if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
                     else null
-                else displayAnimatedNews ('no damage!')
-            else displayAnimatedNews ('missed')
+                }
+            } 
         }
         current_ability_method = null
     },
@@ -439,7 +433,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken("onePunch")
-            if( onHit(aim, target, 'sword') ){
+            if( onHit(aim, target, 'sword','One Punch') ){
                 //bonus action added
                 if(target.hasClass('blackTeam') && !mySkillTrack.Halftusk.black.twoPunch.used){
                     let myTusk = $('[data-name="Halftusk"][data-tenmodel].whiteTeam')
@@ -448,12 +442,12 @@ var m_ = {
                     let opoTusk = $('[data-name="Halftusk"][data-tenmodel].blackTeam')
                     opoTusk.attr('data-actionstaken',(Number(opoTusk.attr('data-actionstaken'))-1) )
                 }
-                if( doDamage(hurt, target) )
+                if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
                         moveLadder(target,target.data('stepsgiven'))
                     else null
-                else displayAnimatedNews("no damage!")
-            }else displayAnimatedNews ("missed!")
+                }
+            }
         }
         current_ability_method = null
     },
@@ -467,7 +461,7 @@ var m_ = {
             $('.selectedModel').addClass('twoPunch_selected')
             highlightHexes({colour:'legendaryGlow',dist:1})
             add_action_taken("twoPunch")
-            if( onHit(aim, target, 'spell') )//allow for bonus one hex movement for Halftusk action here
+            if( onHit(aim, target, 'spell','Two Punch') )//allow for bonus one hex movement for Halftusk action here
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target,target.data('stepsgiven'))
@@ -496,11 +490,10 @@ var m_ = {
         add_action_taken("feint")
         current_ability_method = null
         un_glow()
-        if( onHit(aim, target,'sword') ){
+        if( onHit(aim, target,'sword','Feint') ){
             displayAnimatedNews(`${target.data('name')}<br/>-1 aim`)
             setBoons_Blights(target,{baim:Number(target.attr('data-baim'))-1})
-        } else 
-            displayAnimatedNews('missed!')
+        }
     },
     theGreatTusk:function(o){
         const { hex, row, cursePackage} = o
@@ -537,7 +530,7 @@ var m_ = {
              
             un_glow()
             add_action_taken("tongueLash")
-            if( onHit(aim, target,'scythe') && !$('.tongueLash_selected').length ){
+            if( onHit(aim, target,'scythe', 'Tongue Lash') && !$('.tongueLash_selected').length ){
                     target.addClass('tongueLash_selected')
                     highlightHexes({colour:'greenGlow',dist:1},target)
                     highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
@@ -594,7 +587,7 @@ var m_ = {
             un_glow()
              
             add_action_taken('shieldBash')
-            if( onHit(aim, target,'sword') ){
+            if( onHit(aim, target,'sword','Shield Bash') ){
                 displayAnimatedNews(`Rhodri bashed<br/>${target.data('name')}`)
                 target.addClass('shieldBash_selected')
                 setBoons_Blights(target,{bdamage:Number(target.attr('data-bdamage'))-1})
@@ -613,7 +606,7 @@ var m_ = {
              
             un_glow()
             add_action_taken('swordSlash')
-            if( onHit(aim, target,'sword') )
+            if( onHit(aim, target,'sword','Sword Slash') )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
@@ -667,7 +660,7 @@ var m_ = {
              
             un_glow()
             add_action_taken('swordStrike')
-            if( onHit(aim, target,'sword') )
+            if( onHit(aim, target,'sword','Sword Strike') )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
@@ -722,7 +715,7 @@ var m_ = {
              
             un_glow()
             add_action_taken('soulCleave')
-            if( onHit(aim, target,'sword') ){
+            if( onHit(aim, target,'sword','Soul Cleave') ){
                 const team = target.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
                 //resurrection starts here
                 if( doDamage(hurt, target) )
@@ -805,7 +798,7 @@ var m_ = {
              
             un_glow()
             add_action_taken('deathsDoor')
-            if( onHit(aim, target,'sword') )
+            if( onHit(aim, target,'sword','Deaths Door') )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
@@ -871,7 +864,7 @@ var m_ = {
             if_moved_end_it('lifeBlade')
             un_glow()
             add_action_taken('lifeBlade')
-            if( onHit(aim, target,'sword') ){
+            if( onHit(aim, target,'sword','Life Blade') ){
                 healLife( $('.selectedModel[data-name="Finvarr"][data-tenmodel]'), 1)
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
@@ -899,7 +892,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('shadowWard')
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'spell','Shadow Ward') ){
                 displayAnimatedNews(`reposition<br/>${target.data('name')}`)
                 target.addClass('shadowWard_selected')
                 highlightHexes({colour:'legendaryGlow',dist: 1}, $('.shadowWard_selected'))
@@ -932,7 +925,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('lifeTrade')
-            if( onHit(aim, target,'sword') )
+            if( onHit(aim, target,'sword','Life Trade') )
                 if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) ){
                         if( $('.selectedModel').siblings('.smallCard').length < 2 ){
@@ -991,7 +984,7 @@ var m_ = {
              
             un_glow()
             add_action_taken('shadowSnare')
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'spell','Shadow Snare') ){
                 setBoons_Blights(target,{ bspeed:Number( target.attr('data-bspeed') )-1 })
                 displayAnimatedNews(`${target.data('name')}<br/>-1 speed`)
             }else displayAnimatedNews ("missed!")
@@ -1017,7 +1010,7 @@ var m_ = {
         current_ability_method = null
         if(targets.length){
             const target = $(targets[0])
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'spell','Erosion') ){
                 setBoons_Blights(target,{ bprotection:Number( target.attr('data-bprotection') )-1 })
                 displayAnimatedNews(`${target.data('name')}<br/>-1 protection`)
             }else displayAnimatedNews ("missed!")
@@ -1030,7 +1023,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('blindingLight')
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'spell','Blinding Light') ){
                 setBoons_Blights(target,{ baim:Number( target.attr('data-baim') )-1 })
                 displayAnimatedNews(`${target.data('name')}<br/>-1 aim`)
                 if( doDamage(hurt, target) )
@@ -1132,7 +1125,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken("stoneThrow")
-            if( onHit(aim, target,'spell') )
+            if( onHit(aim, target,'spell','Stone Throw') )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
@@ -1175,7 +1168,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('shimmer')
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'Shimmer') ){
                 displayAnimatedNews(`Shimmer<br/>${target.data('name')}<br/>-1 speed`)
                 setBoons_Blights(target,{bspeed:Number(target.attr('data-bspeed'))-1})
             }else displayAnimatedNews ("missed!")
@@ -1197,7 +1190,7 @@ var m_ = {
                 target.addClass('headbutt_selected')
                 displayAnimatedNews(`${n}headbutt<br/>${target.data('name')}`)
             }
-            if( onHit(aim, target,'sword') )
+            if( onHit(aim, target,'sword','Headbutt') )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
@@ -1217,7 +1210,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('lungingStrike')
-            if( onHit(aim, target,'sword') )
+            if( onHit(aim, target,'sword','Lunging Strike') )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
@@ -1334,7 +1327,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             shayle_takes_action('stoneSpikes')
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'spell','Stone Spikes') ){
                 setBoons_Blights(target, { bspeed: Number(target.attr('data-bspeed')) - 1 })
                 displayAnimatedNews('stone spikes<br/>-1 speed')
             } else displayAnimatedNews ("missed!")
@@ -1357,7 +1350,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             shayle_takes_action('runeweaving')
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'spell','Runeweaving') ){
                 displayAnimatedNews('runeweaving')
                 if ( myTurn )
                     $('#gameScreen').append(crystalGlareOptions(o, { hex, row }, "runeweaving2",1,`choose one boon`))
@@ -1442,7 +1435,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('boulderBash')
-            if( onHit(aim, target,'sword') ){
+            if( onHit(aim, target,'sword','Boulder Bash') ){
                 setBoons_Blights(target,{bdodge:Number(target.attr('data-bdodge'))-1})
                 let completeness = false
                 if( doDamage(hurt, target) ){
@@ -1496,7 +1489,7 @@ var m_ = {
             const { side, name } = target.data()
             un_glow()
             add_action_taken('deadlyCurse')
-            if( onHit(aim, target,'spell') ){ 
+            if( onHit(aim, target,'spell','Deadly Curse') ){ 
                 if( myTurn )
                     $('#gameScreen').append(  dedlyCursePanel( {side,name,socksMethod:'deadlyCurse',message:'choose one'} )  )
                 if( doDamage(hurt, target) )
@@ -1550,7 +1543,7 @@ var m_ = {
             const { side, name } = target.data()
             un_glow()
             add_action_taken('graspingCurse')
-            if( onHit(aim, target,'spell') ){ 
+            if( onHit(aim, target,'spell','Grasping Curse') ){ 
                 if( myTurn )
                     $('#gameScreen').append( dedlyCursePanel( {side,name,socksMethod:'graspingCurse',message:'choose one'} ) )
                 else
@@ -1665,7 +1658,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('piercingShot')
-            if( onHit(aim, target,'arrow') ){
+            if( onHit(aim, target,'arrow','Piercing Shot') ){
                 target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
                 animateDamage(target, -1)
                 shootAndScoot()
@@ -1683,7 +1676,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('mysticArrow')
-            if( onHit(aim, target,'arrow') ){
+            if( onHit(aim, target,'arrow','Mystic Arrow') ){
                 const p = hurt.length > 10 ? 6 : 5
                 const stPunch = hurt.slice(0, p)
                 const ndPunch = hurt.slice(p)
@@ -1711,7 +1704,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('snipe')
-            if( onHit(aim, target,'arrow') )
+            if( onHit(aim, target,'arrow','Snipe') )
                 if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
                         moveLadder(target, slayerPoints(target) )
@@ -1738,7 +1731,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('faryFire')
-            if( onHit(aim, target,'arrow') ){
+            if( onHit(aim, target,'arrow','Fairy Fire') ){
                 setBoons_Blights(target,{bprotection:Number(target.attr('data-bprotection'))-1})
                 displayAnimatedNews(`${target.data('name')}<br/>-1 protection`)
             } else displayAnimatedNews ("missed!")
@@ -1752,7 +1745,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('legendary')
-            if( onHit(aim, target,'arrow') ){
+            if( onHit(aim, target,'arrow','Deathblow') ){
                 target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-2) )
                 animateDamage(target, -2)
                 shootAndScoot()
@@ -1784,7 +1777,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('fire')
-            if( onHit(aim, target,'arrow') )
+            if( onHit(aim, target,'arrow','Fire') )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
@@ -1808,7 +1801,7 @@ var m_ = {
         if(targets.length){
             const target = $(targets[0])
             un_glow()
-            if( onHit(aim, target,'arrow') ){
+            if( onHit(aim, target,'arrow','Fairy Fire') ){
                 displayAnimatedNews(`${target.data('name')}<br/>-1 protection`)
                 setBoons_Blights(target,{bprotection:Number(target.attr('data-bprotection'))-1})
             }else displayAnimatedNews ("missed!")
@@ -1833,7 +1826,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('annoy')
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'spell','Annoy') ){
                 //enemy pushing here
                 target.addClass('annoyed_selected')
                 highlightHexes({colour:'legendaryGlow',dist:2},target)
@@ -1870,7 +1863,7 @@ var m_ = {
             const target = $('.pounced')
             target.removeClass('pounced')
             add_action_taken('legendary')
-            if( onHit(aim, target,'sword') )
+            if( onHit(aim, target,'sword','Pounce') )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
@@ -1906,7 +1899,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('irritate')
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'spell','Irritate') ){
                 displayAnimatedNews(`${target.data('name')}<br/>-1 aim`)
                 setBoons_Blights(target,{baim:Number(target.attr('data-baim'))-1})
             }else displayAnimatedNews ("missed!")
@@ -1930,7 +1923,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('letMeDoIt')
-            if( onHit(aim, target,'sword') )
+            if( onHit(aim, target,'sword','Let Me Do It') )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
@@ -1962,7 +1955,7 @@ var m_ = {
             un_glow()
             add_action_taken("jawbreaker")
             brutalMaster_brutaliser('aim')
-            if( onHit(aim, target,'axe') ){
+            if( onHit(aim, target,'axe','Jawbreaker') ){
                 brutalMaster_brutaliser('damage')
                 if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
@@ -1992,7 +1985,7 @@ var m_ = {
             un_glow()
             add_action_taken('whiplash')
             brutalMaster_brutaliser('aim')
-            if( onHit(aim, target,'axe') ){
+            if( onHit(aim, target,'axe','Whiplash') ){
                     brutalMaster_brutaliser('damage')
                     displayAnimatedNews(`${target.data('name')}<br/>whiplashed`)
                 if( doDamage(hurt, target) ){
@@ -2033,7 +2026,7 @@ var m_ = {
             un_glow()
             add_action_taken('breakSpirit')
             brutalMaster_brutaliser('aim')
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'spell','Break Spirit') ){
                 displayAnimatedNews(`${target.data('name')}<br/>-1 dodge`)
                 setBoons_Blights(target,{bdodge:Number(target.attr('data-bdodge'))-1})
             }else displayAnimatedNews ("missed!")
@@ -2066,7 +2059,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken("shoot")
-            if( onHit(aim, target,'arrow') )
+            if( onHit(aim, target,'arrow','Shoot') )
                 if( doDamage(hurt, target) ){
                     stolenTreasure()
                     if( checkIfStillAlive(target) )
@@ -2099,7 +2092,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('snowballsChance')
-            if( onHit(aim, target,'scythe') )
+            if( onHit(aim, target,'scythe','Snowballs Chance') )
                 if( doDamage(hurt, target) ){
                     target.attr('data-healthleft', 0 )
                     animateDamage(target, 0-target.data('health'))
@@ -2119,7 +2112,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('iceblade')
-            if( onHit(aim, target,'scythe') ){
+            if( onHit(aim, target,'scythe','Iceblade') ){
                 const { bspeed, baim, bdamage } = extractBoons_Blights(target)
                 const extraWound = bspeed === -1 || baim === -1 || bdamage === -1 ? -1 : 0
                 if( doDamage(hurt, target) )
@@ -2147,7 +2140,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('icebolt')
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'spell','Icebolt') ){
                 setBoons_Blights(target,{baim:Number(target.attr('data-baim'))-1})
                 displayAnimatedNews(`${target.data('name')}<br/>-1 aim`)
                 if( doDamage(hurt, target) )
@@ -2177,7 +2170,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('frostyGlance')
-            if( onHit(aim, target,'spell') ){//allow for bonus one hex movement for Halftusk action here
+            if( onHit(aim, target,'spell','Frosty Glance') ){//allow for bonus one hex movement for Halftusk action here
                 highlightHexes({colour:'legendaryGlow',dist:1},$('.selectedModel'))
                 highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
                 setBoons_Blights(target,{bprotection:(Number(target.attr('data-bprotection'))-1) })
@@ -2217,7 +2210,7 @@ var m_ = {
              
             un_glow()
             add_action_taken('snowbladefight')
-            if( onHit(aim, target,'sword') )
+            if( onHit(aim, target,'sword','Snowblade Fight') )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
                         moveLadder(target, target.data('stepsgiven'))
@@ -2244,7 +2237,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('chillOut')
-            if( onHit(aim, target,'spell') ){
+            if( onHit(aim, target,'spell','Chill Out') ){
                 setBoons_Blights(target,{bdamage:Number(target.attr('data-bdamage'))-1})
                 displayAnimatedNews(`${target.data('name')}<br/>-1 damage`)
             } else displayAnimatedNews ("missed!")

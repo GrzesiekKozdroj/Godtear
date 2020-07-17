@@ -463,6 +463,10 @@ $white: white;
     z-index:-1;
     .mini-card-actions{
         justify-content: space-evenly;
+        pointer-events: none;
+        .card_base_action{
+            pointer-events: all;
+        }
     }
 }
 #dummy_contain.right{ left: -220%}

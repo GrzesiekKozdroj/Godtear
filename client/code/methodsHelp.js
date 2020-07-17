@@ -637,7 +637,14 @@ function backstab(o){
                 target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
                 animateDamage(target, -1)
             }
-            displayAnimatedNews(`${target.data('name')}<br/>backstabbed`)
+            displayAnimatedNews({
+                $attacker:$('.selectedModel'),
+                $victim:target,
+                skillName:'backstab',
+                skillIcon:'skull',
+                dieRoll:aim,
+                rollOutcome:true,
+                templateType:'attack'})
             if( checkIfStillAlive(target) )
                 moveLadder(target, target.data('stepsgiven'))
             else {

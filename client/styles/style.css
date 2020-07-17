@@ -2884,3 +2884,196 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
     transform: rotate(-360deg);
   }
 }
+
+#sms {
+  position: absolute;
+  width: 40vw;
+  height: 80vh;
+  top: 10vh;
+  left: 30vw;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column-reverse;
+  font-family: "Shojumaru", cursive;
+  color: #1d1d1d;
+  text-shadow: 0 0 1px #746d6b, 0 0 2px #c5bbb7, 0 0 3px #d4c5d2;
+}
+
+#sms .sms_message {
+  -webkit-animation: sms_fadeout 8s forwards;
+  -moz-animation: sms_fadeout 8s forwards;
+  -o-animation: sms_fadeout 8s forwards;
+  animation: sms_fadeout 8s forwards;
+  opacity: 100%;
+  font-family: inherit;
+  font-weight: 100;
+  font-size: 80%;
+  letter-spacing: .007vw;
+}
+
+@-webkit-keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+#sms .sms_message span {
+  letter-spacing: inherit;
+  font-family: inherit;
+  font-size: 120%;
+  font-weight: 800;
+  height: 0;
+  border: none;
+  border-radius: 100%;
+  box-shadow: none;
+}
+
+#sms .sms_message span:after, #sms .sms_message span:before {
+  width: 0;
+  height: 0;
+  background: none;
+}
+
+#sms .sms_message .whiteTeam {
+  color: #00001d;
+  text-shadow: 0 0 1px #00ccff, 0 0 2px #00ffbf, 0 0 3px #00ffb3;
+  font-size: 120%;
+}
+
+#sms .sms_message .blackTeam {
+  color: #130000;
+  text-shadow: 0 0 1px #722101, 0 0 2px #752201, 0 0 3px #9b0186;
+  font-size: 120%;
+}
+
+#sms .sms_message span.skull {
+  color: #271000;
+  text-shadow: 0 0 1px #ff7b00, 0 0 2px #af8000, 0 0 3px #9b7700;
+  font-size: 110%;
+}
+
+#sms .sms_message span.cogs {
+  color: #00151d;
+  text-shadow: 0 0 1px #0059ff, 0 0 2px #0075b9, 0 0 3px #007c92;
+  font-size: 110%;
+}
+
+#sms .sms_message span.star {
+  color: #292100;
+  text-shadow: 0 0 1px #ffee00, 0 0 2px #b9ad00, 0 0 3px #fffb00;
+  font-size: 110%;
+}
+
+#sms .sms_message span.self {
+  color: #0a1f00;
+  text-shadow: 0 0 1px lime, 0 0 2px #06b900, 0 0 3px #119200;
+  font-size: 110%;
+}
+
+#sms .sms_message .success {
+  color: #002016;
+  text-shadow: 0 0 1px #00ff9d, 0 0 2px #00b95c, 0 0 3px #00c57a;
+  font-size: 125%;
+}
+
+#sms .sms_message .miss {
+  color: #170000;
+  text-shadow: 0 0 1px #c78ee3, 0 0 2px #63486d, 0 0 3px #c488df;
+  font-size: 120%;
+}
+
+#dice_._square.whiteTeam {
+  background: linear-gradient(149deg, rgba(28, 105, 160, 0.961) 6%, rgba(10, 56, 117, 0.947) 34%, rgba(3, 6, 39, 0.942) 100%);
+}
+
+#dice_._square.whiteTeam .eye {
+  background: linear-gradient(315deg, rgba(253, 255, 215, 0.961205) 6%, rgba(212, 251, 106, 0.947) 34%, rgba(196, 238, 8, 0.942) 100%);
+}
+
+#dice_._square.blackTeam {
+  background: linear-gradient(149deg, rgba(235, 119, 119, 0.961) 6%, rgba(240, 51, 51, 0.947) 34%, rgba(39, 1, 1, 0.942) 100%);
+}
+
+#dice_._square.blackTeam .eye {
+  background: linear-gradient(315deg, rgba(253, 255, 215, 0.961205) 6%, rgba(212, 251, 106, 0.947) 34%, rgba(196, 238, 8, 0.942) 100%);
+}
+
+#dice_._square {
+  display: inline-block;
+  width: 2.5vh;
+  padding-bottom: 2.5vh;
+  height: 0;
+  box-shadow: 0 0 .5vh white, 0 0 .4vh white;
+}
+
+#dice_._square:after, #dice_._square:before {
+  width: 0;
+  height: 0;
+  background: none;
+  padding-bottom: 100%;
+}
+
+.eye {
+  position: relative;
+  box-shadow: 0 0 .5vh black, 0 0 .4vh black;
+  border-radius: 50%;
+  width: 1vh;
+  height: 1vh;
+}
+
+.die_1 {
+  top: .75vh;
+  left: 32%;
+}
+
+.die_2a {
+  top: .4vh;
+  left: 12%;
+}
+
+.die_2b {
+  top: .5vh;
+  left: 45%;
+}

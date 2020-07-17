@@ -1085,3 +1085,182 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
     @include scalatoreX(-1);
     @include swingGun(0deg,-360deg,'left')
 }
+@mixin skillNameMixin($name){
+    @if($name=='skull'){
+        color: rgb(39, 16, 0);
+        text-shadow: 0 0 1px rgb(255, 123, 0), 0 0 2px rgb(175, 128, 0), 0 0 3px rgb(155, 119, 0);
+        font-size: 110%;
+    } @else if($name=='cogs'){
+        color: rgb(0, 21, 29);
+        text-shadow: 0 0 1px rgb(0, 89, 255), 0 0 2px rgb(0, 117, 185), 0 0 3px rgb(0, 124, 146);
+        font-size: 110%;
+    } @else if($name=='star'){
+        color: rgb(41, 33, 0);
+        text-shadow: 0 0 1px rgb(255, 238, 0), 0 0 2px rgb(185, 173, 0), 0 0 3px rgb(255, 251, 0);
+        font-size: 110%;
+    } @else if($name=='self'){
+        color: rgb(10, 31, 0);
+        text-shadow: 0 0 1px rgb(0, 255, 0), 0 0 2px rgb(6, 185, 0), 0 0 3px rgb(17, 146, 0);
+        font-size: 110%;
+    } @else if($name=='success'){
+        color: rgb(0, 32, 22);
+        text-shadow: 0 0 1px rgb(0, 255, 157), 0 0 2px rgb(0, 185, 92), 0 0 3px rgb(0, 197, 122);
+        font-size: 125%;
+    } @else if($name=='whiteTeam'){
+        color: rgb(0, 0, 29);
+        text-shadow: 0 0 1px rgb(0, 204, 255), 0 0 2px rgb(0, 255, 191), 0 0 3px rgb(0, 255, 179);
+        font-size: 120%;
+    } @else if($name=='blackTeam'){
+        color: rgb(19, 0, 0);
+        text-shadow:  0 0 1px rgb(114, 33, 1), 0 0 2px rgb(117, 34, 1), 0 0 3px rgb(155, 1, 134);
+        font-size: 120%;
+    } @else if($name=='miss'){
+        color: #170000;
+        text-shadow: 0 0 1px #c78ee3, 0 0 2px #63486d, 0 0 3px #c488df;
+        font-size: 120%;
+    }
+}
+@mixin apa_sms (){
+    @-webkit-keyframes sms_fadeout {
+        0%   { opacity: 1; }
+        67%  { opacity: .7; }
+        100% { opacity: 0; }
+      }
+      @-moz-keyframes sms_fadeout {
+        0%   { opacity: 1; }
+        67%  { opacity: .7; }
+        100% { opacity: 0; }
+      }
+      @-o-keyframes sms_fadeout {
+        0%   { opacity: 1; }
+        67%  { opacity: .7; }
+        100% { opacity: 0; }
+      }
+      @keyframes sms_fadeout {
+        0%   { opacity: 1; }
+        67%  { opacity: .7; }
+        100% { opacity: 0; }
+      }
+    -webkit-animation: sms_fadeout 8s forwards;
+    -moz-animation:    sms_fadeout 8s forwards;
+    -o-animation:      sms_fadeout 8s forwards;
+    animation:         sms_fadeout 8s forwards;
+}
+#sms{
+    position: absolute;
+    width: 40vw;
+    height: 80vh;
+    top: 10vh;
+    left: 30vw;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column-reverse;
+    font-family: $coinFont2;
+    color: rgb(29, 29, 29);
+    text-shadow:  0 0 1px rgb(116, 109, 107), 0 0 2px rgb(197, 187, 183), 0 0 3px rgb(212, 197, 210);
+    .sms_message{
+        @include apa_sms;
+        opacity:100%;
+        font-family: inherit;
+        font-weight: 100;
+        font-size: 80%;
+        letter-spacing: .007vw;
+        span{
+            letter-spacing: inherit;
+            font-family: inherit;
+            font-size: 120%;
+            font-weight: 800;
+            height: 0;
+            border:none;
+            //box-shadow: 0 0 1vh #ffffff83, 0 0 1.2vh #ffffff83, 0 0 1vh #ffffff83 inset, 0 0 1.2vh #ffffff83 inset;
+            border-radius: 100%;
+            box-shadow: none;
+            &:after,&:before{
+                width:0;
+                height:0;
+                background: none;
+            }
+        }
+        .whiteTeam{
+            @include skillNameMixin('whiteTeam');
+        }
+        .blackTeam{
+            @include skillNameMixin('blackTeam');
+        }
+        span.skull{
+            @include skillNameMixin('skull')
+        }
+        span.cogs{
+            @include skillNameMixin('cogs')
+        }
+        span.star{
+            @include skillNameMixin('star')
+        }
+        span.self{
+            @include skillNameMixin('self')
+        }
+        .success{
+            @include skillNameMixin('success')
+        }
+        .miss{
+            @include skillNameMixin('miss')
+        }
+    }
+}
+#dice_._square.whiteTeam{
+    background: linear-gradient(149deg, 
+        rgba(28, 105, 160, 0.961) 6%, 
+        rgba(10, 56, 117, 0.947) 34%, 
+        rgba(3, 6, 39, 0.942) 100%);
+    .eye{
+        background: linear-gradient(315deg, 
+            rgba(253,255,215,0.9612045501794468) 6%, 
+            rgba(212, 251, 106, 0.947) 34%, 
+            rgba(196, 238, 8, 0.942) 100%);
+    }
+}
+#dice_._square.blackTeam{
+    background: linear-gradient(149deg, 
+        rgba(235, 119, 119, 0.961) 6%, 
+        rgba(240, 51, 51, 0.947) 34%, 
+        rgba(39, 1, 1, 0.942) 100%);
+    .eye{
+        background: linear-gradient(315deg, 
+            rgba(253,255,215,0.9612045501794468) 6%, 
+            rgba(212, 251, 106, 0.947) 34%, 
+            rgba(196, 238, 8, 0.942) 100%);
+    }
+}
+
+    #dice_._square {
+        &:after,&:before{
+            width:0;
+            height:0;
+            background: none;
+            padding-bottom:100%;
+        }
+        display: inline-block;
+        width: 2.5vh;
+        padding-bottom: 2.5vh;
+        height:0;
+        box-shadow: 0 0 .5vh white, 0 0 .4vh white;
+    }
+    .eye{
+        position:relative;
+        box-shadow: 0 0 .5vh black, 0 0 .4vh black;
+        border-radius:50%;
+        width:1vh;
+        height:1vh;
+    }
+    .die_1{
+        top:.75vh;
+        left:32%;
+    }
+    .die_2a{
+        top:.4vh;
+        left:12%;
+    }
+    .die_2b{
+        top:.5vh;
+        left:45%;
+    }

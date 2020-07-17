@@ -872,6 +872,11 @@
 
 #dummy_contain .mini-card-actions {
   justify-content: space-evenly;
+  pointer-events: none;
+}
+
+#dummy_contain .mini-card-actions .card_base_action {
+  pointer-events: all;
 }
 
 #dummy_contain.right {

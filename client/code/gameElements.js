@@ -29,22 +29,56 @@ function displayDeploymentInfo(scenario) {
     </div>
     `
 }
+function displayAnimatedNews ({$attacker,$victim,skillName,skillIcon,dieRoll,rollOutcome,templateType}){
+    if(dieRoll){
+        console.log(dieRoll)
+    const extractor = (model) => {
+        const name = model.data('name')
+        const team = model.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        return { name, team }
+    }
+    const uq_id = Math.floor( Math.random () * (1000 - 1 + 1)) + 1
+    const a = extractor($attacker)
+    const v = extractor($victim)
+    const skillMarker = (skillName,skillIcon) => `<span class="${skillIcon}" >${skillName}</span>`
+    const charMarker = x => `<span class="${x.team}" >${x.name}</span>`
+    const outcoMarker = y => `<span class="${y?'success':'miss'}" >${y?'hits!':'fails!'}</span>`
+    const diceMarker = (x,dieRoll) => dieRoll.map(el=>{
+        if(el===0){
+            return `<div id="dice_" class="_square ${x.team}" ></div>`
+        }else if(el===1){
+            return `<div id="dice_" class="_square ${x.team}" ><div class="die_1 eye"></div></div>`
+        }else if(el===2){
+            return `
+                <div id="dice_" class="_square ${x.team}" >
+                    <div class="die_2a eye"></div><div class="die_2b eye"></div>
+                </div>`
+        }
+    }).join('&nbsp; ')
+    if(templateType === 'attack'){
+        $('#sms').prepend(`<div class="sms_message ${uq_id}">
+            ${charMarker(a)} use ${skillMarker(skillName,skillIcon)} on ${charMarker(v)} <br/> 
+            roll ${diceMarker(a,dieRoll)} ${outcoMarker(rollOutcome)}
+            </div>
+        `)
+    }
+    setTimeout(()=>$('.'+uq_id).remove(),8020)
 
-function displayAnimatedNews (message){
-    const flashNews = msg => ` <h3 class='flashNews hinge-in-from-middle-y mui-enter'> ${msg} </h3> ` 
-    $('#gameScreen').append( flashNews(message) )
-    setTimeout(()=>$('.flashNews').addClass('mui-enter-active'), 250)
-    setTimeout(()=>
-        $('.flashNews')
-            .removeClass('hinge-in-from-middle-y mui-enter mui-enter-active')
-            .addClass('scale-out-up mui-leave mui-leave-active')
-            ,1500)
-    setTimeout( () => $('.flashNews').off().remove(), 1950 )
-    $('body').one('click',function(e){
-        e.preventDefault()
-        $('.flashNews')
-            .remove()
-    })
+}//if dieRoll
+    // const flashNews = msg => ` <h3 class='flashNews hinge-in-from-middle-y mui-enter'> ${msg} </h3> ` 
+    // $('#gameScreen').append( flashNews(message) )
+    // setTimeout(()=>$('.flashNews').addClass('mui-enter-active'), 250)
+    // setTimeout(()=>
+    //     $('.flashNews')
+    //         .removeClass('hinge-in-from-middle-y mui-enter mui-enter-active')
+    //         .addClass('scale-out-up mui-leave mui-leave-active')
+    //         ,1500)
+    // setTimeout( () => $('.flashNews').off().remove(), 1950 )
+    // $('body').one('click',function(e){
+    //     e.preventDefault()
+    //     $('.flashNews')
+    //         .remove()
+    // })
 }
 
 const decideOrnament = (bb) => bb > 0 ? 'booned' : bb < 0 ? 'blighted' : 'nooner'

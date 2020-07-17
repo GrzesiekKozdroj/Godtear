@@ -93,7 +93,9 @@ function makeGameBoard(o,coin){
                 </div>
                 <div id='board'>
                     <div id="app"></div>
-                    <div id="ladder"></div>
+                    <div id="ladder">
+                        <div id="sms"></div>
+                    </div>
                 </div>
                 <div id='game_card' class='${mySide} cardsContainer ${mySide}_card'>
                     ${deeploy(roster,mySide)}

@@ -2885,30 +2885,11 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   }
 }
 
-#sms {
-  position: absolute;
-  width: 40vw;
-  height: 80vh;
-  top: 10vh;
-  left: 30vw;
-  pointer-events: none;
-  display: flex;
-  flex-direction: column-reverse;
-  font-family: "Shojumaru", cursive;
-  color: #1d1d1d;
-  text-shadow: 0 0 1px #746d6b, 0 0 2px #c5bbb7, 0 0 3px #d4c5d2;
-}
-
-#sms .sms_message {
+.fade_sms {
   -webkit-animation: sms_fadeout 8s forwards;
   -moz-animation: sms_fadeout 8s forwards;
   -o-animation: sms_fadeout 8s forwards;
   animation: sms_fadeout 8s forwards;
-  opacity: 100%;
-  font-family: inherit;
-  font-weight: 100;
-  font-size: 80%;
-  letter-spacing: .007vw;
 }
 
 @-webkit-keyframes sms_fadeout {
@@ -2957,6 +2938,29 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   100% {
     opacity: 0;
   }
+}
+
+#sms {
+  overflow-y: hidden;
+  position: absolute;
+  width: 40vw;
+  height: 80vh;
+  top: 10vh;
+  left: 30vw;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column-reverse;
+  font-family: "Shojumaru", cursive;
+  color: #1d1d1d;
+  text-shadow: 0 0 1px #746d6b, 0 0 2px #c5bbb7, 0 0 3px #d4c5d2;
+}
+
+#sms .sms_message {
+  opacity: 100%;
+  font-family: inherit;
+  font-weight: 100;
+  font-size: 80%;
+  letter-spacing: .007vw;
 }
 
 #sms .sms_message span {
@@ -3024,6 +3028,12 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   font-size: 120%;
 }
 
+#sms .sms_message .SMS-gold {
+  color: #171400;
+  text-shadow: 0 0 1px #e3d68e, 0 0 2px #6d6648, 0 0 3px #dfd688;
+  font-size: 119%;
+}
+
 #dice_._square.whiteTeam {
   background: linear-gradient(149deg, rgba(28, 105, 160, 0.961) 6%, rgba(10, 56, 117, 0.947) 34%, rgba(3, 6, 39, 0.942) 100%);
 }
@@ -3076,4 +3086,124 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
 .die_2b {
   top: .5vh;
   left: 45%;
+}
+
+.SMS_BB {
+  width: 3vh;
+  height: 3vh;
+  display: inline-block;
+}
+
+.bigger-SMS {
+  font-size: 120%;
+}
+
+.show_sms {
+  -webkit-animation: sms_fadeout 250ms forwards;
+  -moz-animation: sms_fadeout 250ms forwards;
+  -o-animation: sms_fadeout 250ms forwards;
+  animation: sms_fadeout 250ms forwards;
+}
+
+@-webkit-keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.hide_sms {
+  -webkit-animation: sms_fadeout 250ms backwards;
+  -moz-animation: sms_fadeout 250ms backwards;
+  -o-animation: sms_fadeout 250ms backwards;
+  animation: sms_fadeout 250ms backwards;
+}
+
+@-webkit-keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes sms_fadeout {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+  }
 }

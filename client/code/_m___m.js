@@ -26,6 +26,7 @@ var _m_ = {
         thiz.removeClass('outflank_selected outflank')
         if( !$('.outflank').length )
             {
+                $('.outflank_source').removeClass('outflank_source')
                 un_glow()
                 current_ability_method = null
             }

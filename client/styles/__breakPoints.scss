@@ -149,9 +149,9 @@
                     height:($hexHeight + $hexTriangleSize / 1.2);
                     width:$one * 1.05;
                     position:relative;
-                    top:($hexMinusQuarter * 1.38);
-                    left:($hexMinusQuarter * .36);
-                    z-index: 2;
+                    top:($hexMinusQuarter * .08);
+                    left:($hexMinusQuarter * -.1);
+                    z-index: 3;
                 }
                 .top, .bottom{
                     position: absolute;

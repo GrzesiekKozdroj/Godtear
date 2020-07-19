@@ -78,7 +78,7 @@ socket.on('HH',p=>{
     if( m )__m[m]()
 })
 socket.on('sC',p=>{console.log('banner falle after emit')
-    m.universal.claim( $(`.hex_${p.hex}_in_row_${p.row}`), 'blackTeam',p.key )
+    m.universal.claim( $(`.hex_${p.hex}_in_row_${p.row}.hexagon`), 'blackTeam',p.key )
 })
 socket.on('markedMan',p=>{
     const {hex, row, multiInfo} = p

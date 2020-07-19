@@ -112,8 +112,6 @@ const onHit = (aim, target, weapon, skillName) => { console.log('aim roll: ', ..
 const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
     const target_protection = Number(target.attr('data-protection')) + checkIfNotMorrigan(target,'bprotection')
     const hurt_total = hurt.reduce((a,b)=>a+b,0) - ( superiority(target) ? hurt[0] : 0 )
-    setBoons_Blights($('.selectedModel'),{bdamage:0})
-    setBoons_Blights(target,{bprotection:0})
     const product = hurt_total > target_protection
     displayAnimatedNews({
         dieRoll:hurt,
@@ -122,6 +120,9 @@ const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
         hurtTotal: target_protection - hurt_total,
         $victim:target
     })
+    setBoons_Blights($('.selectedModel'),{bdamage:0})
+    setBoons_Blights(target,{bprotection:0})
+    animateDamage(target, (target_protection - hurt_total))
         if( product ){
             let target_health = target.attr('data-healthleft')
             let pain = target_health - (hurt_total - target_protection)
@@ -132,20 +133,27 @@ const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
                 .removeClass('normal')
                 .addClass('blighted')
                 .text( Number(target.attr('data-healthleft')) )
-            animateDamage(target, (target_protection - hurt_total))
             return true
         } else { return false }
 }//<--should take $(origin) and reset its bdamage and take target and it bprotection
 const animateDamage = (target, pain) => {
-    target.addClass('shakeModel')
-    target.parent('.hexagon').append(displayDamageRecieved(pain))
-    $('.displayDamageRecieved').animate({
-        transform:'scale(1.3)',
-        opacity:0.5
-    }, 770, ()=>{
-        $('.displayDamageRecieved').remove()
-        setTimeout(()=>target.removeClass('shakeModel'),250)
+    displayAnimatedNews({
+        templateType:'pain',
+        hurtTotal: pain,
+        $victim:target,
+        rollOutcome:pain<0?true:false
     })
+    if( pain < 0){
+        target.addClass('shakeModel')
+        target.parent('.hexagon').append(displayDamageRecieved(pain))
+        $('.displayDamageRecieved').animate({
+            transform:'scale(1.3)',
+            opacity:0.5
+        }, 770, ()=>{
+            $('.displayDamageRecieved').remove()
+            setTimeout(()=>target.removeClass('shakeModel'),250)
+        })
+    }
 }
 const checkIfStillAlive = (target) => {
     if( Number(target.attr('data-healthleft') ) < 1 ){
@@ -196,11 +204,6 @@ const forceKill = (target) => {//$()
 }//<---killed units and champs need to give up their boons and blights, what about resurrected units??
 const moveLadder = (target,steps) => {
     const origin = $($('#coin').parent('.ladderBlock')).data('block')
-    displayAnimatedNews({
-        templateType:'points',
-        steps,
-        $victim:target
-    })
     let direction = 0 //1   <--> 22
     if( target.hasClass('blackTeam') && target.hasClass('smallCard') ){
         direction = mySide === 'left' ? -1 : 1
@@ -227,6 +230,11 @@ const moveLadder = (target,steps) => {
                 }, 500, ()=>{
                 $('#coin').removeAttr('style').finish()//.detach().appendTo(destination)
             })
+    displayAnimatedNews({
+        templateType:'points',
+        steps,
+        $victim:$('.selectedModel')
+    })
         // $('#coin').animate({
         //     left: (steps * direction * calculus)
         // }, 500, ()=>{
@@ -243,10 +251,15 @@ const extractBoons_Blights = (origin) => {
     return { baim, bdamage, bspeed, bdodge, bprotection, healthleft }
 }
 const setBoons_Blights = (origin,props,local = false)=>{//$(), {baim:-1}
+    let subject = local !== 'local' ? 
+        $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"][data-tenmodel]`) : origin
+    displayAnimatedNews({
+        $attacker:$(subject[0]),
+        templateType:'boons',
+        blights:props
+    })
     for(let key in props){
         let boon_blight = props[key]
-        let subject = local !== 'local' ? 
-        $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"][data-tenmodel]`) : origin
             subject.each(function(){
                 if( boon_blight <= 1 && boon_blight >= -1 ){
                     $(this).attr(`data-${key}`,boon_blight) 

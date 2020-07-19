@@ -1232,5 +1232,15 @@ const _m = {
         const aim = [1, 1, 1][unitSize]
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim + baim + AIIM), socksMethod:"chillOut", hex, row })
-    }
+    },
+    royalSummonsBlack:function(origin,target){},
+    royalSummonsWhite:function(origin,target){},
+    viciousBite:function(origin,target){},
+    rainOfFire:function(origin,target){},
+    regalBlessing:function(origin,target){},
+    firebrand:function(origin,target){},
+    bite:function(origin,target){},
+    fieryBreath:function(origin,target){},
+    draconicRage:function(origin,target){},
+    roar:function(origin,target){},
 }

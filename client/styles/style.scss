@@ -1118,9 +1118,13 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
         color: #170000;
         text-shadow: 0 0 1px #c78ee3, 0 0 2px #63486d, 0 0 3px #c488df;
         font-size: 120%;
+    } @else if($name=='gold'){
+        color: #171400;
+        text-shadow: 0 0 1px #e3d68e, 0 0 2px #6d6648, 0 0 3px #dfd688;
+        font-size:119%;
     }
 }
-@mixin apa_sms (){
+@mixin apa_sms ($direction,$time){
     @-webkit-keyframes sms_fadeout {
         0%   { opacity: 1; }
         67%  { opacity: .7; }
@@ -1141,12 +1145,16 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
         67%  { opacity: .7; }
         100% { opacity: 0; }
       }
-    -webkit-animation: sms_fadeout 8s forwards;
-    -moz-animation:    sms_fadeout 8s forwards;
-    -o-animation:      sms_fadeout 8s forwards;
-    animation:         sms_fadeout 8s forwards;
+    -webkit-animation: sms_fadeout $time $direction;
+    -moz-animation:    sms_fadeout $time $direction;
+    -o-animation:      sms_fadeout $time $direction;
+    animation:         sms_fadeout $time $direction;
+}
+.fade_sms{
+    @include apa_sms(forwards,8s);
 }
 #sms{
+    overflow-y: hidden;
     position: absolute;
     width: 40vw;
     height: 80vh;
@@ -1159,7 +1167,6 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
     color: rgb(29, 29, 29);
     text-shadow:  0 0 1px rgb(116, 109, 107), 0 0 2px rgb(197, 187, 183), 0 0 3px rgb(212, 197, 210);
     .sms_message{
-        @include apa_sms;
         opacity:100%;
         font-family: inherit;
         font-weight: 100;
@@ -1205,6 +1212,9 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
         .miss{
             @include skillNameMixin('miss')
         }
+        .SMS-gold{
+            @include skillNameMixin(('gold'))
+        }
     }
 }
 #dice_._square.whiteTeam{
@@ -1232,35 +1242,51 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
     }
 }
 
-    #dice_._square {
-        &:after,&:before{
-            width:0;
-            height:0;
-            background: none;
-            padding-bottom:100%;
-        }
-        display: inline-block;
-        width: 2.5vh;
-        padding-bottom: 2.5vh;
+#dice_._square {
+    &:after,&:before{
+        width:0;
         height:0;
-        box-shadow: 0 0 .5vh white, 0 0 .4vh white;
+        background: none;
+        padding-bottom:100%;
     }
-    .eye{
-        position:relative;
-        box-shadow: 0 0 .5vh black, 0 0 .4vh black;
-        border-radius:50%;
-        width:1vh;
-        height:1vh;
-    }
-    .die_1{
-        top:.75vh;
-        left:32%;
-    }
-    .die_2a{
-        top:.4vh;
-        left:12%;
-    }
-    .die_2b{
-        top:.5vh;
-        left:45%;
-    }
+    display: inline-block;
+    width: 2.5vh;
+    padding-bottom: 2.5vh;
+    height:0;
+    box-shadow: 0 0 .5vh white, 0 0 .4vh white;
+}
+.eye{
+    position:relative;
+    box-shadow: 0 0 .5vh black, 0 0 .4vh black;
+    border-radius:50%;
+    width:1vh;
+    height:1vh;
+}
+.die_1{
+    top:.75vh;
+    left:32%;
+}
+.die_2a{
+    top:.4vh;
+    left:12%;
+}
+.die_2b{
+    top:.5vh;
+    left:45%;
+}
+.SMS_BB{
+    width: 3vh;
+    height: 3vh;
+    display: inline-block;
+}
+.bigger-SMS{
+    font-size: 120%;
+}
+// .fade_sms{animation:apa_sms (forwards,8s)}
+ .show_sms{ @include apa_sms(forwards,250ms); }
+ .hide_sms{ @include apa_sms(backwards,250ms); }
+    //.bdamage-sms{background-image:'../img/'}
+    //.baim-sms{background-image:'../img/'}
+    //.bspeed-sms{background-image:'../img/'}
+    //.bdodge{background-image:'../img/'}
+    //.bprotection{background-image:'../img/'}

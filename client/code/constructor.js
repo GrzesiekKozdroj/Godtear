@@ -31,7 +31,7 @@ class Character{
     //this.doing = 'not used';
     this.stepsGiven = name !== "Mournblade" && role === "champion" ? 4 : 
         name === "Retchlings" ? 0 :
-        name === "Landslide" || name === "youngDragons" ? 2 :
+        name === "Landslide" || name === "YoungDragons" ? 2 :
         1;
     }
 //methods
@@ -83,6 +83,9 @@ const SneakyStabbers = new Character("slayer","unit","SneakyStabbers", 3, "./img
 const Rangosh = new Character("slayer","champion", "Rangosh",1,'./img/Rangosh.png',[4,2],4,2,7,m.rangosh,'./img/classSlayer.png',3);
 const RedBandits = new Character("slayer","unit","RedBandits",5,"./img/Rangosh.png",[2,2],3,2,1,m.redBandits,'./img/classSlayer.png',3);
 
+const Keera = new Character("slayer","champion","Keera",1,'./img/Keera.png',[2,2],3,2,6,m.keera,'./img/classSlayer.png',4)
+const YoungDragons = new Character("slayer","unit","YoungDragons",2,'./img/Keera.png',[3,3],2,3,5,m.youngDragons,'./img/classSlayer.png',4);
+
 const rosters = 
 {
     guardian:
@@ -97,7 +100,8 @@ const rosters =
         {champ:Morrigan, grunt:ColdBones},
         {champ:Lorsann, grunt:MistwoodRangers},
         {champ:SneakyPeet, grunt:SneakyStabbers},
-        {champ:Rangosh, grunt:RedBandits}
+        {champ:Rangosh, grunt:RedBandits},
+        {champ:Keera, grunt:YoungDragons}
     ],
     maelstrom:
     [
@@ -114,7 +118,7 @@ const rosters =
     ]
 };
 roster = [
-    rosters.slayer[2].champ.name,
+    rosters.slayer[4].champ.name,
     rosters.maelstrom[1].champ.name, 
     rosters.shaper[3].champ.name, 
 ];

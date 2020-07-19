@@ -290,6 +290,7 @@ var m_ = {
         add_action_taken("outflank")
         if( !$('.outflank').length && onHit(aim, singleSpecimen, 'sword','Outflank') ){
             const team = singleSpecimen.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
+            console.log('outflank init')
             un_glow()
             $('.selectedModel').removeClass('selectedModel')
             highlightHexes ({colour:'blueGlow', dist:1}, singleSpecimen)
@@ -298,6 +299,7 @@ var m_ = {
                     let thix = $(this)
                     thix.children(`[data-name="GlorySeekers"].${team}`).addClass('outflank')
                 })
+            singleSpecimen.addClass('outflank_source')
             displayAnimatedNews({addInfo:'reposition',$attacker:$($('.outflank')[0]),templateType:'info'})
         }
         current_ability_method = null
@@ -1455,8 +1457,9 @@ var m_ = {
         displayAnimatedNews(`eruption<br/>${addo} protection`)
         const ARR = [...$($(`[data-glow].hexagon`).children(`.smallCard:not([data-tenmodel="Landslide0"]${team})`)) ].map(el=>$(el).data('name'))
         const uniqSet = [...new Set(ARR)]
+        console.log(uniqSet)
         uniqSet.forEach(el=>{
-            const thiz = $(`[data-name="${el}"][data-tenmodel]`)
+            const thiz = $($(`[data-glow].hexagon`).children(`[data-name="${el}"][data-tenmodel]`)[0])
             setBoons_Blights(thiz,{ bprotection: (Number(thiz.attr('data-bprotection')) + addo) })
         })
         un_glow()
@@ -2291,5 +2294,15 @@ var m_ = {
         update_basket()
         turn_resetter(opoSkillTrack,'white','blackTeam')
         turn_resetter(mySkillTrack,'white','whiteTeam')
-    }
+    },
+    royalSummonsBlack:function(o){},
+    royalSummonsWhite:function(o){},
+    viciousBite:function(o){},
+    rainOfFire:function(o){},
+    regalBlessing:function(o){},
+    firebrand:function(o){},
+    bite:function(o){},
+    fieryBreath:function(o){},
+    draconicRage:function(o){},
+    roar:function(o){},
 }

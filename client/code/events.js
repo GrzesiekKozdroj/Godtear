@@ -197,7 +197,8 @@ $('body').on('click','#claimAction',function(e){
         }
     }
 })
-$('body').on('click','.objectiveGlow[data-glow="claimColor"]', function(){
+$('body').on('click','.objectiveGlow[data-glow="claimColor"].hexagon', function(e){
+    e.preventDefault()
     if(phase==='white' && myTurn){
         m.universal.claim( $(this), 'whiteTeam' )
         const {hex, row} = $(this).data()
@@ -589,6 +590,7 @@ $('body').on('click','.illKillYouAll',function(e){
 $('body').on('click','.outflank',function(e){
     e.preventDefault()
     if(myTurn){
+        setTimeout(()=>highlightHexes({colour:'blueGlow', dist:1}, $('.outflank_source')),360)
         $('.outflank_selected').removeClass('outflank_selected')
         $(this).addClass('outflank_selected')
     }
@@ -754,6 +756,13 @@ $('body').on('click','.chnt',function(e){
     else if ( $(this).hasClass('ch2nt') )
         socket.emit('rolloSkill', { socksMethod:'dwhnt', key:opoSide })
     $('.soCoolMistressPanel').remove()
+})
+$('body').on('click','#ladder',function(e){
+    console.log('show sms')
+    if( !$('.show_sms').length )
+        $('.sms_message').removeClass('hide_sms fade_sms').addClass('show_sms')
+    else
+        $('.sms_message').removeClass('show_sms').addClass('hide_sms')
 })
 
 

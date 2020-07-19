@@ -2059,5 +2059,117 @@ const m =
                 m:'brainFreeze'
             }
         }
+    },
+    keera:{
+        black:{
+            royalSummons:{
+                name:"Royal Summons",
+                desc:`Young dragons may make an advance action or a recruit action`,
+                icon:'cogs',
+                unused:true,
+                m:"royalSummonsBlack"
+            },
+            viciousBite:{
+                name:"Vicious Bite",
+                desc:`If the target is a champion it gains 1 wound.`,
+                icon:skull,
+                dist:1,
+                aim:[4],
+                hurt:[7],
+                unused:true,
+                m:"viciousBite"
+            },
+            rainOfFire:{
+                name:"Rain Of Fire",
+                desc:`Hit Effect: -1 ${protectionBlight}.`,
+                icon:skull,
+                dist:1,
+                aim:[7],
+                hurt:[4],
+                unused:true,
+                m:"rainOfFire"
+            }
+        },
+        white:{
+            royalSummons:{
+                name:"Royal Summons",
+                desc:`Young dragons may make an advance action or a recruit action`,
+                icon:'cogs',
+                unused:true,
+                m:"royalSummonsWhite"
+            },
+            regalBlessing:{
+                name:"Regal Blessing",
+                dist:3,
+                desc:`If a Young Draon is within range they gain ${aimBoon}.`,
+                icon:'cogs',
+                unused:true,
+                m:"regalBlessing"
+            }
+        },
+        util:{
+            legendary:{
+                name:"Firebrand",
+                desc:`Each enemy champion that is within 2 hexes of 1 or more Young Dragons gains 1 wound`,
+                icon:star,
+                unused:true,
+                legendaryUsed:false,
+                m:"firebrand"
+            },
+            byMyCommand:{
+                name:"By My Command!",
+                desc:"The range of Keera's skull skills must be determined from a Young Dragon within 3 hexes of her.",
+                m:"frostForged"
+            }
+        }
+
+    },
+    youngDragons:{
+        black:{
+            bite:{
+                name:"Bite",
+                desc:`If the target is a champion it gains 1 wound.`,
+                icon:skull,
+                dist:1,
+                aim:[3],
+                hurt:[5],
+                unused:true,
+                m:"bite"
+            },
+            fieryBreath:{
+                name:"Fiery Breath",
+                desc:`Hit Effect: -1 ${protectionBlight}.`,
+                dist:1,
+                aim:5,
+                hurt:3,
+                unused:true,
+                m:"fieryBreath"
+            }
+        },
+        white:{
+            draconicRage:{
+                name:"Draconic Rage",
+                desc:`${damageBoon}.`,
+                icon:'self',
+                unused:true,
+                m:"draconicRage"
+            },
+            roar:{
+                name:"Roar",
+                desc:`Hit Effect: -1 ${dodgeBlight}.`,
+                icon:skull,
+                dist:3,
+                aim:[5],
+                unused:true,
+                m:"roar"
+            }
+        },
+        util:{
+            flight:{
+                Name:"Flight",
+                desc:"During an advance action, the Young Dragons may move through other models' hexes but cannot end their movement on those hexes'.",
+                m:"flight"
+            }
+        }
     }
 }

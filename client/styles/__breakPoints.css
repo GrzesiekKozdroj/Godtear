@@ -494,9 +494,9 @@
     height: 7.29156vh;
     width: 6.5625vh;
     position: relative;
-    top: -2.14125vh;
-    left: -0.55859vh;
-    z-index: 2;
+    top: -0.12413vh;
+    left: 0.15516vh;
+    z-index: 3;
   }
   .shelf .hexagon .top, .shelf .hexagon .bottom {
     position: absolute;
@@ -1103,9 +1103,9 @@
     height: 5.55548vh;
     width: 5vh;
     position: relative;
-    top: -1.63143vh;
-    left: -0.42559vh;
-    z-index: 2;
+    top: -0.09458vh;
+    left: 0.11822vh;
+    z-index: 3;
   }
   .shelf .hexagon .top, .shelf .hexagon .bottom {
     position: absolute;

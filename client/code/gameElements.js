@@ -29,9 +29,7 @@ function displayDeploymentInfo(scenario) {
     </div>
     `
 }
-function displayAnimatedNews ({$attacker,$victim,skillName,skillIcon,dieRoll,rollOutcome,templateType, points, blight,addInfo,hurtTotal}){
-    if(dieRoll){
-        console.log(dieRoll)
+function displayAnimatedNews ({$attacker,$victim,skillName,skillIcon,dieRoll,rollOutcome,templateType, steps, blights,addInfo,hurtTotal}){
     const extractor = (model) => {
         const name = model.data('name')
         const team = model.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
@@ -44,6 +42,10 @@ function displayAnimatedNews ({$attacker,$victim,skillName,skillIcon,dieRoll,rol
     const charMarker = x => `<span class="${x.team}" >${x.name}</span>`
     const outcoMarker = y => `<span class="${y?'success':'miss'}" >${y?'hits!':'fails!'}</span>`
     const damageMarker = (y, hT) => `${y ? '<span class="blackTeam" >'+hT+'</span>' : 'no' }`
+    const makeSMS_b_b = (value,Bname) => {
+        const imageAdd = [...Bname].slice(1).join('')+(value>0?'Boon':'Blight')
+        const val = value > 0 ? '<span class="bigger-SMS">+1</span>' : '<span class="bigger-SMS">-1</span>'
+        return `${val}&nbsp;<div class="SMS_BB" style="background-image:url('../img/${imageAdd}.svg')"></div> `}
     const diceMarker = (x,dieRoll) => dieRoll.map(el=>{
         const X = x.team ? x.team : 'blackTeam'
         if(el===0){
@@ -57,25 +59,30 @@ function displayAnimatedNews ({$attacker,$victim,skillName,skillIcon,dieRoll,rol
                 </div>`
         }
     }).join('&nbsp; ')
+    const templater = food => $('#sms').prepend(`<div class="sms_message fade_sms ${uq_id}">${food}</div>`)
     if(templateType === 'attack'){
-        $('#sms').prepend(`<div class="sms_message ${uq_id}">
-            ${charMarker(a)} use ${skillMarker(skillName,skillIcon)} on ${charMarker(v)} <br/> 
-            roll ${diceMarker(a,dieRoll)} ${outcoMarker(rollOutcome)}
-            </div>
-        `)
+        templater(`${charMarker(a)} use ${skillMarker(skillName,skillIcon)} on ${charMarker(v)} <br/> 
+            roll ${diceMarker(a,dieRoll)} ${outcoMarker(rollOutcome)}`)
     }else if(templateType==='damage'){
-        $('#sms').prepend(`<div class="sms_message ${uq_id}">
-            ${charMarker(v)} suffers damage roll of 
-            ${diceMarker('',dieRoll)} causing ${damageMarker(rollOutcome,hurtTotal)} damage
-        </div>
-    `)
-
+        templater(`${charMarker(v)} suffers damage roll of ${diceMarker('',dieRoll)}`)
+    }else if(templateType==='pain'){
+        templater(`${charMarker(v)} recieves ${damageMarker(rollOutcome,hurtTotal)} damage`)
+    }else if(templateType==='boons'){
+        let messahe = ''
+        let argr = false
+        for(let k in blights){
+            const boobli = blights[k]
+            messahe+=makeSMS_b_b(boobli,k)
+            argr = argr ? argr : boobli !== 0 ? true : false
+        }
+        if( argr )
+            templater(`<div class="sms_message ${uq_id}">${charMarker(a) + ' ' + messahe}</div>`)
     }else if(templateType==='points'){
-
+        templater(`${charMarker(v)} scores <span class="SMS-gold">${steps} step${steps>1?'s':''}</span>`)
     }else if(templateType==='info'){}
-    setTimeout(()=>$('.'+uq_id).remove(),8020)
+    //setTimeout(()=>$('.'+uq_id).remove(),9020)
 
-}//if dieRoll
+//if dieRoll
     // const flashNews = msg => ` <h3 class='flashNews hinge-in-from-middle-y mui-enter'> ${msg} </h3> ` 
     // $('#gameScreen').append( flashNews(message) )
     // setTimeout(()=>$('.flashNews').addClass('mui-enter-active'), 250)
@@ -454,7 +461,7 @@ function showLikeWater( RaithMarid ){
         </div>
     `
 }
-function un_glow(p=false){//console.trace()
+function un_glow(p=false){console.trace()
     if (!p)
         $('[data-glow]').removeAttr('data-glow')
     else

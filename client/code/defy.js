@@ -239,8 +239,9 @@ var defy = {
         $('.roarOfBattle_selected').removeClass('roarOfBattle_selected')
         uniCancel()
     },
-    outflank:()=>{
-        $('.outflank').removeClass('outflank outflank_selected')
+    outflank:()=>{console.log('outfl defy')
+        multiMovement_procedure('outflank','outflank_selected','outflanked')
+        $('.outflank_source').removeClass('outflank_source')
         uniCancel()
     },
     rapidDeployment:()=>{

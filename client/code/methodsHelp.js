@@ -45,7 +45,7 @@ const causeOfRetchlings = (skill) => {
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
     const targetos = (abilName, p = phase) => {
         let prod;
-     //   console.log(name,p,abilName)
+        //console.log(name,p,abilName)
         if(side === mySide)
                 prod = causeOfRetchlings(  mySkillTrack[name][p][abilName].used )
         else if(side === opoSide)
@@ -1223,4 +1223,36 @@ function animateWeapon($target, weapon){
                 setTimeout(()=>$(`#factualWeapon.${randomisoro}`).remove(),250)
             })
         },400)
+}
+const phaser = () => phase === 'white' ? 'White' : 'Black'
+
+function _royalSummons(origin,target){
+    console.log(`Young Dragons may make an advance action or a recruit action.`)
+    let PH = phase === 'white' ? 'White' : 'Black'
+    socket.emit('rolloSkill',{ socksMethod:"royalSummons"+PH })
+}
+const rally_drakes = (side)=>{
+    add_action_taken('royalSummons'+phaser())
+    //no drakes on board, allow only for recruitment
+    rallyActionDeclaration({ unitname:'Keera', side, type:'unit', name:'YoungDragons' })
+    displayAnimatedNews('drake recruit')
+}
+const walk_drakes = (drakes)=>{
+    //two drakes, one can walk, no recruitment
+    if( !$('.summonsWalk').length ){
+        drakes.addClass('summonsWalk')
+        displayAnimatedNews('rakos walkos')
+    }
+}
+function royalSummons_(o){
+    const team = $('.selectedModel[data-tenmodel^="Keera"]').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+    const drakes = $(`[data-tenmodel^="YoungDragons"].${team}`)
+    const side = $('.selectedModel[data-tenmodel^="Keera"]').data('side')
+    if ( drakes.length < 1 ){
+        rally_drakes(side)
+    } else if ( drakes.length === 1 ){
+        $('#gameScreen').append(  royalSummonsChoices( drakes, side )  )
+    } else {
+        walk_drakes(drakes)
+    }
 }

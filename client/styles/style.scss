@@ -1290,3 +1290,37 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
     //.bspeed-sms{background-image:'../img/'}
     //.bdodge{background-image:'../img/'}
     //.bprotection{background-image:'../img/'}
+.royalSumms{
+    border-radius: 50%;
+    border:solid .6vh rgb(46, 8, 8);
+    width: 20vh;
+    height: 20vh;
+    background-position: center;
+    background-size: contain;
+    @include instaFlex;
+    font-family: $coinFont2;
+    font-size:80%;
+    margin:.2vw;
+    &:active{
+        transform: scale(.95);
+        box-shadow: 0 0 2px black inset;
+    }
+}
+.walkDragonblack{
+    background-image: url('../img/walk_black.png');
+}
+.recruitDragonblack{
+    background-image: url('../img/recruit_black.png');
+}
+.cancelDragonblack{
+    background:radial-gradient(circle, rgb(138, 81, 35) 0%, rgb(15, 1, 4) 100%);
+}
+.walkDragonwhite{
+    background-image: url('../img/walk_white.png');
+}
+.recruitDragonwhite{
+    background-image: url('../img/recruit_white.png');
+}
+.cancelDragonwhite{
+    background:radial-gradient(circle, rgba(251,148,63,1) 0%, rgba(91,5,22,1) 100%);
+}

@@ -501,6 +501,18 @@ function display_who_starts_next_phase(){
                 </div>
             </div>
         `)
-    console.log('if I see this message, then BRAVO, I can carry on :D')
     //stil TODO
+}
+function royalSummonsChoices( drakes, side ){
+    if( myTurn ) return`
+        <div class="soCoolMistressPanel">
+            <div 
+                class="soCoolMistressPanelCrest" 
+              >
+                <div class="message">choose to walk or recruit a Young Dragon</div>
+                <div class="walkDragon${phase} walkDragon royalSumms" >advance</div>
+                <div class="cancelDragon${phase} cancelDragon royalSumms" >cancel</div>
+                <div class="recruitDragon${phase} recruitDragon royalSumms" >recruit</div>
+            </div>
+        </div>`
 }

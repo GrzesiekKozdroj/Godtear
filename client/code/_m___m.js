@@ -360,6 +360,27 @@ var _m_ = {
             $(thiz).removeClass(`rapidDeployment_selected`)
             setTimeout(()=>thiz.removeAttr('style'),100)
         }
+    },
+    summonsWalk:$thiz=>{
+        console.log($('[data-glow].hexagon').length)
+        if ( $('[data-glow].hexagon').length > 19 ) {
+            un_glow()
+            if_moved_end_it()
+            add_action_taken( 'royalSummons' + phaser() )
+            highlightHexes({colour:'legendaryGlow',dist:2},$thiz)
+        } else if( $('[data-glow].hexagon').length > 6 ){
+            un_glow()
+            highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
+        } else {
+            un_glow()
+            $($thiz).removeClass(`summonsWalk_selected summonsWalk`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            if(!$('.summonsWalk').length ){
+                current_ability_method = null
+                pocketBox = null
+                add_action_taken( 'royalSummons' + phaser() )
+            }
+        }
     }
 }
 

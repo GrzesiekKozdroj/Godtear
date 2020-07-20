@@ -2091,9 +2091,9 @@ const m =
             }
         },
         white:{
-            royalSummons:{
+            royalSummonsWhite:{
                 name:"Royal Summons",
-                desc:`Young dragons may make an advance action or a recruit action`,
+                desc:`Young Dragons may make an advance action or a recruit action.`,
                 icon:'cogs',
                 unused:true,
                 m:"royalSummonsWhite"
@@ -2101,7 +2101,7 @@ const m =
             regalBlessing:{
                 name:"Regal Blessing",
                 dist:3,
-                desc:`If a Young Draon is within range they gain ${aimBoon}.`,
+                desc:`If a Young Dragon is within range they gain ${aimBoon}.`,
                 icon:'cogs',
                 unused:true,
                 m:"regalBlessing"

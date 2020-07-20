@@ -1233,8 +1233,8 @@ const _m = {
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (aim + baim + AIIM), socksMethod:"chillOut", hex, row })
     },
-    royalSummonsBlack:function(origin,target){},
-    royalSummonsWhite:function(origin,target){},
+    royalSummonsBlack:_royalSummons,
+    royalSummonsWhite:_royalSummons,
     viciousBite:function(origin,target){},
     rainOfFire:function(origin,target){},
     regalBlessing:function(origin,target){},

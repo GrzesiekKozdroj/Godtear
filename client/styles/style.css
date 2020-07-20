@@ -3207,3 +3207,47 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
     opacity: 0;
   }
 }
+
+.royalSumms {
+  border-radius: 50%;
+  border: solid 0.6vh #2e0808;
+  width: 20vh;
+  height: 20vh;
+  background-position: center;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Shojumaru", cursive;
+  font-size: 80%;
+  margin: .2vw;
+}
+
+.royalSumms:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 2px black inset;
+}
+
+.walkDragonblack {
+  background-image: url("../img/walk_black.png");
+}
+
+.recruitDragonblack {
+  background-image: url("../img/recruit_black.png");
+}
+
+.cancelDragonblack {
+  background: radial-gradient(circle, #8a5123 0%, #0f0104 100%);
+}
+
+.walkDragonwhite {
+  background-image: url("../img/walk_white.png");
+}
+
+.recruitDragonwhite {
+  background-image: url("../img/recruit_white.png");
+}
+
+.cancelDragonwhite {
+  background: radial-gradient(circle, #fb943f 0%, #5b0516 100%);
+}

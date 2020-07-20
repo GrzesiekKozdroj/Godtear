@@ -2295,8 +2295,8 @@ var m_ = {
         turn_resetter(opoSkillTrack,'white','blackTeam')
         turn_resetter(mySkillTrack,'white','whiteTeam')
     },
-    royalSummonsBlack:function(o){},
-    royalSummonsWhite:function(o){},
+    royalSummonsBlack:royalSummons_,
+    royalSummonsWhite:royalSummons_,
     viciousBite:function(o){},
     rainOfFire:function(o){},
     regalBlessing:function(o){},
@@ -2305,4 +2305,23 @@ var m_ = {
     fieryBreath:function(o){},
     draconicRage:function(o){},
     roar:function(o){},
+    summonsWalk:function(o){
+        const { hex, row } = o
+        $('.summonsWalk_selected').removeClass('summonsWalk_selected summonsWalk')
+        const drake = $($(`.hex_${hex}_in_row_${row}`).children('.summonsWalk')[0])
+        drake.addClass('summonsWalk_selected')
+        un_glow()
+        highlightHexes({colour:'legendaryGlow', dist:3}, $('.summonsWalk_selected'))
+    },
+    rally_drakes_:function(){
+        current_ability_method = null
+        const side = $('.selectedModel[data-tenmodel^="Keera"]').data('side')
+        rally_drakes(side)
+    },
+    walk_drakes_:function(){
+        current_ability_method = ()=>true
+        const team = $('.selectedModel[data-tenmodel^="Keera"]').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        const drakes = $(`[data-tenmodel^="YoungDragons"].${team}`)
+        walk_drakes(drakes)
+    },
 }

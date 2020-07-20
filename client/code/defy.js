@@ -389,7 +389,8 @@ var defy = {
     earthquakeWhite:()=>multiMovement_procedure('earthquake_moveable','earthquake_selected','earthquake<br/>cancelled'),
     earthquakeBlack:()=>multiMovement_procedure('earthquake_moveable','earthquake_selected','earthquake<br/>cancelled'),
     boulderBash:()=>uniCancel(),
-
+    royalSummonsWhite:()=>rsDefy(),
+    royalSummonsBlack:()=>rsDefy(),
 
 }
 
@@ -410,5 +411,7 @@ function multiMovement_procedure(c,c_s,strng){
         uniCancel()
     }
     $('.' + c_s).removeClass(c + ' ' +c_s)
-
+}
+function rsDefy(){
+    multiMovement_procedure( 'summonsWalk', 'summonsWalk_selected', 'Royal Sommons ended')
 }

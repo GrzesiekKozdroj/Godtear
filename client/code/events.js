@@ -559,6 +559,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.beastlyCharge_selected').length && !thiz.children('.smallCard').length )
             extraMover('beastlyCharge',thiz,'walk',['onlyOneStep'])
         if( $('.leap_selected').length )extraMover('leap',thiz,'walk')
+        if( $('.summonsWalk_selected').length )extraMover('summonsWalk',thiz,'walk',['onlyOneStep'])
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
@@ -586,6 +587,11 @@ $('body').on('click','.illKillYouAll',function(e){
         un_glow()
         highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
     }
+})
+$('body').on('click','.summonsWalk',function(e){
+    e.preventDefault()
+    const { hex, row } = $(this).parent('.hexagon').data()
+    socket.emit('rolloSkill', { socksMethod: 'summonsWalk', hex, row })
 })
 $('body').on('click','.outflank',function(e){
     e.preventDefault()
@@ -739,7 +745,18 @@ $('body').on('click','.fire[data-socksmethod="callTotems"]',function(e){console.
     else 
         $('#multi_choice_info_panel').remove()
 })
-
+$('body').on('click','.royalSumms',function(e){
+    e.preventDefault()
+    const thiz = $(this)
+    if( thiz.hasClass('walkDragon') ){
+        socket.emit('rolloSkill',{ socksMethod:'walk_drakes_' })
+    } else if ( thiz.hasClass('recruitDragon') ){
+        add_action_taken('royalSummons'+phaser())
+        socket.emit('rolloSkill',{ socksMethod:'rally_drakes_' })
+        current_ability_method = null
+    }
+    $('.soCoolMistressPanel').remove()
+})
 $(`body`).on('click',`.endTask`,function(e){
     e.preventDefault()
     e.stopPropagation()
@@ -759,10 +776,13 @@ $('body').on('click','.chnt',function(e){
 })
 $('body').on('click','#ladder',function(e){
     console.log('show sms')
-    if( !$('.show_sms').length )
+    if( !$('.show_sms').length ){
         $('.sms_message').removeClass('hide_sms fade_sms').addClass('show_sms')
-    else
+        //$('#sms').css('pointer-events','auto')
+    } else {
         $('.sms_message').removeClass('show_sms').addClass('hide_sms')
+        //$('#sms').css('pointer-events','none')
+    }
 })
 
 

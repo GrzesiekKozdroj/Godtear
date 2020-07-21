@@ -2062,7 +2062,7 @@ const m =
     },
     keera:{
         black:{
-            royalSummons:{
+            royalSummonsBlack:{
                 name:"Royal Summons",
                 desc:`Young dragons may make an advance action or a recruit action`,
                 icon:'cogs',
@@ -2077,6 +2077,7 @@ const m =
                 aim:[4],
                 hurt:[7],
                 unused:true,
+                itskeera:true,
                 m:"viciousBite"
             },
             rainOfFire:{
@@ -2087,6 +2088,7 @@ const m =
                 aim:[7],
                 hurt:[4],
                 unused:true,
+                itskeera:true,
                 m:"rainOfFire"
             }
         },
@@ -2143,6 +2145,7 @@ const m =
                 aim:5,
                 hurt:3,
                 unused:true,
+                icon:skull,
                 m:"fieryBreath"
             }
         },
@@ -2166,7 +2169,7 @@ const m =
         },
         util:{
             flight:{
-                Name:"Flight",
+                name:"Flight",
                 desc:"During an advance action, the Young Dragons may move through other models' hexes but cannot end their movement on those hexes'.",
                 m:"flight"
             }

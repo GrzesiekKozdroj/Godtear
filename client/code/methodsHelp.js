@@ -1256,3 +1256,11 @@ function royalSummons_(o){
         walk_drakes(drakes)
     }
 }
+const kause_of_Keera = () => {
+    const team = $('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+    un_glow()
+    highlightHexes({colour:'blank',dist:3})
+    const drakes = $('[data-glow].hexagon').children(`[data-tenmodel^="YoungDragons"].${team}`)
+    un_glow()
+    return drakes
+}

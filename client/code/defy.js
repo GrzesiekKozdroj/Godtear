@@ -391,6 +391,12 @@ var defy = {
     boulderBash:()=>uniCancel(),
     royalSummonsWhite:()=>rsDefy(),
     royalSummonsBlack:()=>rsDefy(),
+    regalBlessing:()=>uniCancel(),
+    firebrand:()=>uniCancel(),
+    roar:()=>uniCancel(),
+    draconicRage:()=>uniCancel(),
+    viciousBite:()=>uniCancel(),
+    rainOfFire:()=>uniCancel(),
 
 }
 
@@ -414,4 +420,5 @@ function multiMovement_procedure(c,c_s,strng){
 }
 function rsDefy(){
     multiMovement_procedure( 'summonsWalk', 'summonsWalk_selected', 'Royal Sommons ended')
+    $('.soCoolMistressPanel').remove()
 }

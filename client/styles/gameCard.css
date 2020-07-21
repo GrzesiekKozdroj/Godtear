@@ -847,6 +847,8 @@
 
 .img_cogs_black.left, .img_cogs_white.left {
   transform: rotate(180deg);
+  align-items: end;
+  display: flex;
 }
 
 .img_cogs_black.left .gameCard_name, .img_cogs_white.left .gameCard_name {
@@ -856,6 +858,8 @@
 
 .img_cogs_black.right, .img_cogs_whire.right {
   transform: rotate(180deg);
+  align-items: end;
+  display: flex;
 }
 
 .img_cogs_black.right .gameCard_name, .img_cogs_whire.right .gameCard_name {

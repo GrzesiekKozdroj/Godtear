@@ -104,7 +104,9 @@ function makeGameBoard(o,coin){
     beginBattle()
     buildLadder()
     QUICK_DEEPLOY()
-    //setTimeout(()=>{phase='black';myNextPhase='black'},2900)
+    //---------------------------------------------BLACK____PHASE-----------------------------------
+    setTimeout(()=>{phase='black';myNextPhase='black'},2900)
+    //----------------------------------------------------------------------------------------------
     opoSkillTrack = buildSkillTrack(opoRoster)
     mySkillTrack = buildSkillTrack(roster)
 }

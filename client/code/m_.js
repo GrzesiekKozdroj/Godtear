@@ -2297,14 +2297,6 @@ var m_ = {
     },
     royalSummonsBlack:royalSummons_,
     royalSummonsWhite:royalSummons_,
-    viciousBite:function(o){},
-    rainOfFire:function(o){},
-    regalBlessing:function(o){},
-    firebrand:function(o){},
-    bite:function(o){},
-    fieryBreath:function(o){},
-    draconicRage:function(o){},
-    roar:function(o){},
     summonsWalk:function(o){
         const { hex, row } = o
         $('.summonsWalk_selected').removeClass('summonsWalk_selected summonsWalk')
@@ -2324,4 +2316,116 @@ var m_ = {
         const drakes = $(`[data-tenmodel^="YoungDragons"].${team}`)
         walk_drakes(drakes)
     },
+    regalBlessing:function(o){
+        const { hex, row } = o
+        const target = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel^="YoungDragons"]')[0])
+        un_glow()
+        current_ability_method = null
+        add_action_taken('regalBlessing')
+        if( target.length ){
+            setBoons_Blights( target, {baim:Number(target.attr('data-baim'))+1})
+            displayAnimatedNews()
+        }
+    },
+    firebrand:function(o){
+        un_glow()
+        add_action_taken('legendary')
+        const team = $('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        const opoteam = !$('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        const drakes = $(`[data-tenmodel^="YoungDragons"].${team}`)
+        current_ability_method = null
+        drakes.each(function(){
+            highlightHexes({colour:'redGlow',dist:2}, $(this) )
+            $('[data-glow].hexagon').children(`.champModel.${opoteam}:not(".beaten_already")`).each(function(){
+                const target = $(this)
+                target.addClass('beaten_already')
+                target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-2) )
+                animateDamage(target, -2)
+                if( checkIfStillAlive(target) )
+                    moveLadder(target, slayerPoints(target) )
+            })
+            un_glow()
+        })
+        $('.beaten_already').removeClass('beaten_already')
+        displayAnimatedNews()
+    },
+    draconicRage:function(o){
+        add_action_taken('draconicRage')
+        current_ability_method = null
+        un_glow()
+        setBoons_Blights( $('.selectedModel'), { bdamage: Number( $('.selectedModel').attr('data-bdamage') )+1 })
+        displayAnimatedNews()
+    },
+    roar:function(o){
+        const { aim, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            un_glow()
+            add_action_taken("roar")
+            if( onHit(aim, target, 'spell','Roar') ){
+                setBoons_Blights( target, { bdodge: Number( target.attr('data-bdodge') )-1 })
+            }
+        }
+        current_ability_method = null
+    },
+    viciousBite:function(o){
+        const drakes = kause_of_Keera()
+        drakes.each(function(){
+            highlightHexes({colour:'redGlow',dist:1}, $(this))
+        })
+        current_ability_method = _m.viciousBite_onDrakes
+    },
+    viciousBite_onDrakes:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            un_glow()
+            add_action_taken("viciousBite")
+            if( onHit(aim, target, 'spell','Vicious Bite') ){
+                if( target.hasClass('champModel')){
+                    target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-2) )
+                    animateDamage(target, -2)
+                }
+                if( checkIfStillAlive(target) ){
+                    moveLadder(target, slayerPoints(target) )
+                } else if( doDamage(hurt, target) ){
+                    if( checkIfStillAlive(target) ){
+                        moveLadder(target, slayerPoints(target) )
+                    } else null
+                }
+            }
+        }
+        current_ability_method = null
+
+    },
+    rainOfFire:function(o){
+        const drakes = kause_of_Keera()
+        drakes.each(function(){
+            highlightHexes({colour:'redGlow',dist:1}, $(this))
+        })
+        current_ability_method = _m.rainOfFire_onDrakes
+    },
+    rainOfFire_onDrakes:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            un_glow()
+            add_action_taken("rainOfFire")
+            if( onHit(aim, target, 'spell','Vicious Bite') ){
+                setBoons_Blights( target, { bprotection:Number( target.attr('data-bprotection') ) - 1 })
+                if( doDamage(hurt, target) ){
+                    if( checkIfStillAlive(target) ){
+                        moveLadder(target, slayerPoints(target) )
+                    } else null
+                }
+            }
+        }
+        current_ability_method = null
+
+    },
+    bite:function(o){},
+    fieryBreath:function(o){},
 }

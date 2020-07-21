@@ -1235,12 +1235,46 @@ const _m = {
     },
     royalSummonsBlack:_royalSummons,
     royalSummonsWhite:_royalSummons,
-    viciousBite:function(origin,target){},
-    rainOfFire:function(origin,target){},
-    regalBlessing:function(origin,target){},
-    firebrand:function(origin,target){},
+    regalBlessing:function(origin,target){
+        const { hex, row } = target
+        if( $(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel^="YoungDragons"].whiteTeam').length ){
+            socket.emit('rolloSkill', { hex, row, socksMethod:'regalBlessing'})
+            un_glow()
+        }
+    },
+    firebrand:function(origin,target){
+        socket.emit('rolloSkill',{ socksMethod:'firebrand' })
+    },
+    draconicRage:function(origin,target){
+        socket.emit('rolloSkill',{ socksMethod:'draconicRage' })
+    },
+    roar:function(origin,target){
+        const { baim } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (5 + baim), socksMethod:"roar", hex, row })
+    },
+    viciousBite:function(origin,target){
+        socket.emit('rolloSkill',{ socksMethod:'viciousBite' })
+    },
+    viciousBite_onDrakes:function(origin, target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (4 + baim), hurt:(7 + bdamage), socksMethod:"viciousBite_onDrakes", hex, row })
+    },
+    rainOfFire:function(origin,target){
+        socket.emit('rolloSkill',{ socksMethod:'rainOfFire' })
+    },
+    rainOfFire_onDrakes:function(origin, target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (7 + baim), hurt:(4 + bdamage), socksMethod:"rainOfFire_onDrakes", hex, row })
+    },
     bite:function(origin,target){},
     fieryBreath:function(origin,target){},
-    draconicRage:function(origin,target){},
-    roar:function(origin,target){},
 }

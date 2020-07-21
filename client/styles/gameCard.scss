@@ -440,17 +440,21 @@ $white: white;
         margin-top:-14%
     }
 }
-
+@mixin cog_rotating{
+    transform:rotate(180deg);
+    align-items: end;
+    display: flex;    
+}
 .nope{filter:brightness(.3)}
 .img_cogs_black.left,.img_cogs_white.left{
-    transform:rotate(180deg);
+    @include cog_rotating;
     .gameCard_name{
         transform:rotate(-180deg);
         margin-top:100%;
     }
 }
 .img_cogs_black.right,.img_cogs_whire.right{
-    transform: rotate(180deg);
+    @include cog_rotating;
     .gameCard_name{
         transform:rotate(-180deg)
     }

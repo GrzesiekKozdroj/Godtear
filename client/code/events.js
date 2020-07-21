@@ -274,7 +274,7 @@ for(let K in m){
                         current_ability_method = _m[data.m]
                         canceller = defy[SKILL.m] ? defy[SKILL.m] : ()=>{return 0}
                         cancellerName = SKILL.m
-                        if(data.dist)
+                        if(data.dist && !data.itskeera)
                             socket.emit('HH', {color:glow,dist:data.dist,m:SKILL.preface})//r way also pre init function
                         else//for things like initiating message to other player, highlighting uttons active, pre setting skills
                             current_ability_method($('.selectedModel'), $('.selectedModel').parent('.hexagon').data())

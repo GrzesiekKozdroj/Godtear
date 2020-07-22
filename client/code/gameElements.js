@@ -461,7 +461,7 @@ function showLikeWater( RaithMarid ){
         </div>
     `
 }
-function un_glow(p=false){console.trace()
+function un_glow(p=false){//console.trace()
     if (!p)
         $('[data-glow]').removeAttr('data-glow')
     else

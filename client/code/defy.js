@@ -397,6 +397,8 @@ var defy = {
     draconicRage:()=>uniCancel(),
     viciousBite:()=>uniCancel(),
     rainOfFire:()=>uniCancel(),
+    bite:()=>uniCancel(),
+    fieryBreath:()=>uniCancel(),
 
 }
 

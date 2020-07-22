@@ -2414,7 +2414,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken("rainOfFire")
-            if( onHit(aim, target, 'spell','Vicious Bite') ){
+            if( onHit(aim, target, 'spell','Rain Of Fire') ){
                 setBoons_Blights( target, { bprotection:Number( target.attr('data-bprotection') ) - 1 })
                 if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) ){
@@ -2426,6 +2426,46 @@ var m_ = {
         current_ability_method = null
 
     },
-    bite:function(o){},
-    fieryBreath:function(o){},
+    bite:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            un_glow()
+            add_action_taken("bite")
+            if( onHit(aim, target, 'spell','Bite') ){
+                if( target.hasClass('champModel')){
+                    target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
+                    animateDamage(target, -1)
+                }
+                if( checkIfStillAlive(target) ){
+                    moveLadder(target, target.data('stepsgiven') )
+                } else
+                if( doDamage(hurt, target) ){
+                    if( checkIfStillAlive(target) ){
+                        moveLadder(target, target.data('stepsgiven'))
+                    } else null
+                }
+            }
+        }
+        current_ability_method = null
+    },
+    fieryBreath:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            un_glow()
+            add_action_taken("fieryBreath")
+            if( onHit(aim, target, 'spell','Fiery Breath') ){
+                setBoons_Blights( target, { bprotection:Number( target.attr('data-bprotection') ) - 1 })
+                if( doDamage(hurt, target) ){
+                    if( checkIfStillAlive(target) ){
+                        moveLadder(target, slayerPoints(target) )
+                    } else null
+                }
+            }
+        }
+        current_ability_method = null
+    },
 }

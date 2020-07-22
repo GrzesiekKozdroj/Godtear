@@ -1275,6 +1275,18 @@ const _m = {
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (7 + baim), hurt:(4 + bdamage), socksMethod:"rainOfFire_onDrakes", hex, row })
     },
-    bite:function(origin,target){},
-    fieryBreath:function(origin,target){},
+    bite:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (/*5*/9 + baim), hurt:(/*3*/15 + bdamage), socksMethod:"bite", hex, row })
+    },
+    fieryBreath:function(origin,target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) )
+            socket.emit('rolloSkill',{ aim: (/*5*/9 + baim), hurt:(/*3*/15 + bdamage), socksMethod:"fieryBreath", hex, row })
+    },
 }

@@ -212,8 +212,9 @@ $('body').on('click','.objectiveGlow[data-glow="claimColor"].hexagon', function(
 $('body').on('click','.hexagon:not([data-glow="callTotems"])',function(e){
     e.preventDefault()
     const S_Stabber = $( $(this).children('.smallCard[data-tenmodel^="SneakyStabbers"].whiteTeam')[0] )
+    const Y_Dragon = $( $(this).children('.smallCard[data-tenmodel^="YoungDragons"].whiteTeam')[0] )
     const normal_model = $( $(this).children('.smallCard')[0] )
-    const thiz = S_Stabber.length ? S_Stabber : normal_model
+    const thiz = S_Stabber.length ? S_Stabber : Y_Dragon.length ? Y_Dragon: normal_model
     if (phase === 'end' && !am_I_winner() ){
         const { hex, row } = $(this).data()
         socket.emit('epp', { hex, row })
@@ -664,7 +665,7 @@ $('body').on('click','.earthquake_moveable',function(e){
 $('body').on('click','#rallyAction',function(e){
     e.preventDefault()
     const th = $(this)
-    if(myTurn){
+    if( myTurn && th.data('side') === mySide ){
         un_glow()
         highlightHexes({colour:'recruitGlow',dist:1},$(`[data-tenmodel^=${th.data('unitname')}][data-side=${th.data('side')}]`))
         rallyActionDeclaration( th.data() )

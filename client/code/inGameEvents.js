@@ -104,7 +104,7 @@ const animateCart = (site, thiz) =>
     data.type = thiz.attr('data-type')
     data.name = thiz.attr('data-name')
     data.icon = thiz.attr('data-icon')
-    data.unitname = thiz.attr('data-unitname')
+    data.unitName = thiz.attr('data-unitname')
     data.unitSize = thiz.attr('data-unitsize')
     data.healthleft = Number( thiz.attr('data-healthleft') )
     data.skills = JSON.parse(decodeURIComponent(thiz.attr('data-skills')));

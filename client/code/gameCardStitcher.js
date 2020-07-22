@@ -27,14 +27,14 @@ const bigCard_bb = (a,b)=>`<span class="${b>0?'booned':b<0?'blighted':'normal'} 
         }
 
         const bloodedUnit = (unitName, side, unitSize,type, name) =>{
-            const gunit = $(`[data-name="${unitName}"].${mySide}`)
+            const gunit = $(`[data-name="${unitName}"].${side}`)
             const onChamp = (gunit.length === 0 && type === 'champion')
             if( (gunit.length < unitSize && gunit.length > 0 && side === mySide && type !== 'champion') || onChamp
              )
             return `
             <div id='rallyAction' class='game_card-attrib card_base_action ${phase} unit rally'
                 data-unitname=${onChamp ? name : unitName} 
-                data-side=${mySide} 
+                data-side=${side} 
                 data-type=${type} 
                 data-name=${onChamp ? unitName : name}
             >

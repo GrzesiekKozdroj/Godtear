@@ -1102,7 +1102,11 @@ function standardWalk ({ $model, $destination, rules }){// rules is a array ['on
                         name === $destination.children(`.smallCard[data-side="${side}"]`).first().data('name') && 
                         !$model.hasClass('largeUnitModel')
                     ) ||
-                    ( name === 'SneakyStabbers' && $('[data-glow].hexagon').length > 6 )//data.glow count is bad fix
+                    ( 
+                        (
+                            name === 'SneakyStabbers' || 
+                            name === 'YoungDragons' 
+                        ) && $('[data-glow].hexagon').length > 6 )//data.glow count is bad fix
                 ) && 
                 $destination.children(`.smallCard`).length < 3
             )

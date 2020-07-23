@@ -174,32 +174,34 @@ const spreadTheInfection = () =>
     )
 
 function displayMovementAura (thiz) {
-    let  bspeed = thiz.attr('data-bspeed')
-    $('[data-glow]').removeAttr('data-glow')
-    let h = Number(thiz.parent('.hexagon').data('hex'))
-    let r = Number(thiz.parent('.hexagon').data('row'))
-    let numbeOfSteps = Number( [...thiz.attr('data-speedleft')][phase === 'white' ? 0 : 2] ) + Number(bspeed)
-    const noKnightshades = ()=>{
-        let produce = true
-        highlightHexes({colour:'trans',dist:1},thiz)
-        $(`[data-glow].hexagon`).each(function(){
+    if( Number(thiz.attr('data-actionstaken') ) < 2 ){
+        let  bspeed = thiz.attr('data-bspeed')
+        $('[data-glow]').removeAttr('data-glow')
+        let h = Number(thiz.parent('.hexagon').data('hex'))
+        let r = Number(thiz.parent('.hexagon').data('row'))
+        let numbeOfSteps = Number( [...thiz.attr('data-speedleft')][phase === 'white' ? 0 : 2] ) + Number(bspeed)
+        const noKnightshades = ()=>{
+            let produce = true
+            highlightHexes({colour:'trans',dist:1},thiz)
+            $(`[data-glow].hexagon`).each(function(){
             if( $(this).children(`[data-name="Knightshades"][data-tenmodel].blackTeam`).length ){
                 produce = false
                 return false
             }
-        })
-        $(`data-glow`).removeAttr(`data-glow`)
-        return produce
-    }
-    if( numbeOfSteps && noKnightshades() )
-        for(let m = 0; m < numbeOfSteps; m++ ){
-            m === 0 ?
-                infectMovementHexesWithYellow(r,h)
-            :
-                spreadTheInfection()
+            })
+            $(`data-glow`).removeAttr(`data-glow`)
+            return produce
         }
-    thiz.parent('.hexagon').removeAttr('data-glow')
-    thiz.parent('.hexagon').children().removeAttr('data-glow')
+        if( numbeOfSteps && noKnightshades() )
+            for(let m = 0; m < numbeOfSteps; m++ ){
+                m === 0 ?
+                    infectMovementHexesWithYellow(r,h)
+                :
+                    spreadTheInfection()
+            }
+        thiz.parent('.hexagon').removeAttr('data-glow')
+        thiz.parent('.hexagon').children().removeAttr('data-glow')
+    }
 }
 
 const onlyOneStep = (thiz, origin = $('.selectedModel') ) => {

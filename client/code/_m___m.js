@@ -362,7 +362,6 @@ var _m_ = {
         }
     },
     summonsWalk:$thiz=>{
-        console.log($('[data-glow].hexagon').length)
         if ( $('[data-glow].hexagon').length > 19 ) {
             un_glow()
             if_moved_end_it()
@@ -379,6 +378,20 @@ var _m_ = {
                 current_ability_method = null
                 pocketBox = null
                 add_action_taken( 'royalSummons' + phaser() )
+            }
+        }
+    },
+    deathMove:$thiz=>{
+        if( $('[data-glow].hexagon').length > 7 ){
+            un_glow()
+            highlightHexes({colour:'deathMove',dist:1},$thiz)
+        } else {
+            un_glow()
+            $($thiz).removeClass(`deathMove_selected`)
+            setTimeout(()=>$thiz.removeAttr('style'),100)
+            if(!$('.deathMove_selected').length ){
+                current_ability_method = null
+                pocketBox = null
             }
         }
     }

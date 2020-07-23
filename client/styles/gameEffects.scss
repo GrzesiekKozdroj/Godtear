@@ -184,13 +184,14 @@ $glowDensity:.25;
         rgba(152, 241, 101, $glowDensity)
     )
 }
+$deathGlowDensity:.55;
 [data-glow="deathMove"],.usedSkill{ 
     @include makeGlow('black',
-        rgba(29, 28, 28, $glowDensity) ,
-        rgba(36, 32, 32, $glowDensity) ,
-        rgba(49, 6, 6, $glowDensity) ,
-        rgba(41, 39, 39, $glowDensity) 
-    )
+        rgba(29, 28, 28, $deathGlowDensity) ,
+        rgba(36, 32, 32, $deathGlowDensity) ,
+        rgba(49, 6, 6, $deathGlowDensity) ,
+        rgba(41, 39, 39, $deathGlowDensity) 
+    );
 }
 @keyframes shake {
     0% { transform: translate(1px, 1px) rotate(0deg); }

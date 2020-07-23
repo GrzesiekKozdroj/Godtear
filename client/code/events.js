@@ -561,6 +561,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
             extraMover('beastlyCharge',thiz,'walk',['onlyOneStep'])
         if( $('.leap_selected').length )extraMover('leap',thiz,'walk')
         if( $('.summonsWalk_selected').length )extraMover('summonsWalk',thiz,'walk',['onlyOneStep'])
+        if( $('.deathMove_selected').length )extraMover('deathMove',thiz,'walk',['onlyOneStep'])
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
@@ -665,7 +666,19 @@ $('body').on('click','.earthquake_moveable',function(e){
 $('body').on('click','#rallyAction',function(e){
     e.preventDefault()
     const th = $(this)
-    if( myTurn && th.data('side') === mySide ){
+    const { side, name } = th.data()
+    const brothers = $(`[data-tenmodel^="${name}"][data-side="${side}"]`)
+    const actionzKount = () => {
+        if( brothers.length )
+            return check_actions_count('rallied', name)
+        else {
+            const aktkount = Number(  $(graveyard[side][name][0]).attr('data-actionstaken')  ) < 2
+            const trakSkill = side === mySide ? mySkillTrack : opoSkillTrack
+            const trakoutk = !trakSkill[name][phase].rallied.used
+            return (aktkount && trakoutk)
+        }
+    }
+    if( myTurn && th.data('side') === mySide && actionzKount() ){
         un_glow()
         highlightHexes({colour:'recruitGlow',dist:1},$(`[data-tenmodel^=${th.data('unitname')}][data-side=${th.data('side')}]`))
         rallyActionDeclaration( th.data() )
@@ -676,7 +689,7 @@ $('body').on('click','[data-glow="recruitGlow"].hexagon',function(e){
     e.stopPropagation()
     const { hex, row } = $(this).data()
     if(myTurn)
-        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDead", hex, row})
+        socket.emit('rolloSkill',{ socksMethod:"raiseDead", hex, row })
 })
 $('body').on('click',`[data-glow^="rockFormation"].hexagon`,function(e){
     e.preventDefault()
@@ -758,6 +771,11 @@ $('body').on('click','.royalSumms',function(e){
     }
     $('.soCoolMistressPanel').remove()
 })
+$('body').on('click','.deathMove',function(e){
+    e.preventDefault()
+    const { hex, row } = $(this).parent('.hexagon').data()
+    socket.emit('rolloSkill', {socksMethod:'deathMove', hex, row })
+})
 $(`body`).on('click',`.endTask`,function(e){
     e.preventDefault()
     e.stopPropagation()
@@ -776,13 +794,12 @@ $('body').on('click','.chnt',function(e){
     $('.soCoolMistressPanel').remove()
 })
 $('body').on('click','#ladder',function(e){
-    console.log('show sms')
     if( !$('.show_sms').length ){
         $('.sms_message').removeClass('hide_sms fade_sms').addClass('show_sms')
-        //$('#sms').css('pointer-events','auto')
+        $('#sms').css('pointer-events','none')
     } else {
         $('.sms_message').removeClass('show_sms').addClass('hide_sms')
-        //$('#sms').css('pointer-events','none')
+        $('#sms').css('pointer-events','all')
     }
 })
 

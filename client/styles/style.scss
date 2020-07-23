@@ -1154,6 +1154,8 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
     @include apa_sms(forwards,8s);
 }
 #sms{
+    background-color:rgba(223, 183, 124, 0.39);
+    box-shadow: 0 0 1vh black inset, 0 0 .5vh black inset;
     overflow-y: hidden;
     position: absolute;
     width: 40vw;
@@ -1323,4 +1325,7 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
 }
 .cancelDragonwhite{
     background:radial-gradient(circle, rgba(251,148,63,1) 0%, rgba(91,5,22,1) 100%);
+}
+#rallyAction:active, #claimAction:active{
+    transform:scale(.95);
 }

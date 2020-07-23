@@ -18,13 +18,16 @@ const if_moved_end_it  = () => {//should take argument to end movement of custom
         }
     })
 }
-const abilTruthChange = (abilName = null,side=mySide) => {
-    let name = $('.selectedModel').data('name')
+const abilTruthChange = (
+        abilName = null,
+        side = mySide,
+        name = $('.selectedModel').data('name')
+) => {
     const targetos = (abilName, p = phase) => 
-        $('.selectedModel').hasClass('whiteTeam') ? 
-        mySkillTrack[name][p][abilName].used = true
-        : 
-        opoSkillTrack[name][p][abilName].used = true
+    $('.selectedModel').hasClass('whiteTeam') ? 
+    mySkillTrack[name][p][abilName].used = true
+    : 
+    opoSkillTrack[name][p][abilName].used = true
 
     if(abilName === "legendary")
         targetos("legendary","util")
@@ -45,7 +48,7 @@ const causeOfRetchlings = (skill) => {
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
     const targetos = (abilName, p = phase) => {
         let prod;
-        //console.log(name,p,abilName)
+        console.log(name,p,abilName)
         if(side === mySide)
                 prod = causeOfRetchlings(  mySkillTrack[name][p][abilName].used )
         else if(side === opoSide)
@@ -72,7 +75,7 @@ const add_action_taken = (
             $(this).attr('data-actionstaken', (actionstaken + 1) )
         })
     }
-    abilTruthChange(abilName,side)
+    abilTruthChange(abilName,side,name)
 }
 const check_actions_count = (abilName = false, side = mySide) => {
     return Number( $('.selectedModel').attr('data-actionstaken') ) < 2 && 
@@ -189,11 +192,16 @@ const forceKill = (target) => {//$()
                 graveyard[target.data('side')][target.data('name')] = [target.removeClass('.death').detach()]
             } else if( target.data('type')==='champion' ){
             //gotta emit champ death
-            un_glow()
-            highlightHexes({colour:'deathMove',dist:2},target)
+            cancellerName = 'deathMove' //UNTESTEDO
+            if( !$('.deathMove_selected').length ){
+                target.addClass('deathMove_selected')
+                un_glow()
+                highlightHexes({colour:'deathMove',dist:2},target)
+            }else
+                target.addClass('deathMove')
             //resurrect Mournblade
             if(Number($(`[data-name="Mournblade"].${mySide}[data-tenmodel]`).attr('data-healthleft')) === 0 &&
-            target.hasClass(opoSide)){
+            target.hasClass(opoSide)){//it should be presented as a option.
                 $(`[data-name="Mournblade"].${mySide}[data-tenmodel]`)
                     .attr('data-healthleft',1)
                     .removeClass('death')
@@ -482,7 +490,8 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
             socket.emit('HH', {color:glowType,dist, hex:h, row:r, river, n:nickName})
         })
     }
-    if (glowType==='callTotems') un_glow()
+    if (glowType==='callTotems') 
+        un_glow()
     if(glowType==='lifeTrade')
         lifeTradeRaise()
     else if ( glowType.includes(`rockFormation`) )
@@ -502,6 +511,7 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
             socket.emit('HH', {color:glowType,dist, hex:h, row:r, river, n:nickName})
         })
     }
+    cancellerName = 'rallied'
 }
 function blights_spew_declaration ({origin, abilName}){
     const { baim } = extractBoons_Blights(origin)
@@ -583,8 +593,13 @@ function propagate_BB_s($origin,$target){
     setBoons_Blights( $target, { baim, bdamage, bspeed, bdodge, bprotection } )
     if ( $origin.hasClass('activated') ) 
         $target.addClass('activated').attr('data-actionstaken',2)
-    else
-        $target.removeClass('activated').attr('data-actionstaken',Number($($origin[0]).attr('data-actionstaken')))
+    else {
+        if( $target.data('name') !== "Landslide" )
+            $target.removeClass('activated').attr('data-actionstaken',Number($($origin[0]).attr('data-actionstaken')))
+        else { console.log("Landslided")
+            add_action_taken("rallied",false,"Landslide")
+        }
+    }
 }
 function shootAndScoot(){
     highlightHexes({colour:'shootAndScoot',dist:1})

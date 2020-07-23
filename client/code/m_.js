@@ -332,6 +332,8 @@ var m_ = {
         graveyard[river[1]][river[3]].splice(0,1)
         const $thiz = $(thiz.children('.smallCard')[0])
         const $brothers = $($(`[data-name="${$thiz.data('name')}"][data-side=${$thiz.data('side')}]:not( [data-tenmodel="${$thiz.data('tenmodel')}"] )`)[0])
+        if( $brothers.data('name') !== "Landslide" )
+            add_action_taken(key?key:"rallied")
         propagate_BB_s($brothers,$thiz)
         setTimeout(()=>rapidDeployment($thiz),700)
         if(key!=='callTotems' || !graveyard[river[1]][river[3]].length ){     //untestedo
@@ -341,7 +343,6 @@ var m_ = {
             $('#multi_choice_info_panel').remove()
             $('.selectedModel').removeClass('selectedModel')                                          //untestedo
         }                                                                                             //untestedo
-        add_action_taken(key?key:"rallied")
     },
     fluSpew:function(o){
         blights_spew_recieved({o, blight:"bdamage",m:"fluSpew"})
@@ -2468,4 +2469,14 @@ var m_ = {
         }
         current_ability_method = null
     },
+    deathMove:function(o){
+        const { hex, row } = o
+        const dedmov = $(`.hex_${hex}_in_row_${row}`).children('.deathMove')
+        if(!dedmov.hasClass('deathMove_selected')){
+            $('.deathMove_selected').removeClass('deathMove_selected deathMove')
+            dedmov.addClass('deathMove_selected')
+            un_glow()
+            highlightHexes({colour:'deathMove', dist:2},$('.deathMove_selected'))
+        }
+    }
 }

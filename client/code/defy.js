@@ -399,6 +399,8 @@ var defy = {
     rainOfFire:()=>uniCancel(),
     bite:()=>uniCancel(),
     fieryBreath:()=>uniCancel(),
+    rallied:()=>uniCancel(),
+    deathMove:()=>multiMovement_procedure('deathMove','deathMove_selected','death move<br/>cancelled'),
 
 }
 

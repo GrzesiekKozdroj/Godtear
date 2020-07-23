@@ -2941,6 +2941,8 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
 }
 
 #sms {
+  background-color: rgba(223, 183, 124, 0.39);
+  box-shadow: 0 0 1vh black inset, 0 0 .5vh black inset;
   overflow-y: hidden;
   position: absolute;
   width: 40vw;
@@ -3250,4 +3252,8 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
 
 .cancelDragonwhite {
   background: radial-gradient(circle, #fb943f 0%, #5b0516 100%);
+}
+
+#rallyAction:active, #claimAction:active {
+  transform: scale(0.95);
 }

@@ -2940,9 +2940,19 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   }
 }
 
+#sms.showta {
+  pointer-events: all !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 246, 0.468207) 17%, rgba(255, 254, 220, 0.487815) 100%);
+  box-shadow: .1vh .1vh 1vh black, 0 0 .5vh black;
+}
+
+#sms.hidta {
+  pointer-events: none !important;
+  background: none;
+  box-shadow: none;
+}
+
 #sms {
-  background-color: rgba(223, 183, 124, 0.39);
-  box-shadow: 0 0 1vh black inset, 0 0 .5vh black inset;
   overflow-y: hidden;
   position: absolute;
   width: 40vw;
@@ -3256,4 +3266,37 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
 
 #rallyAction:active, #claimAction:active {
   transform: scale(0.95);
+}
+
+.sms_message {
+  padding-left: .4vw;
+}
+
+.endTask {
+  background-image: url("../img/minus.svg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.myName {
+  font-family: "Shojumaru", cursive;
+  font-size: 80%;
+  z-index: 4;
+  width: 110%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  top: -283%;
+}
+
+.myName.black {
+  color: white;
+  text-shadow: 0 0 2px black;
+}
+
+.myName.white {
+  color: black;
+  text-shadow: 0 0 2px white, 0 0 1px white;
 }

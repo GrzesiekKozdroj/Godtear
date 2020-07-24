@@ -794,13 +794,14 @@ $('body').on('click','.chnt',function(e){
     $('.soCoolMistressPanel').remove()
 })
 $('body').on('click','#ladder',function(e){
-    if( !$('.show_sms').length ){
-        $('.sms_message').removeClass('hide_sms fade_sms').addClass('show_sms')
-        $('#sms').css('pointer-events','none')
-    } else {
-        $('.sms_message').removeClass('show_sms').addClass('hide_sms')
-        $('#sms').css('pointer-events','all')
-    }
+    if( $('.sms_message').length )
+        if( !$('.show_sms').length ){
+            $('.sms_message').removeClass('hide_sms fade_sms').addClass('show_sms')
+            $('#sms').addClass('hidta').removeClass('showta')
+        } else {
+            $('.sms_message').removeClass('show_sms').addClass('hide_sms')
+            $('#sms').addClass('showta').removeClass('hidta')
+        }
 })
 
 

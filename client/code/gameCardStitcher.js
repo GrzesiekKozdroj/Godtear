@@ -130,6 +130,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
                 <div class='top'></div>
                 <img class='heroImg' src='${icon}'/>
                 <div class='bottom'></div>
+                ${showMeName(phase,name)}
             </div>
 
             <div class='game_card-attribs'>
@@ -163,10 +164,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
         </div>
 
         <div class='game_card-actions card_shadow-${side}'>
-
-            <div id='endAction' class='game_card-attrib card_base_action endTask ${type} ${phase} left'>
-                <div class='top'></div><div class='bottom'></div>
-            </div>
+            ${endActionButton(type,phase,side)}
 
             <div id='claimAction' class='game_card-attrib card_base_action ${phase} ${type} claim'>
                 <div class='top'></div><div class='bottom'></div>
@@ -296,6 +294,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
                 <div class='top'></div>
                 <img class='heroImg' src='${icon}'/>
                 <div class='bottom'></div>
+                ${showMeName(phase,name)}
             </div>
         </div>
         <div class='game_card-actions card_shadow-right'>
@@ -304,9 +303,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
             <div id='claimAction' class='game_card-attrib card_base_action ${phase} ${type} claim'>
                 <div class='top'></div><div class='bottom'></div>
             </div>
-            <div id='endAction' class='game_card-attrib card_base_action endTask ${type} ${phase} right'>
-                <div class='top'></div><div class='bottom'></div>
-            </div>
+            ${endActionButton(type,phase,side)}
         </div>
         <div class='game_card-skill_list card_shadow-right'>
             ${skillList(skills,side)}
@@ -377,6 +374,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
             <div class='top'></div>
             <img class='heroImg' src='${icon}'/>
             <div class='bottom'></div>
+            ${showMeName(phase,name)}
         </div>
 
         <div class='smallCard speed ${phase} ${BB_HUD(bspeed)}'>
@@ -403,9 +401,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
             <div class='bottom'></div>
         </div>
         ${skillzBlack(skillx,phase,side)}
-        <div id='endAction' class='smallCard endTask ${type} ${phase} ${side}'>
-            <div class='top'></div><div class='bottom'></div>
-        </div>
+        ${endActionButton(type,phase,side,1)}
         <div id="dummy_contain" class="${side}">
             <div class="mini-card-actions">
                 <div id='claimAction' class='game_card-attrib card_base_action ${phase} ${type} claim'>
@@ -457,3 +453,9 @@ function checkPOINTS({side, num}){
     }
      
 }
+const endActionButton = (type,phase,side,napis=false)=>`
+    <div id='endAction' class='game_card-attrib card_base_action endTask ${type} ${phase} ${side}'>
+        ${napis?''/*'<span>End<br/>Turn</span>'*/:''}
+        <div class='top'></div><div class='bottom'></div>
+    </div>`
+const showMeName = (phase,name) => `<span class="myName ${phase}">${name}</span>`

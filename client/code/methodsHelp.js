@@ -1,7 +1,8 @@
-const if_moved_end_it  = () => {//should take argument to end movement of custom guy
-    const name = $('.selectedModel').attr('data-name')
-    const side = $('.selectedModel').attr('data-side')
-    const actionstaken = $('.selectedModel').attr('data-actionstaken')
+const if_moved_end_it  = (
+        name = $('.selectedModel').attr('data-name'),
+        side = $('.selectedModel').attr('data-side'),
+        actionstaken = $('.selectedModel').attr('data-actionstaken')
+    ) => {
     const w = phase === 'white' ? 0 : 2
     $(`[data-name=${name}][data-tenmodel].${side}`).each(function(){
         const speed = $(this).attr('data-speed')
@@ -17,6 +18,12 @@ const if_moved_end_it  = () => {//should take argument to end movement of custom
             return false
         }
     })
+}
+function shayle_takes_action(strng = false){
+    if ( $('.selectedModel').data('name') === 'Shayle' ){
+        if (strng) add_action_taken(strng)
+        $(`[data-tenmodel^="Landslide"][data-side="${$('.selectedModel').data('side')}"]`).attr('data-landstepper',1)
+    }
 }
 const abilTruthChange = (
         abilName = null,
@@ -48,7 +55,7 @@ const causeOfRetchlings = (skill) => {
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
     const targetos = (abilName, p = phase) => {
         let prod;
-        console.log(name,p,abilName)
+        //console.log(name,p,abilName)
         if(side === mySide)
                 prod = causeOfRetchlings(  mySkillTrack[name][p][abilName].used )
         else if(side === opoSide)
@@ -78,9 +85,11 @@ const add_action_taken = (
     abilTruthChange(abilName,side,name)
 }
 const check_actions_count = (abilName = false, side = mySide) => {
-    return Number( $('.selectedModel').attr('data-actionstaken') ) < 2 && 
-        abilTruthRead(abilName,side)
-        ? true : false
+    return (
+        Number( $('.selectedModel:not(".death")').attr('data-actionstaken') ) < 2 && 
+        abilTruthRead(abilName,side) ? 
+        true : false
+    )
 }
 function checkIfNotMorrigan(target,attriName){
     const bAttri = Number(target.attr(`data-${attriName}`))
@@ -197,6 +206,8 @@ const forceKill = (target) => {//$()
                 target.addClass('deathMove_selected')
                 un_glow()
                 highlightHexes({colour:'deathMove',dist:2},target)
+                const { name, side } = target.data()
+                $(`#dummy_contain.${side}`).find('.mini-card-actions').append( dedChamp(name, side) )
             }else
                 target.addClass('deathMove')
             //resurrect Mournblade
@@ -926,13 +937,6 @@ function earthquake_(o){
         } else displayAnimatedNews ("missed!")
     }
     current_ability_method = null
-}
-function shayle_takes_action(strng = false){
-    if ( $('.selectedModel').data('name') === 'Shayle' ){
-        if(!strng) if_moved_end_it()
-        else add_action_taken(strng)
-        $(`[data-tenmodel^="Landslide"][data-side="${$('.selectedModel').data('side')}"]`).attr('data-landstepper',1)
-    }
 }
 function land_sliding( $thiz ){
     const kid = $($thiz.children(`[data-tenmodel^="Landslide"].whiteTeam`)[0])

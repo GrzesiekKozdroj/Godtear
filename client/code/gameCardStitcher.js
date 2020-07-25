@@ -11,37 +11,46 @@
         }
 
 const bigCard_bb = (a,b)=>`<span class="${b>0?'booned':b<0?'blighted':'normal'} big_card__BB_skill">${a+b}</span>`
-        const dis_min_BBs = (skill,baim,bdamage) => {
-            let produce = []
-            if ( skill.aim )
-                if ( baim > 0 )
-                    produce = [ ...produce, aimBoon ]
-                else if ( baim < 0 )
-                    produce = [ ...produce, aimBlight ]
-            if( skill.hurt )
-                if ( bdamage > 0 )
-                    produce = [ ...produce, damageBoon ]
-                else if ( bdamage < 0 )
-                produce = [ ...produce, damageBlight ]
-            return [styled_attribute_name(skill.name,bdamage+baim),...produce].join('')
-        }
 
-        const bloodedUnit = (unitName, side, unitSize,type, name) =>{
-            const gunit = $(`[data-name="${unitName}"].${side}`)
-            const onChamp = (gunit.length === 0 && type === 'champion')
-            if( (gunit.length < unitSize && gunit.length > 0 && side === mySide && type !== 'champion') || onChamp
-             )
-            return `
-            <div id='rallyAction' class='game_card-attrib card_base_action ${phase} unit rally'
-                data-unitname=${onChamp ? name : unitName} 
-                data-side=${side} 
-                data-type=${type} 
-                data-name=${onChamp ? unitName : name}
-            >
-                <div class='top'></div><div class='bottom'></div>
-            </div>`
-            else return ''
-        }
+const dis_min_BBs = (skill,baim,bdamage) => {
+    let produce = []
+    if ( skill.aim )
+        if ( baim > 0 )
+            produce = [ ...produce, aimBoon ]
+        else if ( baim < 0 )
+            produce = [ ...produce, aimBlight ]
+    if( skill.hurt )
+        if ( bdamage > 0 )
+            produce = [ ...produce, damageBoon ]
+        else if ( bdamage < 0 )
+        produce = [ ...produce, damageBlight ]
+    return [styled_attribute_name(skill.name,bdamage+baim),...produce].join('')
+}
+
+const bloodedUnit = (unitName, side, unitSize,type, name) => {
+    const gunit = $(`[data-name="${unitName}"].${side}`)
+    const onChamp = (gunit.length === 0 && type === 'champion')
+    if( (gunit.length < unitSize && gunit.length > 0 && side === mySide && type !== 'champion') || onChamp
+     )
+    return `
+    <div id='rallyAction' class='game_card-attrib card_base_action ${phase} unit rally'
+        data-unitname=${onChamp ? name : unitName} 
+        data-side=${side} 
+        data-type=${type} 
+        data-name=${onChamp ? unitName : name}
+    >
+        <div class='top'></div><div class='bottom'></div>
+    </div>`
+    else return ''
+}
+
+const dedChamp = (name, side) =>{
+    const healthleft = Number( $(`[data-tenmodel^="${name}"].${side}`).attr('data-healthleft') )
+    return healthleft < 1 ? 
+    `<div id='rallyAction' class='game_card-attrib card_base_action ${phase} champion rally'>
+        <div class='top'></div><div class='bottom'></div>
+    </div>` : ''
+}
 function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side) {
     const { baim, bdamage,bdodge,bprotection,bspeed,healthleft } = extractBoons_Blights( $(`[data-name="${name}"].${side}`) )
     const skillList = (skills,side)=>{
@@ -171,6 +180,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             </div>
 
             ${bloodedUnit(unitName, side, unitSize,type,name)}
+            ${dedChamp(name, side)}
             ${treasureBox(side)}
 
         </div>
@@ -299,6 +309,7 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
         </div>
         <div class='game_card-actions card_shadow-right'>
             ${bloodedUnit(unitName, side, unitSize,type,name)}
+            ${dedChamp(name, side)}
             ${treasureBox(side)}
             <div id='claimAction' class='game_card-attrib card_base_action ${phase} ${type} claim'>
                 <div class='top'></div><div class='bottom'></div>
@@ -408,6 +419,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
                     <div class='top'></div><div class='bottom'></div>
                 </div>
                 ${bloodedUnit(unitName, side, unitSize,type,name)}
+                ${dedChamp(name, side)}
                 ${treasureBox(side)}
             </div>
         </div>

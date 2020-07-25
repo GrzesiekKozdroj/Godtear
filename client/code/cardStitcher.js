@@ -1,5 +1,5 @@
 function bandSelection(){
-    return `        
+    return `
         <div id="bandSelection" class="">
             ${char_swiper(rosters.guardian)}
             ${char_swiper(rosters.maelstrom)}

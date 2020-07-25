@@ -561,7 +561,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
             extraMover('beastlyCharge',thiz,'walk',['onlyOneStep'])
         if( $('.leap_selected').length )extraMover('leap',thiz,'walk')
         if( $('.summonsWalk_selected').length )extraMover('summonsWalk',thiz,'walk',['onlyOneStep'])
-        if( $('.deathMove_selected').length )extraMover('deathMove',thiz,'walk',['onlyOneStep'])
+        if( $('.deathMove_selected').length )extraMover('deathMove',thiz,'push',['onlyOneStep'])
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){
@@ -684,6 +684,11 @@ $('body').on('click','#rallyAction',function(e){
         rallyActionDeclaration( th.data() )
     }
 }) 
+$('body').on('click','.champion.rally',function(e){
+    e.preventDefault()
+    if( myTurn && $('.selectedModel').hasClass(mySide) )
+        socket.emit('rolloSkill', { socksMethod:'raiseDedChamp' })
+})
 $('body').on('click','[data-glow="recruitGlow"].hexagon',function(e){
     e.preventDefault()
     e.stopPropagation()

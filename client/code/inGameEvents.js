@@ -174,6 +174,7 @@ const spreadTheInfection = () =>
     )
 
 function displayMovementAura (thiz) {
+    cancellerName = null //UNTESTEDO, added cause of shayle cancelling landslide movement in case he dies and moves just one hex
     if( Number(thiz.attr('data-actionstaken') ) < 2 ){
         let  bspeed = thiz.attr('data-bspeed')
         $('[data-glow]').removeAttr('data-glow')

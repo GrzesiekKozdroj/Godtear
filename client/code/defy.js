@@ -306,9 +306,7 @@ var defy = {
     },
     runecaller:()=>{
         displayAnimatedNews('Runecaller<br/>cancelled')
-        $('[data-tenmodel^="Landslide"]').each(function(){
-            $(this).attr('data-landstepper', 0)
-        })
+        $('[data-tenmodel^="Landslide"]').each(function(){$(this).attr('data-landstepper', 0)})
         uniCancel()
     },
     currentWhite:currentDefy,

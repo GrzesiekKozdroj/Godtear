@@ -1414,7 +1414,6 @@ var m_ = {
     },
     runecaller:function(o){
         const { hex, row } = o
-        console.log('landsliding')
         const kid = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel^="Landslide"]')[0])
         highlightHexes({colour:'landSlideGlow', dist:2}, kid )
     },
@@ -1427,6 +1426,8 @@ var m_ = {
             makeAnim(landS,targetLocation,()=>{
                 un_glow()
                 landS.attr('data-landstepper',0)
+                if_moved_end_it('Shayle',landS.data('side'))
+                //checks shayles movement.... HERE!?
             })
     },
     earthquakeWhite:earthquake_,
@@ -2478,5 +2479,22 @@ var m_ = {
             un_glow()
             highlightHexes({colour:'deathMove', dist:2},$('.deathMove_selected'))
         }
+    },
+    raiseDedChamp:function(o){
+        const jees = $('.selectedModel.death')
+        if( Number(jees.attr('data-actionstaken')) < 2 ){
+            jees
+                .removeClass('death')
+                .attr('data-actionstaken', Number(jees.attr('data-actionstaken')) + 1 )
+                .attr('data-healthleft', Number(jees.attr('data-health')) )
+            $(`#game_card.${jees.data('side')}`)
+                .find('.health')
+                .children('p.gameCard_num')
+                .text(jees.data('health'))
+                .removeClass('blighted')
+            $(`#dummy_contain.${jees.data('side')}`).find('.champion.rally').remove()
+        displayAnimatedNews('bobo resurrected champ')
+        }
+        if(jees.data('name')==='Shayle')shayle_takes_action()
     }
 }

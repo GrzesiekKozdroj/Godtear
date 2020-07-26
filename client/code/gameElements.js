@@ -29,7 +29,13 @@ function displayDeploymentInfo(scenario) {
     </div>
     `
 }
-function displayAnimatedNews ({$attacker,$victim,skillName,skillIcon,dieRoll,rollOutcome,templateType, steps, blights,addInfo,hurtTotal}){
+function displayAnimatedNews ({
+    $attacker, $victim, 
+    skillName, skillIcon, 
+    dieRoll, rollOutcome, hurtTotal,
+    templateType, steps, blights, 
+    msg0, msg1, msg2, msg3
+}){
     const extractor = (model) => {
         const name = model.data('name')
         const team = model.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
@@ -38,10 +44,12 @@ function displayAnimatedNews ({$attacker,$victim,skillName,skillIcon,dieRoll,rol
     const uq_id = Math.floor( Math.random () * (1000 - 1 + 1)) + 1
     const a = $attacker ? extractor($attacker) : null
     const v = $victim ? extractor($victim) : null
-    const skillMarker = (skillName,skillIcon) => `<span class="${skillIcon}" >${skillName}</span>`
-    const charMarker = x => `<span class="${x.team}" >${x.name}</span>`
-    const outcoMarker = y => `<span class="${y?'success':'miss'}" >${y?'hits!':'fails!'}</span>`
+    const skillMarker = (sN,sI) => sN && sI ? `<span class="${sI}" >${sN}</span>` : ''
+    const charMarker = x => x ? `<span class="${x.team}" >${x.name}</span>` : ''
+    const outcoMarker = y =>`<span class="${y?'success':'miss'}" >${y?'hits!':'fails!'}</span>`
     const damageMarker = (y, hT) => `${y ? '<span class="blackTeam" >'+hT+'</span>' : 'no' }`
+    const ptsMarker = pts => `<span class="SMS-gold">${pts} step${pts>1?'s':''}</span>`
+    const msgMincer = (msg) => msg ? msg : ''
     const makeSMS_b_b = (value,Bname) => {
         const imageAdd = [...Bname].slice(1).join('')+(value>0?'Boon':'Blight')
         const val = value > 0 ? '<span class="bigger-SMS">+1</span>' : '<span class="bigger-SMS">-1</span>'
@@ -78,32 +86,40 @@ function displayAnimatedNews ({$attacker,$victim,skillName,skillIcon,dieRoll,rol
         if( argr )
             templater(`<div class="sms_message ${uq_id}">${charMarker(a) + ' ' + messahe}</div>`)
     }else if(templateType==='points'){
-        templater(`${charMarker(v)} scores <span class="SMS-gold">${steps} step${steps>1?'s':''}</span>`)
-    }else if(templateType==='info'){}
-    //setTimeout(()=>$('.'+uq_id).remove(),9020)
-
-//if dieRoll
-    // const flashNews = msg => ` <h3 class='flashNews hinge-in-from-middle-y mui-enter'> ${msg} </h3> ` 
-    // $('#gameScreen').append( flashNews(message) )
-    // setTimeout(()=>$('.flashNews').addClass('mui-enter-active'), 250)
-    // setTimeout(()=>
-    //     $('.flashNews')
-    //         .removeClass('hinge-in-from-middle-y mui-enter mui-enter-active')
-    //         .addClass('scale-out-up mui-leave mui-leave-active')
-    //         ,1500)
-    // setTimeout( () => $('.flashNews').off().remove(), 1950 )
-    // $('body').one('click',function(e){
-    //     e.preventDefault()
-    //     $('.flashNews')
-    //         .remove()
-    // })
+        templater(`${charMarker(v)} scores ${ptsMarker(steps)}`)
+    }else if(templateType==='info'){//it needs dies here as well
+        templater(`
+            ${msgMincer(msg0)} 
+            ${charMarker(a)} 
+            ${msgMincer(msg1)} 
+            ${skillMarker(skillName, skillIcon)} 
+            ${msgMincer(msg2)}
+            ${charMarker(v)} 
+            ${msgMincer(msg3)}
+        `)
+    } else {
+        const flashNews = msg => ` <h3 class='flashNews hinge-in-from-middle-y mui-enter'> ${msg} </h3> ` 
+        $('#gameScreen').append( flashNews(message) )
+        setTimeout(()=>$('.flashNews').addClass('mui-enter-active'), 250)
+        setTimeout(()=>
+            $('.flashNews')
+                .removeClass('hinge-in-from-middle-y mui-enter mui-enter-active')
+                .addClass('scale-out-up mui-leave mui-leave-active')
+                ,1500)
+        setTimeout( () => $('.flashNews').off().remove(), 1950 )
+        $('body').one('click',function(e){
+            e.preventDefault()
+            $('.flashNews')
+                .remove()
+        })
+    }
 }
 
 const decideOrnament = (bb) => bb > 0 ? 'booned' : bb < 0 ? 'blighted' : 'nooner'
 
 function beginFirstPlotPhase(){
     //.append(miniCard(Morrigan,phase,opoSide)
-    displayAnimatedNews ('Begin Plot Phase')
+    displayAnimatedNews({templateType:'info',msg0:'Begin Plot Phase'})
     $(`.${opoSide}.cardsContainer.${opoSide}_card`).empty().addClass(`hinge-out-from-${opoSide} mui-leave mui-leave-active`)
     $(`.${mySide}.cardsContainer.${mySide}_card`).empty().addClass(`hinge-out-from-${mySide} mui-leave mui-leave-active`)
     $('.'+myDeployment).removeClass(myDeployment)

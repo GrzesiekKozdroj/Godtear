@@ -46,8 +46,10 @@ const bloodedUnit = (unitName, side, unitSize,type, name) => {
 
 const dedChamp = (name, side) =>{
     const healthleft = Number( $(`[data-tenmodel^="${name}"].${side}`).attr('data-healthleft') )
-    return healthleft < 1 ? 
-    `<div id='rallyAction' class='game_card-attrib card_base_action ${phase} champion rally'>
+    return healthleft < 1 && !$(`#rallyAction[data-name="${name}"][data-dedside="${side}"]`).length ? 
+    `<div id='rallyAction' class='game_card-attrib card_base_action ${phase} champion rally' 
+    data-name="${name}" data-dedside="${side}" 
+    >
         <div class='top'></div><div class='bottom'></div>
     </div>` : ''
 }

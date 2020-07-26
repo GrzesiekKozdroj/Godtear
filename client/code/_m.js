@@ -55,7 +55,7 @@ const _m = {
         if($target.length){
             socket.emit('rolloSkill',{aim:6+baim, hurt:0, socksMethod:"evilEye", hex, row})
         }else if( !$target.length )
-            displayAnimatedNews('must target<br/>a follower')
+            displayAnimatedNews({templateType:'info', msg0:'must target a follower'})
     },
     fireStorm:function(origin,taget){
         const {hex, row } = taget
@@ -74,7 +74,7 @@ const _m = {
             {
                 placeMark({hex, row, multiInfo, target, key})
                 socket.emit('markedMan',{hex, row, multiInfo})
-            } else displayAnimatedNews ("target enemy<br/>units")
+            } else displayAnimatedNews({templateType:'info', msg0:"target enemy units"})
         if( doomed.length + 1 === 5 || doomed.length + 1 === allAviable.length ) 
         {
             const { baim, bdamage } = extractBoons_Blights(origin)
@@ -201,8 +201,7 @@ const _m = {
         if($target.hasClass(`blackTeam`) ){
             $('#gameScreen').append(challengeOptions(origin, target, "challenge",2,`apply two blights to ${$target.data('name')}`))
             socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"challenge", hex, row, curseCount:1 })
-        } else 
-            displayAnimatedNews('target enemy model')
+        } else displayAnimatedNews({templateType:'info', msg0:'target enemy model'})
     },
     illKillYouAll:function(origin,target){
         const { baim } = extractBoons_Blights(origin)
@@ -307,7 +306,7 @@ const _m = {
             {
                 placeMark({hex, row, multiInfo, target, key})
                 socket.emit('markedMan',{hex, row, multiInfo})
-            } else displayAnimatedNews ("target enemy<br/>units")
+            } else displayAnimatedNews({templateType:'info', msg0:"target enemy units"})
         if( doomed.length + 1 === 3 || doomed.length + 1 === allAviable.length ) 
         {
             const { baim, bdamage } = extractBoons_Blights(origin)
@@ -411,13 +410,13 @@ const _m = {
         const { hex, row } = target
         const $target = $(`.hex_${hex}_in_row_${row}`)
         if( $target.children('.claimedBanner.whiteTeam').length ){
-            displayAnimatedNews('reposition your banner')
+            displayAnimatedNews({templateType:'info', msg0:'reposition your banner'})
             un_glow()
             highlightHexes({colour:'greenGlow',dist:1},$($target.children('.claimedBanner')[0]))
             $target.children('.claimedBanner').addClass('tongueTow_selected')
             highlight_closest_path(origin.parent('.hexagon').data(),target)
             socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"tongueTow", hex, row})
-        } else displayAnimatedNews('must target friendly banner')
+        } else displayAnimatedNews({templateType:'info',msg0:'must target friendly banner'})
     },
     tongueLash:function(origin,target){
         const { baim } = extractBoons_Blights(origin)
@@ -426,12 +425,12 @@ const _m = {
         const aim = [5, 6, 7][unitSize]
         const $target = $(`.hex_${hex}_in_row_${row}`)
         if( $target.children('.smallCard.blackTeam').length ){
-            displayAnimatedNews('reposition model')
+            displayAnimatedNews({templateType:'info',msg0:'reposition model'})
             un_glow()
             highlightHexes({colour:'greenGlow',dist:1},$($target.children('.smallCard')[0]))
             $target.children('.claimedBanner').addClass('tongueLash_selected')
             socket.emit('rolloSkill',{aim:(baim+aim), hurt:0, socksMethod:"tongueLash", hex, row})
-        } else displayAnimatedNews('must target<br/>enemy model')
+        } else displayAnimatedNews({templateType:'info',msg0:'must target enemy model'})
     },
     feelThePower:function(origin,target){
         const { hex, row } = target ;
@@ -442,7 +441,7 @@ const _m = {
             //     bdodge:Number(target.attr('data-bdodge'))+1,
             //     bprotection:Number(target.attr('data-bprotection'))+1})
         } else
-            displayAnimatedNews('must stand on<br/>objective hex')
+            displayAnimatedNews({templateType:'info', msg0:'must stand on objective hex'})
     },
     hop:function(origin,target){
         const { hex, row } = target
@@ -478,9 +477,15 @@ const _m = {
         if( $(`[data-name="${name}"].whiteTeam`).length < unitsize ){
             un_glow()
             setTimeout(()=>rallyActionDeclaration({ unitname, side, type, name }, 'answerTheCall'),800)
-            displayAnimatedNews(`${name} answers<br/>the call of Rhodri`)
+            displayAnimatedNews({
+                templateType:'info',
+                $attacker:$target, 
+                skillName:'Answers The Call', 
+                msg2:' of ', 
+                $victim:origin
+            })
         } else 
-            displayAnimatedNews(`${name} has<br/>maximum unit size`)
+            displayAnimatedNews({templateType:'info',$attacker:$target, msg1:'has maximum unit size'})
         current_ability_method = null
     },
     hold:function(origin,target){
@@ -522,12 +527,12 @@ const _m = {
         const $target = $(`.hex_${hex}_in_row_${row}`).children('.claimedBanner[data-name="Mournblade"].whiteTeam')
         $target.addClass(`deathWind_selected`)
         socket.emit('forceMove',{h:hex, r:row, klass:"champion", callback:`deathWind`})
-        displayAnimatedNews('click banner<br/>then move it')
+        displayAnimatedNews({templateType:'info',msg0:'click on banner then move it'})
     },
     raiseDeadChamps:function(origin,target){
         const { hex, row } = target
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseDeadChamps", hex, row })
-        displayAnimatedNews('choose champions<br/>to rally')
+        displayAnimatedNews({templateType:'info',msg0:'choose champions to rally'})
     },
     soulCleave:function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)
@@ -573,7 +578,8 @@ const _m = {
         $target = $(`.hex_in_${hex}_row_in_${row}`).children('[data-name="Mournblade"].whiteTeam')
         if( $target ){
             socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"carefulMaster", hex, row })
-        } else if ( !$target ) displayAnimatedNews('Must target<br/>your Mournblade')
+        } else if ( !$target ) 
+        displayAnimatedNews({templateType:'info',msg0:'Must target your', $attacker:$target})
     },
     wheresMaster:function(origin,target){
         const { hex, row } = target
@@ -585,12 +591,12 @@ const _m = {
         const { hex, row } = target
         const $target = $(`.hex_${hex}_in_row_${row}`)
         if( $target.children('.claimedBanner.whiteTeam').length ){
-            displayAnimatedNews('reposition your banner')
+            displayAnimatedNews({templateType:'info',msg0:'reposition your banner'})
             un_glow()
             highlightHexes({colour:'greenGlow',dist:1},$($target.children('.claimedBanner')[0]))
             $target.children('.claimedBanner').addClass('tongueTow_selected')
             socket.emit('rolloSkill',{aim:0, hurt:0, socksMethod:"tongueTow", hex, row})
-        } else displayAnimatedNews('must target friendly banner')
+        } else displayAnimatedNews({templateType:'info',msg0:'must target friendly banner'})
     },
     voidWeaponChamp:function(origin,target){
         const { hex, row } = origin.parent('.hexagon').data()
@@ -814,8 +820,7 @@ const _m = {
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel^="Landslide"].whiteTeam')[0])
         if( $target.length )
             socket.emit('rolloSkill',{aim:0,hurt:0,hex,row,socksMethod:"stoneStrenght"})
-        else
-            displayAnimatedNews('click on<br/>Landslide')
+        else displayAnimatedNews({templateType:'info', msg0:'click on Landslide'})
     },
     runeweaving:function(origin,target){
         const { baim } = extractBoons_Blights(origin)
@@ -1046,7 +1051,7 @@ const _m = {
         const sneaker = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="SneakyStabbers"].whiteTeam')[0])
         if( sneaker.length )
             socket.emit('rolloSkill',{ socksMethod:"sneak", hex, row })
-        else displayAnimatedNews('choose<br/>stabber')
+        else displayAnimatedNews({templateType:'info', msg0:'choose your stabber'})
     },
     irritate:function(origin,target){
         const { baim } = extractBoons_Blights(origin)
@@ -1280,13 +1285,13 @@ const _m = {
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (/*5*/9 + baim), hurt:(/*3*/15 + bdamage), socksMethod:"bite", hex, row })
+            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(3 + bdamage), socksMethod:"bite", hex, row })
     },
     fieryBreath:function(origin,target){
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (/*5*/9 + baim), hurt:(/*3*/15 + bdamage), socksMethod:"fieryBreath", hex, row })
+            socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(3 + bdamage), socksMethod:"fieryBreath", hex, row })
     },
 }

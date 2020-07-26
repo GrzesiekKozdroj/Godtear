@@ -55,7 +55,7 @@ const m =
             shayle_takes_action()
             if(phase==='white')
                 moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
-            displayAnimatedNews(`${ $('.selectedModel').data('name') }<br/>claims objective`)
+                displayAnimatedNews({templateType:'info',$attacker:$('.selectedModel'),msg1:` claims objective`})
         }
     },
     blackjaw:

@@ -2,7 +2,7 @@ var _m_ = {
     pathof:thiz=>{
         titustepper[$('.selectedModel').data('side')] = false
         $('.pathof_selected').removeClass('pathof_selected')
-        displayAnimatedNews('use another<br/>ability')
+        displayAnimatedNews({templateType:'info', msg0:'use another ability'})
         uniCancel()
     },
     illKillYouAll: (thiz) => {//Utterlu brokenos, keeps glow and bad blood on the recieving end
@@ -178,7 +178,7 @@ var _m_ = {
         }
     },
     tsunami:()=>{
-        displayAnimatedNews('tsunami<br/>move models')
+        displayAnimatedNews({templateType:'info', skillName:'Tsunami', skillIcon:'star', msg2:'move models'})
         un_glow()
         highlightHexes({colour:'blueGlow', dist: 2})
         const team = $('.selectedModel').hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
@@ -230,11 +230,11 @@ var _m_ = {
     shootAndScoot:($thiz)=>{
         un_glow()
         $('.shootAndScoot_selected').removeClass('shootAndScoot_selected')
-        displayAnimatedNews('Lorsann<br/>Shoot & Scoot')
+        displayAnimatedNews({templateType:'info', $attacker:$thiz, skillName:'Shoot & Scoot', skillIcon:'self'})
     },
     leap:$thiz=>{
         un_glow()
-        displayAnimatedNews('sneaky<br/>leap')
+        displayAnimatedNews({templateType:'info', $attacker:$thiz, skillName:'Leap', skillIcon:'self'})
         add_action_taken('leap')
         current_ability_method = null
     },
@@ -276,7 +276,7 @@ var _m_ = {
     },
     brokenJaw:$thiz=>{
         un_glow()
-        displayAnimatedNews(`${$thiz.data('name')}<br/>broken jaw`)
+        displayAnimatedNews({templateType:'info', $victim:$thiz, skillName:'Broken Jaw', skillIcon:'skull', msg2:' Ends'})
         $('.brokenJaw_selected').removeClass('brokenJaw_selected')
     },
     whiplash:thiz=>{
@@ -355,7 +355,7 @@ var _m_ = {
             un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},thiz)
         } else {
-            displayAnimatedNews('Rapid<br/>Deployment<br/>Ends')
+            displayAnimatedNews({templateType:'info',skillName:'Rapid Deployment', skillIcon:'cogs',msg2:' Ends'})
             un_glow()
             $(thiz).removeClass(`rapidDeployment_selected`)
             setTimeout(()=>thiz.removeAttr('style'),100)
@@ -409,7 +409,7 @@ var m__ = {
 
 var __m = {//only on da otha sajd
     beastlyCharge:function(){
-        displayAnimatedNews('beastly<br/>charge')
+        displayAnimatedNews({templateType:'info',skillName:'Beastly Charge', skillIcon:'star'})
         $(`[data-name="Rangosh"].${opoSide}`).addClass('beastlyCharge_selected')
         un_glow()
         highlightHexes({colour:'legendaryGlow',dist:2})

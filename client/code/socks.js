@@ -46,7 +46,7 @@ socket.on('d-o-h',p=>{
     deployTrayToBoard('selected-enemy-model',that,false)
 
     if( !$('.list.tray').find('.teamBox').children('.smallCard').length && myTurn) socket.emit('beginBattle')
-    else if(myTurn) displayAnimatedNews ('Your turn')
+    else if(myTurn) displayAnimatedNews({templateType:'info',msg0:'Your turn'})
 })
 
 socket.on('horn',p=>{
@@ -139,18 +139,12 @@ socket.on('tt',p=>{//key: { phase, next: myNextPhase, name, side:mySide }
         }
         end_GAME_check()
         GAME_TURN++
-        displayAnimatedNews(GAME_SCENARIO.turnEndMessage(dieRoll))
+        displayAnimatedNews(  { templateType:'info',msg0:GAME_SCENARIO.turnEndMessage(dieRoll) }  )
         if( GAME_SCENARIO.instaCall )
             GAME_SCENARIO.ruleset(0,0)
-        //no need to pass anything through server at this point, each player can calculate independently the ammount of points 
-        //they have and allocate score according to turn number (need to track it), thn still without server knowledge
-        //apply scenario rules, this time with through server declaration, once that done, loosing player declares first
-        //player once again through server.
-        //here also is the place to check if there is a winner, once the godtears have been allocated.
-        console.log('TURN END TURN END TURN END TURN END TURN END TURN END')
     }
     if( myTurn )
-        displayAnimatedNews('Your<br/>turn')
+    displayAnimatedNews({templateType:'info',msg0:'Your turn'})
     //need to add deifer and ultra resetter here
 })
 socket.on('camcel',p=>defy[p.m](p.c))

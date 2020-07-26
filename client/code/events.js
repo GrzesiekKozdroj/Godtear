@@ -779,7 +779,8 @@ $('body').on('click','.royalSumms',function(e){
 $('body').on('click','.deathMove',function(e){
     e.preventDefault()
     const { hex, row } = $(this).parent('.hexagon').data()
-    socket.emit('rolloSkill', {socksMethod:'deathMove', hex, row })
+    if( myTurn )
+        socket.emit('rolloSkill', {socksMethod:'deathMove', hex, row })
 })
 $(`body`).on('click',`.endTask`,function(e){
     e.preventDefault()

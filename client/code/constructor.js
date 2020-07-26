@@ -169,7 +169,7 @@ const scenarios = [
                         turn_resetter(mySkillTrack,'white','whiteTeam')
                     }
                 } else 
-                    displayAnimatedNews('must target<br/>empty hexes<br/>adjacent to objective hexes')
+                    displayAnimatedNews({templateType:'info',msg0:'must target empty hexes, adjacent to objective hexes'})
                 un_glow()
             }
             // need way to track how many hexes been moved

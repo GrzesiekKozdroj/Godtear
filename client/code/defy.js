@@ -14,7 +14,7 @@ var defy = {
         if( $(`[data-name="Knightshades"][data-tenmodel].${myTurn?'whiteTeam':'blackTeam'}`).length === 3 )
             uniCancel()
         else
-            displayAnimatedNews(`deploy all<br/>Knightshades`)
+            displayAnimatedNews({templateType:'info',msg0:`deploy all Knightshades`})
     },
     graveSummons:()=>{uniCancel()},
     carefulMaster:()=>{uniCancel()},
@@ -28,11 +28,11 @@ var defy = {
     marchRhodriWhite:()=>{uniCancel()},
     hold:()=>uniCancel(),
     marchGuardWhite:()=>{
-        multiMovement_procedure('marchGuardWhite','marchGuardWhite_selected','Guards<br/>end march')
+        multiMovement_procedure('marchGuardWhite','marchGuardWhite_selected','Guards end march')
         uniCancel()
     },
     marchGuardBlack:()=>{
-        multiMovement_procedure('marchGuardBlack','marchGuardBlack_selected','Guards<br/>end march')
+        multiMovement_procedure('marchGuardBlack','marchGuardBlack_selected','Guards end march')
         uniCancel()
     },
     feelThePoweer:()=>uniCancel(),
@@ -191,7 +191,7 @@ var defy = {
     },
     sneak:()=>{
         if( $('[data-glow="sneak"]').length )
-            displayAnimatedNews('Recruit<br/>Sneaky<br/>Stabber')
+            displayAnimatedNews({templateType:'info',msg0:'Recruit Sneaky Stabber'})
     },
     irritate:()=>uniCancel(),
     plotRevenge:()=>uniCancel(),
@@ -211,7 +211,7 @@ var defy = {
         $('.titusChallenge').remove()
         uniCancel()
     },
-    callTotems:()=>displayAnimatedNews('click green flame<br/>to call<br/>totems back'),
+    callTotems:()=>displayAnimatedNews({templateType:'info',msg0:'click green flame to call totems back'}),
     graspingCurse:()=>{
         $('.deadlyCursePanel').remove()
         uniCancel()
@@ -231,8 +231,8 @@ var defy = {
         uniCancel()
     },
     slipAndSlide:()=>uniCancel(),
-    newSpewBlack:()=>displayAnimatedNews('deploy all<br/>Retchlings'),
-    newSpewWhite:()=>displayAnimatedNews('deploy all<br/>Retchlings'),
+    newSpewBlack:()=>displayAnimatedNews({templateType:'info',msg0:'deploy all Retchlings'}),
+    newSpewWhite:()=>displayAnimatedNews({templateType:'info',msg0:'deploy all Retchlings'}),
     fluSpew:()=>uniCancel(),
     gooSpew:()=>uniCancel(),
     roarOfBattle:()=>{
@@ -260,7 +260,7 @@ var defy = {
     pathof_cancelledStep:()=>{
         titustepper[$('.selectedModel').data('side')] = false
         $('.pathof_selected').removeClass('pathof_selected')
-        displayAnimatedNews('movement<br/>cancelled')
+        displayAnimatedNews({templateType:'info',msg0:'movement cancelled'})
         uniCancel()
     },
     piercingStrike:()=>uniCancel(),
@@ -273,7 +273,7 @@ var defy = {
     hack:()=>uniCancel(),
     surroundPound:()=>uniCancel(),
     roll:()=>{
-        displayAnimatedNews('Roll<br/>ended')
+        displayAnimatedNews({templateType:'info',msg0:'Roll ended'})
         $('.roll_selected').removeClass('roll_selected')
         uniCancel()
     },
@@ -300,12 +300,12 @@ var defy = {
         uniCancel()
     },
     avalanche:()=>{
-        displayAnimatedNews('Avalanche<br/>Ends')
+        displayAnimatedNews({templateType:'info',skillName:'Avalanche',skillIcon:'star',msg2:' Ends'})
         $('.avalanche_moveable').removeClass('avalanche_moveable avalanche_selected')
         uniCancel()
     },
     runecaller:()=>{
-        displayAnimatedNews('Runecaller<br/>cancelled')
+        displayAnimatedNews({templateType:'info',msg2:' cancelled', skillName:'Runecaller', skillIcon:'self'})
         $('[data-tenmodel^="Landslide"]').each(function(){$(this).attr('data-landstepper', 0)})
         uniCancel()
     },
@@ -337,7 +337,7 @@ var defy = {
         if ( !pocketBox )
             uniCancel()
         else if ( myTurn )
-            displayAnimatedNews('you have<br/>to place<br/>objective hex')
+            displayAnimatedNews({templateType:'info',msg0:'you have to place one objective hex'})
     },
     tsunami:()=>{
         if( !$('.tsunami-selected').length ){
@@ -345,7 +345,7 @@ var defy = {
             $('.tsunami-moveable').removeClass('tsunami-moveable')
         }
         if( !$('.tsunami-moveable').length ){
-            displayAnimatedNews('Tsunami<br/>ends')
+            displayAnimatedNews({templateType:'info',skillName:'Tsunami', skillIcon:'star', msg2:' Ends'})
             uniCancel()
         }
         $('.tsunami-selected').removeClass('tsunami-moveable tsunami-selected')
@@ -371,7 +371,7 @@ var defy = {
     },
     rollingStones:()=>{
         un_glow()
-        multiMovement_procedure('roll','roll_selected',"Roll<br/>ends")
+        multiMovement_procedure('roll','roll_selected',"Roll ends")
     },
     stoneThrow:()=>uniCancel(),
     headbutt:()=>{
@@ -384,8 +384,8 @@ var defy = {
     },
     tremor:()=>uniCancel(),
     stoneSpikes:()=>uniCancel(),
-    earthquakeWhite:()=>multiMovement_procedure('earthquake_moveable','earthquake_selected','earthquake<br/>cancelled'),
-    earthquakeBlack:()=>multiMovement_procedure('earthquake_moveable','earthquake_selected','earthquake<br/>cancelled'),
+    earthquakeWhite:()=>multiMovement_procedure('earthquake_moveable','earthquake_selected','earthquake cancelled'),
+    earthquakeBlack:()=>multiMovement_procedure('earthquake_moveable','earthquake_selected','earthquake cancelled'),
     boulderBash:()=>uniCancel(),
     royalSummonsWhite:()=>rsDefy(),
     royalSummonsBlack:()=>rsDefy(),
@@ -398,7 +398,7 @@ var defy = {
     bite:()=>uniCancel(),
     fieryBreath:()=>uniCancel(),
     rallied:()=>uniCancel(),
-    deathMove:()=>multiMovement_procedure('deathMove','deathMove_selected','death move<br/>cancelled'),
+    deathMove:()=>multiMovement_procedure('deathMove','deathMove_selected','death move cancelled'),
 
 }
 
@@ -415,12 +415,12 @@ function multiMovement_procedure(c,c_s,strng){
         $('.' + c).removeClass(c)
     }
     if( !$('.' + c).length ){
-        displayAnimatedNews(strng)
+        displayAnimatedNews({templateType:'info',msg0:strng})
         uniCancel()
     }
     $('.' + c_s).removeClass(c + ' ' +c_s)
 }
 function rsDefy(){
-    multiMovement_procedure( 'summonsWalk', 'summonsWalk_selected', 'Royal Sommons ended')
+    multiMovement_procedure( 'summonsWalk', 'summonsWalk_selected', 'Royal Summons ended')
     $('.soCoolMistressPanel').remove()
 }

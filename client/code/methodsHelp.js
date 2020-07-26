@@ -201,7 +201,7 @@ const forceKill = (target) => {//$()
                 graveyard[target.data('side')][target.data('name')] = [target.removeClass('.death').detach()]
             } else if( target.data('type')==='champion' ){
             //gotta emit champ death
-            cancellerName = 'deathMove' //UNTESTEDO
+            if ( myTurn )cancellerName = 'deathMove' //UNTESTEDO
             if( !$('.deathMove_selected').length ){
                 target.addClass('deathMove_selected')
                 un_glow()

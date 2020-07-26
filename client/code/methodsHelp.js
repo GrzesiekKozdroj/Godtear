@@ -216,7 +216,11 @@ const forceKill = (target) => {//$()
                 $(`[data-name="Mournblade"].${mySide}[data-tenmodel]`)
                     .attr('data-healthleft',1)
                     .removeClass('death')
-                setTimeout(()=>displayAnimatedNews('Mournblade<br/>rallies'),700)
+                setTimeout(()=>displayAnimatedNews({ 
+                    templateType:'info', 
+                    $attacker: $(`[data-name="Mournblade"].${mySide}[data-tenmodel]`), 
+                    msg2:' rallies' 
+                }),700)
             }
         }
     }, 700)
@@ -269,13 +273,14 @@ const extractBoons_Blights = (origin) => {
     const healthleft = Number(origin.attr('data-healthleft'))
     return { baim, bdamage, bspeed, bdodge, bprotection, healthleft }
 }
-const setBoons_Blights = (origin,props,local = false)=>{//$(), {baim:-1}
+const setBoons_Blights = (origin,props,local = false, {N = false, I = false })=>{//$(), {baim:-1}
     let subject = local !== 'local' ? 
         $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"][data-tenmodel]`) : origin
     displayAnimatedNews({
         $attacker:$(subject[0]),
         templateType:'boons',
-        blights:props
+        blights:props,
+        skillIcon:I, skillName:N
     })
     for(let key in props){
         let boon_blight = props[key]
@@ -549,10 +554,7 @@ function blights_spew_recieved({o, blight, m}){
         un_glow()
         add_action_taken(m)
         if( onHit(aim, target,'spell',m) ){
-            setBoons_Blights(target,{[blight]:-1})
-            displayAnimatedNews({
-                blight:`-1 ${[...blight].slice(1).join('')}`
-            })
+            setBoons_Blights(target,{[blight]:-1},0,{N:m,I:'skull'})
         }
     }
     current_ability_method = null
@@ -564,7 +566,13 @@ function healLife(target, h = 2){
             target.attr('data-healthleft', currentWounds)
         }
     }
-    displayAnimatedNews(`${target.data('name')}<br/>heals ${h} wound${h>2?"s":''}`)
+    displayAnimatedNews({
+        templateType:'info', 
+        $attacker:target,
+        skillName: 'Heal Life',
+        skillIcon:'self',
+        msg2:`: ${h} wound${h>2?"s":''}`
+    })
     let style =  ( Number(target.attr('data-healthleft') ) < target.data('health') ) ? 0 : 1
     $(`.miniGameCard.${target.data('side')}[data-name="${target.data('name')}"]`)
         .find('.smallCard.health')
@@ -572,7 +580,6 @@ function healLife(target, h = 2){
         .removeClass(style?'normal':'blighted')
         .addClass(style?'blighted':'normal')
         .text( Number(target.attr('data-healthleft')) )
-            
 }
 function march (string, targetHex, thizModel = $('.selectedModel'), dist=1 ){
     const { hex, row } = targetHex
@@ -585,11 +592,10 @@ function marchExec(string, aktion){
     add_action_taken(aktion)
     un_glow()
     $(`.march${string}_selected`).removeClass(`march${string}_selected`)
-    displayAnimatedNews('marching')
 }
 function rallyChampion(thiz){
     thiz.removeClass('death mournblade_raisins').attr('data-healthleft', thiz.data('health') )
-    displayAnimatedNews(`${thiz.data('name')}<br/>back in game`)
+    displayAnimatedNews({templateType:'info', $attacker:thiz, msg1:` rallies`})
 }
 function _target({ hex, row }){//UNFINISHED, not annoyed enuff yet
     return $(`.hex_`)
@@ -710,7 +716,7 @@ function backstab(o){
                         else null
                 },1550)
             }
-        } else displayAnimatedNews ("missed!")
+        }
     }
     current_ability_method = null
 }
@@ -756,11 +762,11 @@ function ambush_(o){
             stolenTreasure()
             target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-1) )
             animateDamage(target, -1)
-            displayAnimatedNews(`${target.data('name')}<br/>ambushed`)
+            displayAnimatedNews({templateType:'info', $attacker:target,msg1:` Ambushed`})
             if( checkIfStillAlive(target) )
                 moveLadder(target, target.data('stepsgiven'))
             else null
-            } else displayAnimatedNews ("missed!")
+            }
     }
     current_ability_method = null
 }
@@ -768,8 +774,7 @@ function sT(o){
     const { hex, row, cursePackage } = o
     const bb = cursePackage[0]
     const target = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel][data-name="RedBandits"]')[0])
-    setBoons_Blights(target,{ [bb]: Number(target.attr(`data-${bb}`))+1 })
-    displayAnimatedNews(`Red Bandits<br/>+1 ${[...bb].slice(1).join('')}`)
+    setBoons_Blights(target,{ [bb]: Number(target.attr(`data-${bb}`))+1 },0,{N:'StolenTreasure',I:'self'})
 }
 function wildfire(){
     let blackja = $('.selectedModel[data-tenmodel="Blackjaw"]')
@@ -815,8 +820,9 @@ function hexBolt_(o){
         add_action_taken(at)
         if( onHit(aim, target,'spell','Hex Bolt') ){ 
             if( myTurn )
-                $('#gameScreen').append(  challengeOptions(target, {hex, row}, "hexBolt2",1,`give 1 blight to ${target.data('name')}`)  )
-        } else displayAnimatedNews ("missed!")
+                $('#gameScreen')
+                    .append(  challengeOptions(target, {hex, row}, "hexBolt2",1,`give 1 blight to ${target.data('name')}`)  )
+        }
     }
     current_ability_method = null
 }
@@ -832,18 +838,18 @@ function rollTheBones_(o){
         if ( myTurn )
             $('#gameScreen').append( EatHexes( {side,socksMethod:'hexEaters',message:'Hexlings gain 1 boon'} ) )
         else
-            displayAnimatedNews('Hex<br/>Eaters')
+            displayAnimatedNews({templateType:'info', skillName:'Hex Eaters', skillIcon:'self'})
     }else{
         $(`[data-glow]`).removeAttr('data-glow')
         highlightHexes({colour:'blueGlow',dist},rattlebone)
-        displayAnimatedNews('choose<br/>donor')
+        displayAnimatedNews({templateType:'info', msg0:'choose token donor'})
         current_ability_method = _m.rollTheBonesTransfer
     }
 }
 function newSpew_ (o){//TRIGGERS TWICE
     const phejs = phase==='white'?'White':'Black'
     add_action_taken(`newSpew${phejs}`)
-    displayAnimatedNews('Retchlings<br/>respawn')
+    displayAnimatedNews({templateType:'info', msg0:'Retchlings respawn'})
     $(`[data-tenmodel^="Retchlings"].${o.multiAction}`).each(function(){
         if( !$(this).hasClass('miniGameCard') )
             forceKill ( $(this) )
@@ -859,7 +865,7 @@ function newSpew_ (o){//TRIGGERS TWICE
 }
 function rapidDeployment(thiz){
     if( thiz.data('name')==='GlorySeekers' ){
-        displayAnimatedNews('Rapid<br/>Deployment')
+        displayAnimatedNews({templateType:'info', skillName:'Rapid Deployment', skillIcon:'self'})
         thiz.addClass('rapidDeployment_selected')
         highlightHexes({colour:'legendaryGlow', dist:2}, thiz)
         cancellerName = 'rapidDeployment'
@@ -899,7 +905,13 @@ function tituulti_addaction (actionName, multiAction = false){
         if ( loop_tituulti() === 2 ){
             $('.selectedModel[data-tenmodel="Titus"]')
                 .attr('data-actionstaken', 1 + Number($('.selectedModel[data-tenmodel="Titus"]').attr('data-actionstaken') ))
-            displayAnimatedNews('Titus<br/>legendary<br/>ends')
+                displayAnimatedNews({
+                    templateType:'info', 
+                    $attacker:$('.selectedModel'), 
+                    skillName:'Path Of Destruction',
+                    skillIcon:'star',
+                    msg2:' ends'
+                })
         }
     }
 }
@@ -930,11 +942,17 @@ function earthquake_(o){
         un_glow()
         add_action_taken(`earthquake${phase==='white'?"White":"Black"}`)
         if( !$('.earthquake_selected').length && onHit(aim, target,'spell','Earthquake') ){
-            displayAnimatedNews(`earthquake<br/>${target.data('name')} moving`)
+            displayAnimatedNews({
+                templateType:'info', 
+                skillName:`Earthquake`,
+                skillIcon:'skull',
+                $victim:target,
+                msg2:` moving`
+            })
             $(`[data-name="${target.data('name')}"]${team}`).addClass('earthquake_moveable')
             target.addClass('earthquake_selected')
             highlightHexes({colour:'legendaryGlow',dist:2},target)
-        } else displayAnimatedNews ("missed!")
+        }
     }
     current_ability_method = null
 }
@@ -953,7 +971,12 @@ function likeWater_(o){ console.log('once', o.key === mySide)
     if ( mySide === o.key )
         $('#gameScreen').append(  showLikeWater( $(`[data-tenmodel^="RaithMarid"][data-side="${o.key}"]`) )  )
     else 
-        displayAnimatedNews('Splashlings<br/>like water')
+        displayAnimatedNews({
+            templateType:'info', 
+            $attacker:$(`[data-tenmodel="Splashlings"].${o.key}`),
+            skillName:' Like Water',
+            skillIcon:'self'
+        })
 }
 function _current(origin,target){
     const { hex, row } = target
@@ -967,7 +990,7 @@ function current_(o){
         add_action_taken(`current${phase==='white'?'White':'Black'}`)
         $(`[data-name="${singleSpecimen.data('name')}"].${team}`).addClass('current')
         un_glow()
-        displayAnimatedNews('current')
+        displayAnimatedNews({templateType:'info', msg0:'current'})
     }
 }
 function _tide(origin,target){
@@ -987,12 +1010,11 @@ function tide_(o){
         un_glow()
         add_action_taken(`tide${phase==='white'?'White':'Black'}`)
         if( onHit(aim, target,'spell','Tide') ){
-            displayAnimatedNews('tide')
             un_glow()
             target.addClass('tide_selected')
             highlightHexes({colour:"legendaryGlow",dist:1},target)
             //movement of a victim herree
-        }else displayAnimatedNews ("missed!")
+        }
     }
     current_ability_method = null
 }
@@ -1001,20 +1023,31 @@ function ripplingScales(t){
     if (side === mySide)
         $('#gameScreen').append( ripplingChoices(side) )
     else
-        displayAnimatedNews('Rippling<br/>scales<br/>triggered')
+        displayAnimatedNews({
+            templateType:'info',
+            skillName:'Rippling Scales',
+            skillIcon:'self',
+            msg2:' triggered'
+        })
 }
 function rockFormation(whereTo,callback){
     const baner = $( whereTo.children('.claimedBanner')[0] )
     if ( baner.data('name') === 'Nia' ){
-        displayAnimatedNews('Quartzlings<br/>Rock Formation')
         const saiid = baner.hasClass('whiteTeam') ? mySide : opoSide
-            rallyActionDeclaration({ 
-                unitname:'Nia', 
-                side: saiid, 
-                type:'unit', 
-                name:'Quartzlings', 
-                dist:1 
-            },`rockFormation${mySide}`)
+        displayAnimatedNews({
+            templateType:'info', 
+            $attacker:$($(`[data-tenmodel="Quartzlings".${saiid}`)[0]),
+            msg1:' trigger ',
+            skillName:'Rock Formation',
+            skillIcon:'self'
+        })
+        rallyActionDeclaration({ 
+            unitname:'Nia', 
+            side: saiid, 
+            type:'unit', 
+            name:'Quartzlings', 
+            dist:1 
+        },`rockFormation${mySide}`)
     }
     callback()
 }
@@ -1031,21 +1064,28 @@ function rockConcert_(o){
     const actionsTaken = Number( nija.attr('data-actionstaken') )
     if( !actionsTaken && quarzlings.length === 3 ){
         un_glow()
-        displayAnimatedNews('Rock Concert<br/>extra action')
+        displayAnimatedNews({
+            templateType:'info', 
+            $attacker:nija,
+            msg1:' trigger ',
+            skillName:'Rock Concert',
+            skillIcon:'self',
+            msg2:'and gains extra action'
+        })
         nija.attr('data-actionstaken', -1)
         add_action_taken(`rockConcert${phase==='white'?'White':'Black'}`, true)
         current_ability_method = null
     } else if ( quarzlings.length !== 3 )
-        displayAnimatedNews('Missing<br/>Quartzlings')
+        displayAnimatedNews({templateType:'info', msg0:'Missing ',$attacker:'Quartzlings'})
     else if ( actionsTaken )
-        displayAnimatedNews("Its no longer<br/>beginning<br/>of activation")
+        displayAnimatedNews({templateType:'info', msg0:"Its no longer beginning of activation"})
 }
 function kerSplash_(o){
     const { hex, row, multiAction } = o
     const team = multiAction === mySide ? 'whiteTeam' : 'blackTeam'
     const $target = $($(`.hex_${hex}_in_row_${row}`).children(`[data-name="Splashlings"].${team}`)[0])
     if( $target.length && !$target.siblings('.smallCard').length ){
-        displayAnimatedNews("Ker-splash!")
+        displayAnimatedNews({templateType:'info', skillName:"Ker-splash!", skillIcon:"self"})
         forceKill($target)
         makeAnim($(`[data-name="RaithMarid"].${team}`),$(`.hex_${hex}_in_row_${row}`))
         add_action_taken(`kerSplash${phase==='white'?'White':'Black'}`)
@@ -1055,14 +1095,14 @@ function kerSplash_(o){
 }
 function rubble(target){
     if( target.data('name') === 'Landslide' ){
-        displayAnimatedNews('rubble')
+        displayAnimatedNews({templateType:'info', $attacker:target, msg1: ' becomes ', skillName:'Rubble', skillIcon:'self'})
         const { hex, row } = target.parent('.hexagon').data()
         makeObjectiveHex(row,hex)
     }
 }
 function shieldWall ($HG){//takes in household_guard
     const product = onlyOneStep($(`[data-tenmodel^="Rhodri"][data-side="${$HG.data('side')}"]`).parent('.hexagon'),  $HG)
-    if( product ) displayAnimatedNews('Shield<br/>Wall')
+    if( product ) displayAnimatedNews({templateType:'info', skillName:'Shield Wall', skillIcon:'self'})
     return product
     //if next to rhodri, household can't be moved
 }
@@ -1071,7 +1111,13 @@ function unyielding ($R){//takes_in_rhodri
     let product = false
     $(`.claimedBanner.${team}`).each(function(){
         if (  onlyOneStep( $R.parent('.hexagon'), $(this) )  ){
-            displayAnimatedNews('Rhodri<br/>is<br/>unyielding')
+            displayAnimatedNews({
+                templateType:'info', 
+                $attacker:$R,
+                msg1:' is ',
+                skillName:'Unyielding',
+                skillIcon:'self'
+            })
             product = true
             return false
         }
@@ -1082,8 +1128,7 @@ function unyielding ($R){//takes_in_rhodri
 function brainFreeze(){
     //killing coldBones impairs attacker with dodgeBlight
     const victim = $('.selectedModel')
-    displayAnimatedNews(`${victim.data('name')}<br/>brain freeze<br/>-1 dodge`)
-    setBoons_Blights(victim, { bdodge:(Number(victim.attr('data-bdodge')) -1) })
+    setBoons_Blights(victim, { bdodge:(Number(victim.attr('data-bdodge')) -1) },0,{N:'Brain Freeze',I:'cogs'})
 }
 function validateBannerPlacement({ $model, $destination, rules }){
     //tongue tow:    //"Move a friendly banner that is within range up to 1 hex toward this froglodyte"
@@ -1094,7 +1139,7 @@ function validateBannerPlacement({ $model, $destination, rules }){
     if ( product ) 
         return true
     else {
-        displayAnimatedNews('place on<br/>empty<br/>objective hex')
+        displayAnimatedNews({templateType:'info', msg0:'place on empty objective hex'})
         return false
     }
 }
@@ -1258,13 +1303,25 @@ const rally_drakes = (side)=>{
     add_action_taken('royalSummons'+phaser())
     //no drakes on board, allow only for recruitment
     rallyActionDeclaration({ unitname:'Keera', side, type:'unit', name:'YoungDragons' })
-    displayAnimatedNews('drake recruit')
+    displayAnimatedNews({
+        templateType:'info', 
+        $attacker:$('.selectedModel'), 
+        msg1:' recruits ', 
+        $victim:$(`[data-tenmodel="YoungDragons"].${side}`).length ? 
+            $($(`[data-tenmodel="YoungDragons"].${side}`)[0]) : 'Young Dragons'
+    })
 }
 const walk_drakes = (drakes)=>{
     //two drakes, one can walk, no recruitment
     if( !$('.summonsWalk').length ){
         drakes.addClass('summonsWalk')
-        displayAnimatedNews('rakos walkos')
+        displayAnimatedNews({
+            templateType:'info', 
+            $attacker:$('.selectedModel'), 
+            msg1:' commands ',
+            msg2:' to advance ', 
+            $victim:$(`[data-tenmodel="YoungDragons"].${side}`)
+        })
     }
 }
 function royalSummons_(o){

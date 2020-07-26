@@ -84,7 +84,7 @@ function displayAnimatedNews ({
             argr = argr ? argr : boobli !== 0 ? true : false
         }
         if( argr )
-            templater(`<div class="sms_message ${uq_id}">${charMarker(a) + ' ' + messahe}</div>`)
+            templater(`${charMarker(a) + ' ' + messahe} ${ skillName ? " from " + skillMarker(skillName,skillIcon) : ''}`)
     }else if(templateType==='points'){
         templater(`${charMarker(v)} scores ${ptsMarker(steps)}`)
     }else if(templateType==='info'){//it needs dies here as well
@@ -98,20 +98,20 @@ function displayAnimatedNews ({
             ${msgMincer(msg3)}
         `)
     } else {
-        const flashNews = msg => ` <h3 class='flashNews hinge-in-from-middle-y mui-enter'> ${msg} </h3> ` 
-        $('#gameScreen').append( flashNews(message) )
-        setTimeout(()=>$('.flashNews').addClass('mui-enter-active'), 250)
-        setTimeout(()=>
-            $('.flashNews')
-                .removeClass('hinge-in-from-middle-y mui-enter mui-enter-active')
-                .addClass('scale-out-up mui-leave mui-leave-active')
-                ,1500)
-        setTimeout( () => $('.flashNews').off().remove(), 1950 )
-        $('body').one('click',function(e){
-            e.preventDefault()
-            $('.flashNews')
-                .remove()
-        })
+        // const flashNews = msg => ` <h3 class='flashNews hinge-in-from-middle-y mui-enter'> ${msg} </h3> ` 
+        // $('#gameScreen').append( flashNews(message) )
+        // setTimeout(()=>$('.flashNews').addClass('mui-enter-active'), 250)
+        // setTimeout(()=>
+        //     $('.flashNews')
+        //         .removeClass('hinge-in-from-middle-y mui-enter mui-enter-active')
+        //         .addClass('scale-out-up mui-leave mui-leave-active')
+        //         ,1500)
+        // setTimeout( () => $('.flashNews').off().remove(), 1950 )
+        // $('body').one('click',function(e){
+        //     e.preventDefault()
+        //     $('.flashNews')
+        //         .remove()
+        // })
     }
 }
 

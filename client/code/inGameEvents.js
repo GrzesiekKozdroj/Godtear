@@ -246,9 +246,6 @@ function removeAllBanners(team){
         })
         return B_S
     } else {
-        //here need to add quest scenario banner counting queerkinyess
-        //right side is always on bottom, left side is always on top
-        // if first model with ${team} color has data-side left and banner dad has row < 7, then give pts
         const extraCondid = (t,$B)=>{return(
             $($(`[data-tenmodel].${t}`)[0]).data('side') === 'left' && $B.parent('.hexagon').data('row') < 7 ||
             $($(`[data-tenmodel].${t}`)[0]).data('side') === 'right' && $B.parent('.hexagon').data('row') > 6

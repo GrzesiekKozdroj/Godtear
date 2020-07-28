@@ -107,9 +107,11 @@ const onHit = (aim, target, weapon, skillName) => { console.log('aim roll: ', ..
     const aim_total = aim.reduce((a,b)=>a+b,0) - (fearsome() || superiority(target) ? aim[0] : 0)
     setBoons_Blights($('.selectedModel'),{baim:0})
     setBoons_Blights(target,{bdodge:0})
-    console.log(aim_total)
     animateWeapon(target, weapon)
     const product = aim_total  >= target_dodge
+    percentileMarker(target,'dodgeability',!product)
+    percentileMarker($('.selectedModel'),'accuracy',product)
+    pixkedAtMarker($('.selectedModel'),'favouriteToHit',target)
     displayAnimatedNews({
         dieRoll:aim,
         templateType:'attack',
@@ -121,23 +123,28 @@ const onHit = (aim, target, weapon, skillName) => { console.log('aim roll: ', ..
     })
     return product
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
-const doDamage = (hurt, target) => {console.log('damage: ',...hurt)
+const doDamage = (hurt, target) => {
     const target_protection = Number(target.attr('data-protection')) + checkIfNotMorrigan(target,'bprotection')
     const hurt_total = hurt.reduce((a,b)=>a+b,0) - ( superiority(target) ? hurt[0] : 0 )
     const product = hurt_total > target_protection
+    const hurtTotal = target_protection - hurt_total
     displayAnimatedNews({
         dieRoll:hurt,
         templateType:'damage',
         rollOutcome:product,
-        hurtTotal: target_protection - hurt_total,
+        hurtTotal,
         $victim:target
     })
     setBoons_Blights($('.selectedModel'),{bdamage:0})
     setBoons_Blights(target,{bprotection:0})
     animateDamage(target, (target_protection - hurt_total))
+    counterMaker(target,'tankyness',product?target_protection:hurt_total)
         if( product ){
             let target_health = target.attr('data-healthleft')
-            let pain = target_health - (hurt_total - target_protection)
+            let pain = target_health - hurtTotal
+            let painAbs = Math.abs(pain)
+            counterMaker(target, 'woundsSuffered', painAbs)
+            counterMaker($('.selectedModel'), 'dmgCaused', painAbs)
             target.attr( 'data-healthleft', pain )
             $(`.miniGameCard.${target.data('side')}[data-name="${target.data('name')}"]`)
                 .find('.smallCard.health')
@@ -169,6 +176,7 @@ const animateDamage = (target, pain) => {
 }
 const checkIfStillAlive = (target) => {
     if( Number(target.attr('data-healthleft') ) < 1 ){
+        pixkedAtMarker($('.selectedModel'),'killsCount',target)
         forceKill(target)
         return true
     }
@@ -243,6 +251,12 @@ const moveLadder = (target,steps) => {
     const R_ = GAME_SCENARIO.warbandTokens.right
     adres = adres <= _L ? (_L + 1) : adres >= R_ ? (R_ - 1) : adres > _L && adres < R_ ? adres : false
     const destination = $(`.block${ adres }`)
+    displayAnimatedNews({
+        templateType:'points',
+        steps,
+        $victim:$('.selectedModel')
+    })
+    counterMaker(target,'stepsEarned',steps)
     if( adres )
         $('#coin')
             .css('right',`${(steps * direction * calculus)}px`)
@@ -253,16 +267,6 @@ const moveLadder = (target,steps) => {
                 }, 500, ()=>{
                 $('#coin').removeAttr('style').finish()//.detach().appendTo(destination)
             })
-    displayAnimatedNews({
-        templateType:'points',
-        steps,
-        $victim:$('.selectedModel')
-    })
-        // $('#coin').animate({
-        //     left: (steps * direction * calculus)
-        // }, 500, ()=>{
-        //     $('#coin').removeAttr('style').finish().detach().appendTo(destination)
-        // })
 }
 const extractBoons_Blights = (origin) => {
     const baim = Number(origin.attr('data-baim'))
@@ -273,7 +277,7 @@ const extractBoons_Blights = (origin) => {
     const healthleft = Number(origin.attr('data-healthleft'))
     return { baim, bdamage, bspeed, bdodge, bprotection, healthleft }
 }
-const setBoons_Blights = (origin,props,local = false, {N = false, I = false })=>{//$(), {baim:-1}
+const setBoons_Blights = (origin,props,local = false, {N , I} = false)=>{//$(), {baim:-1}
     let subject = local !== 'local' ? 
         $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"][data-tenmodel]`) : origin
     displayAnimatedNews({
@@ -1343,4 +1347,76 @@ const kause_of_Keera = () => {
     const drakes = $('[data-glow].hexagon').children(`[data-tenmodel^="YoungDragons"].${team}`)
     un_glow()
     return drakes
+}
+
+function GEEK_MAKER(rozter, victims){//keera, titus, shayle
+    const nameButter = (r) =>{ 
+        let prod = {}
+        r.forEach(el => prod[el] = 0)
+        return prod
+    }
+    let vNames = []
+    for(let k in rosters){
+        let klass = rosters[k]
+        let band = klass.filter(b => { return (
+            victims[0]===b.champ.name || 
+            victims[1] === b.champ.name || 
+            victims[2] === b.champ.name || 
+            victims[3] === b.champ.name 
+        )})
+        if(band.length){
+            vNames = [...vNames, band[0].champ.name, band[0].grunt.name]
+        }
+    }
+    let template =  {
+        bannersClaimed:0,//
+        bannersStayed:0,//
+        bannersSlayed:0,//?
+        accuracy:[],//
+        dmgCaused:0,//
+        dodgeability:[],//
+        tankyness:0,//
+        woundsSuffered:0,//
+        ralliesRecruits:0,//
+        hexesTravelled:0,//
+        stepsEarned:0,//
+        favouriteToHit:nameButter(vNames),//
+        killsCount:nameButter(vNames)//
+    }
+    let product = {}
+    for(let k in rosters){
+        let klass = rosters[k]
+        let band = klass.filter(b => { return (
+            rozter[0]===b.champ.name || 
+            rozter[1] === b.champ.name || 
+            rozter[2] === b.champ.name || 
+            rozter[3] === b.champ.name
+        )})
+        if(band.length){
+            product[band[0].champ.name] = template
+            product[band[0].grunt.name] = template
+        }
+    }
+    return product
+}
+function counterMaker(model,attrib,n=1){
+    try {
+        GEEK[model.data('side')][model.data('name')][attrib]+=n
+    } catch { 
+        console.log('error @ counterMarker', model, attrib, n) 
+    }
+}
+function percentileMarker(model,attrib,boo){
+    try {
+        GEEK[model.data('side')][model.data('name')][attrib] = [...GEEK[model.data('side')][model.data('name')][attrib], boo]
+    } catch { 
+        console.log('error @ percentileMarker', model, attrib, boo) 
+    }
+}
+function pixkedAtMarker(model,mode,victim){
+    try {
+        GEEK[model.data('side')][model.data('name')][mode][victim.data('name')]+=1
+    } catch { 
+        console.log('error @ pixkedAtMarker', model, mode, victim) 
+    }
 }

@@ -121,12 +121,12 @@ socket.on('tt',p=>{//key: { phase, next: myNextPhase, name, side:mySide }
         phase==='black' && 
         $('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length && 
         $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length
-    ){console.log('TT_III')
+    ){
         myTurn = false
+        phase='end' 
         let myBanners = removeAllBanners('whiteTeam')
         let opBanners = removeAllBanners('blackTeam')
         moveLadder($($('[data-tenmodel].whiteTeam')[0]), myBanners - opBanners)
-        phase='end' 
         $('.clashPhase').removeClass('clashPhase').addClass('endPhase')
         myNextPhase = 'white'
         GAME_SCENARIO.dieRoll = dieRoll

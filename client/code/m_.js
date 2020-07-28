@@ -334,6 +334,7 @@ var m_ = {
         if( $brothers.data('name') !== "Landslide" )
             add_action_taken(key?key:"rallied")
         propagate_BB_s($brothers,$thiz)
+        counterMaker( $thiz,'ralliesRecruits')
         setTimeout(()=>rapidDeployment($thiz),700)
         if(key!=='callTotems' || !graveyard[river[1]][river[3]].length ){     //untestedo
             un_glow()
@@ -2367,6 +2368,7 @@ var m_ = {
                 .removeClass('blighted')
             $(`#dummy_contain.${jees.data('side')}`).find('.champion.rally').remove()
             displayAnimatedNews({templateType:'info', $attacker:jees, msg1:' rallies'})
+            counterMaker( $thiz, 'ralliesRecruits' )
         }
         if(jees.data('name')==='Shayle')shayle_takes_action()
     }

@@ -78,6 +78,7 @@ const makeAnim = (model,whereTo,callback=false) => {//model, destination
                 else
                     whereTo.removeAttr('data-glow')
                 shayle_takes_action()
+                counterMaker(model,'hexesTravelled')
                 MOVINGNOW = false
             })
 };//anim
@@ -103,10 +104,12 @@ function makeGameBoard(o,coin){
             `)
     beginBattle()
     buildLadder()
-    QUICK_DEEPLOY()
-    //---------------------------------------------BLACK____PHASE-----------------------------------
+    //---------------------------------------------TEZT____PHASE-----------------------------------
+    //QUICK_DEEPLOY()//dont forget EVENTS.js
     //setTimeout(()=>{phase='black';myNextPhase='black'},2900)
     //----------------------------------------------------------------------------------------------
+    GEEK[mySide]  = GEEK_MAKER(roster, opoRoster)
+    GEEK[opoSide] = GEEK_MAKER(opoRoster, roster)
     opoSkillTrack = buildSkillTrack(opoRoster)
     mySkillTrack = buildSkillTrack(roster)
 }
@@ -115,7 +118,12 @@ function deeploy (group,side){
     let championBands = []
     for(let k in rosters){
         let klass = rosters[k]
-        let band = klass.filter(b => group[0]===b.champ.name || group[1] === b.champ.name || group[2] === b.champ.name )
+        let band = klass.filter(b => { return(
+            group[0]===b.champ.name || 
+            group[1] === b.champ.name || 
+            group[2] === b.champ.name || 
+            group[3] === b.champ.name 
+        )})
         if(band.length){
             championBands = [...championBands,...band]
         }

@@ -55,3 +55,4 @@ var landstepper = {
     left:false,
     right:false
 }
+var GEEK = {}

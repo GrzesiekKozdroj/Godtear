@@ -343,6 +343,7 @@
     #app{
         padding-top:5vh;
     }
+    .ripplingChoices.confirm{ font-size: 80%;}
 }
 @media (max-aspect-ratio: 1000/781) and (min-aspect-ratio:1000/1000){
     .selection_card_hexagram{@include hexagonomicron(15);}

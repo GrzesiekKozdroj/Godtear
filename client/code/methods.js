@@ -44,6 +44,7 @@ const m =
             if( whereTo.children(`.claimedBanner`).length && model.hasClass('smallCard') ){
                 rockFormation(whereTo,()=>{whereTo.find(`.claimedBanner`).remove()})
                 //this ought to be thing functionalised
+                counterMaker(model,phase!=='end'?'bannersSlayed':'bannersStayed')
                 if( points )
                     moveLadder(model,-1)
             }
@@ -55,7 +56,8 @@ const m =
             shayle_takes_action()
             if(phase==='white')
                 moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
-                displayAnimatedNews({templateType:'info',$attacker:$('.selectedModel'),msg1:` claims objective`})
+            counterMaker($('.selectedModel'),'bannersClaimed')
+            displayAnimatedNews({templateType:'info',$attacker:$('.selectedModel'),msg1:` claims objective`})
         }
     },
     blackjaw:
@@ -2142,8 +2144,8 @@ const m =
                 name:"Fiery Breath",
                 desc:`Hit Effect: -1 ${protectionBlight}.`,
                 dist:1,
-                aim:5,
-                hurt:3,
+                aim:[5],
+                hurt:[3],
                 unused:true,
                 icon:skull,
                 m:"fieryBreath"

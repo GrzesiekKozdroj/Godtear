@@ -1376,3 +1376,84 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
     color:black;
     text-shadow: 0 0 2px white, 0 0 1px white;
 }
+//WP==========================================================================
+#WP{
+    margin:0;
+    padding:0;
+    position: absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    z-index:100;
+    overflow-y: scroll;
+    background-color:rgba(0, 0, 0, 0.555);
+}
+.statListNames{
+    @include instaFlex;
+    color:white;
+    align-items: flex-end;
+    font-family: $coinFont2;
+  //  border:1px solid red;
+    font-size: 86%;
+    .singleStats{
+        width:5.3vw;
+        writing-mode: sideways-lr;
+        @include instaFlex;
+        font-family: inherit;
+    }
+}
+#mainWPinfo{
+    width:100vw;
+    height: 15vh;
+    font-size: 300%;
+    font-family: $coinFont2;
+    color: white;
+    @include instaFlex;
+}
+.list_name_label{
+    width: 19vw;
+    font-family: inherit;
+    @include instaFlex;
+}
+.wp_portrait{
+    width:5vw;
+    height:100%;
+    @include instaFlex;
+    flex-wrap:wrap;
+}
+.singleStatList{
+    @include instaFlex;
+    *{
+       // border:1px solid red;
+        color:white;
+        @include instaFlex;
+        font-family: $coinFont2;
+        font-size:87%;
+        img{top:0;left:0;}
+    }
+    .singleStats{
+        width:5.4vw;
+        height:6vw;
+    }
+    .wp_name_label{
+        width:19vw;
+        height: 6vw;
+        justify-content: right;
+        text-align: right;
+    }
+    .multiStat{
+        width:19vw;
+        flex-wrap:wrap;
+        .multiStatLine{
+            height:3vw;
+            width:100%;
+        }
+    }
+}
+.bluish{
+    color:rgb(149, 222, 255);
+}
+.redish{
+    color:rgb(255, 149, 149);
+}

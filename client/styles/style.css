@@ -3300,3 +3300,113 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   color: black;
   text-shadow: 0 0 2px white, 0 0 1px white;
 }
+
+#WP {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  overflow-y: scroll;
+  background-color: rgba(0, 0, 0, 0.555);
+}
+
+.statListNames {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  align-items: flex-end;
+  font-family: "Shojumaru", cursive;
+  font-size: 86%;
+}
+
+.statListNames .singleStats {
+  width: 5.3vw;
+  writing-mode: sideways-lr;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: inherit;
+}
+
+#mainWPinfo {
+  width: 100vw;
+  height: 15vh;
+  font-size: 300%;
+  font-family: "Shojumaru", cursive;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list_name_label {
+  width: 19vw;
+  font-family: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wp_portrait {
+  width: 5vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.singleStatList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.singleStatList * {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Shojumaru", cursive;
+  font-size: 87%;
+}
+
+.singleStatList * img {
+  top: 0;
+  left: 0;
+}
+
+.singleStatList .singleStats {
+  width: 5.4vw;
+  height: 6vw;
+}
+
+.singleStatList .wp_name_label {
+  width: 19vw;
+  height: 6vw;
+  justify-content: right;
+  text-align: right;
+}
+
+.singleStatList .multiStat {
+  width: 19vw;
+  flex-wrap: wrap;
+}
+
+.singleStatList .multiStat .multiStatLine {
+  height: 3vw;
+  width: 100%;
+}
+
+.bluish {
+  color: #95deff;
+}
+
+.redish {
+  color: #ff9595;
+}

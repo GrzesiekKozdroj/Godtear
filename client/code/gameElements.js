@@ -532,3 +532,77 @@ function royalSummonsChoices( drakes, side ){
             </div>
         </div>`
 }
+
+function wellPlayed(){
+    console.log('wp')
+    return `<div id="WP">
+    <div id="mainWPinfo">Victory!</div>
+        <div class="statListNames">
+            <div class="list_name_label"></div>
+            <div class="singleStats">Banners Claimed</div>
+            <div class="singleStats">Banners Stayed</div>
+            <div class="singleStats">Banners Slayed</div>
+            <div class="singleStats">Accuracy</div>
+            <div class="singleStats">Damage</div>
+            <div class="singleStats">Dodgeability</div>
+            <div class="singleStats">Tankiness</div>
+            <div class="singleStats">Wounds Suffered</div>
+            <div class="singleStats">Rallies/Recruits</div>
+            <div class="singleStats">Hexes Travelled</div>
+            <div class="singleStats">Steps Earned</div>
+            <div class="list_name_label"></div>
+        </div>
+        ${loopaWP('left')}
+        ${loopaWP('right')}
+    </div>`
+}
+const loopaWP = (side) => {
+    let LIST = ""
+    for(let c in GEEK[side]){
+        const ch = GEEK[side][c]
+        LIST += (    singleStatList({ch,side,c})   )
+    }
+    return LIST
+}
+const beatUpCounter = () =>{
+    return `<div class="singlebeatup">
+        <div class="wp_portrait"></div>
+        <div class="spanINFO">x12</div>
+    </div>`
+}
+const beatUpCombinator = () => {
+    return beatUpCounter()+beatUpCounter()+beatUpCounter()
+}
+const singleStatList = ({ch,side,c}) => {
+    const thiz = $(`.${side}[data-name="${c}"]`)
+    const team = thiz.hasClass('whiteTeam') ? 'bluish' : 'redish'//UNUSED
+    const { 
+        bannersClaimed, bannersStayed, bannersSlayed, 
+        accuracy, dmgCaused, 
+        dodgeability, tankyness, woundsSuffered, 
+        ralliesRecruits, hexesTravelled, stepsEarned, 
+        favouriteToHit, killsCount 
+    } = ch
+    console.log(ch, side, c, thiz)
+    return `<div class="singleStatList">
+        <div class="wp_name_label">
+            <div class="wp_portrait"></div>
+            <div class="wp_name ${team}">${c}</div>
+        </div>
+        <div id="bannersClaimed" class="singleStats ${team}">${bannersClaimed}</div>
+        <div id="bannersStayed" class="singleStats ${team}">${bannersStayed}</div>
+        <div id="bannersSlayed" class="singleStats ${team}">${bannersSlayed}</div>
+        <div id="accuracy" class="singleStats ${team}">${accuracy}%</div>
+        <div id="dmgCaused" class="singleStats ${team}">${dmgCaused}</div>
+        <div id="dodgeability" class="singleStats ${team}">${dodgeability}%</div>
+        <div id="tankyness" class="singleStats ${team}">${tankyness}</div>
+        <div id="woundsSuffered" class="singleStats ${team}">${woundsSuffered}</div>
+        <div id="ralliesRecruits" class="singleStats ${team}">${ralliesRecruits}</div>
+        <div id="hexesTravelled" class="singleStats ${team}">${hexesTravelled}</div>
+        <div id="stepsEarned" class="singleStats ${team}">${stepsEarned}</div>
+        <div class="multiStat">
+            <div id="favouriteToHit" class="multiStatLine">${beatUpCombinator()}</div>
+            <div id="killsCount" class="multiStatLine">${beatUpCombinator()}</div>
+        </div>
+    </div>`
+}

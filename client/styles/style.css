@@ -3311,7 +3311,10 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   height: 100vh;
   z-index: 100;
   overflow-y: scroll;
-  background-color: rgba(0, 0, 0, 0.555);
+}
+
+#WP .singleStatList, #WP .statListNames, #WP #mainWPinfo {
+  background-color: rgba(0, 0, 0, 0.88);
 }
 
 .statListNames {
@@ -3409,4 +3412,8 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
 
 .redish {
   color: #ff9595;
+}
+
+.wp_hihg {
+  background-color: rgba(245, 245, 245, 0.062);
 }

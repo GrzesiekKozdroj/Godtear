@@ -534,48 +534,68 @@ function royalSummonsChoices( drakes, side ){
 }
 
 function wellPlayed(){
-    console.log('wp')
     return `<div id="WP">
-    <div id="mainWPinfo">Victory!</div>
+    <div id="mainWPinfo">${MY_SCORE > 4 ? 'Victory!' : 'Well Played!'}</div>
         <div class="statListNames">
             <div class="list_name_label"></div>
-            <div class="singleStats">Banners Claimed</div>
-            <div class="singleStats">Banners Stayed</div>
-            <div class="singleStats">Banners Slayed</div>
-            <div class="singleStats">Accuracy</div>
-            <div class="singleStats">Damage</div>
-            <div class="singleStats">Dodgeability</div>
-            <div class="singleStats">Tankiness</div>
-            <div class="singleStats">Wounds Suffered</div>
-            <div class="singleStats">Rallies/Recruits</div>
-            <div class="singleStats">Hexes Travelled</div>
-            <div class="singleStats">Steps Earned</div>
-            <div class="list_name_label"></div>
+            <div class="singleStats" >Banners Claimed</div>
+            <div class="singleStats" >Banners Stayed</div>
+            <div class="singleStats" >Banners Slayed</div>
+            <div class="singleStats" >Accuracy</div>
+            <div class="singleStats" >Damage</div>
+            <div class="singleStats" >Dodgeability</div>
+            <div class="singleStats" >Tankiness</div>
+            <div class="singleStats" >Wounds Suffered</div>
+            <div class="singleStats" >Rallies/Recruits</div>
+            <div class="singleStats" >Hexes Travelled</div>
+            <div class="singleStats" >Steps Earned</div>
+            <div class="list_name_label" ></div>
         </div>
-        ${loopaWP('left')}
-        ${loopaWP('right')}
+        ${loopaLLWP()}
     </div>`
 }
-const loopaWP = (side) => {
+const loopaLLWP = ()=>{
+    let line = 1
     let LIST = ""
-    for(let c in GEEK[side]){
-        const ch = GEEK[side][c]
-        LIST += (    singleStatList({ch,side,c})   )
+    for(let c in GEEK[mySide]){
+        const ch = GEEK[mySide][c]
+        const thiz = $($(`.${mySide}[data-tenmodel^="${c}"]`)[0])
+        LIST += (    singleStatList({ch,side:mySide,c,thiz, line})   )
+        line++
+    }
+    for(let c in GEEK[opoSide]){
+        const ch = GEEK[opoSide][c]
+        const thiz = $($(`.${opoSide}[data-tenmodel^="${c}"]`)[0])
+        LIST += (    singleStatList({ch,side:opoSide,c,thiz, line})   )
+        line++
     }
     return LIST
 }
-const beatUpCounter = () =>{
+const beatUpCounter = (piece,side) =>{
+    const thiz = $($(`.${side === mySide ? opoSide : mySide }[data-tenmodel^="${piece.name}"]`)[0])
     return `<div class="singlebeatup">
-        <div class="wp_portrait"></div>
-        <div class="spanINFO">x12</div>
+        <div class="wp_portrait">${dudesCloner(thiz)}</div>
+        <div class="spanINFO">x${piece.p}</div>
     </div>`
 }
-const beatUpCombinator = () => {
-    return beatUpCounter()+beatUpCounter()+beatUpCounter()
+const beatUpCombinator = (list,side) => {
+    let pts = []
+    for(let k in list){
+        pts = [...pts, {name:k, p:list[k]}]
+    }
+    pts.sort(function(a, b){return b.p-a.p})
+    return beatUpCounter(pts[0],side)+beatUpCounter(pts[1],side)+beatUpCounter(pts[2],side)
 }
-const singleStatList = ({ch,side,c}) => {
-    const thiz = $(`.${side}[data-name="${c}"]`)
-    const team = thiz.hasClass('whiteTeam') ? 'bluish' : 'redish'//UNUSED
+const percentileReducer = P => P.length ? P.reduce((a,c)=>a+c) * 100 / P.length : 0
+const dudesCloner = thiz => `
+    <div class="${thiz.attr("class").toString().split(' ').join(' ')}">
+        <div class="top ${thiz.hasClass('whiteTeam') ? 'whiteTeam' : 'blackteam' }"></div>
+        <div class="bottom ${thiz.hasClass('whiteTeam') ? 'whiteTeam' : 'blackteam' }"></div>
+        <img src="${thiz.data('icon')}" />
+    </div>`
+
+const singleStatList = ({ch,side,c, thiz, line}) => {
+    const team = thiz.hasClass('whiteTeam') ? 'bluish' : 'redish'
     const { 
         bannersClaimed, bannersStayed, bannersSlayed, 
         accuracy, dmgCaused, 
@@ -583,26 +603,30 @@ const singleStatList = ({ch,side,c}) => {
         ralliesRecruits, hexesTravelled, stepsEarned, 
         favouriteToHit, killsCount 
     } = ch
-    console.log(ch, side, c, thiz)
+    //console.log(killsCount)
     return `<div class="singleStatList">
-        <div class="wp_name_label">
-            <div class="wp_portrait"></div>
+        <div class="wp_name_label wh" data-line="${line}" data-col="0">
+            <div class="wp_portrait ${side}_${c}">${dudesCloner(thiz)}</div>
             <div class="wp_name ${team}">${c}</div>
         </div>
-        <div id="bannersClaimed" class="singleStats ${team}">${bannersClaimed}</div>
-        <div id="bannersStayed" class="singleStats ${team}">${bannersStayed}</div>
-        <div id="bannersSlayed" class="singleStats ${team}">${bannersSlayed}</div>
-        <div id="accuracy" class="singleStats ${team}">${accuracy}%</div>
-        <div id="dmgCaused" class="singleStats ${team}">${dmgCaused}</div>
-        <div id="dodgeability" class="singleStats ${team}">${dodgeability}%</div>
-        <div id="tankyness" class="singleStats ${team}">${tankyness}</div>
-        <div id="woundsSuffered" class="singleStats ${team}">${woundsSuffered}</div>
-        <div id="ralliesRecruits" class="singleStats ${team}">${ralliesRecruits}</div>
-        <div id="hexesTravelled" class="singleStats ${team}">${hexesTravelled}</div>
-        <div id="stepsEarned" class="singleStats ${team}">${stepsEarned}</div>
-        <div class="multiStat">
-            <div id="favouriteToHit" class="multiStatLine">${beatUpCombinator()}</div>
-            <div id="killsCount" class="multiStatLine">${beatUpCombinator()}</div>
+        <div id="bannersClaimed" class="singleStats wh ${team}" data-line="${line}" data-col="1">${bannersClaimed}</div>
+        <div id="bannersStayed" class="singleStats wh ${team}" data-line="${line}" data-col="2">${bannersStayed}</div>
+        <div id="bannersSlayed" class="singleStats wh ${team}" data-line="${line}" data-col="3">${bannersSlayed}</div>
+        <div id="accuracy" class="singleStats wh ${team}" data-line="${line}" data-col="4">${percentileReducer(accuracy)}%</div>
+        <div id="dmgCaused" class="singleStats wh ${team}" data-line="${line}" data-col="5">${dmgCaused}</div>
+        <div id="dodgeability" class="singleStats wh ${team}" data-line="${line}" data-col="6">
+            ${percentileReducer(dodgeability)}%
+        </div>
+        <div id="tankyness" class="singleStats wh ${team}" data-line="${line}" data-col="7">${tankyness}</div>
+        <div id="woundsSuffered" class="singleStats wh ${team}" data-line="${line}" data-col="8">${woundsSuffered}</div>
+        <div id="ralliesRecruits" class="singleStats wh ${team}" data-line="${line}" data-col="9">${ralliesRecruits}</div>
+        <div id="hexesTravelled" class="singleStats wh ${team}" data-line="${line}" data-col="10">
+            ${hexesTravelled/$(`.${side}[data-tenmodel^="${c}"]`).data('unitsize')}
+        </div>
+        <div id="stepsEarned" class="singleStats wh ${team}" data-line="${line}" data-col="11">${stepsEarned}</div>
+        <div class="multiStat wh ${team}" data-line="${line}" data-col="12">
+            <div id="favouriteToHit" class="multiStatLine">${beatUpCombinator(favouriteToHit,side)}</div>
+            <div id="killsCount" class="multiStatLine">${beatUpCombinator(killsCount,side)}</div>
         </div>
     </div>`
 }

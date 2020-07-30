@@ -3,9 +3,9 @@ let zIndex = 1;
 
 $((e) => {
     $('body').append(`<img id="map_place" src="../img/place${Math.floor(Math.random()*8)}.jpg" />`)
-    //$('#gameScreen').empty().append(firstStitch());
+    $('#gameScreen').empty().append(firstStitch());
 
-    socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
+    //socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
 
     $('.selection_section').each(
         function(){
@@ -94,7 +94,6 @@ $('#selection_maelstrom').addClass('hinge-in-from-right mui-enter')
 $('#selection_guardian').addClass('hinge-in-from-left mui-enter')
 $('#selection_slayer').addClass('hinge-in-from-bottom mui-enter')
 $('#selection_shaper').addClass('hinge-in-from-left mui-enter')
-
 
 setTimeout(()=>{
     let o = 'mui-enter-active';
@@ -204,6 +203,14 @@ $('body').on('click','.objectiveGlow[data-glow="claimColor"].hexagon', function(
         const {hex, row} = $(this).data()
         socket.emit('stakeClaim',{ hex: hex, row: row })
     }
+})
+$("body").on('mouseenter', '.wh', function(e){
+    e.preventDefault()
+    console.log('high')
+    const { line, col } = $(this).data()
+    $('.wp_hihg').removeClass('wp_hihg')
+    $(`[data-line="${line}"]`).addClass('wp_hihg')
+    $(`[data-col="${col}"]`).addClass('wp_hihg')
 })
 
 

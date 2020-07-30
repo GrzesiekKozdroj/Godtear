@@ -105,8 +105,12 @@ function makeGameBoard(o,coin){
     beginBattle()
     buildLadder()
     //---------------------------------------------TEZT____PHASE-----------------------------------
-    QUICK_DEEPLOY()//dont forget EVENTS.js
-    setTimeout(()=>{phase='black';myNextPhase='black';$('#gameScreen').append(wellPlayed())},2900)
+    //QUICK_DEEPLOY()//dont forget EVENTS.js
+    // setTimeout(()=>{
+    //     phase='black';
+    //     myNextPhase='black';
+    //     //$('#gameScreen').append(wellPlayed());
+    // },2900)
     //----------------------------------------------------------------------------------------------
     GEEK[mySide]  = GEEK_MAKER(roster, opoRoster)
     GEEK[opoSide] = GEEK_MAKER(opoRoster, roster)

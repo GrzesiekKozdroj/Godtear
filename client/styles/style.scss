@@ -1387,7 +1387,9 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
     height:100vh;
     z-index:100;
     overflow-y: scroll;
-    background-color:rgba(0, 0, 0, 0.555);
+    .singleStatList,.statListNames,#mainWPinfo{
+        background-color:rgba(0, 0, 0, 0.88);
+    }
 }
 .statListNames{
     @include instaFlex;
@@ -1456,4 +1458,7 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
 }
 .redish{
     color:rgb(255, 149, 149);
+}
+.wp_hihg{
+    background-color:rgba(245, 245, 245, 0.062);
 }

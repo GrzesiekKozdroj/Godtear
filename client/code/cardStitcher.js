@@ -100,7 +100,7 @@ function roster_attribute(o,attrib,phase){
         </div>
     `
 }
-function roster_face(o){
+function roster_face(o){//neets to be changed to accept minions and display their model count in form of lili pictures 
     return `
         <div class="selection_card_hexagram card_hex_big" >   
             <div class="top"></div>  

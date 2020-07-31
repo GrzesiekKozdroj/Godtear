@@ -1,6 +1,6 @@
 function makeCoin(){
     return `
-        <div id="coin"></div>
+        <div id="coin">1</div>
     `
 }
 
@@ -534,10 +534,10 @@ function royalSummonsChoices( drakes, side ){
 }
 
 function wellPlayed(){
-    return `<div id="WP">
+    return `<div id="WP" class="hinge-out-from-top mui-leave mui-leave-active">
     <div id="mainWPinfo">${MY_SCORE > 4 ? 'Victory!' : 'Well Played!'}</div>
         <div class="statListNames">
-            <div class="list_name_label"></div>
+            <div class="list_name_label">${treasureBox('left')}</div>
             <div class="singleStats" >Banners Claimed</div>
             <div class="singleStats" >Banners Stayed</div>
             <div class="singleStats" >Banners Slayed</div>
@@ -549,7 +549,7 @@ function wellPlayed(){
             <div class="singleStats" >Rallies/Recruits</div>
             <div class="singleStats" >Hexes Travelled</div>
             <div class="singleStats" >Steps Earned</div>
-            <div class="list_name_label" ></div>
+            <div class="list_name_label" >${treasureBox('right')}</div>
         </div>
         ${loopaLLWP()}
     </div>`

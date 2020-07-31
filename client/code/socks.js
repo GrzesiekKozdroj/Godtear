@@ -111,6 +111,8 @@ socket.on('tt',p=>{//key: { phase, next: myNextPhase, name, side:mySide }
         $('.plotPhase').removeClass('plotPhase').addClass('clashPhase')
         turn_resetter(opoSkillTrack,'black','blackTeam')
         turn_resetter(mySkillTrack,'black','whiteTeam')
+        animateCart(opoSide, $($(".blackTeam[data-tenmodel]")[0]))
+        animateCart(mySide, $($(".whiteTeam[data-tenmodel")[0]))
     }
     if(phase==='white'&&myNextPhase==='white'){console.log('TT_II')//one white phase ends another begins
         turn_resetter(opoSkillTrack,'white','blackTeam')

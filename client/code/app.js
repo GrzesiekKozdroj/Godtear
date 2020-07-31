@@ -109,8 +109,18 @@ function makeGameBoard(o,coin){
     // setTimeout(()=>{
     //     phase='black';
     //     myNextPhase='black';
-    //     //$('#gameScreen').append(wellPlayed());
-    // },2900)
+        // $('#gameScreen').append(wellPlayed());
+        // setTimeout(()=>{
+        //     $(`.cardsContainer`)
+        //         .removeClass(`hinge-in-from-left hinge-in-from-right mui-enter mui-enter-active`)
+        //         .addClass(`hinge-out-from-left hinge-out-from-right mui-leave mui-leave-active`)
+        //         .remove()
+        //     $("#WP")
+        //         .removeClass('hinge-out-from-top mui-leave mui-leave-active')
+        //         .addClass("hinge-in-from-top mui-enter mui-enter-active")
+        // },700)
+        // console.log('timeout')
+    //},2900)
     //----------------------------------------------------------------------------------------------
     GEEK[mySide]  = GEEK_MAKER(roster, opoRoster)
     GEEK[opoSide] = GEEK_MAKER(opoRoster, roster)

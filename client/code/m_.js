@@ -2151,19 +2151,19 @@ var m_ = {
             displayAnimatedNews({templateType:'info', msg0:'You go first'})
             $(`.warbandToken.${mySide}`).text('1')
             $(`.warbandToken.${opoSide}`).text('2')
-            if(mySide === 'left' )
-                $('#coin').detach().appendTo('.block11')
-            else
-                $('#coin').detach().appendTo('.block12')
+            $('#coin')
+                .detach()
+                .appendTo(mySide === 'left' ? '.block11' : '.block12')
+                .text( calc_score() )
         } else {
             myTurn = false
             $(`.warbandToken.${mySide}`).text('2')
             $(`.warbandToken.${opoSide}`).text('1')
             displayAnimatedNews({templateType:'info',msg0:'You go second'})
-            if(mySide === 'left' )
-                $('#coin').detach().appendTo('.block12')
-            else
-                $('#coin').detach().appendTo('.block11')
+            $('#coin')
+                .detach()
+                .appendTo(!mySide === 'left' ? '.block11' : '.block12')
+                .text( calc_score() )
         }
         phase = 'white'
         myNextPhase = 'white'

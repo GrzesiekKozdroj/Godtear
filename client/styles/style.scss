@@ -1462,3 +1462,21 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard{top:0%;left:0%;background
 .wp_hihg{
     background-color:rgba(245, 245, 245, 0.062);
 }
+@keyframes coinPulse {
+    25%{transform:scale(1.1)}
+    75%{transform: scale(.8);}
+}
+#coin{
+    width:1px;
+    height: 1px;
+    margin:auto auto;
+    border-radius: 50%;
+    background-color: goldenrod;
+    box-shadow: 0 0 1vh 2vh rgba(218, 165, 32, 1);
+    position:relative;
+    animation: alternate infinite 4s coinPulse;
+    font-family: $coinFont2;
+    color: #1766ac;
+    @include instaFlex;
+    text-shadow: 0 0 1vh rgb(27, 0, 0);
+}

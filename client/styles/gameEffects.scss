@@ -112,20 +112,6 @@ $selectedByEnemyGlow:rgba(238, 65, 53, 1);
     z-index:10;
     animation: forwards 2s popbigAndSmall;
 }
-@keyframes coinPulse {
-    25%{transform:scale(1.1)}
-    75%{transform: scale(.8);}
-}
-#coin{
-    width:1px;
-    height: 1px;
-    margin:auto auto;
-    border-radius: 50%;
-    background-color: goldenrod;
-    box-shadow: 0 0 1vh 2vh rgba(218, 165, 32, 1);
-    position:relative;
-    animation: alternate infinite 4s coinPulse;
-}
 $glowDensity:.25;
 
 [data-glow="redGlow"]{

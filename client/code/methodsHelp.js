@@ -1242,10 +1242,16 @@ function am_I_winner(){
     )
 }
 function end_GAME_check(){
-    if(OP_SCORE>4){
-        $('body').empty().text('You LOST')
-    }else if(MY_SCORE>4){
-        $('body').empty().text('You WON')
+    if( OP_SCORE > 4 || MY_SCORE > 4 ){
+        $(`.cardsContainer`)
+            .removeClass(`hinge-in-from-left hinge-in-from-right mui-enter mui-enter-active`)
+            .addClass(`hinge-out-from-left hinge-out-from-right mui-leave mui-leave-active`)
+            .remove()
+        $('#gameScreen').append(wellPlayed())
+        setTimeout(()=>$("#WP")
+            .removeClass('hinge-out-from-top mui-leave mui-leave-active')
+            .addClass("hinge-in-from-top mui-enter mui-enter-active")
+        ,700)
     }
 }
 function animateWeapon($target, weapon){

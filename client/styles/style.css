@@ -3417,3 +3417,29 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
 .wp_hihg {
   background-color: rgba(245, 245, 245, 0.062);
 }
+
+@keyframes coinPulse {
+  25% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(0.8);
+  }
+}
+
+#coin {
+  width: 1px;
+  height: 1px;
+  margin: auto auto;
+  border-radius: 50%;
+  background-color: goldenrod;
+  box-shadow: 0 0 1vh 2vh goldenrod;
+  position: relative;
+  animation: alternate infinite 4s coinPulse;
+  font-family: "Shojumaru", cursive;
+  color: #1766ac;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 0 0 1vh #1b0000;
+}

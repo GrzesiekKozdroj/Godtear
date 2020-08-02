@@ -36,17 +36,22 @@ socket.on('betaTime',
 )
 
 socket.on('deployment-select',p=>{
-    $('.selected-enemy-model').removeClass('selected-enemy-model')
-    $(`.${opoSide}.miniGameCard`).find(`[data-tenModel=${p}]`).addClass('selected-enemy-model')
+    $('.selected-model').removeClass('selected-model')
+    $(`.${opoSide}.miniGameCard`).find(`[data-tenModel=${p}]`).addClass('selected-model')
 })
 
 socket.on('d-o-h',p=>{
-    myTurn = p.turnChange ? false : true
-    let that = $(`.hex_${p.hex}_in_row_${p.row}`)
-    deployTrayToBoard('selected-enemy-model',that,false)
-
+    const { hex, row } = p
+    const dad = $(`.hex_${hex}_in_row_${row}`)
+    deployTrayToBoard('selected-model',dad,false)
     if( !$('.list.tray').find('.teamBox').children('.smallCard').length && myTurn) socket.emit('beginBattle')
     else if(myTurn) displayAnimatedNews({templateType:'info',msg0:'Your turn'})
+    const deter = myTurn ? {side:mySide, dep:myDeployment} : {side:opoSide, dep:opoDeployment}
+    const counter = !$(`.teamBox.${deter.side}.${deter.dep}`).children('.smallCard').length
+    console.log(counter)
+    let turnChange =  counter && myTurn ? false : true
+    myTurn = turnChange
+    if( !turnChange ) $(`.teamBox.${mySide}.${myDeployment}`).removeClass(myDeployment)
 })
 
 socket.on('horn',p=>{

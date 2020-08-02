@@ -97,7 +97,7 @@ io.sockets.on('connection', (socket) => {
             loopRoom({socket:socket,pack:p,stringEmit:'deployment-select',callback:o=>o,twoWay:false})
         })
     socket.on('quick_game',p=>loopRoom({socket:socket,pack:p,stringEmit:'qg',callback:o=>o,twoWay:true}))
-    socket.on('deploy-on-hex',p=>loopRoom({socket:socket,pack:p,stringEmit:'d-o-h',callback:o=>o,twoWay:false}) )
+    socket.on('deploy-on-hex',p=>loopRoom({socket:socket,pack:p,stringEmit:'d-o-h',callback:o=>o,twoWay:true}) )
     socket.on('beginBattle',()=>loopRoom({socket:socket,pack:'white',stringEmit:'horn',callback:o=>o,twoWay:true}))
     socket.on('selectedModel',p=>loopRoom({socket:socket,pack:p,stringEmit:'sM',callback:o=>o,twoWay:false}))
     socket.on('modelMoving',p=>loopRoom({socket:socket,pack:p,stringEmit:'mM',callback:o=>o,twoWay:false}))

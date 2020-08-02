@@ -61,17 +61,18 @@ const buildScenarioLayout = ({redHexes, greenHexes, objectiveHexes}) => {
 }
 function deployEvent (model){
     if(myTurn){
-        socket.emit('deployment-select',model.data('tenmodel') )
         $('.selected-model').removeClass('selected-model')
         model.addClass('selected-model')
+        socket.emit('deployment-select', model.data('tenmodel') )
     }
 }
 const __canIBePlacedOnHex = (thiz, modelClass) => 
     !thiz.children(`.smallCard`).length || 
     ( 
       $(`.${modelClass}`).data('name') === thiz.children(`.smallCard`).first().data('name') && 
-      thiz.children(`.smallCard`).length < 3
+      thiz.children(`.unitModel`).length < 3 && !thiz.children('[data-tenmodel]').hasClass('largeUnitModel')
     ) ? true : false
+
 function deployTrayToBoard(modelClass, thiz, deployment){
     let classType = $('.'+modelClass).data('type')
     let stepsgiven = $('.'+modelClass).data('stepsgiven')
@@ -89,7 +90,6 @@ function deployTrayToBoard(modelClass, thiz, deployment){
                     ${className===30?'unitModel':className===24?'unitModel largeUnitModel':'champModel'}`)
             .detach()
             .appendTo( thiz )
-
 }
 
 

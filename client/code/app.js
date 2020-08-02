@@ -207,15 +207,12 @@ function deeploy (group,side){
         })
         $('#gameScreen').on('click',`.smallCard.${mySide} `,function(e){
             e.preventDefault()
-            if(phase==='deployment' && $(this).parents().hasClass('teamBox'))deployEvent($(this))
+            if(phase==='deployment' && $(this).parents('.teamBox').hasClass(myDeployment) )deployEvent($(this))
         })
         $('#gameScreen').on('click',`.${myDeployment}.hexagon`,function(e){
             e.preventDefault()
-            deployTrayToBoard('selected-model',$(this),true)
-            let turnChange = !$(`.teamBox.${mySide}.${myDeployment}`).children('.smallCard').length ? false : true
-            myTurn = turnChange
-            if( !turnChange ) $(`.teamBox.${mySide}.${myDeployment}`).removeClass(myDeployment)
-            socket.emit('deploy-on-hex',{row:$(this).data('row'),hex:$(this).data('hex'),turnChange:turnChange})
+            const { hex, row } = $(this).data()
+            socket.emit('deploy-on-hex',{row, hex})
         })
     }
 

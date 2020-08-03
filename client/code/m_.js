@@ -2128,6 +2128,7 @@ var m_ = {
     phaseEnd:function(o){
         const { next, name, side } = o.key//o.phase
         let strajng = ''
+        const dieRoll = o.aim
         const selectedModels = $(`[data-name="${name}"][data-side="${side}"]`)
         selectedModels.each(function(){
             $(this).attr('data-actionstaken',2).addClass('activated')
@@ -2135,14 +2136,22 @@ var m_ = {
         $(`[data-glow]`).removeAttr('data-glow')
         current_ability_method = null
         strajng+=` activated`
-        if(phase==='white'&&$('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length){
-            socket.emit('turnEnd',{current:'white', next:'black'})
+        if(
+            phase==='white' && 
+            myTurn ? 
+                $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length :
+                $('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length
+        ){
+            turnTransition_ (dieRoll)//socket.emit('turnEnd',{current:'white', next:'black'})
             strajng+=" turn end"
-        }else if(phase==='black' && side===mySide){
-            socket.emit('turnEnd',{current:'black', next:'black'})
+        }else if(phase==='black' /*&& side===mySide*/){
+            turnTransition_ (dieRoll)//socket.emit('turnEnd',{current:'black', next:'black'})
             strajng+=" turn end"
         }
         displayAnimatedNews({templateType:'info', $attacker:$(selectedModels[0]), msg1:strajng})
+        meagREsetter()
+        // myTurn = phase === "black" ? 
+        //     myTurn ? false : true : myTurn
     },
     dwhnt:function(o){
         const { key } = o

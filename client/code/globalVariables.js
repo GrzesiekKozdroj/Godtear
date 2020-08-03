@@ -8,6 +8,7 @@ var mySide;
 var myTurn;
 var myDeployment;
 var opoDeployment;
+var TMER = true;
 var phase = 'white';
 var myNextPhase = "white";
 var glow;

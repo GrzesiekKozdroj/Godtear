@@ -104,7 +104,8 @@ function slayerPoints(target){
 }
 const onHit = (aim, target, weapon, skillName) => { console.log('aim roll: ', ...aim)
     const target_dodge = Number(target.attr('data-dodge')) + checkIfNotMorrigan(target,'bdodge')
-    const aim_total = aim.reduce((a,b)=>a+b,0) - (fearsome() || superiority(target) ? aim[0] : 0)
+    aim.splice(0,fearsome() + superiority(target))
+    const aim_total = aim.reduce((a,b)=>a+b,0)
     setBoons_Blights($('.selectedModel'),{baim:0})
     setBoons_Blights(target,{bdodge:0})
     animateWeapon(target, weapon)
@@ -123,9 +124,10 @@ const onHit = (aim, target, weapon, skillName) => { console.log('aim roll: ', ..
     })
     return product
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
-const doDamage = (hurt, target) => {
+const doDamage = (hurt, target) => {console.log(...hurt)
     const target_protection = Number(target.attr('data-protection')) + checkIfNotMorrigan(target,'bprotection')
-    const hurt_total = hurt.reduce((a,b)=>a+b,0) - ( superiority(target) ? hurt[0] : 0 )
+    hurt.splice(0,superiority(target))
+    const hurt_total = hurt.reduce((a,b)=>a+b,0)
     const product = hurt_total > target_protection
     const hurtTotal = target_protection - hurt_total
     displayAnimatedNews({
@@ -135,16 +137,16 @@ const doDamage = (hurt, target) => {
         hurtTotal,
         $victim:target
     })
+            console.log(target.attr('data-healthleft'), hurtTotal)
     setBoons_Blights($('.selectedModel'),{bdamage:0})
     setBoons_Blights(target,{bprotection:0})
     animateDamage(target, (target_protection - hurt_total))
     counterMaker(target,'tankyness',product?target_protection:hurt_total)
         if( product ){
-            let target_health = target.attr('data-healthleft')
-            let pain = target_health - hurtTotal
-            let painAbs = Math.abs(pain)
-            counterMaker(target, 'woundsSuffered', painAbs)
-            counterMaker($('.selectedModel'), 'dmgCaused', painAbs)
+            let target_health = Number(target.attr('data-healthleft'))
+            let pain = target_health + hurtTotal
+            counterMaker(target, 'woundsSuffered', pain)
+            counterMaker($('.selectedModel'), 'dmgCaused', pain)
             target.attr( 'data-healthleft', pain )
             $(`.miniGameCard.${target.data('side')}[data-name="${target.data('name')}"]`)
                 .find('.smallCard.health')
@@ -182,6 +184,7 @@ const checkIfStillAlive = (target) => {
     }
 }
 const forceKill = (target) => {//$()
+    console.log(target)
     target.addClass('death')
     target.attr('data-baim',0)
     target.attr('data-bdamage',0)
@@ -1097,7 +1100,7 @@ function kerSplash_(o){
     current_ability_method=null
     un_glow()
 }
-function rubble(target){
+function rubble(target){console.log('rubble')
     if( target.data('name') === 'Landslide' ){
         displayAnimatedNews({templateType:'info', $attacker:target, msg1: ' becomes ', skillName:'Rubble', skillIcon:'self'})
         const { hex, row } = target.parent('.hexagon').data()
@@ -1425,4 +1428,54 @@ function pixkedAtMarker(model,mode,victim){
     } catch { 
         console.log('error @ pixkedAtMarker', model, mode, victim) 
     }
+}
+
+function turnTransition_ (dieRoll){
+    myTurn = myTurn ? false : true
+    $('.activatingShow').removeClass('activatingShow').addClass('nonActivShow')
+    $('.nonActivShow').removeClass('nonActivShow').addClass('activatingShow')
+    //p1 && p2 starts black
+    if(phase==='white'&&myNextPhase==='black'){console.log('TT_I')//into black phase
+        phase='black'
+        $('.plotPhase').removeClass('plotPhase').addClass('clashPhase')
+        turn_resetter(opoSkillTrack,'black','blackTeam')
+        turn_resetter(mySkillTrack,'black','whiteTeam')
+        animateCart(opoSide, $($(".blackTeam[data-tenmodel]")[0]))
+        animateCart(mySide, $($(".whiteTeam[data-tenmodel")[0]))
+    }
+    if(phase==='white'&&myNextPhase==='white'){console.log('TT_II')//one white phase ends another begins
+        turn_resetter(opoSkillTrack,'white','blackTeam')
+        turn_resetter(mySkillTrack,'white','whiteTeam')
+        myNextPhase='black'
+       // myTurn = myTurn ? false : true
+    }
+    if( 
+        phase==='black' && 
+        $('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length && 
+        $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length
+    ){
+        myTurn = false
+        phase='end' 
+        let myBanners = removeAllBanners('whiteTeam')
+        let opBanners = removeAllBanners('blackTeam')
+        moveLadder($($('[data-tenmodel].whiteTeam')[0]), myBanners - opBanners)
+        $('.clashPhase').removeClass('clashPhase').addClass('endPhase')
+        myNextPhase = 'white'
+        GAME_SCENARIO.dieRoll = dieRoll
+        const skor = calc_score()
+        //see if i won:
+        if ( am_I_winner() ){
+            MY_SCORE += skor
+        } else {
+            OP_SCORE += skor
+        }
+        end_GAME_check()
+        GAME_TURN++
+        displayAnimatedNews(  { templateType:'info',msg0:GAME_SCENARIO.turnEndMessage(dieRoll) }  )
+        if( GAME_SCENARIO.instaCall )
+            GAME_SCENARIO.ruleset(0,0)
+    }
+    if( myTurn )
+    displayAnimatedNews({templateType:'info',msg0:'Your turn'})
+    //need to add deifer and ultra resetter here
 }

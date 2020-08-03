@@ -151,7 +151,7 @@
     box-shadow: 0 0 1vh 1vh rgba(243, 243, 243, 0.568), 0 0 1vh 1vh inset rgba(243, 243, 243, 0.568);
   }
   100% {
-    box-shadow: 0 0 1vh 1vh rgba(238, 250, 231, 0.541), 0 0 1vh 1vh inset rgba(238, 250, 231, 0.541);
+    box-shadow: 0 0 1vh 1vh rgba(255, 255, 255, 0.541), 0 0 1vh 1vh inset rgba(255, 255, 255, 0.541);
   }
 }
 
@@ -436,252 +436,252 @@
 }
 
 .particle:nth-of-type(1) {
-  animation-delay: 0.2444s;
+  animation-delay: 0.57378s;
   left: calc((100% - 5em) * 0);
 }
 
 .particle:nth-of-type(2) {
-  animation-delay: 0.21381s;
+  animation-delay: 0.41936s;
   left: calc((100% - 5em) * 0.02);
 }
 
 .particle:nth-of-type(3) {
-  animation-delay: 0.49676s;
+  animation-delay: 0.69423s;
   left: calc((100% - 5em) * 0.04);
 }
 
 .particle:nth-of-type(4) {
-  animation-delay: 0.34213s;
+  animation-delay: 0.13809s;
   left: calc((100% - 5em) * 0.06);
 }
 
 .particle:nth-of-type(5) {
-  animation-delay: 0.19997s;
+  animation-delay: 0.67145s;
   left: calc((100% - 5em) * 0.08);
 }
 
 .particle:nth-of-type(6) {
-  animation-delay: 0.7601s;
+  animation-delay: 0.95544s;
   left: calc((100% - 5em) * 0.1);
 }
 
 .particle:nth-of-type(7) {
-  animation-delay: 0.03737s;
+  animation-delay: 0.8948s;
   left: calc((100% - 5em) * 0.12);
 }
 
 .particle:nth-of-type(8) {
-  animation-delay: 0.35438s;
+  animation-delay: 0.64607s;
   left: calc((100% - 5em) * 0.14);
 }
 
 .particle:nth-of-type(9) {
-  animation-delay: 0.0631s;
+  animation-delay: 0.00021s;
   left: calc((100% - 5em) * 0.16);
 }
 
 .particle:nth-of-type(10) {
-  animation-delay: 0.81836s;
+  animation-delay: 0.87s;
   left: calc((100% - 5em) * 0.18);
 }
 
 .particle:nth-of-type(11) {
-  animation-delay: 0.82634s;
+  animation-delay: 0.71658s;
   left: calc((100% - 5em) * 0.2);
 }
 
 .particle:nth-of-type(12) {
-  animation-delay: 0.51789s;
+  animation-delay: 0.11998s;
   left: calc((100% - 5em) * 0.22);
 }
 
 .particle:nth-of-type(13) {
-  animation-delay: 0.27488s;
+  animation-delay: 0.63425s;
   left: calc((100% - 5em) * 0.24);
 }
 
 .particle:nth-of-type(14) {
-  animation-delay: 0.03019s;
+  animation-delay: 0.24922s;
   left: calc((100% - 5em) * 0.26);
 }
 
 .particle:nth-of-type(15) {
-  animation-delay: 0.37257s;
+  animation-delay: 0.90703s;
   left: calc((100% - 5em) * 0.28);
 }
 
 .particle:nth-of-type(16) {
-  animation-delay: 0.82501s;
+  animation-delay: 0.00646s;
   left: calc((100% - 5em) * 0.3);
 }
 
 .particle:nth-of-type(17) {
-  animation-delay: 0.53375s;
+  animation-delay: 0.19002s;
   left: calc((100% - 5em) * 0.32);
 }
 
 .particle:nth-of-type(18) {
-  animation-delay: 0.82887s;
+  animation-delay: 0.70249s;
   left: calc((100% - 5em) * 0.34);
 }
 
 .particle:nth-of-type(19) {
-  animation-delay: 0.35703s;
+  animation-delay: 0.07765s;
   left: calc((100% - 5em) * 0.36);
 }
 
 .particle:nth-of-type(20) {
-  animation-delay: 0.95145s;
+  animation-delay: 0.85664s;
   left: calc((100% - 5em) * 0.38);
 }
 
 .particle:nth-of-type(21) {
-  animation-delay: 0.71422s;
+  animation-delay: 0.94469s;
   left: calc((100% - 5em) * 0.4);
 }
 
 .particle:nth-of-type(22) {
-  animation-delay: 0.80411s;
+  animation-delay: 0.36638s;
   left: calc((100% - 5em) * 0.42);
 }
 
 .particle:nth-of-type(23) {
-  animation-delay: 0.16232s;
+  animation-delay: 0.91674s;
   left: calc((100% - 5em) * 0.44);
 }
 
 .particle:nth-of-type(24) {
-  animation-delay: 0.66113s;
+  animation-delay: 0.80181s;
   left: calc((100% - 5em) * 0.46);
 }
 
 .particle:nth-of-type(25) {
-  animation-delay: 0.30282s;
+  animation-delay: 0.43982s;
   left: calc((100% - 5em) * 0.48);
 }
 
 .particle:nth-of-type(26) {
-  animation-delay: 0.83323s;
+  animation-delay: 0.35164s;
   left: calc((100% - 5em) * 0.5);
 }
 
 .particle:nth-of-type(27) {
-  animation-delay: 0.58751s;
+  animation-delay: 0.64365s;
   left: calc((100% - 5em) * 0.52);
 }
 
 .particle:nth-of-type(28) {
-  animation-delay: 0.12703s;
+  animation-delay: 0.37017s;
   left: calc((100% - 5em) * 0.54);
 }
 
 .particle:nth-of-type(29) {
-  animation-delay: 0.32809s;
+  animation-delay: 0.35642s;
   left: calc((100% - 5em) * 0.56);
 }
 
 .particle:nth-of-type(30) {
-  animation-delay: 0.29396s;
+  animation-delay: 0.12211s;
   left: calc((100% - 5em) * 0.58);
 }
 
 .particle:nth-of-type(31) {
-  animation-delay: 0.45187s;
+  animation-delay: 0.7463s;
   left: calc((100% - 5em) * 0.6);
 }
 
 .particle:nth-of-type(32) {
-  animation-delay: 0.70624s;
+  animation-delay: 0.22271s;
   left: calc((100% - 5em) * 0.62);
 }
 
 .particle:nth-of-type(33) {
-  animation-delay: 0.38384s;
+  animation-delay: 0.07708s;
   left: calc((100% - 5em) * 0.64);
 }
 
 .particle:nth-of-type(34) {
-  animation-delay: 0.01071s;
+  animation-delay: 0.1432s;
   left: calc((100% - 5em) * 0.66);
 }
 
 .particle:nth-of-type(35) {
-  animation-delay: 0.48633s;
+  animation-delay: 0.25655s;
   left: calc((100% - 5em) * 0.68);
 }
 
 .particle:nth-of-type(36) {
-  animation-delay: 0.25393s;
+  animation-delay: 0.5679s;
   left: calc((100% - 5em) * 0.7);
 }
 
 .particle:nth-of-type(37) {
-  animation-delay: 0.20736s;
+  animation-delay: 0.36511s;
   left: calc((100% - 5em) * 0.72);
 }
 
 .particle:nth-of-type(38) {
-  animation-delay: 0.16258s;
+  animation-delay: 0.4514s;
   left: calc((100% - 5em) * 0.74);
 }
 
 .particle:nth-of-type(39) {
-  animation-delay: 0.88919s;
+  animation-delay: 0.60757s;
   left: calc((100% - 5em) * 0.76);
 }
 
 .particle:nth-of-type(40) {
-  animation-delay: 0.62124s;
+  animation-delay: 0.56651s;
   left: calc((100% - 5em) * 0.78);
 }
 
 .particle:nth-of-type(41) {
-  animation-delay: 0.50269s;
+  animation-delay: 0.03525s;
   left: calc((100% - 5em) * 0.8);
 }
 
 .particle:nth-of-type(42) {
-  animation-delay: 0.71597s;
+  animation-delay: 0.67755s;
   left: calc((100% - 5em) * 0.82);
 }
 
 .particle:nth-of-type(43) {
-  animation-delay: 0.04207s;
+  animation-delay: 0.52311s;
   left: calc((100% - 5em) * 0.84);
 }
 
 .particle:nth-of-type(44) {
-  animation-delay: 0.17865s;
+  animation-delay: 0.38981s;
   left: calc((100% - 5em) * 0.86);
 }
 
 .particle:nth-of-type(45) {
-  animation-delay: 0.01905s;
+  animation-delay: 0.19391s;
   left: calc((100% - 5em) * 0.88);
 }
 
 .particle:nth-of-type(46) {
-  animation-delay: 0.46847s;
+  animation-delay: 0.23397s;
   left: calc((100% - 5em) * 0.9);
 }
 
 .particle:nth-of-type(47) {
-  animation-delay: 0.07986s;
+  animation-delay: 0.246s;
   left: calc((100% - 5em) * 0.92);
 }
 
 .particle:nth-of-type(48) {
-  animation-delay: 0.31136s;
+  animation-delay: 0.48191s;
   left: calc((100% - 5em) * 0.94);
 }
 
 .particle:nth-of-type(49) {
-  animation-delay: 0.44678s;
+  animation-delay: 0.41509s;
   left: calc((100% - 5em) * 0.96);
 }
 
 .particle:nth-of-type(50) {
-  animation-delay: 0.62215s;
+  animation-delay: 0.34975s;
   left: calc((100% - 5em) * 0.98);
 }
 

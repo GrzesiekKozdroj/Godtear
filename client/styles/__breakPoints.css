@@ -749,6 +749,9 @@
   .shelf .hexagon .hexagrama-30 .bottom:after {
     background-position: center bottom;
   }
+  .shelf .hexagon .unitModel {
+    margin: auto -65% !important;
+  }
 }
 
 @media (max-aspect-ratio: 1000 / 721) and (min-aspect-ratio: 1000 / 780) {
@@ -1699,6 +1702,14 @@
 
 .shelf .hexagon.endPhase {
   border-color: transparent rgba(134, 191, 196, 0.637) transparent rgba(149, 203, 207, 0.829);
+}
+
+.shelf .hexagon.endPhase:hover {
+  background-image: url("../img/1Obj.svg");
+}
+
+.shelf .hexagon.endPhase:hover .top, .shelf .hexagon.endPhase:hover .bottom {
+  background-image: url("../img/1Obj.svg");
 }
 
 .shelf .hexagon.endPhase .top {

@@ -3,9 +3,9 @@ let zIndex = 1;
 
 $((e) => {
     $('body').append(`<img id="map_place" src="../img/place${Math.floor(Math.random()*8)}.jpg" />`)
-    $('#gameScreen').empty().append(firstStitch());
+    //$('#gameScreen').empty().append(firstStitch());
 
-    //socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
+    socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
 
     $('.selection_section').each(
         function(){
@@ -294,8 +294,10 @@ for(let K in m){
 $('body').on('click','[data-glow]', function (){
     const thiz_target = $(this).data()
     const thiz_origin = $('.selectedModel')
-    if(current_ability_method && myTurn)
+    if(current_ability_method && myTurn && TMER)
+        TMER = false
         current_ability_method(thiz_origin, thiz_target)
+        setTimeout(()=>TMER = true, 800)
 })
 $('body').on('click','.brutalMaster.damage',function(e){
     e.preventDefault()
@@ -792,9 +794,9 @@ $('body').on('click','.deathMove',function(e){
 $(`body`).on('click',`.endTask`,function(e){
     e.preventDefault()
     e.stopPropagation()
-    if( $(this).hasClass(`${mySide}`) && myTurn ){
+    if( $(this).hasClass(`${mySide}`) && myTurn && !$(this).hasClass('activated')){
         const { name } = $($(this).parents(`[data-klass][data-name][data-type]`)[0]).data()
-        socket.emit('rolloSkill',{    socksMethod:'phaseEnd',key: { phase, next: myNextPhase, name, side:mySide }   })
+        socket.emit('rolloSkill',{    socksMethod:'phaseEnd',aim: 4, key: { phase,  next: myNextPhase, name, side:mySide }   })
     }
 })
 

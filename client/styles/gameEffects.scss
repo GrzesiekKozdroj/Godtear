@@ -90,7 +90,7 @@
     @include makeGlow('goldenrod', rgba(218, 165, 32, 0.555), rgba(218, 165, 32, 0.568), rgba(218, 165, 32, 0.568), rgba(218, 165, 32, 0.562))
 }
 .claimColor{
-    @include makeGlow('white', rgba(245, 245, 245, 0.589), rgba(194, 197, 194, 0.541), rgba(243, 243, 243, 0.568), rgba(238, 250, 231, 0.541))
+    @include makeGlow('white', rgba(245, 245, 245, 0.589), rgba(194, 197, 194, 0.541), rgba(243, 243, 243, 0.568), rgba(255, 255, 255, 0.541))
 }
 
 @keyframes popbigAndSmall{

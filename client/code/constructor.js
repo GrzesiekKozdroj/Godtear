@@ -146,7 +146,7 @@ const scenarios = [
         },
         instaCall:false,
         dieRoll:0,
-        turnEndMessage:(r)=>`LIFE<br/>looser places<br/>${r[0]+2} objectives`,
+        turnEndMessage:(r)=>`LIFE<br/>looser places ${r[0]+2} objectives`,
         warbandTokens:{ left: 1, right: 22 },
         ruleset:function({ hex, row }){
             const roll = GAME_SCENARIO.dieRoll[0] + 2
@@ -190,7 +190,7 @@ const scenarios = [
         },
         instaCall:false,
         dieRoll:0,
-        turnEndMessage:(r)=>`DEATH<br/>looser removes<br/>2 objectives`,
+        turnEndMessage:(r)=>`DEATH<br/>looser removes 2 objectives`,
         warbandTokens:{ left: 1, right: 22 },
         ruleset:function({ hex, row}){
             if( typeof GAME_SCENARIO.dieRoll === "object" ){
@@ -220,7 +220,7 @@ const scenarios = [
         },
         instaCall:true,
         dieRoll:0,
-        turnEndMessage:(r)=>`CHANGE<br/>looser moves<br/>${typeof r === 'number' ? r : r.reduce((a,c)=>a+c)} objectives`,
+        turnEndMessage:(r)=>`CHANGE<br/>looser moves ${typeof r === 'number' ? r : r.reduce((a,c)=>a+c)} objectives`,
         warbandTokens:{ left: 2, right: 21 },
         ruleset:function({ hex, row }){
             GAME_SCENARIO.dieRoll = typeof GAME_SCENARIO.dieRoll !== 'number' ? 
@@ -285,7 +285,7 @@ const scenarios = [
         },
         instaCall:true,
         dieRoll:0,
-        turnEndMessage:(r)=>`KNOWLEDGE<br/>wealth<br/>is burden`,
+        turnEndMessage:(r)=>`KNOWLEDGE<br/>wealth is burden`,
         warbandTokens:{ left: 3, right: 20 },
         ruleset:function({ hex, row }){
             turn_resetter(opoSkillTrack,'black','blackTeam')
@@ -347,7 +347,7 @@ const scenarios = [
         warbandTokens:{ left: 4, right: 19 },
         instaCall:false,
         dieRoll:0,
-        turnEndMessage:(r)=>`QUEST<br/>looser place<br/>1 objective<br/> on empty hex`,
+        turnEndMessage:(r)=>`QUEST<br/>looser place 1 objective on empty hex`,
         ruleset:function({ hex, row }){
             if( $(`.hex_${hex}_in_row_${row}`). children().length < 3 && GAME_SCENARIO.dieRoll ){
                 GAME_SCENARIO.dieRoll = 0
@@ -378,6 +378,7 @@ const scenarios = [
         warbandTokens:{ left: 4, right: 19 },
         instaCall:false,
         dieRoll:0,
+        turnEndMessage:(r)=>`CHAOS<br/>looser place 1 objective on empty hex`,
         ruleset:function({ hex, row }){
             if( $(`.hex_${hex}_in_row_${row}`). children().length < 3 && GAME_SCENARIO.dieRoll){
                 GAME_SCENARIO.dieRoll = 0

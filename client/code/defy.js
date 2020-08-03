@@ -115,7 +115,7 @@ var defy = {
     deathblow:()=>uniCancel(),
     aim:()=>uniCancel(),
     fire:()=>uniCancel(),
-    shootAndScoot:()=>{console.log('defied sC')
+    shootAndScoot:()=>{
         $('.shootAndScoot_selected').removeClass('shootAndScoot_selected')
         uniCancel()
     },
@@ -423,4 +423,81 @@ function multiMovement_procedure(c,c_s,strng){
 function rsDefy(){
     multiMovement_procedure( 'summonsWalk', 'summonsWalk_selected', 'Royal Summons ended')
     $('.soCoolMistressPanel').remove()
+}
+function meagREsetter(){
+    $(".smallCard").removeClass(`
+        skilling_declaration
+        forwardMinions
+        forwardMinions_selected
+        wheresMaster_selected
+        marchGuardWhite
+        marchGuardWhite_selected
+        marchGuardBlack
+        marchGuardBlack_selected
+        hop
+        twoPunch_selected
+        tongueTow_selected
+        tongueLash_selected
+        marchRhodriBlack_selected
+        shieldBash_selected
+        deathWind_selected
+        shadowWard_selected
+        shadowStepWhite
+        shadowStepWhite_selected
+        shadowStepBlack
+        shadowStepBlack_selected
+        shadowWard_selected
+        phantomBanners_selected
+        frostyGlance_selected
+        forwardMinionsMorrigan
+        forwardMinionsMorrigan_selected
+        shootAndScoot_selected
+        tongueTow_selected
+        annoyed_selected
+        pounced
+        sprint_selected
+        destined_for_DOOM
+        rush
+        rush_selected
+        brokenJaw_selected
+        whiplash_selected
+        beastlyCharge_selected
+        annoyed_selected
+        titusChallenge
+        roarOfBattle_selected
+        outflank
+        outflank_selected
+        rapidDeployment_selected
+        titusChallenge
+        illKillYouAll
+        illKillYouAll_selected
+        pathof_selected
+        destined_for_DOOM
+        roll_selected
+        avalanche_moveable
+        avalanche_selected
+        tide_selected
+        tsunami-moveable
+        tsunami-selected
+        marchNia_selected
+        headbutt_selected
+        earthquake_moveable
+        earthquake_selected
+        deathMove
+        deathMove_selected
+    `)
+    $('#multi_choice_info_panel').remove()
+    const rem = [
+        'soCoolMistressPanel',
+        'deadlyCursePanel',
+        'titusChallenge',
+        'niaChallenge',
+        'showLikeWaterC',
+        'marchjet_selected',
+        'niaChallengeCrest'
+    ]
+    for(let ii = 0; ii < rem.length; ii++){
+        $("."+rem[ii]).remove()
+    }//.forEach(function(el){$('.'+el).remove()})
+    $('[data-DOOMqueue]').removeAttr('data-DOOMqueue')
 }

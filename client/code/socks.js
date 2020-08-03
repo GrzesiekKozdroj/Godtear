@@ -37,7 +37,12 @@ socket.on('betaTime',
 
 socket.on('deployment-select',p=>{
     $('.selected-model').removeClass('selected-model')
-    $(`.${opoSide}.miniGameCard`).find(`[data-tenModel=${p}]`).addClass('selected-model')
+    $('.teamBox.'+opoDeployment).removeClass(opoDeployment)
+    $(`.${opoSide}.miniGameCard`)
+        .find(`[data-tenModel=${p}]`)
+        .addClass('selected-model')
+            .parent('.teamBox')
+            .addClass(opoDeployment)
 })
 
 socket.on('d-o-h',p=>{
@@ -47,11 +52,12 @@ socket.on('d-o-h',p=>{
     if( !$('.list.tray').find('.teamBox').children('.smallCard').length && myTurn) socket.emit('beginBattle')
     else if(myTurn) displayAnimatedNews({templateType:'info',msg0:'Your turn'})
     const deter = myTurn ? {side:mySide, dep:myDeployment} : {side:opoSide, dep:opoDeployment}
-    const counter = !$(`.teamBox.${deter.side}.${deter.dep}`).children('.smallCard').length
-    console.log(counter)
-    let turnChange =  counter && myTurn ? false : true
-    myTurn = turnChange
-    if( !turnChange ) $(`.teamBox.${mySide}.${myDeployment}`).removeClass(myDeployment)
+    const counter = $(`.teamBox.${deter.side}.${deter.dep}`).children('.smallCard').length
+    let turnChange =  !counter ? false : true
+    myTurn = counter && myTurn ? 
+        true : !counter ? 
+            myTurn ? false : true : myTurn
+    if( !counter ) $(`.teamBox.${deter.side}.${deter.dep}`).removeClass(deter.dep)
 })
 
 socket.on('horn',p=>{
@@ -82,7 +88,7 @@ socket.on('HH',p=>{
     highlightHexes({colour:p.color,dist:p.dist}, specimen)
     if( m )__m[m]()
 })
-socket.on('sC',p=>{console.log('banner falle after emit')
+socket.on('sC',p=>{
     m.universal.claim( $(`.hex_${p.hex}_in_row_${p.row}.hexagon`), 'blackTeam',p.key )
 })
 socket.on('markedMan',p=>{
@@ -104,56 +110,8 @@ socket.on('fM',p=>{
         children
     makeAnim( $(child), $(`.hex_${h}_in_row_${r}`), _m_[callback] )
 })
-socket.on('tt',p=>{//key: { phase, next: myNextPhase, name, side:mySide }
-    console.log('inside TT')//each time one of belows happens up to TT_II, and while in black phase
-    const { current, next, dieRoll } = p
-    myTurn = myTurn ? false : true
-    $('.activatingShow').removeClass('activatingShow').addClass('nonActivShow')
-    $('.nonActivShow').removeClass('nonActivShow').addClass('activatingShow')
-    //p1 && p2 starts black
-    if(phase==='white'&&myNextPhase==='black'){console.log('TT_I')//into black phase
-        phase='black'
-        $('.plotPhase').removeClass('plotPhase').addClass('clashPhase')
-        turn_resetter(opoSkillTrack,'black','blackTeam')
-        turn_resetter(mySkillTrack,'black','whiteTeam')
-        animateCart(opoSide, $($(".blackTeam[data-tenmodel]")[0]))
-        animateCart(mySide, $($(".whiteTeam[data-tenmodel")[0]))
-    }
-    if(phase==='white'&&myNextPhase==='white'){console.log('TT_II')//one white phase ends another begins
-        turn_resetter(opoSkillTrack,'white','blackTeam')
-        turn_resetter(mySkillTrack,'white','whiteTeam')
-        myNextPhase='black'
-    }
-    if( 
-        phase==='black' && 
-        $('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length && 
-        $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length
-    ){
-        myTurn = false
-        phase='end' 
-        let myBanners = removeAllBanners('whiteTeam')
-        let opBanners = removeAllBanners('blackTeam')
-        moveLadder($($('[data-tenmodel].whiteTeam')[0]), myBanners - opBanners)
-        $('.clashPhase').removeClass('clashPhase').addClass('endPhase')
-        myNextPhase = 'white'
-        GAME_SCENARIO.dieRoll = dieRoll
-        const skor = calc_score()
-        //see if i won:
-        if ( am_I_winner() ){
-            MY_SCORE += skor
-        } else {
-            OP_SCORE += skor
-        }
-        end_GAME_check()
-        GAME_TURN++
-        displayAnimatedNews(  { templateType:'info',msg0:GAME_SCENARIO.turnEndMessage(dieRoll) }  )
-        if( GAME_SCENARIO.instaCall )
-            GAME_SCENARIO.ruleset(0,0)
-    }
-    if( myTurn )
-    displayAnimatedNews({templateType:'info',msg0:'Your turn'})
-    //need to add deifer and ultra resetter here
-})
+
+
 socket.on('camcel',p=>defy[p.m](p.c))
 socket.on('epp',(o)=>{
     GAME_SCENARIO.ruleset(o)

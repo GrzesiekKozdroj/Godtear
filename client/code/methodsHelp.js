@@ -1043,7 +1043,7 @@ function rockFormation(whereTo,callback){
         const saiid = baner.hasClass('whiteTeam') ? mySide : opoSide
         displayAnimatedNews({
             templateType:'info', 
-            $attacker:$($(`[data-tenmodel="Quartzlings".${saiid}`)[0]),
+            $attacker:$($(`[data-tenmodel="Quartzlings"].${saiid}`)[0]),
             msg1:' trigger ',
             skillName:'Rock Formation',
             skillIcon:'self'

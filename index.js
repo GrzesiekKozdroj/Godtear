@@ -26,7 +26,7 @@ io.sockets.on('connection', (socket) => {
 
 
     socket.on('namePlace', (data) => {//after that client chooses his team.
-        if (/^[0-9A-Za-z]+$/.test(data.nickName) && /^[0-9A-Za-z]+$/.test(data.place)) {
+        if ( nickName.length < 15 && place.length < 15 && /^[0-9A-Za-z]+$/.test(data.nickName) && /^[0-9A-Za-z]+$/.test(data.place)) {
             //quickame room generation module
                 if ( (data.place in LOBBY_LIST) && (data.nickName in LOBBY_LIST[data.place]) ){
                     socket.emit("duplicateGamerName");
@@ -66,10 +66,7 @@ io.sockets.on('connection', (socket) => {
                 SOCKET_LIST[playjer.id].emit('serverMSG',{message:message,nickName:socket.nickName});
             }
     });
-    socket.on('evalServer',(message)=>{
-        let res = eval(message);
-        socket.emit('serverEvalMSG',res);
-    });
+
     socket.on('chatMSG_seeWhosIn',()=>{
         if((socket.gamePlace in LOBBY_LIST) && Object.keys(LOBBY_LIST[socket.gamePlace]).length === 1){
             socket.emit('serverMSG',{message:'-WAITING-FOR-SECOND-PLAYER-',nickName:'Hoist'});

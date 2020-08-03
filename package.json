@@ -8,7 +8,7 @@
     "express": "^4.17.1",
     "helmet": "^3.21.0",
     "jquery-touch-events": "^1.0.7",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "motion-ui": "^2.0.3",
     "node": "^12.9.1",
     "socket.io": "^2.3.0",

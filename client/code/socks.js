@@ -53,7 +53,6 @@ socket.on('d-o-h',p=>{
     else if(myTurn) displayAnimatedNews({templateType:'info',msg0:'Your turn'})
     const deter = myTurn ? {side:mySide, dep:myDeployment} : {side:opoSide, dep:opoDeployment}
     const counter = $(`.teamBox.${deter.side}.${deter.dep}`).children('.smallCard').length
-    let turnChange =  !counter ? false : true
     myTurn = counter && myTurn ? 
         true : !counter ? 
             myTurn ? false : true : myTurn

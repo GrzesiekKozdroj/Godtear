@@ -3,9 +3,9 @@ let zIndex = 1;
 
 $((e) => {
     $('body').append(`<img id="map_place" src="../img/place${Math.floor(Math.random()*8)}.jpg" />`)
-    //$('#gameScreen').empty().append(firstStitch());
+    $('#gameScreen').empty().append(firstStitch());
 
-    socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
+    //socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
 
     $('.selection_section').each(
         function(){
@@ -71,12 +71,18 @@ $((e) => {
              roster.push($(el).data('name'))
         }
         e.preventDefault();
-        if( /^[0-9A-Za-z]+$/.test(nickName) && /^[0-9A-Za-z]+$/.test(gamePlaceName)   ){
+        if( 
+            /^[0-9A-Za-z]+$/.test(nickName) && 
+            /^[0-9A-Za-z]+$/.test(gamePlaceName) && 
+            nickName.length < 15 && gamePlaceName.length < 15  
+        ){
             socket.emit('namePlace',{nickName:nickName, place:gamePlaceName, roster:roster }  );
         } else if(nickName === '' ){
             $("#wronCharWarning").text("missing nick name");
         } else if(gamePlaceName === ''){
             $("#wronCharWarning").text("missing place name");
+        }else if ( nickName.length > 14 || gamePlaceName.length > 14 ){
+            $("#wronCharWarning").text("can't be longer than 14 characters");
         }else{
             $("#wronCharWarning").text("can't use special symbols");
         }
@@ -294,10 +300,11 @@ for(let K in m){
 $('body').on('click','[data-glow]', function (){
     const thiz_target = $(this).data()
     const thiz_origin = $('.selectedModel')
-    if(current_ability_method && myTurn && TMER)
+    if(typeof current_ability_method === "function" && myTurn && TMER){
         TMER = false
-        current_ability_method(thiz_origin, thiz_target)
         setTimeout(()=>TMER = true, 800)
+        current_ability_method(thiz_origin, thiz_target)
+    }
 })
 $('body').on('click','.brutalMaster.damage',function(e){
     e.preventDefault()
@@ -794,7 +801,9 @@ $('body').on('click','.deathMove',function(e){
 $(`body`).on('click',`.endTask`,function(e){
     e.preventDefault()
     e.stopPropagation()
-    if( $(this).hasClass(`${mySide}`) && myTurn && !$(this).hasClass('activated')){
+    if( $(this).hasClass(`${mySide}`) && myTurn && !$(this).hasClass('activated' && TMER)){
+        TMER = false
+        setTimeout(()=>TMER = true, 1000)
         const { name } = $($(this).parents(`[data-klass][data-name][data-type]`)[0]).data()
         socket.emit('rolloSkill',{    socksMethod:'phaseEnd',aim: 4, key: { phase,  next: myNextPhase, name, side:mySide }   })
     }

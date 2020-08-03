@@ -129,7 +129,7 @@ app.get('/', (req, res) => {
 app.use('/', express.static(__dirname + '/client'));
 console.log(`http://localhost:${serverPort}/`);
 
-serv.listen(serverPort);
+serv.listen(process.env.PORT || serverPort);
 
 function loopRoom (options) {
         let pack = options.pack ? options.pack : {};

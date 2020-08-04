@@ -26,7 +26,7 @@ io.sockets.on('connection', (socket) => {
 
 
     socket.on('namePlace', (data) => {//after that client chooses his team.
-        if ( nickName.length < 15 && place.length < 15 && /^[0-9A-Za-z]+$/.test(data.nickName) && /^[0-9A-Za-z]+$/.test(data.place)) {
+        if ( data.nickName.length < 15 && data.place.length < 15 && /^[0-9A-Za-z]+$/.test(data.nickName) && /^[0-9A-Za-z]+$/.test(data.place)) {
             //quickame room generation module
                 if ( (data.place in LOBBY_LIST) && (data.nickName in LOBBY_LIST[data.place]) ){
                     socket.emit("duplicateGamerName");
@@ -107,19 +107,6 @@ io.sockets.on('connection', (socket) => {
     socket.on('camcel',p=>loopRoom({socket:socket,pack:p,stringEmit:'camcel',callback:o=>o,twoWay:true}))
     socket.on('epp',p=>loopRoom({socket:socket,pack:p,stringEmit:'epp',callback:o=>o,twoWay:true}))
 
-
-    //FOR QUICK SETUP GAME DEV PURPOSES ONLY:
-    //o={nickName:{roster,nickName,opoName,gamePlace,socket.id},opoName:{roster,nickName,opoName,gamePlace,socket.id}}
-    // let RrR = Math.floor( Math.random () * (5 - 0 + 1)) + 0
-    // socket.emit(  'betaTime', {
-    //     pack:{
-    //    Larhendiel:{ id: 0.6372239419915802, nickName: "Larhendiel", roomName: "Mordor", roster:[ "Morrigan", "Titus", "Nia" ] },
-    //    BadBob:{ id: 0.363702456547883, nickName: "BadBob", roomName: "Mordor" , roster:[ "Shayle", "Titus", "RaithMarid" ] },
-    //     },
-    //     scenario:RrR
-    // }  )
-    //////////////////////////////////////////////
-
 });
 
 
@@ -154,10 +141,6 @@ function loopRoom (options) {
 const DICE = () => {
     let r = (Math.ceil(Math.random() * 6))
     return r < 3 ? 0 : r < 6 ? 1 : 2
-}
-function turnTransit(o){
-    o.dieRoll = [ DICE(), DICE(), DICE(), DICE(), ]
-    return o
 }
 function roll(o){
     const { aim, hurt, socksMethod, hex, row, multiAction, cursePackage, curseCount, key } = o

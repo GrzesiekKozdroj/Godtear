@@ -12,13 +12,16 @@
     "motion-ui": "^2.0.3",
     "node": "^12.9.1",
     "socket.io": "^2.3.0",
-    "uuid": "^3.3.3"
-  },
-  "devDependencies": {
+    "uuid": "^3.3.3",
     "jquery": "^3.5.1"
   },
+  "engines": {
+    "node": "13.14"
+  },
+  "devDependencies": {
+  },
   "scripts": {
-    "start": "node ."
+    "start": "node index"
   },
   "repository": {
     "type": "git",

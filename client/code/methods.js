@@ -49,7 +49,7 @@ const m =
                     moveLadder(model,-1)
             }
         },
-        claim: function (thiz, teamColor, key = "claimed") {//console.log(key), key = "claimed"
+        claim: function (thiz, teamColor, key = "claimed") {
             thiz.append(placeBanner(teamColor))
             un_glow()
             add_action_taken(key)

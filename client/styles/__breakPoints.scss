@@ -271,6 +271,9 @@
         // -o-transform: scale(1.18); /* Opera */
     }
 }
+    #agreement{
+        top:-90vh;
+    }
 }
 @media (max-aspect-ratio: 1000/721) and (min-aspect-ratio:1000/780){
     .selection_card_hexagram{@include hexagonomicron(13);}
@@ -347,11 +350,17 @@
         padding-top:5vh;
     }
     .ripplingChoices.confirm{ font-size: 80%;}
+    #agreement{
+        top:-90vh;
+    }
 }
 @media (max-aspect-ratio: 1000/781) and (min-aspect-ratio:1000/1000){
     .selection_card_hexagram{@include hexagonomicron(15);}
     .card_attribute{font-size: 4vh;}
     .card_hex_big{@include hexagonomicron(7);}
+    #agreement{
+        top:-90vh;
+    }
 }
 @media (max-aspect-ratio: 1000/900) and (min-aspect-ratio:1000/1000){
     .selection_card_hexagram{@include hexagonomicron(17);}

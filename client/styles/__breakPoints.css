@@ -752,6 +752,9 @@
   .shelf .hexagon .unitModel {
     margin: auto -65% !important;
   }
+  #agreement {
+    top: -90vh;
+  }
 }
 
 @media (max-aspect-ratio: 1000 / 721) and (min-aspect-ratio: 1000 / 780) {
@@ -1370,6 +1373,9 @@
   .ripplingChoices.confirm {
     font-size: 80%;
   }
+  #agreement {
+    top: -90vh;
+  }
 }
 
 @media (max-aspect-ratio: 1000 / 781) and (min-aspect-ratio: 1000 / 1000) {
@@ -1515,6 +1521,9 @@
   }
   .card_hex_big .bottom:after {
     background-position: center bottom;
+  }
+  #agreement {
+    top: -90vh;
   }
 }
 

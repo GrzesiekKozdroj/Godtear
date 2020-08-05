@@ -1,6 +1,5 @@
 socket.on('duplicateGamerName',()=>$("#wronCharWarning").text("nickname already taken"))
 socket.on('duplicateGameLobbyName',()=>$("#wronCharWarning").text("room already in use"))
-socket.on('serverEvalMSG',o=>console.log(o))
 socket.on('alfaTime',()=>{
     $('#gameScreen').addClass('scale-out-down mui-leave mui-leave-active')
     setTimeout(()=>$('#gameScreen')
@@ -49,8 +48,14 @@ socket.on('d-o-h',p=>{
     const { hex, row } = p
     const dad = $(`.hex_${hex}_in_row_${row}`)
     deployTrayToBoard('selected-model',dad,false)
-    if( !$('.list.tray').find('.teamBox').children('.smallCard').length && myTurn) socket.emit('beginBattle')
-    else if(myTurn) displayAnimatedNews({templateType:'info',msg0:'Your turn'})
+    if( !$('.list.tray').find('.teamBox').children('.smallCard').length && myTurn) {
+        socket.emit('beginBattle')
+        displayAnimatedNews({ templateType:'info',msg0:'Begin Plot Phase' })
+    } else if (myTurn && $(`.teamBox.${myDeployment}`).children(".smallCard").length) {
+        displayAnimatedNews({templateType:'info', msg0:"Keep placing this warband's models"})
+    } else if ( !myTurn && !$(`.teamBox.${opoDeployment}`).children('.smallCard').length ){
+        displayAnimatedNews({ templateType:'info', msg0:'Now you deploy one warband'})
+    }
     const deter = myTurn ? {side:mySide, dep:myDeployment} : {side:opoSide, dep:opoDeployment}
     const counter = $(`.teamBox.${deter.side}.${deter.dep}`).children('.smallCard').length
     myTurn = counter && myTurn ? 

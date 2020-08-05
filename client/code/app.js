@@ -105,9 +105,9 @@ function makeGameBoard(o,coin){
     beginBattle()
     buildLadder()
     //---------------------------------------------TEZT____PHASE-----------------------------------
-    // QUICK_DEEPLOY()//dont forget EVENTS.js
-    // setTimeout(()=>{
-    //     phase='black';
+    //QUICK_DEEPLOY()//dont forget EVENTS.js
+    //setTimeout(()=>{
+    //    phase='black';
     //    myNextPhase='black';
     //     //$('#gameScreen').append(wellPlayed());
     //     // setTimeout(()=>{

@@ -1134,3 +1134,21 @@
 .legendary {
   box-shadow: inset 0 0 5vh goldenrod !important;
 }
+
+#agreement {
+  position: relative;
+  top: -95vh;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.transparent {
+  display: none !important;
+  pointer-events: none;
+}
+
+#TaT:hover {
+  cursor: pointer;
+}

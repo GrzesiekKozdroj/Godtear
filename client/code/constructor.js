@@ -150,10 +150,8 @@ const scenarios = [
         warbandTokens:{ left: 1, right: 22 },
         ruleset:function({ hex, row }){
             const roll = GAME_SCENARIO.dieRoll[0] + 2
-            console.log('endphase function activated',roll)
             if ( roll > 0 ){
                 const dad = $(`.hex_${hex}_in_row_${row}`)
-                console.log('life scenario condition fulfilled')
                 un_glow()
                 highlightHexes( {colour:'whiteGlow', dist: 1}, dad.children('.top') )
                 if( $('[data-glow].objectiveGlow').length && dad.children().length < 3 ){

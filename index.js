@@ -124,9 +124,6 @@ function loopRoom (options) {
             if(typeof callback === 'function')return callback(pack);
         }
         let returnPackage = evokeMe(pack, options.callback);
-
-        let playjer = LOBBY_LIST[options.socket.gamePlace][options.socket.nickName];
-        let oplayer = LOBBY_LIST[options.socket.gamePlace][options.socket.opoName];
         if(options.twoWay === 'selfie'){
             SOCKET_LIST[options.socket.id].emit(options.stringEmit, returnPackage) 
         }

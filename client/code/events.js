@@ -6,7 +6,6 @@ $((e) => {
     $('#gameScreen').empty().append(firstStitch());
 
     //socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
-
     $('.selection_section').each(
         function(){
             let daddy = $(this)
@@ -74,7 +73,11 @@ $((e) => {
         if( 
             /^[0-9A-Za-z]+$/.test(nickName) && 
             /^[0-9A-Za-z]+$/.test(gamePlaceName) && 
-            nickName.length < 15 && gamePlaceName.length < 15  
+            nickName.length < 15 && gamePlaceName.length < 15 && 
+            $('#checkbox').prop('checked') &&
+            $('.ch_rd').children('.card_heroImg').attr('style') &&
+            $('.ch_nd').children('.card_heroImg').attr('style') &&
+            $('.ch_st').children('.card_heroImg').attr('style') 
         ){
             socket.emit('namePlace',{nickName:nickName, place:gamePlaceName, roster:roster }  );
         } else if(nickName === '' ){
@@ -83,8 +86,21 @@ $((e) => {
             $("#wronCharWarning").text("missing place name");
         }else if ( nickName.length > 14 || gamePlaceName.length > 14 ){
             $("#wronCharWarning").text("can't be longer than 14 characters");
-        }else{
+        }else if ( !$('#checkbox').prop('checked') ){
+            $("#wronCharWarning").text("agree to terms & conditions");
+        }else if (
+            !/^[0-9A-Za-z]+$/.test(nickName) || 
+            !/^[0-9A-Za-z]+$/.test(gamePlaceName)
+        ){
             $("#wronCharWarning").text("can't use special symbols");
+        } else if(
+            !$('.ch_rd').children('.card_heroImg').attr('style') ||
+            !$('.ch_nd').children('.card_heroImg').attr('style') ||
+            !$('.ch_st').children('.card_heroImg').attr('style') 
+        ){
+            $("#wronCharWarning").text("complete your warband");
+        }else{
+            $("#wronCharWarning").text("unforeseen error");
         }
     })
     $('#introductory_insructions_info').on('click',e=>{
@@ -135,13 +151,20 @@ $('body').on('click','.puller',function(e){
             .addClass(`hinge-in-from-${data.side} mui-enter mui-enter-active`)
     },750)
 })
+$('body').on('click','#TaT',function(e){
+    e.preventDefault()
+    displatyTT()
+})
+$('body').on('click','#closeTT',function(e){
+    e.preventDefault()
+    setTimeout(()=>$("#rolledOutTT").remove(),250)
+})
 $('body').on('click','#game_card-big',function(e){
     e.preventDefault()
     const data = $(this).data()
     //below is no good, it needs to start extracting attribue(data) from board and return it in form of object
     const h = rosters[ data.klass ][ data.index ][ data.type === 'champion' ? 'champ' : 'grunt' ]
     const l = $($(`[data-tenmodel][data-name="${data.name}"].${data.side}`)[0])
-    //console.log(l, data)
     const selectedChar = {
             klass: h.klass,
             type: l.attr('data-type') || h.type,
@@ -212,7 +235,6 @@ $('body').on('click','.objectiveGlow[data-glow="claimColor"].hexagon', function(
 })
 $("body").on('mouseenter', '.wh', function(e){
     e.preventDefault()
-    console.log('high')
     const { line, col } = $(this).data()
     $('.wp_hihg').removeClass('wp_hihg')
     $(`[data-line="${line}"]`).addClass('wp_hihg')
@@ -328,9 +350,6 @@ $('body').on('click','.brutalMaster.confirm',function(e){
 
 })
 
-$('body').on('click','.multi_choice', function(){
-    console.log( $(this).data() )//what are you for??
-})
 $('body').on('click','.boon-blight.crystalGlare',function(e){
     e.preventDefault()
     if( $(this).hasClass('blighted') ){
@@ -716,11 +735,10 @@ $('body').on('click',`[data-glow^="rockFormation"].hexagon`,function(e){
     e.preventDefault()
     e.stopPropagation()
     const { hex, row } = $(this).data()
-    console.log('glow clicked')
     if ( $(this).attr('data-glow').includes(mySide))
         socket.emit('rolloSkill',{socksMethod:"raiseDead", hex, row})
 })
-$('body').on('click','[data-glow="callTotems"].hexagon',function(e){console.log('click on data glow')
+$('body').on('click','[data-glow="callTotems"].hexagon',function(e){
     e.preventDefault()
     e.stopPropagation()
     const { hex, row } = $(this).data()
@@ -769,7 +787,7 @@ $('body').on('click','.current',function(e){
         highlightHexes ({colour:'blueGlow', dist:3},$(this))
     }
 })
-$('body').on('click','.fire[data-socksmethod="callTotems"]',function(e){console.log('click on fire')
+$('body').on('click','.fire[data-socksmethod="callTotems"]',function(e){
     e.preventDefault()
     e.stopPropagation()
   //  socket.emit('rolloSkill',{socksMethod:'callTotems1'})
@@ -827,25 +845,6 @@ $('body').on('click','#ladder',function(e){
             $('#sms').addClass('showta').removeClass('hidta')
         }
 })
-
-
-
-
-
-
-
-// $('body').on('click','.hexagon',function(e){
-//     e.preventDefault()
-//     const epicenter = $($('.hex_5_in_row_7').children('.top')[0])
-//     epicenter.parent('.hexagon').addClass('objectiveGlow obj1')
-//     highlightHexes({colour:'deathMove',dist:1},epicenter)
-//     highlight_closest_path(epicenter.parent('.hexagon').data(),$(this).data())
-//     console.log(tellMeDistance(epicenter.parent('.hexagon').data(),$(this).data()))
-// })
-
-
-
-
 
 
 

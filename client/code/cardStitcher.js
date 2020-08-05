@@ -87,6 +87,7 @@ function chosen_move(img) {
     if($('.ch_rd').children('.card_heroImg').attr('style') &&
        $('.ch_nd').children('.card_heroImg').attr('style') &&
        $('.ch_st').children('.card_heroImg').attr('style') ){
+            $('#agreement').removeClass('transparent').addClass('topped')
             $('#gameTypeForm').addClass('mui-enter-active')
             $('#beginGameButton').addClass('mui-enter-active')
        }
@@ -185,7 +186,7 @@ function list_of_abilities(o){
     }
     return skills
 }
-function roster_card(o){//console.log(o)
+function roster_card(o){
  return `
      <div id="selection_card" class="hinge-in-from-bottom mui-enter ">
          <div class="selection_card_images">
@@ -266,6 +267,9 @@ function selectionForm(){
                 <input type="text" id="gamePlayerName" class="introductionInfo" placeholder="nickname" required>
                 <div id="wronCharWarning"></div>
                 <input type="text" id="gamePlaceName" class="introductionInfo" placeholder="battlefield" required>
+                <p id="agreement" class="transparent">
+                    <input id="checkbox" type="checkbox" required name="terms">&nbsp;I accept the&nbsp; <u id="TaT"> Terms and Conditions</u>
+                </p>
             </form>
         </div>
     `

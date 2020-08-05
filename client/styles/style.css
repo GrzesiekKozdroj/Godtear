@@ -3443,3 +3443,53 @@ div.unitModel:nth-child(3) > .bb_HUD > .bspeed.onBoard {
   align-items: center;
   text-shadow: 0 0 1vh #1b0000;
 }
+
+#rolledOutTT {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  position: absolute;
+  z-index: 24;
+  top: 20vh;
+  left: 20vw;
+  height: 60vh;
+  width: 60vw;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 246, 0.85) 17%, rgba(255, 254, 220, 0.99) 100%);
+  border: 1px solid black;
+  box-shadow: 1px 1px 1px black;
+  text-shadow: 0 0 1px white;
+  padding: 1.5vw;
+}
+
+#rolledOutTT a {
+  display: contents;
+}
+
+#rolledOutTT #closeTT {
+  border: 1px solid #eeb74e;
+  border-radius: 15%;
+  display: inline-block;
+  width: 5vh;
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(250, 222, 143, 0.468207) 11%, rgba(230, 155, 16, 0.767927) 100%);
+  font-family: "Shojumaru", cursive;
+  color: #521f64;
+}
+
+#rolledOutTT #closeTT:hover {
+  cursor: pointer;
+}
+
+#rolledOutTT #closeTT:active {
+  transform: scale(0.9);
+}
+
+#rolledOutTT #contact_me {
+  color: #010e01;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-shadow: 1px 1px 1px black;
+}

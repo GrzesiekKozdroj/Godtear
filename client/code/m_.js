@@ -1,7 +1,7 @@
 var m_ = {
     kick:function (o){
         const { aim, hurt, hex, row } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.unitModel`)
         if(targets.length){
             const target = $(targets[0])
             un_glow()
@@ -19,7 +19,7 @@ var m_ = {
     },
     fieryAxe:function (o){
         const { aim, hurt, hex, row, key, multiAction } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel:not(".death")`)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.unitModel:not(".death")`)
         if(targets.length){
             const target = $(targets[0])
             un_glow()
@@ -37,7 +37,7 @@ var m_ = {
     },
     fireball:function(o){
         const { aim, hurt, hex, row, key, multiAction } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel:not(".death")`)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.unitModel:not(".death")`)
         if(targets.length){
             const target = $(targets[0])
             un_glow()
@@ -78,7 +78,7 @@ var m_ = {
     },
     firestorm:function(o){
         const { aim, hurt, hex, row, multiAction } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel.destined_for_DOOM`)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.unitModel.destined_for_DOOM`)
         if(targets.length){
             const target = $(targets[0])
             target.removeClass('destined_for_DOOM')
@@ -136,7 +136,7 @@ var m_ = {
     },
     intimidation:function(o){
         const { aim, hex, row } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.unitModel`)
         if(targets.length){
             const target = $(targets[0])
             un_glow()
@@ -257,7 +257,7 @@ var m_ = {
     },
     surroundPound:function(o){
         const { aim, hurt, hex, row, key } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.unitModel`)
         if(targets.length){
             const target = $(targets[0])
             add_action_taken("surroundPound")
@@ -289,7 +289,6 @@ var m_ = {
         add_action_taken("outflank")
         if( !$('.outflank').length && onHit(aim, singleSpecimen, 'sword','Outflank') ){
             const team = singleSpecimen.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
-            console.log('outflank init')
             un_glow()
             $('.selectedModel').removeClass('selectedModel')
             highlightHexes ({colour:'blueGlow', dist:1}, singleSpecimen)
@@ -352,7 +351,7 @@ var m_ = {
     },
     nomNomNom: function (o) {
         const { aim, hurt, hex, row } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel`)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.unitModel`)
         if(targets.length){
             const target = $(targets[0])
             un_glow()
@@ -369,7 +368,7 @@ var m_ = {
     },
     buffet:function(o){
         const { aim, hurt, hex, row, key, multiAction } = o
-        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.hexagrama-30.unitModel.destined_for_DOOM`)
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.unitModel.destined_for_DOOM`)
         if(targets.length){
             const target = $(targets[0])
             target.removeClass('destined_for_DOOM')
@@ -556,7 +555,6 @@ var m_ = {
             const parentHex = $('.selectedModel').parent('.hexagon')
             parentHex.children('.smallCard').addClass('hop')
             add_action_taken("hop")
-            console.log('hop: ',hex,' ', row)
             $('.selectedModel').removeClass('selectedModel')
             $(parentHex.children('.hop')[0])
                 .detach()
@@ -1103,7 +1101,6 @@ var m_ = {
     calcify:function(o){
         const { hex, row } = o
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Quartzlings"]')[0])
-        console.log('calcify', hex, row )
         if ( $target.length && !$target.siblings('.smallCard').length ){
             makeObjectiveHex(row,hex)
             displayAnimatedNews({templateType:'info', $attacker:$target, skillName:'Calcify', skillIcon:"self"})

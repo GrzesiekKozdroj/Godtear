@@ -239,7 +239,7 @@ var defy = {
         $('.roarOfBattle_selected').removeClass('roarOfBattle_selected')
         uniCancel()
     },
-    outflank:()=>{console.log('outfl defy')
+    outflank:()=>{
         multiMovement_procedure('outflank','outflank_selected','outflanked')
         $('.outflank_source').removeClass('outflank_source')
         uniCancel()

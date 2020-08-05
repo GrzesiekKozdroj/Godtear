@@ -153,7 +153,7 @@ function reduceSpeedLeft(){
     } else 
         spedred()
 }
-function highlightHexes ({colour, dist},thiz = $('.selectedModel'), type = 'glow'){//console.trace()
+function highlightHexes ({colour, dist},thiz = $('.selectedModel'), type = 'glow'){
     const applyClass = ({colour, row, hex, type}) => {
         if(row % 2 === 1) oddRowPosition(row, hex, colour, type) 
         else if (row % 2 === 0) evenRowPosition(row, hex, colour, type)
@@ -458,7 +458,6 @@ function rTB_Transfer( {hex,row,socksMethod,message} ){
 }
 function showLikeWater( RaithMarid ){
     const { baim, bdamage, bdodge, bprotection, bspeed } = extractBoons_Blights( RaithMarid )
-    console.log( RaithMarid )
     return `
         <div class="showLikeWaterC">
             <div 
@@ -477,7 +476,7 @@ function showLikeWater( RaithMarid ){
         </div>
     `
 }
-function un_glow(p=false){//console.trace()
+function un_glow(p=false){
     if (!p)
         $('[data-glow]').removeAttr('data-glow')
     else
@@ -603,7 +602,6 @@ const singleStatList = ({ch,side,c, thiz, line}) => {
         ralliesRecruits, hexesTravelled, stepsEarned, 
         favouriteToHit, killsCount 
     } = ch
-    //console.log(killsCount)
     return `<div class="singleStatList">
         <div class="wp_name_label wh" data-line="${line}" data-col="0">
             <div class="wp_portrait ${side}_${c}">${dudesCloner(thiz)}</div>
@@ -629,4 +627,13 @@ const singleStatList = ({ch,side,c, thiz, line}) => {
             <div id="killsCount" class="multiStatLine">${beatUpCombinator(killsCount,side)}</div>
         </div>
     </div>`
+}
+function displatyTT(){
+    $('body').append(`
+        <p id="rolledOutTT">
+            <span id="closeTT">X</span>
+            All character names, abilities, rules and character images are registered trademarks of&nbsp;<a target="_blank" href="https://steamforged.com/">Steam Forged Games Ltd.</a>&nbsp;This site is not affiliated with&nbsp;<a target="_blank"  href="https://steamforged.com/">Steam Forged Games Ltd.</a>&nbsp;and no claim of ownership is made to any of these trademarks. Icons for skills, banners etc. are are graciously provided by&nbsp;<a target="_blank"  href="https://game-icons.net/">https://game-icons.net/</a>&nbsp;.<br/><br/>You expressly agree that use of this service is at your sole risk and is provided on an "as is" basis without warranties of any kind, either express or implied. No one can warrant that the service will be uninterrupted or error-free. Use at your own risk.
+            <span id="contact_me">larhendiel@yahoo.co.uk</span>
+        </p>
+    `)
 }

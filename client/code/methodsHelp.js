@@ -55,7 +55,6 @@ const causeOfRetchlings = (skill) => {
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
     const targetos = (abilName, p = phase) => {
         let prod;
-        //console.log(name,p,abilName)
         if(side === mySide)
                 prod = causeOfRetchlings(  mySkillTrack[name][p][abilName].used )
         else if(side === opoSide)
@@ -102,7 +101,7 @@ function slayerPoints(target){
     else 
         return target.data('stepsgiven')
 }
-const onHit = (aim, target, weapon, skillName) => { console.log('aim roll: ', ...aim)
+const onHit = (aim, target, weapon, skillName) => {
     const target_dodge = Number(target.attr('data-dodge')) + checkIfNotMorrigan(target,'bdodge')
     aim.splice(0,fearsome() + superiority(target))
     const aim_total = aim.reduce((a,b)=>a+b,0)
@@ -124,7 +123,7 @@ const onHit = (aim, target, weapon, skillName) => { console.log('aim roll: ', ..
     })
     return product
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
-const doDamage = (hurt, target) => {console.log(...hurt)
+const doDamage = (hurt, target) => {
     const target_protection = Number(target.attr('data-protection')) + checkIfNotMorrigan(target,'bprotection')
     hurt.splice(0,superiority(target))
     const hurt_total = hurt.reduce((a,b)=>a+b,0)
@@ -137,7 +136,6 @@ const doDamage = (hurt, target) => {console.log(...hurt)
         hurtTotal,
         $victim:target
     })
-            console.log(target.attr('data-healthleft'), hurtTotal)
     setBoons_Blights($('.selectedModel'),{bdamage:0})
     setBoons_Blights(target,{bprotection:0})
     animateDamage(target, (target_protection - hurt_total))
@@ -183,8 +181,7 @@ const checkIfStillAlive = (target) => {
         return true
     }
 }
-const forceKill = (target) => {//$()
-    console.log(target)
+const forceKill = (target) => {
     target.addClass('death')
     target.attr('data-baim',0)
     target.attr('data-bdamage',0)
@@ -519,7 +516,7 @@ function rallyActionDeclaration({ unitname, side, type, name, dist = 1 },glowTyp
         lifeTradeRaise()
     else if ( glowType.includes(`rockFormation`) )
         socket.emit('rolloSkill', { socksMethod: 'rockFormation1', key: side })//<--make that skill
-    else if( myTurn ){console.log(glowType, side, unitname, type)
+    else if( myTurn ){
         highlightHexes({colour:glowType,dist},$(`[data-name="${unitname}"].${side}`))
         //commented out once again: newSpew and graspingDead
         //above was commented out but it cannot work without it
@@ -557,7 +554,6 @@ function blights_spew_recieved({o, blight, m}){
     const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
     if(targets.length){
         const target = $(targets[0])
-         console.log(hex,row)
         un_glow()
         add_action_taken(m)
         if( onHit(aim, target,'spell',m) ){
@@ -620,7 +616,7 @@ function propagate_BB_s($origin,$target){
     else {
         if( $target.data('name') !== "Landslide" )
             $target.removeClass('activated').attr('data-actionstaken',Number($($origin[0]).attr('data-actionstaken')))
-        else { console.log("Landslided")
+        else {
             add_action_taken("rallied",false,"Landslide")
         }
     }
@@ -881,7 +877,6 @@ function rapidDeployment(thiz){
 function callTotems1(){
     const side = $('.selectedModel').hasClass(mySide) ? mySide : opoSide
     un_glow()
-    console.log('totems1')
     rallyActionDeclaration( { unitname:'Rattlebone', side, type:'unit', name:'Hexlings', dist:2 }, 'callTotems' )
 }
 function superiority(target){
@@ -974,7 +969,7 @@ function land_sliding( $thiz ){
 function _likeWater(origin,target){
     socket.emit('rolloSkill', { key:mySide, socksMethod:`likeWater${phase==='white'?'White':'Black'}` })
 }
-function likeWater_(o){ console.log('once', o.key === mySide)
+function likeWater_(o){
     if ( mySide === o.key )
         $('#gameScreen').append(  showLikeWater( $(`[data-tenmodel^="RaithMarid"][data-side="${o.key}"]`) )  )
     else 
@@ -1100,7 +1095,7 @@ function kerSplash_(o){
     current_ability_method=null
     un_glow()
 }
-function rubble(target){console.log('rubble')
+function rubble(target){
     if( target.data('name') === 'Landslide' ){
         displayAnimatedNews({templateType:'info', $attacker:target, msg1: ' becomes ', skillName:'Rubble', skillIcon:'self'})
         const { hex, row } = target.parent('.hexagon').data()
@@ -1308,7 +1303,6 @@ function animateWeapon($target, weapon){
 const phaser = () => phase === 'white' ? 'White' : 'Black'
 
 function _royalSummons(origin,target){
-    console.log(`Young Dragons may make an advance action or a recruit action.`)
     let PH = phase === 'white' ? 'White' : 'Black'
     socket.emit('rolloSkill',{ socksMethod:"royalSummons"+PH })
 }
@@ -1435,7 +1429,7 @@ function turnTransition_ (dieRoll){
     $('.activatingShow').removeClass('activatingShow').addClass('nonActivShow')
     $('.nonActivShow').removeClass('nonActivShow').addClass('activatingShow')
     //p1 && p2 starts black
-    if(phase==='white'&&myNextPhase==='black'){console.log('TT_I')//into black phase
+    if(phase==='white'&&myNextPhase==='black'){
         phase='black'
         $('.plotPhase').removeClass('plotPhase').addClass('clashPhase')
         turn_resetter(opoSkillTrack,'black','blackTeam')
@@ -1443,7 +1437,7 @@ function turnTransition_ (dieRoll){
         animateCart(opoSide, $($(".blackTeam[data-tenmodel]")[0]))
         animateCart(mySide, $($(".whiteTeam[data-tenmodel")[0]))
     }
-    if(phase==='white'&&myNextPhase==='white'){console.log('TT_II')//one white phase ends another begins
+    if(phase==='white'&&myNextPhase==='white'){
         turn_resetter(opoSkillTrack,'white','blackTeam')
         turn_resetter(mySkillTrack,'white','whiteTeam')
         myNextPhase='black'

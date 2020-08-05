@@ -160,14 +160,14 @@ var _m_ = {
             socket.emit('rolloSkill',{ aim: (6 + baim), hurt:(4 + bdamage), socksMethod:"lungingStrikeHit", hex, row })
         }
     },
-    marchjet:($thiz)=>{console.log($('[data-glow].hexagon').length)
-        if ( $('[data-glow].hexagon').length > 19 ) {console.log('glow 2')
+    marchjet:($thiz)=>{
+        if ( $('[data-glow].hexagon').length > 19 ) {
             un_glow()
             highlightHexes({colour:'legendaryGlow',dist:2},$thiz)
-        } else if( $('[data-glow].hexagon').length > 6 ){console.log('glow 1')
+        } else if( $('[data-glow].hexagon').length > 6 ){
             un_glow()
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
-        } else { console.log('bye bye')
+        } else { 
             un_glow()
             $($thiz).removeClass(`marchjet_selected`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
@@ -403,7 +403,7 @@ var _m_ = {
 
 var m__ = {
     newSpew: function (o){
-        console.log('doubled ?')
+        return true
     }
 }
 

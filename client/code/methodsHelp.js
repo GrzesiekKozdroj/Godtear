@@ -1470,6 +1470,6 @@ function turnTransition_ (dieRoll){
             GAME_SCENARIO.ruleset(0,0)
     }
     if( myTurn )
-    displayAnimatedNews({templateType:'info',msg0:'Your turn'})
+        displayAnimatedNews({templateType:'info',msg0:'Your turn'})
     //need to add deifer and ultra resetter here
 }

@@ -273,8 +273,7 @@ var defy = {
     hack:()=>uniCancel(),
     surroundPound:()=>uniCancel(),
     roll:()=>{
-        displayAnimatedNews({templateType:'info',msg0:'Roll ended'})
-        $('.roll_selected').removeClass('roll_selected')
+        multiMovement_procedure('roll','roll_selected','Roll ended')
         uniCancel()
     },
     nomNomNom:()=>uniCancel(),
@@ -368,10 +367,6 @@ var defy = {
         $('.niaChallenge').remove()
         crystalGlare_bb = null
         uniCancel()
-    },
-    rollingStones:()=>{
-        un_glow()
-        multiMovement_procedure('roll','roll_selected',"Roll ends")
     },
     stoneThrow:()=>uniCancel(),
     headbutt:()=>{
@@ -473,6 +468,7 @@ function meagREsetter(){
         illKillYouAll_selected 
         pathof_selected 
         destined_for_DOOM 
+        roll 
         roll_selected 
         avalanche_moveable 
         avalanche_selected 

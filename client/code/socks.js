@@ -51,8 +51,8 @@ socket.on('d-o-h',p=>{
     if( !$('.list.tray').find('.teamBox').children('.smallCard').length && myTurn) {
         socket.emit('beginBattle')
         displayAnimatedNews({ templateType:'info',msg0:'Begin Plot Phase' })
-    } else if (myTurn && $(`.teamBox.${myDeployment}`).children(".smallCard").length) {
-        displayAnimatedNews({templateType:'info', msg0:"Keep placing this warband's models"})
+    } else if (myTurn && !$(`.teamBox.${myDeployment}`).children(".smallCard").length) {
+        displayAnimatedNews({templateType:'info', msg0:"Opponent will now place their warband's models"})
     } else if ( !myTurn && !$(`.teamBox.${opoDeployment}`).children('.smallCard').length ){
         displayAnimatedNews({ templateType:'info', msg0:'Now you deploy one warband'})
     }

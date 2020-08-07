@@ -83,13 +83,15 @@ function deployTrayToBoard(modelClass, thiz, deployment){
         __canIBePlacedOnHex(thiz, modelClass)
        && 
       modeOfControl
-    )
-        $('.'+modelClass)
+    ){
+        const model = $('.'+modelClass)
             .removeClass( `${modelClass} hexagrama-${ className === 30 ? 14 : 24 ? 10 : 7}`)
             .addClass(`hexagrama-${className} 
                     ${className===30?'unitModel':className===24?'unitModel largeUnitModel':'champModel'}`)
-            .detach()
-            .appendTo( thiz )
+        makeAnim(model,thiz,false)
+    }
+            // .detach()
+            // .appendTo( thiz )
 }
 
 

@@ -127,10 +127,10 @@ function loopRoom (options) {
         if(options.twoWay === 'selfie'){
             SOCKET_LIST[options.socket.id].emit(options.stringEmit, returnPackage) 
         }
-        else if(!options.twoWay){
+        else if( !options.twoWay && SOCKET_LIST[options.socket.opoName] ){
             SOCKET_LIST[options.socket.opoName].emit(options.stringEmit, returnPackage);
         } 
-        else {
+        else if( SOCKET_LIST[options.socket.id] && SOCKET_LIST[options.socket.opoName] ){
             SOCKET_LIST[options.socket.id].emit(options.stringEmit, returnPackage);
             SOCKET_LIST[options.socket.opoName].emit(options.stringEmit, returnPackage);
         }

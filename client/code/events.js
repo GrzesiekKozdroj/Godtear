@@ -280,7 +280,7 @@ $('body').on('click','.hexagon:not([data-glow="callTotems"])',function(e){
     }
 
     //display appropriate card if needed
-    if(phase!=='deployment' && !$(this).attr('data-glow'))
+    if(phase!=='deployment')
         if   ( thiz.hasClass(opoSide) && checkCardContents(opoSide, thiz) ) animateCart(opoSide, thiz)
         else if( thiz.hasClass(mySide) && checkCardContents(mySide, thiz) ) animateCart(mySide, thiz)
 })

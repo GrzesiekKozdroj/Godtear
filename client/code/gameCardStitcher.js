@@ -355,11 +355,11 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
             miniGameCard 
             ${side} ${phase} 
             ${ side === mySide && myTurn ?
-                    'activatingShow'
+                    'activatingShow allied'
                : side === opoSide && !myTurn ? 
-                    'activatingShow' 
+                    'activatingShow enemie' 
                : 
-                 'nonActivShow' 
+                 `nonActivShow ${side===mySide?'allied' : 'enemie'}` 
             }
         ' 
         data-klass='${klass}' 

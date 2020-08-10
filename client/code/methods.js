@@ -54,6 +54,7 @@ const m =
             un_glow()
             add_action_taken(key)
             shayle_takes_action()
+            cancellerName = null
             if(phase==='white')
                 moveLadder($(thiz.children('.claimedBanner')),$(thiz.children('.claimedBanner')).data('color')  )
             counterMaker($('.selectedModel'),'bannersClaimed')

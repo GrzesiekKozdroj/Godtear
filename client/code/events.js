@@ -4,7 +4,6 @@ let zIndex = 1;
 $((e) => {
     $('body').append(`<img id="map_place" src="../img/place${Math.floor(Math.random()*8)}.jpg" />`)
     $('#gameScreen').empty().append(firstStitch());
-
     //socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
     $('.selection_section').each(
         function(){
@@ -220,6 +219,7 @@ $('body').on('click','#claimAction',function(e){
             e.preventDefault()
             let claimsize = $('.selectedModel').data('name') === 'Mournblade' ? 3 : 1
             un_glow()
+            cancellerName = 'bannerClaim'
             highlightHexes({colour:'claimColor',dist:claimsize})
             socket.emit('HH', {color:'claimColor',dist:claimsize})
         }

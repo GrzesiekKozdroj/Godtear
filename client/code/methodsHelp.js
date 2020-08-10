@@ -1426,8 +1426,6 @@ function pixkedAtMarker(model,mode,victim){
 
 function turnTransition_ (dieRoll){
     myTurn = myTurn ? false : true
-    $('.activatingShow').removeClass('activatingShow').addClass('nonActivShow')
-    $('.nonActivShow').removeClass('nonActivShow').addClass('activatingShow')
     //p1 && p2 starts black
     if(phase==='white'&&myNextPhase==='black'){
         phase='black'

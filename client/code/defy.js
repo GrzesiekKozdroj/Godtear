@@ -394,6 +394,7 @@ var defy = {
     fieryBreath:()=>uniCancel(),
     rallied:()=>uniCancel(),
     deathMove:()=>multiMovement_procedure('deathMove','deathMove_selected','death move cancelled'),
+    bannerClaim:()=>uniCancel(),
 
 }
 
@@ -496,4 +497,12 @@ function meagREsetter(){
         $("."+rem[ii]).remove()
     }//.forEach(function(el){$('.'+el).remove()})
     $('[data-DOOMqueue]').removeAttr('data-DOOMqueue')
+
+    if(myTurn){
+        $(`.miniGameCard.${mySide}`).removeClass('nonActivShow').addClass('activatingShow')
+        $(`.miniGameCard.${opoSide}`).removeClass('activatingShow').addClass('nonActivShow')
+    } else {
+        $(`.miniGameCard.${opoSide}`).removeClass('nonActivShow').addClass('activatingShow')
+        $(`.miniGameCard.${mySide}`).removeClass('activatingShow').addClass('nonActivShow')
+    }
 }

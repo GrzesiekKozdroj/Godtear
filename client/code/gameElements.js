@@ -135,6 +135,10 @@ function beginFirstPlotPhase(){
             .addClass(`hinge-in-from-${mySide} mui-enter`)
             .append(  miniCard($($('.whiteTeam')[0]).data(), phase, mySide) )
             .addClass('mui-enter-active')
+        $("#scenarioTip").append(
+            `<div id="s_title" class="hide_sms">${GAME_SCENARIO.name}</div>
+            <div id="s_story" class="hide_sms">${GAME_SCENARIO.desc}</div>`
+        )
     },600)
 }
 function reduceSpeedLeft(){

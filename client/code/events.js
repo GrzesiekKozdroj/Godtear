@@ -2,9 +2,9 @@ let bob = false;
 let zIndex = 1;
 
 $((e) => {
-    //$('body').append(`<img id="map_place" src="../img/place${Math.floor(Math.random()*8)}.jpg" />`)
+    $('body').append(`<img id="map_place" src="../img/place${Math.floor(Math.random()*8)}.jpg" />`)
     $('#gameScreen').empty().append(firstStitch());
-    socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
+    //socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
     $('.selection_section').each(
         function(){
             let daddy = $(this)

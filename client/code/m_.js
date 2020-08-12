@@ -305,43 +305,51 @@ var m_ = {
     roll:function(o){
         if( !$('[data-glow]').length )
             highlightDirectPaths({origin: $('.selectedModel').parent('.hexagon').data(), distance:3, colour:'straitPaths'})
-            $('.selectedModel').addClass('roll_selected')
+            $('.selectedModel').addClass('roll_selected roll')
     },
     newSpewWhite:newSpew_,
     newSpewBlack:newSpew_,
     raiseNewSpew:function(o){
         const { hex, row, multiAction} = o
         const thiz = $(`.hex_${hex}_in_row_${row}`)
-        $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
-        graveyard[river[1]][river[3]].splice(0,1)
-        if( $(`[data-tenmodel^="Retchlings"].${multiAction}`).length < 5 ){
-            rallyActionDeclaration({ unitname:"Grimgut", side:multiAction, type:"champion", name:"Retchlings" }, `newSpewWhite`)
-        } else {
-            river = null
-            current_ability_method = null
-            un_glow()
+        const $model = $(graveyard[river[1]][river[3]][0])
+        if( standardWalk ({ $model, $destination:thiz }) ){
+            $model.detach().appendTo(thiz).removeClass('death')
+            graveyard[river[1]][river[3]].splice(0,1)
+            if( $(`[data-tenmodel^="Retchlings"].${multiAction}`).length < 5 ){
+                rallyActionDeclaration({ unitname:"Grimgut", side:multiAction, type:"champion", name:"Retchlings" }, `newSpewWhite`)
+            } else {
+                river = null
+                current_ability_method = null
+                un_glow()
+            }
         }
     },
     raiseDead:function(o){
         const { hex, row, key } = o
         const thiz = $(`.hex_${hex}_in_row_${row}`)
-        $(graveyard[river[1]][river[3]][0]).detach().appendTo(thiz).removeClass('death')
-        displayAnimatedNews({addInfo:'recruited',$attacker:$(thiz.children('[data-tenmodel]')[0]),templateType:'info'})
-        graveyard[river[1]][river[3]].splice(0,1)
-        const $thiz = $(thiz.children('.smallCard')[0])
-        const $brothers = $($(`[data-name="${$thiz.data('name')}"][data-side=${$thiz.data('side')}]:not( [data-tenmodel="${$thiz.data('tenmodel')}"] )`)[0])
-        if( $brothers.data('name') !== "Landslide" )
+        const lazarus = graveyard[river[1]][river[3]][0].data()
+        const tenModel = $($(`[data-name="${lazarus.name}"][data-side="${lazarus.side}"]`)[0])
+        let attribPack = extractBoons_Blights( tenModel )
+        attribPack.actionstaken = tenModel.attr('data-actionstaken')
+        const dedLaz = $(graveyard[river[1]][river[3]][0])
+        if(standardWalk ({ $model:dedLaz, $destination:thiz, rules:['recruit'] }) ){
+            $lazarus = dedLaz.detach().appendTo(thiz).removeClass('death')
+            displayAnimatedNews({addInfo:'recruited',$attacker:$(thiz.children('[data-tenmodel]')[0]),templateType:'info'})
+            graveyard[river[1]][river[3]].splice(0,1)
+            if( $lazarus.data('name') !== "Landslide" )
             add_action_taken(key?key:"rallied")
-        propagate_BB_s($brothers,$thiz)
-        counterMaker( $thiz,'ralliesRecruits')
-        setTimeout(()=>rapidDeployment($thiz),700)
-        if(key!=='callTotems' || !graveyard[river[1]][river[3]].length ){     //untestedo
-            un_glow()
-            river = null
-            current_ability_method = null
-            $('#multi_choice_info_panel').remove()
-            $('.selectedModel').removeClass('selectedModel')                                          //untestedo
-        }                                                                                             //untestedo
+            propagate_BB_s(tenModel,attribPack,$lazarus)
+            counterMaker( $lazarus,'ralliesRecruits')
+            setTimeout(()=>rapidDeployment($lazarus),700)
+            if(key!=='callTotems' || !graveyard[river[1]][river[3]].length ){     //untestedo
+                un_glow()
+                river = null
+                current_ability_method = null
+                $('#multi_choice_info_panel').remove()
+                $('.selectedModel').removeClass('selectedModel')                                          //untestedo
+            }                                                                                             //untestedo
+        }
     },
     fluSpew:function(o){
         blights_spew_recieved({o, blight:"bdamage",m:"fluSpew"})
@@ -1069,11 +1077,11 @@ var m_ = {
     rockConcert:rockConcert_,
     rollingStones_:function(o){
         const { hex, row } = o
-        $('.roll_selected').removeClass('roll_selected roll')
+        $('.rollingStones_selected').removeClass('rollingStones_selected rollingStones')
         un_glow()
-        const rollabel = $($(`.hex_${hex}_in_row_${row}`).children('.roll')[0])
+        const rollabel = $($(`.hex_${hex}_in_row_${row}`).children('.rollingStones')[0])
         $('.selectedModel').removeClass('selectedModel')
-        rollabel.addClass('roll_selected selectedModel')
+        rollabel.addClass('rollingStones_selected selectedModel')
         if(rollabel.length)
             highlightDirectPaths({origin: $(`.hex_${hex}_in_row_${row}`).data(), distance:3, colour:'straitPaths'})
     },
@@ -1082,8 +1090,8 @@ var m_ = {
         if( !$('[data-glow]').length )
             highlightDirectPaths({origin: $('.selectedModel').parent('.hexagon').data(), distance:3, colour:'straitPaths'})
         const team = $('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
-        $('.selectedModel').addClass('roll_selected')
-        $(`[data-tenmodel^="Quartzlings"].${team}`).addClass('roll')
+        $('.selectedModel').addClass('rollingStones_selected')
+        $(`[data-tenmodel^="Quartzlings"].${team}`).addClass('rollingStones')
         current_ability_method = ()=>{}
     },
     stoneThrow: function (o){
@@ -1123,7 +1131,7 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('shimmer')
-            if( onHit(aim, target,'Shimmer') )
+            if( onHit(aim, target,'spell','Shimmer') )
                 setBoons_Blights(target,{bspeed:Number(target.attr('data-bspeed'))-1},0,{N:'Shimmer',I:'skull'})
         }
         current_ability_method = null
@@ -1357,7 +1365,7 @@ var m_ = {
         const { hex, row } = o
         const targetLocation = $(`.hex_${hex}_in_row_${row}`)
         const landS = $($(`[data-tenmodel^="Landslide"].${ myTurn ? "white" : "black"}Team`)[0])
-        if(landS.attr('data-landstepper') == '1'){
+        if(landS.attr('data-landstepper') == '1' && standardWalk ({ $model:landS, $destination:targetLocation, rules:'walk' })){
             displayAnimatedNews({templateType:'info', $attacker:landS, msg1:' moves'})
             makeAnim(landS,targetLocation,()=>{
                 un_glow()
@@ -2377,5 +2385,15 @@ var m_ = {
             counterMaker( $thiz, 'ralliesRecruits' )
         }
         if(jees.data('name')==='Shayle')shayle_takes_action()
+    },
+    burnWalk:function(o){
+        const { hex, row } = o
+        const dad = $(`.hex_${hex}_in_row_${row}`)
+        const burner = dad.children('[data-tenmodel]')
+        setBoons_Blights(burner,{bspeed:0})
+        $(`[data-name="${burner.data('name')}"][data-tenmodel][data-side="${burner.data('side')}"]`).each(function(){
+            $(this).attr( 'data-actionstaken', Number($(this).attr('data-actionstaken')) + 1 )
+        })
+        displayAnimatedNews({templateType:'info',msg1:'walk burned',$attacker:burner})
     }
 }

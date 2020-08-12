@@ -276,6 +276,10 @@ var defy = {
         multiMovement_procedure('roll','roll_selected','Roll ended')
         uniCancel()
     },
+    rollingStones:()=>{
+        multiMovement_procedure('rollingStones','rollingStones_selected','Rolling Stones ended')
+        uniCancel()
+    },
     nomNomNom:()=>uniCancel(),
     buffet:()=>{
         $('.destined_for_DOOM').removeClass('destined_for_DOOM')
@@ -471,6 +475,8 @@ function meagREsetter(){
         destined_for_DOOM 
         roll 
         roll_selected 
+        rollingStones 
+        rollingStones_selected
         avalanche_moveable 
         avalanche_selected 
         tide_selected 

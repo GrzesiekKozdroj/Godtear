@@ -31,29 +31,8 @@ var _m_ = {
                 current_ability_method = null
             }
     },
-    roll:(that)=>{
-        add_action_taken("rollingStones")
-        $('[data-glow^="str"].hexagon').each(function(){
-          if ( $(this).attr('data-glow') !== $('.selectedModel').parent('.hexagon').attr('data-glow') ) {
-              $(this).removeAttr('data-glow')
-              $(this).children('.top').removeAttr('data-glow')
-              $(this).children('.bottom').removeAttr('data-glow')
-          }
-        })
-        $('[data-glow].hexagon').each(function(){
-            $(this).attr('data-glow','straitPaths')
-            $(this).children('.top').attr('data-glow','straitPaths')
-            $(this).children('.bottom').attr('data-glow','straitPaths')
-        })
-        $('.selectedModel').parent('.hexagon').removeAttr('data-glow')
-        $('.selectedModel').siblings('.top').removeAttr('data-glow')
-        $('.selectedModel').siblings('.bottom').removeAttr('data-glow')
-        if( !$('[data-glow="straitPaths"]').length ){
-            $('.roll_selected').removeClass('roll_selected roll')
-            if( !$('.roll').length )
-                current_ability_method = null
-        }
-    },
+    roll:(thiz)=>rolloAndo(thiz,'roll'),
+    rollingStones:(thiz)=>rolloAndo(thiz,'rollingStones'),
     tongueTow:()=>{
         if( $('.tongueTow_selected').length ){
             un_glow()

@@ -534,7 +534,7 @@ $('body').on('click','.boon-blight.theGreatTusk.confirm', function(e){
     socket.emit('rolloSkill',{ aim: 0, hurt: 0, socksMethod:"theGreatTusk", hex, row, cursePackage })
     $('.titusChallenge').remove()
 })
-$('body').on('click','.roll',function(e){
+$('body').on('click','.rollingStones',function(e){
     e.preventDefault()
     e.stopPropagation()
     const { hex, row } = $(this).parent('.hexagon').data()
@@ -567,7 +567,8 @@ $('body').on('click','[data-glow].hexagon',function(e){
         if( $('.marchRhodriWhite_selected').length )extraMover('marchRhodriWhite',thiz,'walk')
         if( $('.marchNia_selected').length )extraMover('marchNia',thiz,'walk')
         if( $('.shieldBash_selected').length )extraMover('shieldBash',thiz,'push',['onlyOneStep'])
-        if( $('[data-glow^="strait"]').length)extraMover('roll',thiz,'walk',['onlyOneStep'])
+        if( $('.roll').length)extraMover('roll',thiz,'walk',['onlyOneStep'])
+        if( $('.rollingStones').length)extraMover('rollingStones',thiz,'walk',['onlyOneStep'])
         if( $('.marchGuardBlack').length )extraMover('marchGuardBlack',thiz,'walk')
         if( $('.marchGuardWhite').length )extraMover('marchGuardWhite',thiz,'walk')
         if( $('.forwardMinions_selected').length )extraMover('forwardMinions',thiz,'walk',['onlyOneStep'])
@@ -772,6 +773,15 @@ $('body').on('click','[data-glow="graspingDead"].hexagon',function(e){
     const { hex, row } = $(this).data()
     if(myTurn)
         socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"raiseGraspingDead", hex, row, multiAction:mySide})
+})
+$('body').on('click','.smallCard.speed',function(e){
+    e.preventDefault()
+    if( Number($(this).children('.blighted.gameCard_num').text()) <= 0 && myTurn && $(this).parent('.list').hasClass(mySide) ){
+        const dad =  $(this).parent('.list').parent('.miniGameCard')
+        const boi = $($(`[data-tenmodel][data-name="${dad.data('name')}"][data-side="${dad.data('side')}"]`)[0])
+        const { hex, row } = boi.parent('.hexagon').data()
+        socket.emit('rolloSkill',{ socksMethod:"burnWalk", hex, row })
+    }
 })
 $('body').on('click','.tsunami-moveable',function(e){
     const { hex, row } = $(this).parent('.hexagon').data()

@@ -603,19 +603,18 @@ function rallyChampion(thiz){
 function _target({ hex, row }){//UNFINISHED, not annoyed enuff yet
     return $(`.hex_`)
 }
-function moveContentsOfHex(stringz,thiz){//"string for callback name" and $(thestinationHex)
+function moveContentsOfHex(stringz,thiz,$tM){//"string for callback name" and $(thestinationHex)
     const { hex, row } = thiz.data()
     socket.emit('rolloSkill',{ hex, row, socksMethod:stringz })
 }
-function propagate_BB_s($origin,$target){
-    const origin = extractBoons_Blights( $origin )
-    const { baim, bdamage, bspeed, bdodge, bprotection } = origin
+function propagate_BB_s($origin,attribPack,$target){
+    const { baim, bdamage, bspeed, bdodge, bprotection } = attribPack
     setBoons_Blights( $target, { baim, bdamage, bspeed, bdodge, bprotection } )
     if ( $origin.hasClass('activated') ) 
         $target.addClass('activated').attr('data-actionstaken',2)
     else {
         if( $target.data('name') !== "Landslide" )
-            $target.removeClass('activated').attr('data-actionstaken',Number($($origin[0]).attr('data-actionstaken')))
+            $target.removeClass('activated').attr('data-actionstaken',attribPack.actionstaken)
         else {
             add_action_taken("rallied",false,"Landslide")
         }
@@ -1470,4 +1469,27 @@ function turnTransition_ (dieRoll){
     if( myTurn )
         displayAnimatedNews({templateType:'info',msg0:'Your turn'})
     //need to add deifer and ultra resetter here
+}
+const rolloAndo = (that,name)=>{
+    add_action_taken(name)
+    $('[data-glow^="str"].hexagon').each(function(){
+      if ( $(this).attr('data-glow') !== $('.selectedModel').parent('.hexagon').attr('data-glow') ) {
+          $(this).removeAttr('data-glow')
+          $(this).children('.top').removeAttr('data-glow')
+          $(this).children('.bottom').removeAttr('data-glow')
+      }
+    })
+    $('[data-glow].hexagon').each(function(){
+        $(this).attr('data-glow','straitPaths')
+        $(this).children('.top').attr('data-glow','straitPaths')
+        $(this).children('.bottom').attr('data-glow','straitPaths')
+    })
+    $('.selectedModel').parent('.hexagon').removeAttr('data-glow')
+    $('.selectedModel').siblings('.top').removeAttr('data-glow')
+    $('.selectedModel').siblings('.bottom').removeAttr('data-glow')
+    if( !$('[data-glow="straitPaths"]').length ){
+        $(`.${name}_selected`).removeClass(`${name}_selected ${name}`)
+        if( !$('.roll').length )
+            current_ability_method = null
+    }
 }

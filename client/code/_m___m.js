@@ -67,7 +67,7 @@ var _m_ = {
     marchGuardBlack:($thiz)=>{
         add_action_taken('marchGuardBlack')
         un_glow()
-        $($thiz).removeClass('marchGuardBlack').removeClass(`marchGuardBlack_selected`)
+        $($thiz).removeClass('marchGuardBlack marchGuardBlack_selected')
         setTimeout(()=>$thiz.removeAttr('style'),100)
         if(!$('.marchGuardBlack').length ){
             current_ability_method = null
@@ -75,8 +75,9 @@ var _m_ = {
     },
     marchGuardWhite:($thiz)=>{
         add_action_taken('marchGuardWhite')
+        console.log('unglow below')
         un_glow()
-        $($thiz).removeClass('marchGuardWhite').removeClass(`marchGuardWhite_selected`)
+        $($thiz).removeClass('marchGuardWhite marchGuardWhite_selected')
         setTimeout(()=>$thiz.removeAttr('style'),100)
         if(!$('.marchGuardWhite').length ){
             current_ability_method = null

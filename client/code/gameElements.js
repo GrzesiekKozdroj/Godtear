@@ -508,8 +508,7 @@ function ripplingChoices(side) {
     `
 }
 function display_who_starts_next_phase(){
-    if( !am_I_winner() )
-        $('#gameScreen').append(`
+    return $('#gameScreen').append(`
             <div class="soCoolMistressPanel">
                 <div 
                     class="soCoolMistressPanelCrest" 

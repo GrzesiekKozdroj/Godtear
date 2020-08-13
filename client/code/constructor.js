@@ -118,9 +118,9 @@ const rosters =
     ]
 };
 roster = [
-    rosters.slayer[4].champ.name,
+    rosters.shaper[2].champ.name,
     rosters.maelstrom[2].champ.name, 
-    rosters.shaper[1].champ.name, 
+    rosters.guardian[1].champ.name, 
 ];
 
 for(let c in rosters){
@@ -192,7 +192,7 @@ const scenarios = [
         warbandTokens:{ left: 1, right: 22 },
         ruleset:function({ hex, row}){
             if( typeof GAME_SCENARIO.dieRoll === "object" ){
-                GAME_SCENARIO = 1
+                GAME_SCENARIO.dieRoll = 1
                 removeObjectiveHex(row,hex)
             } else if (GAME_SCENARIO.dieRoll === 1){
                 GAME_SCENARIO.dieRoll = 0
@@ -237,12 +237,14 @@ const scenarios = [
                     display_who_starts_next_phase()
             } else if ( hex && row ){
                 const dad = $(`.hex_${hex}_in_row_${row}`)
-                if(!dad.hasClass('objMoved') && dad.hasClass('objectiveGlow')){
+                if(!dad.hasClass('objMoved') && dad.hasClass('objectiveGlow')){//select and highlight movement
                     $('.objMoveableEndPh').removeClass('objMoveableEndPh')
                     dad.addClass('objMoveableEndPh')
                     un_glow()
                     highlightHexes({colour:'legendaryGlow',dist:1},$(dad.children()[0]))
-                }else if( dad.attr('data-glow') === 'legendaryGlow' && dad.children().length < 3){
+                }else if( dad.attr('data-glow') === 'legendaryGlow' && 
+                    dad.children().length < 3 && 
+                    !dad.hasClass('objectiveGlow') ){//move onto empty hex
                     removeObjectiveHex($('.objMoveableEndPh').data('row'),$('.objMoveableEndPh').data('hex'))
                     un_glow()
                     $('.objMoveableEndPh')
@@ -290,6 +292,7 @@ const scenarios = [
             turn_resetter(mySkillTrack,'black','whiteTeam')
             turn_resetter(opoSkillTrack,'white','blackTeam')
             turn_resetter(mySkillTrack,'white','whiteTeam')
+            console.log('knowledge init',!am_I_winner() , GAME_SCENARIO.dieRoll )
             if ( !am_I_winner() && GAME_SCENARIO.dieRoll ){
                 const opoWarbandToken = $(`.warbandToken.${opoSide}`)
                 const dadNum = opoWarbandToken.parent('.ladderBlock').data('block')
@@ -308,7 +311,7 @@ const scenarios = [
                             GAME_TURN - 1 === 4 ? 2 :
                             1)
                 }"]`)
-                display_who_starts_next_phase()
+                setTimeout(()=>display_who_starts_next_phase(),1500)
             } else if ( GAME_SCENARIO.dieRoll ){
                 const myWarbandToken = $(`.warbandToken.${mySide}`)
                 const dadNum = myWarbandToken.parent('.ladderBlock').data('block')
@@ -348,14 +351,19 @@ const scenarios = [
         turnEndMessage:(r)=>`QUEST<br/>looser place 1 objective on empty hex`,
         ruleset:function({ hex, row }){
             if( $(`.hex_${hex}_in_row_${row}`). children().length < 3 && GAME_SCENARIO.dieRoll ){
-                GAME_SCENARIO.dieRoll = 0
-                makeObjectiveHex(row, hex)
-                turn_resetter(opoSkillTrack,'black','blackTeam')
-                turn_resetter(mySkillTrack,'black','whiteTeam')
-                turn_resetter(opoSkillTrack,'white','blackTeam')
-                turn_resetter(mySkillTrack,'white','whiteTeam')
-                if ( !am_I_winner() )
-                    display_who_starts_next_phase()
+                const dad = $(`.hex_${hex}_in_row_${row}`)
+                un_glow()
+                highlightHexes( {colour:'whiteGlow', dist: 1}, dad.children('.top') )
+                if( $('[data-glow].objectiveGlow').length && dad.children().length < 3 && !dad.hasClass('objectiveGlow') ){
+                    GAME_SCENARIO.dieRoll = 0
+                    makeObjectiveHex(row, hex)
+                    turn_resetter(opoSkillTrack,'black','blackTeam')
+                    turn_resetter(mySkillTrack,'black','whiteTeam')
+                    turn_resetter(opoSkillTrack,'white','blackTeam')
+                    turn_resetter(mySkillTrack,'white','whiteTeam')
+                    if ( !am_I_winner() )
+                        display_who_starts_next_phase()
+                }
             }
         }
     },

@@ -642,8 +642,8 @@ $('body').on('click','.outflank',function(e){
 $('body').on('click','.marchGuardBlack',function(e){
     e.preventDefault()
     if(myTurn){
-        $('.selectedModel').removeClass('selectedModel')
-        $('.marchGuardBlack_selected').removeClass('marchGuardBlack_selected')
+       // $('.selectedModel').removeClass('selectedModel')
+        $('.marchGuardBlack_selected').removeClass('marchGuardBlack_selected marchGuardBlack')
         $(this).addClass('marchGuardBlack_selected')
         un_glow()
         highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
@@ -662,8 +662,8 @@ $('body').on('click','.rush[data-tenmodel]',function(e){
 $('body').on('click','.marchGuardWhite',function(e){
     e.preventDefault()
     if(myTurn){
-        $('.selectedModel').removeClass('selectedModel')
-        $('.marchGuardWhite_selected').removeClass('marchGuardWhite_selected')
+      //  $('.selectedModel').removeClass('selectedModel')
+        $('.marchGuardWhite_selected').removeClass('marchGuardWhite_selected marchGuardWhite')
         $(this).addClass('marchGuardWhite_selected')
         un_glow()
         highlightHexes ({colour:'legendaryGlow', dist:1},$(this))
@@ -790,7 +790,7 @@ $('body').on('click','.tsunami-moveable',function(e){
 $('body').on('click','.current',function(e){
     e.preventDefault()
     if(myTurn){
-        $('.selectedModel').removeClass('selectedModel')
+     //   $('.selectedModel').removeClass('selectedModel')
         $('.current_selected').removeClass('current_selected')
         $(this).addClass('current_selected')
         un_glow()

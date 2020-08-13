@@ -248,7 +248,7 @@ function removeAllBanners(team){
         })
         return B_S
     } else {
-        const extraCondid = (t,$B)=>{return(
+        const extraCondid = (t,$B)=>{return (
             $($(`[data-tenmodel].${t}`)[0]).data('side') === 'left' && $B.parent('.hexagon').data('row') < 7 ||
             $($(`[data-tenmodel].${t}`)[0]).data('side') === 'right' && $B.parent('.hexagon').data('row') > 6
         )}

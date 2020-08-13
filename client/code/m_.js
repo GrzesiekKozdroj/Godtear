@@ -313,7 +313,7 @@ var m_ = {
         const { hex, row, multiAction} = o
         const thiz = $(`.hex_${hex}_in_row_${row}`)
         const $model = $(graveyard[river[1]][river[3]][0])
-        if( standardWalk ({ $model, $destination:thiz }) ){
+        if( standardWalk ({ $model, $destination:thiz, rules:['rally'] }) ){
             $model.detach().appendTo(thiz).removeClass('death')
             graveyard[river[1]][river[3]].splice(0,1)
             if( $(`[data-tenmodel^="Retchlings"].${multiAction}`).length < 5 ){
@@ -333,7 +333,7 @@ var m_ = {
         let attribPack = extractBoons_Blights( tenModel )
         attribPack.actionstaken = tenModel.attr('data-actionstaken')
         const dedLaz = $(graveyard[river[1]][river[3]][0])
-        if(standardWalk ({ $model:dedLaz, $destination:thiz, rules:['recruit'] }) ){
+        if(standardWalk ({ $model:dedLaz, $destination:thiz }) ){
             $lazarus = dedLaz.detach().appendTo(thiz).removeClass('death')
             displayAnimatedNews({addInfo:'recruited',$attacker:$(thiz.children('[data-tenmodel]')[0]),templateType:'info'})
             graveyard[river[1]][river[3]].splice(0,1)
@@ -602,7 +602,6 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
             add_action_taken('swordSlash')
             if( onHit(aim, target,'sword','Sword Slash') )
@@ -654,7 +653,6 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
             add_action_taken('swordStrike')
             if( onHit(aim, target,'sword','Sword Strike') )

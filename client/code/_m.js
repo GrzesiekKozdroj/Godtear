@@ -538,7 +538,7 @@ const _m = {
         const { baim, bdamage } = extractBoons_Blights(origin)
         const { hex, row } = target
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
-        if($target.hasClass(`blackTeam`) && $target.hasClass('unitModel') )
+        if( $target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim:(5+baim), hurt:(5+bdamage), socksMethod:"soulCleave", hex, row, multiAction:mySide})
     },
     graveSummons:function(origin,target){

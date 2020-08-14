@@ -490,18 +490,19 @@ function meagREsetter(){
         deathMove_selected 
     `)
     $('#multi_choice_info_panel').remove()
-    const rem = [
-        'soCoolMistressPanel',
-        'deadlyCursePanel',
-        'titusChallenge',
-        'niaChallenge',
-        'showLikeWaterC',
-        'marchjet_selected',
-        'niaChallengeCrest'
-    ]
-    for(let ii = 0; ii < rem.length; ii++){
-        $("."+rem[ii]).remove()
-    }//.forEach(function(el){$('.'+el).remove()})
+    //below removed because it also caused  opposing player to loose choice of i.e. giving blight while using titus challenge
+    // const rem = [
+    //     'soCoolMistressPanel',
+    //     'deadlyCursePanel',
+    //     'titusChallenge',
+    //     'niaChallenge',
+    //     'showLikeWaterC',
+    //     'marchjet_selected',
+    //     'niaChallengeCrest'
+    // ]
+    // for(let ii = 0; ii < rem.length; ii++){
+    //     $("."+rem[ii]).remove()
+    // }//.forEach(function(el){$('.'+el).remove()})
     $('[data-DOOMqueue]').removeAttr('data-DOOMqueue')
 
     if(myTurn){

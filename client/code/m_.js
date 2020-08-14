@@ -705,7 +705,6 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
             add_action_taken('soulCleave')
             if( onHit(aim, target,'sword','Soul Cleave') ){

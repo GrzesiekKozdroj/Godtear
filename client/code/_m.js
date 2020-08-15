@@ -779,11 +779,11 @@ const _m = {
         }
     },
     underthrow:function (origin, target){
-        const { hex, row} = target
-        if( !pocketBox )
-            socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"underthrowR", hex, row })
+        const { hex, row } = target
+        if( !pocketBox && hex && row )
+            socket.emit('rolloSkill',{ socksMethod:"underthrowR", hex, row })
         if ( pocketBox )
-            socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"underthrowM", hex, row })
+            socket.emit('rolloSkill',{ socksMethod:"underthrowM", hex, row })
     },
     jet:function (origin, target){
         const { hex, row } = target

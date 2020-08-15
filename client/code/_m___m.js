@@ -184,6 +184,7 @@ var _m_ = {
     current:($thiz)=>{
         un_glow()
         $($thiz).removeClass('current').removeClass(`current_selected`)
+        add_action_taken(`current${phase==='white'?'White':'Black'}`)
         setTimeout(()=>$thiz.removeAttr('style'),100)
         if(!$('.current').length )
             current_ability_method = null

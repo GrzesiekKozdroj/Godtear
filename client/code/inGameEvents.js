@@ -8,8 +8,8 @@ const makeObjectiveHex =  (row,hex) => {
         .children('.bottom')
             .addClass(`objectiveGlow obj${random}`)
 }
-const removeObjectiveHex = (row,hex) => {
-    $(`[data-row=${row}][data-hex=${hex}]`)
+const removeObjectiveHex = (row,hex) => {console.log('rO')
+    $(`.hex_${hex}_in_row_${row}`)
         .removeClass('objectiveGlow obj1 obj2 obj3')
             .children()
                 .removeClass('objectiveGlow obj1 obj2 obj3')

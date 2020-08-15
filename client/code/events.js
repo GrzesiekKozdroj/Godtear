@@ -319,7 +319,8 @@ for(let K in m){
         }
     }
 }
-$('body').on('click','[data-glow]', function (){
+$('body').on('click','[data-glow].hexagon', function (e){
+    e.preventDefault()
     const thiz_target = $(this).data()
     const thiz_origin = $('.selectedModel')
     if(typeof current_ability_method === "function" && myTurn && TMER){
@@ -790,9 +791,9 @@ $('body').on('click','.tsunami-moveable',function(e){
 $('body').on('click','.current',function(e){
     e.preventDefault()
     if(myTurn){
-     //   $('.selectedModel').removeClass('selectedModel')
-        $('.current_selected').removeClass('current_selected')
-        $(this).addClass('current_selected')
+        $('.selectedModel').removeClass('selectedModel')
+        $('.current_selected').removeClass('current_selected current selectedModel')
+        $(this).addClass('current_selected selectedModel')
         un_glow()
         highlightHexes ({colour:'blueGlow', dist:3},$(this))
     }

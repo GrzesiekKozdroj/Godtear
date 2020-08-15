@@ -333,7 +333,7 @@ var m_ = {
         let attribPack = extractBoons_Blights( tenModel )
         attribPack.actionstaken = tenModel.attr('data-actionstaken')
         const dedLaz = $(graveyard[river[1]][river[3]][0])
-        if(standardWalk ({ $model:dedLaz, $destination:thiz }) ){
+        if(standardWalk ({ $model:dedLaz, $destination:thiz, rules:['resurrection'] }) ){
             $lazarus = dedLaz.detach().appendTo(thiz).removeClass('death')
             displayAnimatedNews({addInfo:'recruited',$attacker:$(thiz.children('[data-tenmodel]')[0]),templateType:'info'})
             graveyard[river[1]][river[3]].splice(0,1)
@@ -885,6 +885,11 @@ var m_ = {
     },
     phantomBanners:function(o){ // current_ability_methodDOESN"T GET NULL!!!!
         const { hex, row } = o
+        displayAnimatedNews({ templateType:'info',
+            $attacker:$('.selectedModel'), 
+            msg1:' declares ', 
+            skillName:'Pantom Banners', 
+            skillIcon:'self' })
         add_action_taken('legendary')
         if_moved_end_it()
         const $banner = $($(`.hex_${hex}_in_row_${row}`).children(`.claimedBanner`)[0])
@@ -1106,7 +1111,13 @@ var m_ = {
     calcify:function(o){
         const { hex, row } = o
         const $target = $($(`.hex_${hex}_in_row_${row}`).children('[data-name="Quartzlings"]')[0])
-        if ( $target.length && !$target.siblings('.smallCard').length ){
+        const neighbpour = () => {
+            highlightHexes({colour:'pointBlank', dist: 1}, $target)
+            const product = $('[data-glow="pointBlank"].objectiveGlow').length
+            un_glow()
+            return product
+        }
+        if ( $target.length && !$target.siblings('.smallCard').length && neighbpour() > 0 ){
             makeObjectiveHex(row,hex)
             displayAnimatedNews({templateType:'info', $attacker:$target, skillName:'Calcify', skillIcon:"self"})
             forceKill($target)
@@ -1172,18 +1183,18 @@ var m_ = {
         current_ability_method = null
         pocketBox = null
     },
-    underthrowR:function (o){ 
-        const { hex, row } = o
-        if ( !pocketBox ){
-            removeObjectiveHex(row,hex)
-            pocketBox = true
-            add_action_taken('underthrow')
+    underthrowR:function (o){
+        if ( !pocketBox && $(`.hex_${o.hex}_in_row_${o.row}`).hasClass('objectiveGlow') ){            
+            pocketBox = { hex:o.hex, row:o.row }        
+            removeObjectiveHex(pocketBox.row,pocketBox.hex)
         }
     },
     underthrowM:function(o){
         const { hex, row } = o
         const hexagon = $(`.hex_${hex}_in_row_${row}`)
         if ( pocketBox && hexagon.children().length < 3 && !hexagon.hasClass('objectiveGlow') ){
+            add_action_taken('underthrow')
+            removeObjectiveHex(pocketBox.row,pocketBox.hex)
             makeObjectiveHex(row,hex)
             un_glow()
             pocketBox = null

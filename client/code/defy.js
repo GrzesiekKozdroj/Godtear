@@ -339,7 +339,10 @@ var defy = {
     underthrow:()=>{
         if ( !pocketBox )
             uniCancel()
-        else if ( myTurn )
+        else if ( myTurn && pocketBox ){
+            makeObjectiveHex(pocketBox.row,pocketBox.hex)
+            pocketBox = null
+        } else 
             displayAnimatedNews({templateType:'info',msg0:'you have to place one objective hex'})
     },
     tsunami:()=>{
@@ -402,13 +405,6 @@ var defy = {
 
 }
 
-
-
-
-function currentDefy ( condition ){
-        $('.current').removeClass(`current current_selected`)
-        uniCancel()
-}
 function multiMovement_procedure(c,c_s,strng){
     if( !$('.' + c_s).length ){
         un_glow()
@@ -420,12 +416,18 @@ function multiMovement_procedure(c,c_s,strng){
     }
     $('.' + c_s).removeClass(c + ' ' +c_s)
 }
+function currentDefy(){
+        multiMovement_procedure( 'current', 'current_selected', 'current cancelled')
+        un_glow()
+}
 function rsDefy(){
     multiMovement_procedure( 'summonsWalk', 'summonsWalk_selected', 'Royal Summons ended')
     $('.soCoolMistressPanel').remove()
 }
 function meagREsetter(){
     $(".smallCard").removeClass(`
+        current 
+        current_selected 
         skilling_declaration 
         forwardMinions 
         forwardMinions_selected 

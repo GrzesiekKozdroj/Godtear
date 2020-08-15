@@ -118,9 +118,9 @@ const rosters =
     ]
 };
 roster = [
-    rosters.shaper[2].champ.name,
-    rosters.maelstrom[2].champ.name, 
-    rosters.guardian[1].champ.name, 
+    rosters.guardian[3].champ.name,
+    rosters.slayer[1].champ.name, 
+    rosters.guardian[2].champ.name, 
 ];
 
 for(let c in rosters){
@@ -191,10 +191,11 @@ const scenarios = [
         turnEndMessage:(r)=>`DEATH<br/>looser removes 2 objectives`,
         warbandTokens:{ left: 1, right: 22 },
         ruleset:function({ hex, row}){
-            if( typeof GAME_SCENARIO.dieRoll === "object" ){
+            const $hex = $(`.hex_${hex}_in_row_${row}`).hasClass('objectiveGlow')
+            if( typeof GAME_SCENARIO.dieRoll === "object" && $hex ){
                 GAME_SCENARIO.dieRoll = 1
                 removeObjectiveHex(row,hex)
-            } else if (GAME_SCENARIO.dieRoll === 1){
+            } else if (GAME_SCENARIO.dieRoll === 1 && $hex ){
                 GAME_SCENARIO.dieRoll = 0
                 removeObjectiveHex(row,hex)
                 if ( !am_I_winner() )
@@ -203,7 +204,8 @@ const scenarios = [
                 turn_resetter(mySkillTrack,'black','whiteTeam')
                 turn_resetter(opoSkillTrack,'white','blackTeam')
                 turn_resetter(mySkillTrack,'white','whiteTeam')
-            }
+            } else if( !$hex )
+                displayAnimatedNews({templateType:'info', msg0:'remove objective hex'})
         }
     },
     {

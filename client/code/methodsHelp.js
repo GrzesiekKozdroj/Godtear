@@ -624,6 +624,11 @@ function shootAndScoot(){
     highlightHexes({colour:'shootAndScoot',dist:1})
     $('.selectedModel').addClass('shootAndScoot_selected')
     cancellerName = 'shootAndScoot'
+    displayAnimatedNews({ templateType:'info',
+        $attacker:$('.selectedModel'), 
+        msg1:' triggers ', 
+        skillName:'Shoot & Scoot', 
+        skillIcon:'self' })
 }
 function buildSkillTrack(roster){//['name','name','name']
     let premadeproduct = {}
@@ -981,16 +986,17 @@ function likeWater_(o){
 }
 function _current(origin,target){
     const { hex, row } = target
-    socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:`current${phase==='white'?'White':'Black'}`, hex, row})
+    socket.emit('rolloSkill',{ socksMethod:`current${phase==='white'?'White':'Black'}`, hex, row})
 }
 function current_(o){
     const {  hex, row } = o
     const singleSpecimen = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
     const team = singleSpecimen.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
     if(!$('.current').length){
-        add_action_taken(`current${phase==='white'?'White':'Black'}`)
+        $('.selectedModel').addClass('current_selected current')
         $(`[data-name="${singleSpecimen.data('name')}"].${team}`).addClass('current')
         un_glow()
+        highlightHexes({ colour:'blueGlow', dist:3 })
         displayAnimatedNews({templateType:'info', msg0:'current'})
     }
 }

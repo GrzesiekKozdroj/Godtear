@@ -106,13 +106,13 @@ function makeGameBoard(o,coin){
     beginBattle()
     buildLadder()
     //---------------------------------------------TEZT____PHASE-----------------------------------
-      QUICK_DEEPLOY()//dont forget EVENTS.js
-     setTimeout(()=>{
-        //phase='black';
-        //myNextPhase='black';
-        //$(".plotPhase").removeClass("plotPhase").addClass("clashPhase")
-    // //     //$('#gameScreen').append(wellPlayed());
-          setTimeout(()=>{
+    //   QUICK_DEEPLOY()//dont forget EVENTS.js
+    //  setTimeout(()=>{
+    //     //phase='black';
+    //     //myNextPhase='black';
+    //     //$(".plotPhase").removeClass("plotPhase").addClass("clashPhase")
+    // // //     //$('#gameScreen').append(wellPlayed());
+    //       setTimeout(()=>{
     //         // $(`.cardsContainer`)
     //         //     .removeClass(`hinge-in-from-left hinge-in-from-right mui-enter mui-enter-active`)
     //         //     .addClass(`hinge-out-from-left hinge-out-from-right mui-leave mui-leave-active`)
@@ -121,13 +121,13 @@ function makeGameBoard(o,coin){
     //         //     .removeClass('hinge-out-from-top mui-leave mui-leave-active')
     //         //     .addClass("hinge-in-from-top mui-enter mui-enter-active")
     //         //GAME_SCENARIO = scenarios[4]
-             $('.unitModel').each(function(){
-                 if( $(this).attr('data-name')!=="Grimgut")
-                     $(this).attr('data-actionstaken',2).addClass('activated')
-             })
-          },700)
-    //  //   console.log('timeout')
-        },2900)
+    //          $('.unitModel').each(function(){
+    //              if( $(this).attr('data-name')!=="Grimgut")
+    //                  $(this).attr('data-actionstaken',2).addClass('activated')
+    //          })
+    //       },700)
+    // //  //   console.log('timeout')
+    //     },2900)
     //----------------------------------------------------------------------------------------------
     GEEK[mySide]  = GEEK_MAKER(roster, opoRoster)
     GEEK[opoSide] = GEEK_MAKER(opoRoster, roster)

@@ -346,15 +346,8 @@ var defy = {
             displayAnimatedNews({templateType:'info',msg0:'you have to place one objective hex'})
     },
     tsunami:()=>{
-        if( !$('.tsunami-selected').length ){
-            un_glow()
-            $('.tsunami-moveable').removeClass('tsunami-moveable')
-        }
-        if( !$('.tsunami-moveable').length ){
-            displayAnimatedNews({templateType:'info',skillName:'Tsunami', skillIcon:'star', msg2:' Ends'})
-            uniCancel()
-        }
-        $('.tsunami-selected').removeClass('tsunami-moveable tsunami-selected')
+        un_glow()
+        multiMovement_procedure('tsunami-moveable','tsunami-selected','Tsunami cancelled')
     },
     shimmer:()=>uniCancel(),
     calcify:()=>uniCancel(),

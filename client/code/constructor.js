@@ -31,7 +31,7 @@ class Character{
     //this.doing = 'not used';
     this.stepsGiven = name !== "Mournblade" && role === "champion" ? 4 : 
         name === "Retchlings" ? 0 :
-        name === "Landslide" || name === "YoungDragons" ? 2 :
+        (name === "Landslide" || name === "YoungDragons") ? 2 :
         1;
     }
 //methods
@@ -118,9 +118,9 @@ const rosters =
     ]
 };
 roster = [
-    rosters.guardian[3].champ.name,
+    rosters.guardian[2].champ.name,
     rosters.slayer[1].champ.name, 
-    rosters.guardian[2].champ.name, 
+    rosters.shaper[2].champ.name, 
 ];
 
 for(let c in rosters){

@@ -855,7 +855,7 @@ var m_ = {
                 healLife( $('.selectedModel[data-name="Finvarr"][data-tenmodel]'), 1)
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
-                        moveLadder(target,1 + target.data('stepsgiven'))
+                        moveLadder(target, target.data('stepsgiven'))
                     else null
             }
         }
@@ -1219,12 +1219,15 @@ var m_ = {
         const $targetHex = $(`.hex_${hex}_in_row_${row}`)
         //un_glow()
         add_action_taken('legendary')
-        if ( $targetHex.attr('data-glow') === 'greenGlow' )
+        if ( 
+            $targetHex.attr('data-glow') === 'greenGlow' && 
+            standardWalk ({ $model:$('.selectedModel'), $destination:$targetHex, rules: [false]})
+        )
             makeAnim($('.selectedModel'),$targetHex,_m_.tsunami)
         if ( 
             $('.tsunami-selected').length && 
             $targetHex.attr('data-glow') === 'legendaryGlow' && 
-            onlyOneStep($targetHex, $('.tsunami-selected') )
+            standardWalk ({ $model:$('.tsunami-selected'), $destination:$targetHex, rules: ['onlyOneStep']})
         )
             makeAnim($('.tsunami-selected'),$targetHex,_m_.tsunamiMove)
     },
@@ -2390,7 +2393,7 @@ var m_ = {
                 .removeClass('blighted')
             $(`#dummy_contain.${jees.data('side')}`).find('.champion.rally').remove()
             displayAnimatedNews({templateType:'info', $attacker:jees, msg1:' rallies'})
-            counterMaker( $thiz, 'ralliesRecruits' )
+            counterMaker( jees, 'ralliesRecruits' )
         }
         if(jees.data('name')==='Shayle')shayle_takes_action()
     },

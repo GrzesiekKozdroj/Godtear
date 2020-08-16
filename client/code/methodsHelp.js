@@ -102,26 +102,26 @@ function slayerPoints(target){
         return target.data('stepsgiven')
 }
 const onHit = (aim, target, weapon, skillName) => {
-    const target_dodge = Number(target.attr('data-dodge')) + checkIfNotMorrigan(target,'bdodge')
-    aim.splice(0,fearsome() + superiority(target))
-    const aim_total = aim.reduce((a,b)=>a+b,0)
-    setBoons_Blights($('.selectedModel'),{baim:0})
-    setBoons_Blights(target,{bdodge:0})
-    animateWeapon(target, weapon)
-    const product = aim_total  >= target_dodge
-    percentileMarker(target,'dodgeability',!product)
-    percentileMarker($('.selectedModel'),'accuracy',product)
-    pixkedAtMarker($('.selectedModel'),'favouriteToHit',target)
-    displayAnimatedNews({
-        dieRoll:aim,
-        templateType:'attack',
-        rollOutcome:product,
-        $victim:target,
-        $attacker:$('.selectedModel'),
-        skillName,
-        skillIcon:'skull'
-    })
-    return product
+        const target_dodge = Number(target.attr('data-dodge')) + checkIfNotMorrigan(target,'bdodge')
+        aim.splice(0,fearsome() + superiority(target))
+        const aim_total = aim.reduce((a,b)=>a+b,0)
+        setBoons_Blights($('.selectedModel'),{baim:0})
+        setBoons_Blights(target,{bdodge:0})
+        animateWeapon(target, weapon)
+        const product = aim_total  >= target_dodge
+        percentileMarker(target,'dodgeability',!product)
+        percentileMarker($('.selectedModel'),'accuracy',product)
+        pixkedAtMarker($('.selectedModel'),'favouriteToHit',target)
+        displayAnimatedNews({
+            dieRoll:aim,
+            templateType:'attack',
+            rollOutcome:product,
+            $victim:target,
+            $attacker:$('.selectedModel'),
+            skillName,
+            skillIcon:'skull'
+        })
+        return product
 }//<--should take $(origin) and reset its baim and take target and reset its bdodge
 const doDamage = (hurt, target) => {
     const target_protection = Number(target.attr('data-protection')) + checkIfNotMorrigan(target,'bprotection')
@@ -289,7 +289,7 @@ const setBoons_Blights = (origin,props,local = false, {N , I} = false)=>{//$(), 
     for(let key in props){
         let boon_blight = props[key]
             subject.each(function(){
-                if( boon_blight <= 1 && boon_blight >= -1 ){
+                if( boon_blight <= 1 && boon_blight >= -1 && ( !$(this).hasClass('death') || boon_blight === 0 ) ){
                     $(this).attr(`data-${key}`,boon_blight) 
                     let val = $(this).attr(`data-${[...key].slice(1).join('')}`)
                    // if(val){
@@ -1184,8 +1184,8 @@ function standardWalk ({ $model, $destination, rules }){// rules is a array ['on
         )
     } 
     const OPTIONAL_RULES = ()=>{
-        const ONE_STEP = rules.includes('onlyOneStep') ? onlyOneStep($destination, $model) : true
-        const ACTIONS_C = rules.includes('checkActionsCount') ? check_actions_count() : true
+        const ONE_STEP = rules && rules.includes('onlyOneStep') ? onlyOneStep($destination, $model) : true
+        const ACTIONS_C = rules && rules.includes('checkActionsCount') ? check_actions_count() : true
         return ONE_STEP && ACTIONS_C
     }
     const NOT_ON_MY_BANNER = ()=> !$destination.children(`.claimedBanner.${team}`).length

@@ -173,7 +173,7 @@ var _m_ = {
             highlightHexes({colour:'legendaryGlow',dist:1},$thiz)
         } else {
             un_glow()
-            $($thiz).removeClass(`tsunami-selected`)
+            $($thiz).removeClass(`tsunami-selected tsunami-moveable`)
             setTimeout(()=>$thiz.removeAttr('style'),100)
             if(!$('.tsunami-moveable').length ){
                 current_ability_method = null

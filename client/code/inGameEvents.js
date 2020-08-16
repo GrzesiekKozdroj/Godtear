@@ -236,27 +236,29 @@ const onlyOneStep = (thiz, origin = $('.selectedModel') ) => {
     }
 }
 
-function removeAllBanners(team){
+function removeAllBanners(team){console.log('team: ',team)
     let B_S = 0
     if( GAME_SCENARIO.name !== "Quest" ){
         $(`.claimedBanner.${team}`).each(function(){
-            if ( $(this).data('banKol') === 'blue' )
+            if ( $(this).data('bankol') === 'blue' )
                 B_S += 5
             else
                 B_S += 4
+            console.log('color: ',$(this).data('bankol'),' score: ', B_S)
             m.universal.stepOnBanner($($(`[data-tenmodel].${team}`)[0]), $(this).parent('.hexagon'), false)
         })
         return B_S
     } else {
-        const extraCondid = (t,$B)=>{return (
+        const extraCondid = (t,$B)=>{return !(
             $($(`[data-tenmodel].${t}`)[0]).data('side') === 'left' && $B.parent('.hexagon').data('row') < 7 ||
             $($(`[data-tenmodel].${t}`)[0]).data('side') === 'right' && $B.parent('.hexagon').data('row') > 6
         )}
         $(`.claimedBanner.${team}`).each(function(){
-            if ( $(this).data('banKol') === 'blue'  && extraCondid(team,$(this)))
+            if ( $(this).data('bankol') === 'blue'  && extraCondid(team,$(this)))
                 B_S += 5
             else if ( extraCondid(team,$(this)) )
                 B_S += 4
+            console.log('color: ',$(this).data('bankol'),' score: ', B_S,' mySide? ',extraCondid(team,$(this)))
             m.universal.stepOnBanner($($(`[data-tenmodel].${team}`)[0]), $(this).parent('.hexagon'), false)
         })
         return B_S

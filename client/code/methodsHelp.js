@@ -1453,8 +1453,8 @@ function turnTransition_ (dieRoll){
     ){
         myTurn = false
         phase='end' 
-        let myBanners = removeAllBanners('whiteTeam')
-        let opBanners = removeAllBanners('blackTeam')
+        let myBanners = removeAllBanners('blackTeam')
+        let opBanners = removeAllBanners('whiteTeam')
         moveLadder($($('[data-tenmodel].whiteTeam')[0]), myBanners - opBanners)
         $('.clashPhase').removeClass('clashPhase').addClass('endPhase')
         myNextPhase = 'white'

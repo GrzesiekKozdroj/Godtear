@@ -1034,7 +1034,7 @@ var m_ = {
         current_ability_method = null
     },
     marchNia:function(o){
-        displayAnimatedNews({templateType:'info', $attacker:$('.selectedModel'), skillName:" March", skillIcon:'self'})
+        displayAnimatedNews({templateType:'info', $attacker:$('.selectedModel'), skillName:"March", skillIcon:'self'})
     },
     geodeZ:function(o){
             const { key } = o
@@ -2193,7 +2193,6 @@ var m_ = {
         phase = 'white'
         myNextPhase = 'white'
         $('.endPhase').removeClass('endPhase').addClass('plotPhase')
-        update_basket()
         turn_resetter(opoSkillTrack,'white','blackTeam')
         turn_resetter(mySkillTrack,'white','whiteTeam')
     },

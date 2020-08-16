@@ -393,7 +393,11 @@ var defy = {
     bite:()=>uniCancel(),
     fieryBreath:()=>uniCancel(),
     rallied:()=>uniCancel(),
-    deathMove:()=>multiMovement_procedure('deathMove','deathMove_selected','death move cancelled'),
+    deathMove:()=>{
+        multiMovement_procedure('deathMove','deathMove_selected','death move cancelled')
+        if( $('.shootAndScoot_selected').length )
+            shootAndScoot()
+    },
     bannerClaim:()=>uniCancel(),
 
 }

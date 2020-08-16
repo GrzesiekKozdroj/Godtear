@@ -118,9 +118,9 @@ const rosters =
     ]
 };
 roster = [
-    rosters.guardian[2].champ.name,
+    rosters.maelstrom[2].champ.name,
     rosters.slayer[1].champ.name, 
-    rosters.shaper[2].champ.name, 
+    rosters.shaper[1].champ.name, 
 ];
 
 for(let c in rosters){
@@ -150,8 +150,8 @@ const scenarios = [
         warbandTokens:{ left: 1, right: 22 },
         ruleset:function({ hex, row }){
             const roll = GAME_SCENARIO.dieRoll[0] + 2
-            if ( roll > 0 ){
-                const dad = $(`.hex_${hex}_in_row_${row}`)
+            const dad = $(`.hex_${hex}_in_row_${row}`)
+            if ( roll > 0 && !dad.hasClass('objectiveGlow') ){
                 un_glow()
                 highlightHexes( {colour:'whiteGlow', dist: 1}, dad.children('.top') )
                 if( $('[data-glow].objectiveGlow').length && dad.children().length < 3 ){
@@ -166,6 +166,7 @@ const scenarios = [
                         turn_resetter(opoSkillTrack,'white','blackTeam')
                         turn_resetter(mySkillTrack,'white','whiteTeam')
                     }
+                    un_glow()
                 } else 
                     displayAnimatedNews({templateType:'info',msg0:'must target empty hexes, adjacent to objective hexes'})
                 un_glow()

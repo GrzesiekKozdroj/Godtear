@@ -124,7 +124,7 @@ var _m_ = {
         $('.phantomBanners_selected').removeClass('phantomBanners_selected')
     },
     marchNia:()=>{
-        marchExec('Nia')
+        marchExec('Nia','marchNia')
     },
     headbutt:()=>{
         current_ability_method = null
@@ -374,6 +374,8 @@ var _m_ = {
                 current_ability_method = null
                 pocketBox = null
             }
+            if( $('.shootAndScoot_selected').length )
+                shootAndScoot()
         }
     }
 }

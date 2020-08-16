@@ -108,9 +108,9 @@ function makeGameBoard(o,coin){
     //---------------------------------------------TEZT____PHASE-----------------------------------
     //   QUICK_DEEPLOY()//dont forget EVENTS.js
     //  setTimeout(()=>{
-    //     //phase='black';
-    //     //myNextPhase='black';
-    //     //$(".plotPhase").removeClass("plotPhase").addClass("clashPhase")
+    //     phase='black';
+    //   myNextPhase='black';
+     //  $(".plotPhase").removeClass("plotPhase").addClass("clashPhase")
     // // //     //$('#gameScreen').append(wellPlayed());
     //       setTimeout(()=>{
     //         // $(`.cardsContainer`)
@@ -127,7 +127,7 @@ function makeGameBoard(o,coin){
     //          })
     //       },700)
     // //  //   console.log('timeout')
-    //     },2900)
+     //    },2900)
     //----------------------------------------------------------------------------------------------
     GEEK[mySide]  = GEEK_MAKER(roster, opoRoster)
     GEEK[opoSide] = GEEK_MAKER(opoRoster, roster)

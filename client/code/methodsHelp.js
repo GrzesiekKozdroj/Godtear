@@ -207,20 +207,25 @@ const forceKill = (target) => {
                     [...graveyard[target.data('side')][target.data('name')], target.removeClass('.death').detach()]
             else
                 graveyard[target.data('side')][target.data('name')] = [target.removeClass('.death').detach()]
+            graveyard[target.data('side')][target.data('name')]
+                .sort(function(a, b){
+                    return ( Number($(a).data('tenmodel')[$(a).data('tenmodel').length-1]) - 
+                             Number($(b).data('tenmodel')[$(a).data('tenmodel').length-1])   )
+                })
             } else if( target.data('type')==='champion' ){
-            //gotta emit champ death
-            if ( myTurn )cancellerName = 'deathMove' //UNTESTEDO
-            if( !$('.deathMove_selected').length ){
-                target.addClass('deathMove_selected')
-                un_glow()
-                highlightHexes({colour:'deathMove',dist:2},target)
-                const { name, side } = target.data()
-                $(`#dummy_contain.${side}`).find('.mini-card-actions').append( dedChamp(name, side) )
-            }else
-                target.addClass('deathMove')
-            //resurrect Mournblade
-            if(Number($(`[data-name="Mournblade"].${mySide}[data-tenmodel]`).attr('data-healthleft')) === 0 &&
-            target.hasClass(opoSide)){//it should be presented as a option.
+                //gotta emit champ death
+                if ( myTurn )cancellerName = 'deathMove' //UNTESTEDO
+                    if( !$('.deathMove_selected').length ){
+                        target.addClass('deathMove_selected')
+                        un_glow()
+                        highlightHexes({colour:'deathMove',dist:2},target)
+                        const { name, side } = target.data()
+                        $(`#dummy_contain.${side}`).find('.mini-card-actions').append( dedChamp(name, side) )
+                    }else
+                        target.addClass('deathMove')
+                //resurrect Mournblade
+                if(Number($(`[data-name="Mournblade"].${mySide}[data-tenmodel]`).attr('data-healthleft')) === 0 &&
+                    target.hasClass(opoSide)){//it should be presented as a option.
                 $(`[data-name="Mournblade"].${mySide}[data-tenmodel]`)
                     .attr('data-healthleft',1)
                     .removeClass('death')
@@ -229,7 +234,7 @@ const forceKill = (target) => {
                     $attacker: $(`[data-name="Mournblade"].${mySide}[data-tenmodel]`), 
                     msg2:' rallies' 
                 }),700)
-            }
+                }
         }
     }, 700)
 }//<---killed units and champs need to give up their boons and blights, what about resurrected units??
@@ -1225,7 +1230,7 @@ function update_basket(){
     for(let i = 1; i <= OP_SCORE; i++){
         $(`.treasureBox.${opoSide}`).children(`.gem${i}`).removeClass('none')
     }
-    for(let i = 1; i<= MY_SCORE; i++){
+    for(let i = 1; i <= MY_SCORE; i++){
         $(`.treasureBox.${mySide}`).children(`.gem${i}`).removeClass('none')
     }
     //update scores seen on board, make flashy animatoin
@@ -1245,6 +1250,7 @@ function am_I_winner(){
     )
 }
 function end_GAME_check(){
+    update_basket()
     if( OP_SCORE > 4 || MY_SCORE > 4 ){
         $(`.cardsContainer`)
             .removeClass(`hinge-in-from-left hinge-in-from-right mui-enter mui-enter-active`)

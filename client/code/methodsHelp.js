@@ -1143,10 +1143,6 @@ function brainFreeze(){
     setBoons_Blights(victim, { bdodge:(Number(victim.attr('data-bdodge')) -1) },0,{N:'Brain Freeze',I:'cogs'})
 }
 function validateBannerPlacement({ $model, $destination, rules }){
-    //tongue tow:    //"Move a friendly banner that is within range up to 1 hex toward this froglodyte"
-    //death wind:    //"If Mournblade's banner is within range, place it on an objective hex within range."
-    //phantom banners:    //"Choose any number of friendly banners within range. Place them on objective hexes within range."
-    //summary:    //I nned it to be empty objective hex, thats all
     const product = ( $destination.children().length < 3 && $destination.hasClass('objectiveGlow') )
     if ( product ) 
         return true
@@ -1250,7 +1246,6 @@ function am_I_winner(){
     )
 }
 function end_GAME_check(){
-    update_basket()
     if( OP_SCORE > 4 || MY_SCORE > 4 ){
         $(`.cardsContainer`)
             .removeClass(`hinge-in-from-left hinge-in-from-right mui-enter mui-enter-active`)
@@ -1262,6 +1257,7 @@ function end_GAME_check(){
             .addClass("hinge-in-from-top mui-enter mui-enter-active")
         ,700)
     }
+    update_basket()
 }
 function animateWeapon($target, weapon){
     const agroDad = $('.selectedModel').parent('.hexagon')

@@ -132,12 +132,29 @@ for(let c in rosters){
         group[g].grunt.unitName = group[g].champ.name
     }
 }
+const ONLY_EMPTY_HEX = (thiz)=>!thiz.hasClass('objectiveGlow') && thiz.children().length < 3
+const ONLY_ADJACENT_HEX = (thiz)=>{
+    un_glow()
+    highlightHexes( {colour:'whiteGlow', dist: 1}, thiz.children('.top') )
+    return $('.objectiveGlow[data-glow="whiteGlow"]').length
+}
+const ONLY_OBJHEX = (thiz)=>thiz.hasClass('objectiveGlow')
+const NO_INTERFERENCERS = (thiz)=>!thiz.attr('data-glow')!=='rockFormation'
+const RARE_CASE = (thiz)=>true
+const PLACEMENT_RULESET = ({ empty = false, adjacent = false, objItself = false }, t) => {
+    return Boolean( 
+        NO_INTERFERENCERS(thiz) && 
+        (empty ? ONLY_EMPTY_HEX(t) : true) && 
+        (adjacent ? ONLY_ADJACENT_HEX(t) : true) &&
+        (objItself ? ONLY_OBJHEX(t) : true)
+    )
+}
 const scenarios = [
     {
         name:"Life",
         desc:`In the end phase of each turn, the player who lost the turn rolls a die and adds 2 to the result. Then they 
             gather that many objective hexes and place them one by one on empty hexes that are adjacent to other objective 
-            hexes. In the rare case that there are no empty hexes adjacent to objective hexes, they may place the nex objective 
+            hexes. In the rare case that there are no empty hexes adjacent to objective hexes, they may place the next objective 
             hex on any empty hex.`,
         layout:{
             greenHexes:[ [11,'row'], [12,'row'] ],
@@ -151,31 +168,21 @@ const scenarios = [
         ruleset:function({ hex, row }){
             const roll = GAME_SCENARIO.dieRoll[0] + 2
             const dad = $(`.hex_${hex}_in_row_${row}`)
-            if ( roll > 0 && !dad.hasClass('objectiveGlow') ){
+            if( roll > 0 && PLACEMENT_RULESET( { empty:1, adjacent:1 }, dad ) ){
+                makeObjectiveHex(row, hex)
+                GAME_SCENARIO.dieRoll[0]--
+                if(GAME_SCENARIO.dieRoll[0] < -1){
+                    GAME_SCENARIO.dieRoll = 0
+                    if ( !am_I_winner() )
+                        display_who_starts_next_phase()
+                    turn_resetter(opoSkillTrack,'black','blackTeam')
+                    turn_resetter(mySkillTrack,'black','whiteTeam')
+                    turn_resetter(opoSkillTrack,'white','blackTeam')
+                    turn_resetter(mySkillTrack,'white','whiteTeam')
+                }
                 un_glow()
-                highlightHexes( {colour:'whiteGlow', dist: 1}, dad.children('.top') )
-                if( $('[data-glow].objectiveGlow').length && dad.children().length < 3 ){
-                    makeObjectiveHex(row, hex)
-                    GAME_SCENARIO.dieRoll[0]--
-                    if(GAME_SCENARIO.dieRoll[0] < -1){
-                        GAME_SCENARIO.dieRoll = 0
-                        if ( !am_I_winner() )
-                            display_who_starts_next_phase()
-                        turn_resetter(opoSkillTrack,'black','blackTeam')
-                        turn_resetter(mySkillTrack,'black','whiteTeam')
-                        turn_resetter(opoSkillTrack,'white','blackTeam')
-                        turn_resetter(mySkillTrack,'white','whiteTeam')
-                    }
-                    un_glow()
-                } else 
-                    displayAnimatedNews({templateType:'info',msg0:'must target empty hexes, adjacent to objective hexes'})
-                un_glow()
-            }
-            // need way to track how many hexes been moved
-            // need way to only allow looser to move hexes
-            // need to verify if hex is empty
-            // need to check if there are adjacent obj hexes
-            // need to place new hex and tell other player about it
+            } else 
+                displayAnimatedNews({templateType:'info',msg0:'must target empty hexes, adjacent to objective hexes'})
         }
     },
     {
@@ -193,10 +200,10 @@ const scenarios = [
         warbandTokens:{ left: 1, right: 22 },
         ruleset:function({ hex, row}){
             const $hex = $(`.hex_${hex}_in_row_${row}`).hasClass('objectiveGlow')
-            if( typeof GAME_SCENARIO.dieRoll === "object" && $hex ){
+            if( typeof GAME_SCENARIO.dieRoll === "object" && PLACEMENT_RULESET( { objItself:1 }, $hex )  ){
                 GAME_SCENARIO.dieRoll = 1
                 removeObjectiveHex(row,hex)
-            } else if (GAME_SCENARIO.dieRoll === 1 && $hex ){
+            } else if (GAME_SCENARIO.dieRoll === 1 && PLACEMENT_RULESET( { objItself:1 }, $hex ) ){
                 GAME_SCENARIO.dieRoll = 0
                 removeObjectiveHex(row,hex)
                 if ( !am_I_winner() )
@@ -226,7 +233,7 @@ const scenarios = [
         ruleset:function({ hex, row }){
             GAME_SCENARIO.dieRoll = typeof GAME_SCENARIO.dieRoll !== 'number' ? 
                 GAME_SCENARIO.dieRoll.reduce((a,c)=>a+c) : GAME_SCENARIO.dieRoll
-            if( !GAME_SCENARIO.dieRoll ){
+            if( !GAME_SCENARIO.dieRoll && NO_INTERFERENCERS( $(`.hex_${hex}_in_row_${row}`) )){
                 //end the skill here
                 GAME_SCENARIO.dieRoll = 0
                 turn_resetter(opoSkillTrack,'black','blackTeam')
@@ -238,7 +245,7 @@ const scenarios = [
                 un_glow()
                 if ( !am_I_winner() )
                     display_who_starts_next_phase()
-            } else if ( hex && row ){
+            } else if ( hex && row && NO_INTERFERENCERS( $(`.hex_${hex}_in_row_${row}`)) ){
                 const dad = $(`.hex_${hex}_in_row_${row}`)
                 if(!dad.hasClass('objMoved') && dad.hasClass('objectiveGlow')){//select and highlight movement
                     $('.objMoveableEndPh').removeClass('objMoveableEndPh')
@@ -295,7 +302,6 @@ const scenarios = [
             turn_resetter(mySkillTrack,'black','whiteTeam')
             turn_resetter(opoSkillTrack,'white','blackTeam')
             turn_resetter(mySkillTrack,'white','whiteTeam')
-            console.log('knowledge init',!am_I_winner() , GAME_SCENARIO.dieRoll )
             if ( !am_I_winner() && GAME_SCENARIO.dieRoll ){
                 const opoWarbandToken = $(`.warbandToken.${opoSide}`)
                 const dadNum = opoWarbandToken.parent('.ladderBlock').data('block')
@@ -353,7 +359,11 @@ const scenarios = [
         dieRoll:0,
         turnEndMessage:(r)=>`QUEST<br/>looser place 1 objective on empty hex`,
         ruleset:function({ hex, row }){
-            if( $(`.hex_${hex}_in_row_${row}`). children().length < 3 && GAME_SCENARIO.dieRoll ){
+            if( 
+                $(`.hex_${hex}_in_row_${row}`). children().length < 3 && 
+                GAME_SCENARIO.dieRoll &&
+                NO_INTERFERENCERS( $(`.hex_${hex}_in_row_${row}`))
+            ){
                 const dad = $(`.hex_${hex}_in_row_${row}`)
                 un_glow()
                 highlightHexes( {colour:'whiteGlow', dist: 1}, dad.children('.top') )
@@ -389,7 +399,7 @@ const scenarios = [
         dieRoll:0,
         turnEndMessage:(r)=>`CHAOS<br/>looser place 1 objective on empty hex`,
         ruleset:function({ hex, row }){
-            if( $(`.hex_${hex}_in_row_${row}`). children().length < 3 && GAME_SCENARIO.dieRoll){
+            if( PLACEMENT_RULESET({ empty:1 }, $(`.hex_${hex}_in_row_${row}`)) && GAME_SCENARIO.dieRoll){
                 GAME_SCENARIO.dieRoll = 0
                 makeObjectiveHex(row, hex)
                 turn_resetter(opoSkillTrack,'black','blackTeam')

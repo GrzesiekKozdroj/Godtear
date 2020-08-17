@@ -323,7 +323,7 @@ $('body').on('click','[data-glow].hexagon', function (e){
     e.preventDefault()
     const thiz_target = $(this).data()
     const thiz_origin = $('.selectedModel')
-    if(typeof current_ability_method === "function" && myTurn && TMER){
+    if(typeof current_ability_method === "function" && myTurn && TMER && !$(this).children('.death').length ){
         TMER = false
         setTimeout(()=>TMER = true, 800)
         current_ability_method(thiz_origin, thiz_target)

@@ -1224,10 +1224,10 @@ function standardPush ({$model,$destination,rules}){// rules is a array ['onlyOn
 }
 function update_basket(){
     for(let i = 1; i <= OP_SCORE; i++){
-        $(`.treasureBox.${opoSide}`).children(`.gem${i}`).removeClass('none')
+        $(`.treasureBox.${opoSide}`).children(`.gem${i}`).removeClass('nope')
     }
     for(let i = 1; i <= MY_SCORE; i++){
-        $(`.treasureBox.${mySide}`).children(`.gem${i}`).removeClass('none')
+        $(`.treasureBox.${mySide}`).children(`.gem${i}`).removeClass('nope')
     }
     //update scores seen on board, make flashy animatoin
 }
@@ -1257,7 +1257,6 @@ function end_GAME_check(){
             .addClass("hinge-in-from-top mui-enter mui-enter-active")
         ,700)
     }
-    update_basket()
 }
 function animateWeapon($target, weapon){
     const agroDad = $('.selectedModel').parent('.hexagon')
@@ -1469,6 +1468,8 @@ function turnTransition_ (dieRoll){
             OP_SCORE += skor
         }
         end_GAME_check()
+        update_basket()
+        console.log('did both players get thi message??')
         GAME_TURN++
         displayAnimatedNews(  { templateType:'info',msg0:GAME_SCENARIO.turnEndMessage(dieRoll) }  )
         if( GAME_SCENARIO.instaCall )

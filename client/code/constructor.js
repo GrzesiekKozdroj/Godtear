@@ -118,7 +118,7 @@ const rosters =
     ]
 };
 roster = [
-    rosters.maelstrom[2].champ.name,
+    rosters.shaper[3].champ.name,
     rosters.slayer[1].champ.name, 
     rosters.shaper[1].champ.name, 
 ];
@@ -139,11 +139,11 @@ const ONLY_ADJACENT_HEX = (thiz)=>{
     return $('.objectiveGlow[data-glow="whiteGlow"]').length
 }
 const ONLY_OBJHEX = (thiz)=>thiz.hasClass('objectiveGlow')
-const NO_INTERFERENCERS = (thiz)=>!thiz.attr('data-glow')!=='rockFormation'
+const NO_INTERFERENCERS = (thiz)=>!thiz.data('glow') || !thiz.data('glow').includes('rockFormation')
 const RARE_CASE = (thiz)=>true
 const PLACEMENT_RULESET = ({ empty = false, adjacent = false, objItself = false }, t) => {
     return Boolean( 
-        NO_INTERFERENCERS(thiz) && 
+        NO_INTERFERENCERS(t) && 
         (empty ? ONLY_EMPTY_HEX(t) : true) && 
         (adjacent ? ONLY_ADJACENT_HEX(t) : true) &&
         (objItself ? ONLY_OBJHEX(t) : true)

@@ -503,7 +503,8 @@ function meagREsetter(){
     //     $("."+rem[ii]).remove()
     // }//.forEach(function(el){$('.'+el).remove()})
     $('[data-DOOMqueue]').removeAttr('data-DOOMqueue')
-
+    $('#factualWeapon').remove()
+    $('[data-landstepper').attr('data-landstepper',0)
     if(myTurn){
         $(`.miniGameCard.${mySide}`).removeClass('nonActivShow').addClass('activatingShow')
         $(`.miniGameCard.${opoSide}`).removeClass('activatingShow').addClass('nonActivShow')

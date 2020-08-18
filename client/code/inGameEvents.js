@@ -249,10 +249,6 @@ function removeAllBanners(team){console.log('team: ',team)
         })
         return B_S
     } else {
-        const extraCondid = (t,$B)=>{return !(
-            $($(`[data-tenmodel].${t}`)[0]).data('side') === 'left' && $B.parent('.hexagon').data('row') < 7 ||
-            $($(`[data-tenmodel].${t}`)[0]).data('side') === 'right' && $B.parent('.hexagon').data('row') > 6
-        )}
         $(`.claimedBanner.${team}`).each(function(){
             if ( $(this).data('bankol') === 'blue'  && extraCondid(team,$(this)))
                 B_S += 5
@@ -264,3 +260,7 @@ function removeAllBanners(team){console.log('team: ',team)
         return B_S
     }
 }
+const extraCondid = (t,$B)=>{return !(
+    $($(`[data-tenmodel].${t}`)[0]).data('side') === 'left' && $B.parent('.hexagon').data('row') < 7 ||
+    $($(`[data-tenmodel].${t}`)[0]).data('side') === 'right' && $B.parent('.hexagon').data('row') > 6
+)}

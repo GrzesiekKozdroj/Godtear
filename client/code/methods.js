@@ -170,7 +170,6 @@ const m =
             {
                 name: "Rush",
                 desc: "Each Unburnt Reaver in this hex may move up to 2 hexes.",
-                dist:2,
                 icon: 'self',
                 m: "rush"
             },

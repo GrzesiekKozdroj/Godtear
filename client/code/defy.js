@@ -166,9 +166,7 @@ var defy = {
         uniCancel()
     },
     rush:()=>{
-        $('.rush').removeClass('rush rush_selected')
-        $('.rush_selected').removeClass('rush rush_selected')
-        uniCancel()
+        multiMovement_procedure('rush','rush_selected','rush ended')
     },
     intimidation:()=>uniCancel(),
     warCry:()=>uniCancel(),

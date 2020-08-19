@@ -124,13 +124,12 @@ var m_ = {
     },
     rush:function(o){//stepingOnHexWithAnotherUnburntRemoves.rush,.rush_selected and data-glow from one entering occupiedhex
         const { hex, row } = o
-        let dad = $('.selectedModel').parent('.hexagon')//$(`.hex_${hex}_in_row_${row}`)
+        const dad = $(`.hex_${hex}_in_row_${row}`)
         if( !$('.rush[data-tenmodel]').length ){
-            displayAnimatedNews(`Rush<br/>Unburnt<br/>Reavers`)
-            dad.children('[data-name="UnburntReavers"][data-tenmodel]').each(function(){$(this).addClass('rush')})
+            displayAnimatedNews({templateType:'info', $attacker:$('.selectedModel'), skillName:' Rush ', skillType:' self'})
+            dad.children('[data-name="UnburntReavers"][data-tenmodel]').addClass('rush')
             $('.selectedModel').addClass('rush_selected')
-            //highlightHexes({colour:'legendaryGlow',dist:2})
-            add_action_taken('rush')
+            highlightHexes({colour:'legendaryGlow',dist:2})
             current_ability_method = null
         }
     },
@@ -1628,15 +1627,14 @@ var m_ = {
                     shootAndScoot()
                     if( checkIfStillAlive(target) )
                         moveLadder(target, slayerPoints(target) )
-                    else {
-                        setTimeout(()=>{
-                            if ( doDamage(ndPunch, target) )
-                                if( checkIfStillAlive(target) )
-                                    moveLadder(target, slayerPoints(target) )
-                                else null
-                        },1550)
-                    }
                 }
+                setTimeout(()=>{
+                    if ( !checkIfStillAlive(target) && doDamage(ndPunch, target) ){
+                        shootAndScoot()
+                        if( checkIfStillAlive(target) )
+                            moveLadder(target, slayerPoints(target) )
+                    }
+                },1550)
             }
         }
         current_ability_method = null

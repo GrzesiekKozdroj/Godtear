@@ -657,7 +657,7 @@ $('body').on('click','.rush[data-tenmodel]',function(e){
     e.preventDefault()
     e.stopPropagation()
     if(myTurn){
-        $(`[data-glow]`).removeAttr('data-glow')
+        un_glow()
         $('.rush_selected[data-tenmodel]').removeClass('rush rush_selected')
         $(this).addClass('rush_selected')
         highlightHexes({colour:'legendaryGlow',dist:2},$(this))

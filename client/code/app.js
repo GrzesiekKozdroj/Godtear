@@ -107,10 +107,10 @@ function makeGameBoard(o,coin){
     buildLadder()
     //---------------------------------------------TEZT____PHASE-----------------------------------
     //   QUICK_DEEPLOY()//dont forget EVENTS.js
-    //  setTimeout(()=>{
+    //   setTimeout(()=>{
     //     phase='black';
-    //   myNextPhase='black';
-     //  $(".plotPhase").removeClass("plotPhase").addClass("clashPhase")
+    //    myNextPhase='black';
+    //    $(".plotPhase").removeClass("plotPhase").addClass("clashPhase")
     // // //     //$('#gameScreen').append(wellPlayed());
     //       setTimeout(()=>{
     //         // $(`.cardsContainer`)
@@ -120,14 +120,14 @@ function makeGameBoard(o,coin){
     //         // $("#WP")
     //         //     .removeClass('hinge-out-from-top mui-leave mui-leave-active')
     //         //     .addClass("hinge-in-from-top mui-enter mui-enter-active")
-    //         //GAME_SCENARIO = scenarios[4]
-    //          $('.unitModel').each(function(){
-    //              if( $(this).attr('data-name')!=="Grimgut")
-    //                  $(this).attr('data-actionstaken',2).addClass('activated')
-    //          })
-    //       },700)
+            //  GAME_SCENARIO = scenarios[3]
+            //  $('.unitModel').each(function(){
+            //      if( $(this).attr('data-name')!=="Lorsann")
+            //          $(this).attr('data-actionstaken',2).addClass('activated')
+            //  })
+         //  },700)
     // //  //   console.log('timeout')
-     //    },2900)
+       //  },2900)
     //----------------------------------------------------------------------------------------------
     GEEK[mySide]  = GEEK_MAKER(roster, opoRoster)
     GEEK[opoSide] = GEEK_MAKER(opoRoster, roster)

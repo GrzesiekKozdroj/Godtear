@@ -119,7 +119,7 @@ const rosters =
 };
 roster = [
     rosters.shaper[3].champ.name,
-    rosters.slayer[1].champ.name, 
+    rosters.maelstrom[0].champ.name, 
     rosters.shaper[1].champ.name, 
 ];
 
@@ -132,6 +132,17 @@ for(let c in rosters){
         group[g].grunt.unitName = group[g].champ.name
     }
 }
+const DETERMINE_WARBAND_TOKEN_POS = (side, dadNum) => {
+    const determentor = side === 'left' ? -1 : 1
+    console.log(GAME_TURN)
+     return dadNum - (
+        (
+            GAME_TURN - 1 === 1 ? 1 :
+            GAME_TURN - 1 === 2 ? 2 :
+            GAME_TURN - 1 === 3 ? 3 :
+            GAME_TURN - 1 === 4 ? 2 :
+        1) * determentor )
+    }
 const ONLY_EMPTY_HEX = (thiz)=>!thiz.hasClass('objectiveGlow') && thiz.children().length < 3
 const ONLY_ADJACENT_HEX = (thiz)=>{
     un_glow()
@@ -306,38 +317,14 @@ const scenarios = [
                 const opoWarbandToken = $(`.warbandToken.${opoSide}`)
                 const dadNum = opoWarbandToken.parent('.ladderBlock').data('block')
                 opoWarbandToken.detach().appendTo(`.ladderBlock[data-block="${
-                    opoSide === 'right' ? dadNum - (
-                        GAME_TURN - 1 === 1 ? 1 :
-                        GAME_TURN - 1 === 2 ? 2 :
-                        GAME_TURN - 1 === 3 ? 3 :
-                        GAME_TURN - 1 === 4 ? 2 :
-                        1) 
-                        : 
-                        dadNum + (
-                            GAME_TURN - 1 === 1 ? 1 :
-                            GAME_TURN - 1 === 2 ? 2 :
-                            GAME_TURN - 1 === 3 ? 3 :
-                            GAME_TURN - 1 === 4 ? 2 :
-                            1)
+                    DETERMINE_WARBAND_TOKEN_POS(opoSide, dadNum)
                 }"]`)
                 setTimeout(()=>display_who_starts_next_phase(),1500)
             } else if ( GAME_SCENARIO.dieRoll ){
                 const myWarbandToken = $(`.warbandToken.${mySide}`)
                 const dadNum = myWarbandToken.parent('.ladderBlock').data('block')
                 myWarbandToken.detach().appendTo(`.ladderBlock[data-block="${
-                    opoSide === 'right' ? dadNum - (
-                        GAME_TURN - 1 === 1 ? 1 :
-                        GAME_TURN - 1 === 2 ? 2 :
-                        GAME_TURN - 1 === 3 ? 3 :
-                        GAME_TURN - 1 === 4 ? 2 :
-                        1) 
-                        : 
-                        dadNum + (
-                            GAME_TURN - 1 === 1 ? 1 :
-                            GAME_TURN - 1 === 2 ? 2 :
-                            GAME_TURN - 1 === 3 ? 3 :
-                            GAME_TURN - 1 === 4 ? 2 :
-                            1)
+                    DETERMINE_WARBAND_TOKEN_POS(mySide, dadNum)
                 }"]`)
             }
             GAME_SCENARIO.dieRoll = 0

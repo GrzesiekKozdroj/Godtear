@@ -638,8 +638,9 @@ $('body').on('click','.summonsWalk',function(e){
 $('body').on('click','.outflank',function(e){
     e.preventDefault()
     if(myTurn){
+        un_glow()
         setTimeout(()=>highlightHexes({colour:'blueGlow', dist:1}, $('.outflank_source')),360)
-        $('.outflank_selected').removeClass('outflank_selected')
+        $('.outflank_selected').removeClass('outflank_selected outflank')
         $(this).addClass('outflank_selected')
     }
 })

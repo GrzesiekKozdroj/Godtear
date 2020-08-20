@@ -238,7 +238,7 @@ var defy = {
         uniCancel()
     },
     outflank:()=>{
-        multiMovement_procedure('outflank','outflank_selected','outflanked')
+        multiMovement_procedure('outflank','outflank_selected','outflank end')
         $('.outflank_source').removeClass('outflank_source')
         uniCancel()
     },

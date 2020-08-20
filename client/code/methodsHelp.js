@@ -1246,6 +1246,10 @@ function am_I_winner(){
     )
 }
 function end_GAME_check(){
+    $('[data-kill]').each(function(){
+        $(this).removeAttr('data-kill')
+        removeObjectiveHex( $(this).data('row'), $(this).data('hex') ) 
+    })
     if( OP_SCORE > 4 || MY_SCORE > 4 ){
         $(`.cardsContainer`)
             .removeClass(`hinge-in-from-left hinge-in-from-right mui-enter mui-enter-active`)

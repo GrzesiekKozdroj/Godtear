@@ -289,7 +289,7 @@ var m_ = {
         if( !$('.outflank').length && onHit(aim, singleSpecimen, 'sword','Outflank') ){
             const team = singleSpecimen.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
             un_glow()
-            $('.selectedModel').removeClass('selectedModel')
+            $('.selectedModel').addClass('outflank_selected')
             highlightHexes ({colour:'blueGlow', dist:1}, singleSpecimen)
             $('[data-glow="blueGlow"]')
                 .each(function(){
@@ -1418,20 +1418,21 @@ var m_ = {
         add_action_taken('eruption')
         current_ability_method = null
     },
-    cursedGround:function(o){//no endphase yet, marks generated hexes with data-kill="side"
+    cursedGround:function(o){
         const { hex, row } = o
         const target = $(`.hex_${hex}_in_row_${row}.hexagon`)
-        add_action_taken('cursedGround')
+        const side = $('.selectedModel').data('side')
         if( 
-            $(`[data-kill="${ $('.selectedModel').data('side') }"]`).length < 2 && 
+            $(`[data-kill="${ side }"]`).length < 2 && 
             target.children().length < 3 && 
             !target.hasClass('objectiveGlow') 
         ){
+            add_action_taken('cursedGround')
             makeObjectiveHex(row,hex)
-            target.attr( 'data-kill', $('.selectedModel').data('side') )
+            target.attr( 'data-kill', side )
             displayAnimatedNews({templateType:'info', skillName:'Cursed Ground', skillIcon:'star'})
         } else displayAnimatedNews({templateType:'info',msg0:'target empty hex'})
-        if ( $('[data-kill]').length > 1 ){
+        if ( $(`[data-kill="${side}"]`).length > 1 ){
             current_ability_method = null
             un_glow()
         }
@@ -1497,7 +1498,8 @@ var m_ = {
             add_action_taken('graspingCurse')
             if( onHit(aim, target,'spell','Grasping Curse') )
                 if( myTurn )
-                    $('#gameScreen').append( dedlyCursePanel( {side,name,socksMethod:'graspingCurse',message:'choose one'} ) )
+                    $('#gameScreen')
+                        .append( dedlyCursePanel( {side,name,socksMethod:'graspingCurse',message:'choose one blight'} ) )
                 else
                     displayAnimatedNews({templateType:'info',msg0:'opponent choosing blight'})
         }
@@ -1573,10 +1575,17 @@ var m_ = {
         const $recepient = $( $(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0] )
         const hexlings = extractBoons_Blights( $hexlings )
         const { baim, bdamage, bspeed, bdodge, bprotection } = hexlings
-        setBoons_Blights( $recepient, { baim, bdamage, bspeed, bdodge, bprotection },0,{N:'Purge Magic',I:'cogs'} )
+        const maim = Number($recepient.attr('data-baim'))+baim
+        const mdamage = Number($recepient.attr('data-bdamage'))+bdamage
+        const mspeed = Number($recepient.attr('data-bspeed'))+bspeed
+        const mdodge = Number($recepient.attr('data-bdodge'))+bdodge
+        const mprotection = Number($recepient.attr('data-bprotection'))+bprotection
+        setBoons_Blights( $recepient, { 
+            baim:maim, bdamage:mdamage, bspeed:mspeed, bdodge:mdodge, bprotection:mprotection 
+        },0,{N:'Purge Magic',I:'cogs'} )
         setBoons_Blights( $hexlings, { baim:0, bdamage:0, bspeed:0, bdodge:0, bprotection:0},0,{N:'Purge Magic',I:'cogs'})
         un_glow()
-        displayAnimatedNews({templateType:'info',$attacker:hexling, skillName:`Pure Magic`, skillIcon:'cogs'})
+        displayAnimatedNews({templateType:'info',$attacker:$hexlings, skillName:`Pure Magic`, skillIcon:'cogs'})
         add_action_taken('purgeMagic')
         current_ability_method = null
     },
@@ -2086,22 +2095,29 @@ var m_ = {
     },
     flashFreeze:function(o){
         const { hex, row } = o
-        const team = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard[data-name="Morrigan"]')[0]).hasClass(mySide) ? opoSide : mySide
-        add_action_taken('legendary')
+        const team = $($(`.hex_${hex}_in_row_${row}`)
+            .children('.smallCard[data-name="Morrigan"]')[0])
+            .hasClass(mySide) ? 
+                opoSide : mySide
         const ARR = [...$($(`[data-glow].hexagon`).children(`.smallCard.${team}`)) ].map(el=>$(el).data('name'))
         const uniqSet = [...new Set(ARR)]
+        uniqSet.forEach(el=>{
+            console.log(el)
+            const x = $($(`[data-name="${el}"][data-tenmodel].${team}`)[0])
+            setBoons_Blights(x,{
+                bdodge:Number(x.attr('data-bdodge'))-1,bspeed:Number(x.attr('data-bspeed'))-1
+            },0,{N:'Flash Freeze',I:'star'})
+        })
+        add_action_taken('legendary')
         current_ability_method = null
         un_glow()
-        uniqSet.forEach(el=>{
-            const x = $(`[data-name="${el}"][data-tenmodel].${team}`)
-            setBoons_Blights(x,{bdodge:Number(x.attr('data-bdodge'))-1,bspeed:Number(x.attr('data-bspeed'))-1},0,{N:'Flash Freeze',I:'star'})
-        })
     },
     intenseCold:function(o){
         const { hex, row } = o
         add_action_taken('intenseCold')
         const target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
         setBoons_Blights(target,{bdamage:Number(target.attr('data-bdamage'))+1},0,{N:'Intense Cold',I:'self'})
+        current_ability_method = null
     },
     snowbladefight:function(o){
         const { aim, hurt, hex, row } = o

@@ -24,6 +24,7 @@ var _m_ = {
     },
     outflank: thiz => {
         thiz.removeClass('outflank_selected outflank')
+        add_action_taken("outflank")
         if( !$('.outflank').length )
             {
                 $('.outflank_source').removeClass('outflank_source')

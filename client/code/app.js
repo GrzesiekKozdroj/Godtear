@@ -127,7 +127,7 @@ function makeGameBoard(o,coin){
             //  })
          //  },700)
     // //  //   console.log('timeout')
-       //  },2900)
+    //     },2900)
     //----------------------------------------------------------------------------------------------
     GEEK[mySide]  = GEEK_MAKER(roster, opoRoster)
     GEEK[opoSide] = GEEK_MAKER(opoRoster, roster)

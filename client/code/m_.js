@@ -215,12 +215,19 @@ var m_ = {
     },//NEEDS SKILL USE VALIDATION TO BE FINISHED!!!!!
     pathOfDestruction:function(o){
         const { hex, row } = o
-        const side = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel^="Titus"]')[0]).data('side')
+        const titu = $($(`.hex_${hex}_in_row_${row}`).children('[data-tenmodel^="Titus"]')[0])
+        const side = titu.data('side')
         for(let SKILL_KEY in tituulti[side]){
             tituulti[side][SKILL_KEY] = true
         }
         titustepper[side] = true
-        displayAnimatedNews('Titus<br/>Path of<br/>Destruction')
+        displayAnimatedNews({
+            templateType:'info', 
+            $attacker:titu, 
+            skillName:"Path Of Destruction", 
+            skillIcon:"star",
+            msg3:'now use any other skill, once done with it, click ultimate again for free move, then click on second skill.'
+        })
         add_action_taken('legendary', true)
         // name: "Path of Destruction",
         // desc: "Titus may make a skill action. Then he may move 1 hex. Then he may make another skill action",
@@ -249,7 +256,9 @@ var m_ = {
             un_glow()
             add_action_taken("hack")
             if( onHit(aim, target,'sword','Hack') ){
-                setBoons_Blights(target,{bprotection:-1},0,{N:'Hack',I:'skull'})
+                setBoons_Blights(target,{
+                    bprotection:Number(target.attr('data-bprotection'))-1
+                },0,{N:'Hack',I:'skull'})
             }
         }
         current_ability_method = null

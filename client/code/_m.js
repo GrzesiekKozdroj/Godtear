@@ -250,7 +250,7 @@ const _m = {
         const aim = [4, 4, 4][unitSize] + skillBonus
         const hurt = [3, 4, 5][unitSize] + skillBonus
         if($target.hasClass(`blackTeam`) )
-            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"cleavingStrike", hex, row })
+            socket.emit('rolloSkill',{ aim: (aim + baim), hurt:(hurt + bdamage), socksMethod:"surroundPound", hex, row })
     },
     roarOfBattle:function(origin,target){
         const { hex, row } = target

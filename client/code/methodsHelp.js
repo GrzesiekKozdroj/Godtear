@@ -53,8 +53,9 @@ const causeOfRetchlings = (skill) => {
     } else { return skill }
 }
 const abilTruthRead = (abilName = null, side, name = $('.selectedModel').data('name') ) => {
-    const targetos = (abilName, p = phase) => {
+    const targetos = (abilName, ph = phase) => {
         let prod;
+        let p = ph !== 'end' ? ph : 'black'
         if(side === mySide)
                 prod = causeOfRetchlings(  mySkillTrack[name][p][abilName].used )
         else if(side === opoSide)
@@ -670,14 +671,24 @@ function buildSkillTrack(roster){//['name','name','name']
     })
     return premadeproduct
 }
+const helpin_turn_resetter = thiz => thiz
+            .removeClass('activated')
+            .attr('data-actionstaken',0)
+            .attr('data-speedleft', thiz.attr('data-speed'))
 function turn_resetter(skillTracker,phase,team){
     $(`.${team}[data-tenmodel]`).each(function(){
         const model = $(this)
-        model
-            .removeClass('activated')
-            .attr('data-actionstaken',0)
-            .attr('data-speedleft', model.attr('data-speed'))
+        helpin_turn_resetter( model )
     })
+    for(let i = 0; i < 2; i++ ){
+        let side = ['left','right']
+        let g_side = graveyard[side[i]]
+        for( let name in g_side){
+            for(let j = 0; j < g_side[name].length; j++){
+                helpin_turn_resetter( $(g_side[name][j]) )
+            }
+        }
+    }
     for(let char in skillTracker){
         for(let s in skillTracker[char][phase]){
             skillTracker[char][phase][s].used = false
@@ -1451,7 +1462,7 @@ function turnTransition_ (dieRoll){
         myNextPhase='black'
        // myTurn = myTurn ? false : true
     }
-    if( 
+    if( //____________BLACK__PHASE__________________
         phase==='black' && 
         $('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length && 
         $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length
@@ -1473,7 +1484,6 @@ function turnTransition_ (dieRoll){
         }
         end_GAME_check()
         update_basket()
-        console.log('did both players get thi message??')
         GAME_TURN++
         displayAnimatedNews(  { templateType:'info',msg0:GAME_SCENARIO.turnEndMessage(dieRoll) }  )
         if( GAME_SCENARIO.instaCall )

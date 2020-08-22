@@ -325,15 +325,16 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
     `
 }
 
-function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,healthleft,skills,banner,index,unitName},phase,side){
+function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,healthleft,skills,banner,index,unitName},ph,side){
+    let phaze = ph === 'white' ? ph : 'black'
     let skillx = rosters[klass][index][type==='champion'?'champ':'grunt'].skills// JSON.parse(decodeURIComponent(skills));
     const { baim, bdamage, bdodge, bprotection, bspeed } = extractBoons_Blights( $($(`[data-name="${name}"].${side}`)[0]) )
     feedSkillstheData (skillx)
     const zpeed = (speed,i) => typeof speed === 'string' ? Number([...speed][i===0?0:2]):speed[i]
-    const skillzBlack = (skillx,phase,side)=>{
+    const skillzBlack = (skillx,phaze,side)=>{
         let skillList = []
-        for(let s in skillx[phase]){
-            let skill = skillx[phase][s]
+        for(let s in skillx[phaze]){
+            let skill = skillx[phaze][s]
             skillList = [...skillList, skill]
         }
         skillList = skillx.util.legendary ? [...skillList, skillx.util.legendary] : skillList;
@@ -342,7 +343,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
             let stajtus = abilTruthRead(jinput,side,name) ? 'glow_unused' : 'usedSkill'
             let b_b = baim+bdamage
             return `
-                <div class='smallCard img_${skill.icon}_${phase} ${side} ${stajtus} skill' ${makedata(skill)} >
+                <div class='smallCard img_${skill.icon}_${phaze} ${side} ${stajtus} skill' ${makedata(skill)} >
                     <div class='top ${stajtus}'></div>
                     ${dis_min_BBs(skill,baim,bdamage)}
                     <div class='bottom ${stajtus}'></div>
@@ -353,7 +354,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
     return `
     <div class='
             miniGameCard 
-            ${side} ${phase} 
+            ${side} ${phaze} 
             ${ side === mySide && myTurn ?
                     'activatingShow allied'
                : side === opoSide && !myTurn ? 
@@ -367,7 +368,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
         data-name='${name}' 
         data-index='${index}' 
         data-side='${side}' 
-        data-phase='${phase}' 
+        data-phase='${phaze}' 
         data-baim='${baim}' 
         data-bdamage='${bdamage}' 
         data-bdodge='${bdodge}' 
@@ -387,37 +388,37 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
             <div class='top'></div>
             <img class='heroImg' src='${icon}'/>
             <div class='bottom'></div>
-            ${showMeName(phase,name)}
+            ${showMeName(phaze,name)}
         </div>
 
-        <div class='smallCard speed ${phase} ${BB_HUD(bspeed)}'>
+        <div class='smallCard speed ${phaze} ${BB_HUD(bspeed)}'>
             <div class='top'></div>
-            ${phase==='white' ? styled_attribute_number(zpeed(speed,0),bspeed) : styled_attribute_number(zpeed(speed,1),bspeed)}
+            ${phaze==='white' ? styled_attribute_number(zpeed(speed,0),bspeed) : styled_attribute_number(zpeed(speed,1),bspeed)}
             <div class='bottom'></div>
         </div>
 
-        <div class='smallCard dodge ${phase}  ${BB_HUD(bdodge)}'>
+        <div class='smallCard dodge ${phaze}  ${BB_HUD(bdodge)}'>
             <div class='top'></div>
             ${styled_attribute_number(dodge,bdodge)}
             <div class='bottom'></div>
         </div>
 
-        <div class='smallCard protection ${phase}  ${BB_HUD(bprotection)}'>
+        <div class='smallCard protection ${phaze}  ${BB_HUD(bprotection)}'>
             <div class='top'></div>
             ${styled_attribute_number(protection,bprotection)}
             <div class='bottom'></div>
         </div>
 
-        <div class='smallCard health ${phase}'>
+        <div class='smallCard health ${phaze}'>
             <div class='top'></div>
             ${   styled_attribute_number(health,-1*(health-healthleft) )    }
             <div class='bottom'></div>
         </div>
-        ${skillzBlack(skillx,phase,side)}
-        ${endActionButton(type,phase,side,1)}
+        ${skillzBlack(skillx,phaze,side)}
+        ${endActionButton(type,phaze,side,1)}
         <div id="dummy_contain" class="${side}">
             <div class="mini-card-actions">
-                <div id='claimAction' class='game_card-attrib card_base_action ${phase} ${type} claim'>
+                <div id='claimAction' class='game_card-attrib card_base_action ${phaze} ${type} claim'>
                     <div class='top'></div><div class='bottom'></div>
                 </div>
                 ${bloodedUnit(unitName, side, unitSize,type,name)}

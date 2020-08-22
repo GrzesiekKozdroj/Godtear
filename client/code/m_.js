@@ -2210,7 +2210,7 @@ var m_ = {
             displayAnimatedNews({templateType:'info',msg0:'You go second'})
             $('#coin')
                 .detach()
-                .appendTo(!mySide === 'left' ? '.block11' : '.block12')
+                .appendTo(mySide === 'left' ? '.block12' : '.block11')
                 .text( calc_score() )
         }
         phase = 'white'
@@ -2218,6 +2218,8 @@ var m_ = {
         $('.endPhase').removeClass('endPhase').addClass('plotPhase')
         turn_resetter(opoSkillTrack,'white','blackTeam')
         turn_resetter(mySkillTrack,'white','whiteTeam')
+        animateCart(opoSide, $($(".blackTeam[data-tenmodel]")[0]))
+        animateCart(mySide, $($(".whiteTeam[data-tenmodel")[0]))
     },
     royalSummonsBlack:royalSummons_,
     royalSummonsWhite:royalSummons_,

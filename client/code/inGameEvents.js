@@ -8,7 +8,7 @@ const makeObjectiveHex =  (row,hex) => {
         .children('.bottom')
             .addClass(`objectiveGlow obj${random}`)
 }
-const removeObjectiveHex = (row,hex) => {console.log('rO')
+const removeObjectiveHex = (row,hex) => {
     $(`.hex_${hex}_in_row_${row}`)
         .removeClass('objectiveGlow obj1 obj2 obj3')
             .children()
@@ -236,7 +236,7 @@ const onlyOneStep = (thiz, origin = $('.selectedModel') ) => {
     }
 }
 
-function removeAllBanners(team){console.log('team: ',team)
+function removeAllBanners(team){
     let B_S = 0
     if( GAME_SCENARIO.name !== "Quest" ){
         $(`.claimedBanner.${team}`).each(function(){

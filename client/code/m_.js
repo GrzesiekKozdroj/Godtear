@@ -1814,7 +1814,7 @@ var m_ = {
             if( onHit(aim, target,'sword','Pounce') )
                 if( doDamage(hurt, target) )
                     if( checkIfStillAlive(target) )
-                        moveLadder(target, target.data('stepsgiven'))
+                        moveLadder(target, slayerPoints(target) )
         current_ability_method = null
         displayAnimatedNews({templateType:'info',msg0:'pounced'})
         },1000)
@@ -1891,7 +1891,6 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         if(targets.length){
             const target = $(targets[0])
-             
             un_glow()
             add_action_taken("jawbreaker")
             brutalMaster_brutaliser('aim')
@@ -1899,7 +1898,7 @@ var m_ = {
                 brutalMaster_brutaliser('damage')
                 if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
-                        moveLadder(target, target.data('stepsgiven'))
+                        moveLadder(target, slayerPoints(target) )
                     else {
                         target.addClass('brokenJaw_selected')
                         highlightHexes({colour:'legendaryGlow',dist:1},target)
@@ -1927,7 +1926,7 @@ var m_ = {
                     displayAnimatedNews({templateType:'info', $attacker:target, skillname:'Whiplashed', skillIcon:'skull'})
                 if( doDamage(hurt, target) ){
                     if( checkIfStillAlive(target) )
-                        moveLadder(target, target.data('stepsgiven'))
+                        moveLadder(target, slayerPoints(target) )
                     else {
                         target.addClass('whiplash_selected')
                         highlightHexes({colour:'legendaryGlow',dist:2},target)
@@ -1975,7 +1974,7 @@ var m_ = {
             target.attr('data-healthleft', (Number(target.attr('data-healthleft'))-2) )
             animateDamage(target, -2)
                 if( checkIfStillAlive(target) )
-                    moveLadder(target, target.data('stepsgiven'))
+                    moveLadder(target, slayerPoints(target) )
                 else null
             current_ability_method = null
             un_glow()
@@ -2111,7 +2110,6 @@ var m_ = {
         const ARR = [...$($(`[data-glow].hexagon`).children(`.smallCard.${team}`)) ].map(el=>$(el).data('name'))
         const uniqSet = [...new Set(ARR)]
         uniqSet.forEach(el=>{
-            console.log(el)
             const x = $($(`[data-name="${el}"][data-tenmodel].${team}`)[0])
             setBoons_Blights(x,{
                 bdodge:Number(x.attr('data-bdodge'))-1,bspeed:Number(x.attr('data-bspeed'))-1
@@ -2165,25 +2163,35 @@ var m_ = {
     },
     stolenTreasure:sT,
     phaseEnd:function(o){
-        const { next, name, side } = o.key//o.phase
+        const { name, side } = o.key//o.phase
         let strajng = ''
         const dieRoll = o.aim
         const selectedModels = $(`[data-name="${name}"][data-side="${side}"]`)
         selectedModels.each(function(){
             $(this).attr('data-actionstaken',2).addClass('activated')
         })
+        if( graveyard[side][name] ){
+            for(let i = 0; i < graveyard[side][name].length; i++){
+                $(graveyard[side][name][i]).attr('data-actionstaken',2).addClass('activated')
+            }
+        }
         $(`[data-glow]`).removeAttr('data-glow')
         current_ability_method = null
         strajng+=` activated`
         if(
             phase==='white' && 
             myTurn ? 
-                $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length :
-                $('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length
+                ( 
+                    $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length && 
+                    DEAD_MODELS_ACTIVATION_CHECK(mySide)
+                ) : (
+                    $('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length && 
+                    DEAD_MODELS_ACTIVATION_CHECK(opoSide)
+                )
         ){
             turnTransition_ (dieRoll)//socket.emit('turnEnd',{current:'white', next:'black'})
             strajng+=" turn end"
-        }else if(phase==='black' /*&& side===mySide*/){
+        }else if( phase==='black' ){
             turnTransition_ (dieRoll)//socket.emit('turnEnd',{current:'black', next:'black'})
             strajng+=" turn end"
         }

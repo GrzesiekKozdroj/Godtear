@@ -133,7 +133,10 @@ var defy = {
     lifeBlade:()=>uniCancel(),
     backstabWhite:()=>uniCancel(),
     backstabBlack:()=>uniCancel(),
-    leap:()=>uniCancel(),
+    leap:()=>{
+        uniCancel()
+        $('.leap_selected').removeClass('leap_selected')
+    },
     letMeDoIt:()=>uniCancel(),
     channelRage:()=>uniCancel(),
     breakSpirit:()=>uniCancel(),
@@ -485,6 +488,7 @@ function meagREsetter(){
         earthquake_selected 
         deathMove 
         deathMove_selected 
+        leap_selected 
     `)
     $('#multi_choice_info_panel').remove()
     //below removed because it also caused  opposing player to loose choice of i.e. giving blight while using titus challenge

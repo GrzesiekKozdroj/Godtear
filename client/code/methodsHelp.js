@@ -190,13 +190,12 @@ const forceKill = (target) => {
     target.attr('data-bdodge',0)
     target.attr('data-bspeed',0)
     if(target.data('type')==='unit'){
-        target.attr('data-healthleft',target.data('health'))
         if(target.data('name')==='Splashlings')
             ripplingScales(target)
         else if ( target.data('name') === 'ColdBones' )
             brainFreeze()
-    } else
-        target.attr('data-healthleft',0)
+        target.attr('data-healthleft',target.data('health'))
+    }
     setTimeout(()=>{
         if( target.data('type')==='unit' ){
             rubble(target)
@@ -730,12 +729,12 @@ function backstab(o){
                 animateDamage(target, -1)
             }
             if( checkIfStillAlive(target) )
-                moveLadder(target, target.data('stepsgiven'))
+                moveLadder(target, slayerPoints(target) )
             else {
                 setTimeout(()=>{
                     if ( doDamage(hurt, target) )
                         if( checkIfStillAlive(target) )
-                            moveLadder(target, target.data('stepsgiven'))
+                            moveLadder(target, slayerPoints(target) )
                         else null
                 },1550)
             }
@@ -1425,7 +1424,7 @@ function GEEK_MAKER(rozter, victims){//keera, titus, shayle
 }
 function counterMaker(model,attrib,n=1){
     try {
-        GEEK[model.data('side')][model.data('name')][attrib]+=n
+        GEEK[$(model[0]).data('side')][$(model[0]).data('name')][attrib]+=n
     } catch { 
         console.log('error @ counterMarker', model, attrib, n) 
     }
@@ -1465,7 +1464,8 @@ function turnTransition_ (dieRoll){
     if( //____________BLACK__PHASE__________________
         phase==='black' && 
         $('.activated.blackTeam[data-tenmodel]').length === $('.blackTeam[data-tenmodel]').length && 
-        $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length
+        $('.activated.whiteTeam[data-tenmodel]').length === $('.whiteTeam[data-tenmodel]').length && 
+        DEAD_MODELS_ACTIVATION_CHECK(mySide) && DEAD_MODELS_ACTIVATION_CHECK(opoSide)
     ){
         myTurn = false
         phase='end' 
@@ -1515,4 +1515,14 @@ const rolloAndo = (that,name)=>{
         if( !$('.roll').length )
             current_ability_method = null
     }
+}
+function DEAD_MODELS_ACTIVATION_CHECK(side){
+    let produce = true
+        for(let teamName in graveyard[side]){
+            let team = graveyard[side][teamName]
+            let teamCount = $(team[0]).data('unitsize')
+            if( team.length === teamCount && !$(team[0]).hasClass('activated'))
+                produce = false
+        }
+    return produce
 }

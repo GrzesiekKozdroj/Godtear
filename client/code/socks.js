@@ -116,8 +116,5 @@ socket.on('fM',p=>{
 })
 
 
-socket.on('camcel',p=>defy[p.m](p.c))
-socket.on('epp',(o)=>{
-    GAME_SCENARIO.ruleset(o)
-
-})
+socket.on( 'camcel', p=>defy[p.m](p.c) )
+socket.on( 'epp', o=>GAME_SCENARIO.ruleset(o) )

@@ -53,8 +53,16 @@ const dedChamp = (name, side) =>{
         <div class='top'></div><div class='bottom'></div>
     </div>` : ''
 }
+const provide_BBs = (name,side) => {
+    const produce = extractBoons_Blights( $(`[data-name="${name}"].${side}`) )
+    if( name === 'Morrigan' )
+        for( let bb in produce ){//{ baim, bdamage,bdodge,bprotection,bspeed,healthleft }
+            produce[bb] = bb !== 'healthleft' && produce[bb] > 0 ? produce[bb] * 2 : produce[bb]
+        }
+    return produce
+}
 function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side) {
-    const { baim, bdamage,bdodge,bprotection,bspeed,healthleft } = extractBoons_Blights( $(`[data-name="${name}"].${side}`) )
+    const { baim, bdamage, bdodge, bprotection, bspeed, healthleft } = provide_BBs(name,side)
     const skillList = (skills,side)=>{
         let skillzList = []
         for(let s in skills[phase]){
@@ -196,7 +204,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 }
 
 function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection, health, skills,banner,index,unitName},phase,side){
-    const { baim, bdamage,bdodge,bprotection,bspeed,healthleft } = extractBoons_Blights( $(`[data-name="${name}"].${side}`) )
+    const { baim, bdamage, bdodge, bprotection, bspeed, healthleft } = provide_BBs(name,side)
     const skillList = (skills,side)=>{
         let skillzList = []
         for(let s in skills[phase]){

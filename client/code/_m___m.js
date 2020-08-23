@@ -218,6 +218,7 @@ var _m_ = {
         un_glow()
         displayAnimatedNews({templateType:'info', $attacker:$thiz, skillName:'Leap', skillIcon:'self'})
         add_action_taken('leap')
+        $('.leap_selected').removeClass('leap_selected')
         current_ability_method = null
     },
     annoyed:($thiz)=>{

@@ -605,7 +605,7 @@ const singleStatList = ({ch,side,c, thiz, line}) => {
         ralliesRecruits, hexesTravelled, stepsEarned, 
         favouriteToHit, killsCount 
     } = ch
-    return `<div class="singleStatList">
+    const CLAY_TABLET  = `<div class="singleStatList">
         <div class="wp_name_label wh" data-line="${line}" data-col="0">
             <div class="wp_portrait ${side}_${c}">${dudesCloner(thiz)}</div>
             <div class="wp_name ${team}">${c}</div>
@@ -630,6 +630,13 @@ const singleStatList = ({ch,side,c, thiz, line}) => {
             <div id="killsCount" class="multiStatLine">${beatUpCombinator(killsCount,side)}</div>
         </div>
     </div>`
+
+    $('.smallCard').each(  function(){ $(this).removeAttr('data') }  )
+    $('.selectedModel').removeClass('selectedModel')
+    meagREsetter()
+    $('#gameScreen').off()
+
+    return CLAY_TABLET
 }
 function displatyTT(){
     $('body').append(`

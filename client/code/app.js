@@ -53,34 +53,36 @@ function beginBattle(){
     }
 }
 const makeAnim = (model,whereTo,callback=false) => {//model, destination
-    let ofsetSize = model.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
-    MOVINGNOW = true
-    const left = -(whereTo.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * km)- model.offset().left)+'px'
-    const top = -(whereTo.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * km) - model.offset().top)+'px'
-    if(whereTo)
-        model
-            .css({ left, top })
-            .detach()
-            .appendTo(whereTo)
-            .animate({
-                left:0,
-                top:0
-            }, 300, ()=>{
-                const name = model.data('name')
-                const team = model.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
-                model.removeAttr('style')
-                document
-                    .querySelector(`[data-name="${name}"]${team}`)
-                    .removeAttribute('style')
-                m.universal.stepOnBanner(model,whereTo)//bugs the shit out of phantomBanners
-                if(callback)
-                    callback(model)
-                else
-                    whereTo.removeAttr('data-glow')
-                shayle_takes_action()
-                counterMaker(model,'hexesTravelled')
-                MOVINGNOW = false
-            })
+    if( model ){
+        let ofsetSize = model.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
+        const left = -(whereTo.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * km)- model.offset().left)+'px'
+        const top = -(whereTo.offset().top - ofsetSize[1] * (.248261 / 12  * .36 * km) - model.offset().top)+'px'
+        MOVINGNOW = true
+        if(whereTo)
+            model
+                .css({ left, top })
+                .detach()
+                .appendTo(whereTo)
+                .animate({
+                    left:0,
+                    top:0
+                }, 300, ()=>{
+                    const name = model.data('name')
+                    const team = model.hasClass('blackTeam') ? '.blackTeam' : '.whiteTeam'
+                    model.removeAttr('style')
+                    document
+                        .querySelector(`[data-name="${name}"]${team}`)
+                        .removeAttribute('style')
+                    m.universal.stepOnBanner(model,whereTo)//bugs the shit out of phantomBanners
+                    if(callback)
+                        callback(model)
+                    else
+                        whereTo.removeAttr('data-glow')
+                    shayle_takes_action()
+                    counterMaker(model,'hexesTravelled')
+                    MOVINGNOW = false
+                })
+    }
 };//anim
 function gameCard (name, roster, color) {
     return `    <div id="${name}" class="game_card"></div>    `
@@ -125,6 +127,8 @@ function makeGameBoard(o,coin){
     //          if( $(this).attr('data-name')!=="Titus")
     //              $(this).attr('data-actionstaken',2).addClass('activated')
     //       })
+    //              MY_SCORE += 4
+    //              OP_SCORE += 4
     //    },700)
     ////  //   console.log('timeout')
     //  },2900)

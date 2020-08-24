@@ -1373,7 +1373,7 @@ const kause_of_Keera = () => {
 }
 
 function GEEK_MAKER(rozter, victims){//keera, titus, shayle
-    const nameButter = (r) =>{ 
+    const nameButter = (r) =>{
         let prod = {}
         r.forEach(el => prod[el] = 0)
         return prod
@@ -1388,7 +1388,7 @@ function GEEK_MAKER(rozter, victims){//keera, titus, shayle
             victims[3] === b.champ.name 
         )})
         if(band.length){
-            for(let l = 0; l < band.length-1; l++){
+            for(let l = 0; l < band.length; l++){
                 vNames = [...vNames, band[l].champ.name, band[l].grunt.name]
             }
         }
@@ -1430,16 +1430,8 @@ function GEEK_MAKER(rozter, victims){//keera, titus, shayle
     return product
 }
 function counterMaker(model,attrib,n=1){
-    console.log(
-        //model,
-        //$(model[0]).data('side'),
-        //$(model[0]).data('name'),
-        //attrib,n,
-        GEEK[$(model[0]).data('side')][$(model[0]).data('name')][attrib]
-    )
     if( GEEK[$(model[0]).data('side')] && GEEK[$(model[0]).data('side')][$(model[0]).data('name')])
         GEEK[$(model[0]).data('side')][$(model[0]).data('name')][attrib]+=n
-    
 }
 function percentileMarker(model,attrib,boo){
     try {
@@ -1498,7 +1490,7 @@ function turnTransition_ (dieRoll){
         update_basket()
         GAME_TURN++
         displayAnimatedNews(  { templateType:'info',msg0:GAME_SCENARIO.turnEndMessage(dieRoll) }  )
-        if( GAME_SCENARIO.instaCall )
+        if( GAME_SCENARIO.instaCall && MY_SCORE < 5 && OP_SCORE < 5 )
             GAME_SCENARIO.ruleset(0,0)
     }
     if( myTurn )

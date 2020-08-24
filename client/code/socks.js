@@ -68,6 +68,11 @@ socket.on('horn',p=>{
     phase = p
     beginFirstPlotPhase()
     $('.deployPhase').removeClass('deployPhase').addClass('plotPhase')
+    for(let side in GEEK){
+        for(let model in GEEK[side]){
+            GEEK[side][model].hexesTravelled = 0
+        }
+    }
 })
 
 socket.on('sM',p=>{

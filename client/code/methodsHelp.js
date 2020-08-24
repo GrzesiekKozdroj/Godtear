@@ -1382,52 +1382,64 @@ function GEEK_MAKER(rozter, victims){//keera, titus, shayle
     for(let k in rosters){
         let klass = rosters[k]
         let band = klass.filter(b => { return (
-            victims[0]===b.champ.name || 
+            victims[0] === b.champ.name || 
             victims[1] === b.champ.name || 
             victims[2] === b.champ.name || 
             victims[3] === b.champ.name 
         )})
         if(band.length){
-            vNames = [...vNames, band[0].champ.name, band[0].grunt.name]
+            for(let l = 0; l < band.length-1; l++){
+                vNames = [...vNames, band[l].champ.name, band[l].grunt.name]
+            }
         }
     }
-    let template =  {
-        bannersClaimed:0,//
-        bannersStayed:0,//
-        bannersSlayed:0,//?
-        accuracy:[],//
-        dmgCaused:0,//
-        dodgeability:[],//
-        tankyness:0,//
-        woundsSuffered:0,//
-        ralliesRecruits:0,//
-        hexesTravelled:0,//
-        stepsEarned:0,//
-        favouriteToHit:nameButter(vNames),//
-        killsCount:nameButter(vNames)//
+    class Templarter {
+        constructor(v_Names){
+            this.bannersClaimed = 0
+            this.bannersStayed = 0
+            this.bannersSlayed = 0
+            this.accuracy = []
+            this.dmgCaused = 0
+            this.dodgeability = []
+            this.tankyness = 0
+            this.woundsSuffered = 0
+            this.ralliesRecruits = 0
+            this.hexesTravelled = 0
+            this.stepsEarned = 0
+            this.favouriteToHit = nameButter(v_Names)
+            this.killsCount = nameButter(v_Names)
+        }
     }
     let product = {}
     for(let k in rosters){
         let klass = rosters[k]
         let band = klass.filter(b => { return (
-            rozter[0]===b.champ.name || 
+            rozter[0] === b.champ.name || 
             rozter[1] === b.champ.name || 
             rozter[2] === b.champ.name || 
             rozter[3] === b.champ.name
         )})
+        //console.log(klass)
         if(band.length){
-            product[band[0].champ.name] = template
-            product[band[0].grunt.name] = template
+            for(let l = 0; l < band.length; l++){
+                product[band[l].champ.name] = new Templarter(vNames)
+                product[band[l].grunt.name] = new Templarter(vNames)
+            }
         }
     }
     return product
 }
 function counterMaker(model,attrib,n=1){
-    try {
+    console.log(
+        //model,
+        //$(model[0]).data('side'),
+        //$(model[0]).data('name'),
+        //attrib,n,
+        GEEK[$(model[0]).data('side')][$(model[0]).data('name')][attrib]
+    )
+    if( GEEK[$(model[0]).data('side')] && GEEK[$(model[0]).data('side')][$(model[0]).data('name')])
         GEEK[$(model[0]).data('side')][$(model[0]).data('name')][attrib]+=n
-    } catch { 
-        console.log('error @ counterMarker', model, attrib, n) 
-    }
+    
 }
 function percentileMarker(model,attrib,boo){
     try {

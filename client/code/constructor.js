@@ -2,37 +2,37 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 class Character{
     constructor(klass, role, name, unitSize, icon, speed, dodge, protection, health, skills,banner, index) {
-    this.klass = klass;
-    this.type = role;
-    this.name = name;
-    this.index = index
-    this.nameTech = `${name}${Math.floor( Math.random () * (100000 - 0 + 1)) + 0 }`; 
-    this.unitSize = unitSize;
-    this.icon = icon;
-    this.speed = speed; //{clash:X,plot:Y}
-    this.speedLeft = speed;
-    this.dodge = dodge;
-    this.protection = protection;
-    this.health = health;
-    this.actionsTaken = 0;
-    this.skills = skills;
-    this.banner = banner;
-
-    this.healthLeft = health;
-    this.row = false;
-    this.hex = false;
-
-    this.bSpeed = 0;
-    this.bDodge = 0;
-    this.bProtection = 0;
-    this.bAim = 0;
-    this.bDamage = 0;
-
-    //this.doing = 'not used';
-    this.stepsGiven = name !== "Mournblade" && role === "champion" ? 4 : 
-        name === "Retchlings" ? 0 :
-        (name === "Landslide" || name === "YoungDragons") ? 2 :
-        1;
+        this.klass = klass;
+        this.type = role;
+        this.name = name;
+        this.index = index
+        this.nameTech = `${name}${Math.floor( Math.random () * (100000 - 0 + 1)) + 0 }`; 
+        this.unitSize = unitSize;
+        this.icon = icon;
+        this.speed = speed; //{clash:X,plot:Y}
+        this.speedLeft = speed;
+        this.dodge = dodge;
+        this.protection = protection;
+        this.health = health;
+        this.actionsTaken = 0;
+        this.skills = skills;
+        this.banner = banner;
+        
+        this.healthLeft = health;
+        this.row = false;
+        this.hex = false;
+        
+        this.bSpeed = 0;
+        this.bDodge = 0;
+        this.bProtection = 0;
+        this.bAim = 0;
+        this.bDamage = 0;
+        
+        //this.doing = 'not used';
+        this.stepsGiven = name !== "Mournblade" && role === "champion" ? 4 : 
+            name === "Retchlings" ? 0 :
+            (name === "Landslide" || name === "YoungDragons") ? 2 :
+            1;
     }
 //methods
 }

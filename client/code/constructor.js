@@ -17,17 +17,17 @@ class Character{
         this.actionsTaken = 0;
         this.skills = skills;
         this.banner = banner;
-        
+
         this.healthLeft = health;
         this.row = false;
         this.hex = false;
-        
+
         this.bSpeed = 0;
         this.bDodge = 0;
         this.bProtection = 0;
         this.bAim = 0;
         this.bDamage = 0;
-        
+
         //this.doing = 'not used';
         this.stepsGiven = name !== "Mournblade" && role === "champion" ? 4 : 
             name === "Retchlings" ? 0 :
@@ -120,7 +120,7 @@ const rosters =
 roster = [
     rosters.maelstrom[2].champ.name, 
     rosters.shaper[3].champ.name, 
-    rosters.slayer[2].champ.name,
+    rosters.slayer[0].champ.name,
 ];
 
 for(let c in rosters){

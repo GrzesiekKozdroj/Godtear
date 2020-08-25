@@ -1,14 +1,14 @@
 
-        const makedata = (skill)=>{
-            let champDATA = []
-            for(let D in skill){
-                let data = /*D === 'm' ? encodeURIComponent(JSON.stringify(skill[D])) :*/ `"${skill[D]}"`
-                let dataModel = `data-${D}=${data} `
-                if(D!=='desc')
-                    champDATA = [...champDATA, dataModel]
-            }
-            return champDATA.join(' ')
-        }
+const makedata = (skill)=>{
+    let champDATA = []
+    for(let D in skill){
+        let data = /*D === 'm' ? encodeURIComponent(JSON.stringify(skill[D])) :*/ `"${skill[D]}"`
+        let dataModel = `data-${D}=${data} `
+        if(D!=='desc')
+            champDATA = [...champDATA, dataModel]
+    }
+    return champDATA.join(' ')
+}
 
 const bigCard_bb = (a,b)=>`<span class="${b>0?'booned':b<0?'blighted':'normal'} big_card__BB_skill">${a+b}</span>`
 
@@ -156,25 +156,27 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
                 <div id='card_speed_${phase}' class='game_card-attrib offset-speed'>
                     <div class='top'></div>
-                    ${phase==='white'?styled_attribute_number(speed[0],bspeed):styled_attribute_number(speed[1],bspeed)}
+                    ${ phase === 'white' ? 
+                        styled_attribute_number(speed[0],bspeed,name) : styled_attribute_number(speed[1],bspeed,name)
+                    }
                     <div class='bottom'></div>
                 </div> 
 
                 <div id='card_dodge_${phase}' class='game_card-attrib offset-dodge'>
                     <div class='top'></div>
-                    ${styled_attribute_number(dodge,bdodge)}
+                    ${styled_attribute_number(dodge,bdodge, name)}
                     <div class='bottom'></div>
                 </div>
 
                 <div id='card_protection_${phase}' class='game_card-attrib offset-protection'>
                     <div class='top'></div>
-                    ${styled_attribute_number(protection,bprotection)}
+                    ${styled_attribute_number(protection,bprotection, name)}
                     <div class='bottom'></div>
                 </div>
 
                 <div id='card_health_${phase}' class='game_card-attrib offset-health'>
                     <div class='top'></div>
-                    ${styled_attribute_number(health,-1*(health-healthleft) )}
+                    ${styled_attribute_number(health,-1*(health-healthleft),name)}
                     <div class='bottom'></div>
                 </div>
 
@@ -290,23 +292,25 @@ function rightCard ({klass, type, name, unitSize, icon, speed, dodge, protection
             <div class='game_card-attribs'>
                 <div id='card_dodge_${phase}' class='game_card-attrib offset-dodge ${side}'>
                     <div class='top'></div>
-                    ${styled_attribute_number(dodge,bdodge)}
+                    ${styled_attribute_number(dodge,bdodge,name)}
                     <div class='bottom'></div>
                 </div>
                 <div id='card_speed_${phase}' class='game_card-attrib offset-speed ${side}'>
                     <div class='top'></div>
-                    ${phase==='white' ? styled_attribute_number(speed[0],bspeed) : styled_attribute_number(speed[1],bspeed)}
+                    ${
+                        phase==='white' ? styled_attribute_number(speed[0],bspeed,name) : 
+                        styled_attribute_number(speed[1],bspeed, name)}
                     <div class='bottom'></div>
                 </div> 
                 <div id='card_health_${phase}' class='game_card-attrib offset-health ${side}'>
                     <div class='top'></div>
-                    ${styled_attribute_number(health,-1*(health-healthleft))}
+                    ${styled_attribute_number(health,-1*(health-healthleft),name)}
                     <div class='bottom'></div>
                 </div>
 
                 <div id='card_protection_${phase}' class='game_card-attrib offset-protection ${side}'>
                     <div class='top'></div>
-                    ${styled_attribute_number(protection,bprotection)}
+                    ${styled_attribute_number(protection,bprotection,name)}
                     <div class='bottom'></div>
                 </div>
             </div>
@@ -401,25 +405,27 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
 
         <div class='smallCard speed ${phaze} ${BB_HUD(bspeed)}'>
             <div class='top'></div>
-            ${phaze==='white' ? styled_attribute_number(zpeed(speed,0),bspeed) : styled_attribute_number(zpeed(speed,1),bspeed)}
+            ${phaze==='white' ? 
+                styled_attribute_number(zpeed(speed,0),bspeed, name) : 
+                styled_attribute_number(zpeed(speed,1),bspeed, name)}
             <div class='bottom'></div>
         </div>
 
         <div class='smallCard dodge ${phaze}  ${BB_HUD(bdodge)}'>
             <div class='top'></div>
-            ${styled_attribute_number(dodge,bdodge)}
+            ${styled_attribute_number(dodge,bdodge,name)}
             <div class='bottom'></div>
         </div>
 
         <div class='smallCard protection ${phaze}  ${BB_HUD(bprotection)}'>
             <div class='top'></div>
-            ${styled_attribute_number(protection,bprotection)}
+            ${styled_attribute_number(protection,bprotection,name)}
             <div class='bottom'></div>
         </div>
 
         <div class='smallCard health ${phaze}'>
             <div class='top'></div>
-            ${   styled_attribute_number(health,-1*(health-healthleft) )    }
+            ${   styled_attribute_number(health,-1*(health-healthleft),name )    }
             <div class='bottom'></div>
         </div>
         ${skillzBlack(skillx,phaze,side)}
@@ -442,14 +448,15 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
 const feedSkillstheData = (s) => {
 }
 
-function styled_attribute_number(num, bb){
-    const colour = bb === 1 ? 'booned' : bb === 0 ? 'normal' : 'blighted'
+function styled_attribute_number(num, bb, name){
+    const colour = bb > 0 ? 'booned' : bb === 0 ? 'normal' : 'blighted'
+    const causeOfMorrigan = name === 'Morrigan' && bb == 1 ? 2 : 1
     return `
-        <p class="${colour} gameCard_num ${phase}" >${Number(num)+bb}</p>
+        <p class="${colour} gameCard_num ${phase}" >${Number(num)+bb*causeOfMorrigan}</p>
     `
 }
 function styled_attribute_name(name, bb){
-    const colour = bb === 1 ? 'booned' : bb === 0 ? 'normal' : 'blighted'
+    const colour = bb > 0 ? 'booned' : bb === 0 ? 'normal' : 'blighted'
     return `
         <p class="${colour} gameCard_name ${phase}" >${name}</p>
     `

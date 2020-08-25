@@ -544,18 +544,18 @@ const _m = {
     graveSummons:function(origin,target){
         const {hex,row}=target
         un_glow()
-        socket.emit('rolloSkill',{ aim:0, hurt:0, socksMethod:"graveSummons", hex, row})
+        socket.emit('rolloSkill',{ socksMethod:"graveSummons", hex, row})
     },
     forwardMinions:function(origin,target){
         const { hex, row } = origin.parent('.hexagon').data()
-        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"forwardMinions", hex, row })
+        socket.emit('rolloSkill',{ socksMethod:"forwardMinions", hex, row })
     },
     graspingDead:function(origin,target){
-        socket.emit('rolloSkill',{ aim: 0, hurt:0, socksMethod:"graspingDead", multiAction:mySide})
+        socket.emit('rolloSkill',{ socksMethod:"graspingDead", multiAction:mySide})
     },
     depthsOfSorrow:function(origin,target){
         const { hex, row } = origin.parent('.hexagon').data()
-        socket.emit('rolloSkill',{aim:0,hurt:0,socksMethod:"depthsOfSorrow", hex, row})
+        socket.emit('rolloSkill',{ socksMethod:"depthsOfSorrow", hex, row})
     },
     deathsDoor:function(origin,target){//NO BONUS ADDED YET
         const { baim, bdamage } = extractBoons_Blights(origin)

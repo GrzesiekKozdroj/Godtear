@@ -295,21 +295,22 @@ const setBoons_Blights = (origin,props,local = false, {N , I} = false)=>{//$(), 
         let boon_blight = props[key]
             subject.each(function(){
                 if( boon_blight <= 1 && boon_blight >= -1 && ( !$(this).hasClass('death') || boon_blight === 0 ) ){
-                    $(this).attr(`data-${key}`,boon_blight) 
+                    $(this).attr(`data-${key}`,boon_blight )
                     let val = $(this).attr(`data-${[...key].slice(1).join('')}`)
                    // if(val){
                         if (key === 'bspeed'){
                             const v = [...val]
                             val = phase === 'white' ? Number(v[0]) : Number(v[2])
                         } else val = Number(val)
-                        styleStats(val,boon_blight,key,$(this))
+                        styleStats(val,morriganBBcause(boon_blight,origin.data('name')),key,$(this))
                   //  }
                 }
             })
     }
 }
+function morriganBBcause(boon_blight,name){ return ( name !== 'Morrigan' ? 1 : boon_blight > 0 ? 2 : 1 ) * boon_blight }
 function styleStats(a,b,key,thiz){
-    if(b===1||b===-1){
+    if(b>0||b===-1){
         let tyjp = b>0?'booned':'blighted'
         $(`#game_card-big[data-name="${thiz.data('name')}"].${thiz.data('side')}`)
             .find('.offset-'+[...key].slice(1).join(''))

@@ -142,7 +142,16 @@ function beginFirstPlotPhase(){
     },600)
 }
 function reduceSpeedLeft(){
-    let bsped = Number($('.selectedModel').attr('data-bspeed'))
+    const morriganSpeed_bb = () => {
+        if( $('.selectedModel').data('name') !== 'Morrigan' )
+            return Number($('.selectedModel').attr('data-bspeed'))
+        else if ( Number($('.selectedModel').attr('data-bspeed')) > 0 && !$('.selectedModel.Mb[data-name="Morrigan"]').length ){
+            $('.selectedModel[data-name="Morrigan"]').addClass('Mb')
+            return Number($('.selectedModel').attr('data-bspeed'))
+        }else
+            return Number($('.selectedModel').attr('data-bspeed'))
+    }
+    let bsped = morriganSpeed_bb()
     const spedred = (n=0) =>{
         const speed = [...$('.selectedModel').attr('data-speedleft')].filter(el=>el!==',')
         const p = phase === 'white' ? 0 : 1
@@ -151,11 +160,14 @@ function reduceSpeedLeft(){
     }
     if( bsped > 0 && $('.selectedModel') ){
         setBoons_Blights( $('.selectedModel'), { bspeed:0 }, 'local' )
-    } else if ( bsped < 0 && $('.selectedModel') ){
+    } else if ( $('.Mb').length ){
+        $('.Mb').removeClass('Mb')
+    }else if ( bsped < 0 && $('.selectedModel')){
         setBoons_Blights( $('.selectedModel'), { bspeed:0 }, 'local' )
         spedred(-1)
-    } else 
+    } else {
         spedred()
+    }
 }
 function highlightHexes ({colour, dist},thiz = $('.selectedModel'), type = 'glow'){
     const applyClass = ({colour, row, hex, type}) => {

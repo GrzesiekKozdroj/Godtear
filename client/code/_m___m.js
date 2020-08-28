@@ -376,7 +376,9 @@ var _m_ = {
                 current_ability_method = null
                 pocketBox = null
             }
-            if( $('.shootAndScoot_selected').length )
+            if ( kallbak_m )
+                kallbak_m()
+            else if( $('.shootAndScoot_selected').length )
                 shootAndScoot()
         }
     }

@@ -549,6 +549,8 @@ $('body').on('click','[data-glow].hexagon',function(e){
     const thiz = $(this)
     const { hex, row } = thiz.data()
     if(myTurn){
+        if( $('.deathMove_selected').length )extraMover('deathMove',thiz,'push',['onlyOneStep'])
+
         if( $('.mournblade_raisins').length )
             socket.emit('rolloSkill',{ socksMethod:"raiseDeadChamps", hex, row })
         if( $('[data-glow="answerTheCall"]').length )
@@ -601,7 +603,6 @@ $('body').on('click','[data-glow].hexagon',function(e){
             extraMover('beastlyCharge',thiz,'walk',['onlyOneStep'])
         if( $('.leap_selected').length )extraMover('leap',thiz,'walk')
         if( $('.summonsWalk_selected').length )extraMover('summonsWalk',thiz,'walk',['onlyOneStep'])
-        if( $('.deathMove_selected').length )extraMover('deathMove',thiz,'push',['onlyOneStep'])
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){

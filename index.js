@@ -102,7 +102,7 @@ io.sockets.on('connection', (socket) => {
     socket.on('stakeClaim',p=>loopRoom({socket:socket,pack:p,stringEmit:'sC',callback:o=>o,twoWay:false}))
     socket.on('markedMan',p=>loopRoom({socket:socket,pack:p,stringEmit:'markedMan',callback:o=>o,twoWay:false}))
     socket.on('rolloSkill',p=>loopRoom({socket:socket,pack:p,stringEmit:p.socksMethod,callback:roll,twoWay:true}))
-    socket.on('forceMove',p=>loopRoom({socket:socket,pack:p,stringEmit:'fM',callback:o=>o,twoWay:false}))
+    socket.on('forceMove',p=>loopRoom({socket:socket,pack:p,stringEmit:'fM',callback:o=>o,twoWay:true}))
     socket.on('turnEnd',p=>loopRoom({socket:socket,pack:p,stringEmit:'tt',callback:roll,twoWay:true}))
     socket.on('camcel',p=>loopRoom({socket:socket,pack:p,stringEmit:'camcel',callback:o=>o,twoWay:true}))
     socket.on('epp',p=>loopRoom({socket:socket,pack:p,stringEmit:'epp',callback:o=>o,twoWay:true}))

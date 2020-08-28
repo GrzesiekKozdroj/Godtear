@@ -175,10 +175,11 @@ const animateDamage = (target, pain) => {
         })
     }
 }
-const checkIfStillAlive = (target) => {
+const checkIfStillAlive = (target,kallbak) => {
     if( Number(target.attr('data-healthleft') ) < 1 ){
         pixkedAtMarker($('.selectedModel'),'killsCount',target)
         forceKill(target)
+        kallbak_m = kallbak
         return true
     }
 }
@@ -484,10 +485,16 @@ function extraMover(methodName,thiz,moveType,rules='empty string'){//<----needs 
             className
         }
         if(h !== klass.h || r !==klass.r){
-            makeAnim( $('.'+methodName+'_selected'), thiz, _m_[methodName] )
+            //makeAnim( $('.'+methodName+'_selected'), thiz, _m_[methodName] )
             socket.emit('forceMove',{h:h, r:r, klass, callback:methodName})
         }
     }
+}
+function twoPunch_move (){
+    kallbak_m = null
+    cancellerName = 'twoPunch'
+    $('.selectedModel').addClass('twoPunch_selected')
+    highlightHexes({colour:'legendaryGlow',dist:1})
 }
 function bannerWarden(origin){
     return origin.parent('.hexagon').hasClass('objectiveGlow') ? 2 : 0
@@ -806,6 +813,19 @@ function wildfire(){
         sk.Blackjaw.util.wildfire.used = true
         blackja.attr('data-actionstaken',Number(blackja.attr('data-actionstaken'))-1)
     }
+}
+function jawbreaker_(target){
+    kallbak_m = null
+    cancellerName = 'jawbreaker'
+    target.addClass('brokenJaw_selected')
+    highlightHexes({colour:'legendaryGlow',dist:1},target)
+}
+function whipLash_(target){
+    kallbak_m = null
+    cancellerName = 'whiplash'
+    target.addClass('whiplash_selected')
+    highlightHexes({colour:'legendaryGlow',dist:2},target)
+    highlight_closest_path($('.selectedModel').parent('.hexagon').data(),target)
 }
 function fearsome (){
     const v = $('.selectedModel')
@@ -1162,6 +1182,27 @@ function validateBannerPlacement({ $model, $destination, rules }){
         return false
     }
 }
+function soulCleave_(multiAction){
+    cancellerName = 'soulCleave'
+    rallyActionDeclaration({ unitname:"Mournblade", side:multiAction, type:"champion", name:"Knightshades" })
+}
+function lifeTrade_(multiAction){
+    kallbak_m = null
+    if( $('.selectedModel').siblings('.smallCard').length < 2 ){
+        cancellerName = 'lifeTrade'
+        rallyActionDeclaration({ 
+            unitname:"Finvarr", 
+            side:multiAction, 
+            type:"champion", 
+            name:"ShadowSentinels" },'lifeTrade')
+            displayAnimatedNews({
+                templateType:'info',
+                skillName:"Life Trade",
+                skillIcon:"skull",
+                msg2:` dead raise again`
+            })
+    }
+}
 function validateAvalanchePlacement(){
     return true
 }
@@ -1420,7 +1461,6 @@ function GEEK_MAKER(rozter, victims){//keera, titus, shayle
             rozter[2] === b.champ.name || 
             rozter[3] === b.champ.name
         )})
-        //console.log(klass)
         if(band.length){
             for(let l = 0; l < band.length; l++){
                 product[band[l].champ.name] = new Templarter(vNames)

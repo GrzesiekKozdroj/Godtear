@@ -34,6 +34,7 @@ let GAME_SCENARIO;
 let GAME_TURN = 1
 let MY_SCORE = 0
 let OP_SCORE = 0
+let kallbak_m = null
 const tituulti = {
     left:{
         challenge:false,

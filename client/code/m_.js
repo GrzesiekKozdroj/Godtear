@@ -473,17 +473,15 @@ var m_ = {
         const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
         un_glow()
         if(targets.length){
-            const target = $(targets[0])
-            const team = $('.selectedModel').hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
-            $('.selectedModel').addClass('twoPunch_selected')
-            highlightHexes({colour:'legendaryGlow',dist:1})
             add_action_taken("twoPunch")
+            const target = $(targets[0])
             if( onHit(aim, target, 'spell','Two Punch') )//allow for bonus one hex movement for Halftusk action here
                 if( doDamage(hurt, target) )
-                    if( checkIfStillAlive(target) )
+                    if( checkIfStillAlive(target, twoPunch_move) )
                         moveLadder(target,target.data('stepsgiven'))
-                    else null
-                else displayAnimatedNews("no damage!")
+                    else {
+                        twoPunch_move()
+                    } else displayAnimatedNews("no damage!")
             else displayAnimatedNews ("missed!")
         }
         current_ability_method = null
@@ -719,11 +717,10 @@ var m_ = {
                 const team = target.hasClass('whiteTeam') ? 'blackTeam' : 'whiteTeam'
                 //resurrection starts here
                 if( doDamage(hurt, target) )
-                    if( checkIfStillAlive(target) )
+                    if( checkIfStillAlive(target,()=>soulCleave_(o.multiAction)) )
                         moveLadder(target,target.data('stepsgiven'))
-                    else null
-            if($(`[data-name="Knightshades"][data-tenmodel].${team}`).length < 3)
-                rallyActionDeclaration({ unitname:"Mournblade", side:o.multiAction, type:"champion", name:"Knightshades" })
+                    else if($(`[data-name="Knightshades"][data-tenmodel].${team}`).length < 3)
+                        soulCleave_(o.multiAction)
             }
         }
         current_ability_method = null
@@ -922,22 +919,9 @@ var m_ = {
             un_glow()
             add_action_taken('lifeTrade')
             if( onHit(aim, target,'sword','Life Trade') && doDamage(hurt, target) ){
-                if( checkIfStillAlive(target) ){
-                    if( $('.selectedModel').siblings('.smallCard').length < 2 ){
-                        rallyActionDeclaration({ 
-                            unitname:"Finvarr", 
-                            side:multiAction, 
-                            type:"champion", 
-                            name:"ShadowSentinels" },'lifeTrade')
-                            displayAnimatedNews({
-                                templateType:'info',
-                                skillName:"Life Trade",
-                                skillIcon:"skull",
-                                msg2:` dead raise again`
-                            })
-                    }
+                if( checkIfStillAlive(target, ()=>lifeTrade_(multiAction) ) ){
                     moveLadder(target, target.data('stepsgiven'))
-                }else null
+                } else null
             }
         }
         current_ability_method = null
@@ -1161,17 +1145,18 @@ var m_ = {
             const target = $(targets[0])
             un_glow()
             add_action_taken('headbutt')
-            const hedbut = ()=>{
+            const hedbut = (target)=>{
+                cancellerName = 'headbutt'
                 un_glow()
                 highlightHexes({colour:'legendaryGlow',dist:1},target)
                 target.addClass('headbutt_selected')
             }
             if( onHit(aim, target,'sword','Headbutt') )
                 if( doDamage(hurt, target) )
-                    if( checkIfStillAlive(target) )
+                    if( checkIfStillAlive(target,()=>hedbut(target)) )
                         moveLadder(target, target.data('stepsgiven'))
-                    else hedbut()
-                else hedbut()
+                    else hedbut(target)
+                else hedbut(target)
         }
         current_ability_method = null
     },
@@ -1897,16 +1882,12 @@ var m_ = {
             if( onHit(aim, target,'axe','Jawbreaker') ){
                 brutalMaster_brutaliser('damage')
                 if( doDamage(hurt, target) ){
-                    if( checkIfStillAlive(target) )
+                    if( checkIfStillAlive(target, ()=>jawbreaker_(target)) )
                         moveLadder(target, slayerPoints(target) )
-                    else {
-                        target.addClass('brokenJaw_selected')
-                        highlightHexes({colour:'legendaryGlow',dist:1},target)
-                    }
-                } else {
-                    target.addClass('brokenJaw_selected')
-                    highlightHexes({colour:'legendaryGlow',dist:1},target)
-                }
+                    else 
+                        jawbreaker_(target)
+                } else 
+                    jawbreaker_(target)
             } else 
                 $('.sacrifice').removeClass('sacrifice damage')
         }
@@ -1925,18 +1906,12 @@ var m_ = {
                     brutalMaster_brutaliser('damage')
                     displayAnimatedNews({templateType:'info', $attacker:target, skillname:'Whiplashed', skillIcon:'skull'})
                 if( doDamage(hurt, target) ){
-                    if( checkIfStillAlive(target) )
+                    if( checkIfStillAlive(target,()=>whipLash_(target)) )
                         moveLadder(target, slayerPoints(target) )
-                    else {
-                        target.addClass('whiplash_selected')
-                        highlightHexes({colour:'legendaryGlow',dist:2},target)
-                        highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
-                    }
-                } else {
-                    target.addClass('whiplash_selected')
-                    highlightHexes({colour:'legendaryGlow',dist:2},target)
-                    highlight_closest_path($('.selectedModel').parent('.hexagon').data(),o)
-                }
+                    else 
+                        whipLash_(target)
+                } else 
+                    whipLash_(target)
             } else 
                 $('.sacrifice').removeClass('sacrifice damage')
         }

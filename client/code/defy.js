@@ -396,7 +396,9 @@ var defy = {
     rallied:()=>uniCancel(),
     deathMove:()=>{
         multiMovement_procedure('deathMove','deathMove_selected','death move cancelled')
-        if( $('.shootAndScoot_selected').length )
+        if ( kallbak_m )
+            kallbak_m()
+        else if( $('.shootAndScoot_selected').length )
             shootAndScoot()
     },
     bannerClaim:()=>uniCancel(),
@@ -508,6 +510,7 @@ function meagREsetter(){
     $('[data-DOOMqueue]').removeAttr('data-DOOMqueue')
     $('#factualWeapon').remove()
     $('[data-landstepper').attr('data-landstepper',0)
+    kallbak_m = null
     if(myTurn){
         $(`.miniGameCard.${mySide}`).removeClass('nonActivShow').addClass('activatingShow')
         $(`.miniGameCard.${opoSide}`).removeClass('activatingShow').addClass('nonActivShow')

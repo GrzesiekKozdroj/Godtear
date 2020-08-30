@@ -600,7 +600,7 @@ const beatUpCombinator = (list,side) => {
     pts.sort(function(a, b){return b.p-a.p})
     return beatUpCounter(pts[0],side)+beatUpCounter(pts[1],side)+beatUpCounter(pts[2],side)
 }
-const percentileReducer = P => P.length ? P.reduce((a,c)=>a+c) * 100 / P.length : 0
+const percentileReducer = P => P.length ? ( P.reduce((a,c)=>a+c) * 100 / P.length ).toFixed(2) : 0
 const dudesCloner = thiz => `
     <div class="${thiz.attr("class").toString().split(' ').join(' ')}">
         <div class="top ${thiz.hasClass('whiteTeam') ? 'whiteTeam' : 'blackteam' }"></div>

@@ -59,6 +59,9 @@ const GlorySeekers = new Character("maelstrom","unit","GlorySeekers",5,"./img/Ti
 const Grimgut = new Character("maelstrom","champion","Grimgut",1,'./img/Grimgut.png',[1,1],2,2,9,m.grimgut,'./img/classMaelstrom.png',2);
 const Retchlings = new Character("maelstrom","unit","Retchlings",5,"./img/Grimgut.png",[0,1],2,1,1,m.retchlings,'./img/classMaelstrom.png',2);
 
+const Jeen = new Character("maelstrom","champion","Jeen",1,'./img/Jeen.png',[3,1],3,3,5,m.Jeen,'./img/classMaelstrom.png',3);
+const goldenShrikes = new Character("maelstrom",'unit','goldenShrikes',4,'./img/Jeen.png',[3,1],3,3,1,m.goldenShrikes,'./img/classMaelstrom.png',3)
+
 const Rattlebone = new Character("shaper","champion","Rattlebone",1,'./img/Rattlebone.png',[3,2],3,3,6,m.rattlebone,'./img/classShaper.png',0);
 const Hexlings = new Character("shaper","unit","Hexlings",5,"./img/Rattlebone.png",[2,2],3,2,1,m.hexlings,'./img/classShaper.png',0);
 
@@ -107,7 +110,8 @@ const rosters =
     [
         {champ:Blackjaw, grunt:UnburntReavers},
         {champ:Titus, grunt:GlorySeekers},
-        {champ:Grimgut, grunt:Retchlings}
+        {champ:Grimgut, grunt:Retchlings},
+        {champ:Jeen, grunt:goldenShrikes}
     ],
     shaper:
     [

@@ -2413,5 +2413,79 @@ var m_ = {
             $(this).attr( 'data-actionstaken', Number($(this).attr('data-actionstaken')) + 1 )
         })
         displayAnimatedNews({templateType:'info',msg1:'walk burned',$attacker:burner})
-    }
+    },
+    sharpenBlade:function(o){
+        const target = $('.selectedModel')
+        setBoons_Blights( target, { bdamage:Number( target.attr('data-bdamage') ) + 1 },0,{N:'Sharpen Blade',I:'self'})
+        add_action_taken('sharpenBlade')
+        current_ability_method = null
+    },
+    pressForwardJeen:function(o){
+        const { hex, row } = o
+        const target = $($(`.hex_${hex}_in_row_${row}`).children(`[data-tenmodel].${$('.selectedModel').data('side')}`)[0])
+        if( target.length ){
+            setBoons_Blights( target, {bspeed:Number( target.attr('data-bspeed') ) + 1 },0,{N:'Press Forward',I:'cogs'})
+            add_action_taken('pressForwardJeen')
+            un_glow()
+            current_ability_method = null
+        }
+    },
+    polearmSweepBlack:polearmSweep_,
+    polearmSweepWhite:polearmSweep_,
+    polearmSweepKill:function(o){
+        const { aim, hurt, hex, row, multiAction } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard.unitModel:not(".death")`)
+        if(targets.length){
+            const target = $(targets[0])
+            un_glow()
+            add_action_taken(`polearmSweep${phaser()}`,multiAction)
+            if( onHit(aim, target, 'scythe','Polearm Sweep') ){
+                if( doDamage(hurt, target) ){
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,maelstromBonu(target) + target.data('stepsgiven'))
+                    else null
+                }
+            }
+        }
+        current_ability_method = null
+    },
+    bladeStorm:function (o){
+        const { aim, hurt, hex, row, multiAction } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard:not(".death")`)
+        if(targets.length){
+            const target = $(targets[0])
+            un_glow()
+            add_action_taken("bladeStorm",multiAction)
+            if( onHit(aim, target, 'scythe','Blade Storm') ){
+                if( doDamage(hurt, target) ){
+                    wildfire()
+                    if( checkIfStillAlive(target) )
+                        moveLadder(target,maelstromBonu(target) + target.data('stepsgiven'))
+                    else null
+                    $('.selectedModel').addClass('bladeStorm bladeStorm_selected')
+                    highlightHexes({dist:1, colour:'legendaryGlow'})
+                }
+            }
+        }
+        current_ability_method = null
+    },
+    rapidStrike:function(o){
+        const { aim, hurt, hex, row } = o
+        const targets = $(`.hex_${hex}_in_row_${row}`).children(`.smallCard`)
+        if(targets.length){
+            const target = $(targets[0])
+            un_glow()
+            add_action_taken("rapidStrike")
+            $('.selectedModel').attr('data-actionstaken',Number( $('.selectedModel').attr('data-actionstaken') ) - 1)
+            if( onHit(aim, target, 'scythe','Rapid Strike') ){
+                if( doDamage(hurt, target) ){
+                    wildfire()
+                    if( checkIfStillAlive(target) ){
+                        moveLadder(target,maelstromBonu(target) + target.data('stepsgiven'))
+                    } else null
+                }
+            }
+        }
+        current_ability_method = null
+    },
 }

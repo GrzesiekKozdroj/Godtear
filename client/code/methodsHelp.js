@@ -1571,3 +1571,43 @@ function DEAD_MODELS_ACTIVATION_CHECK(side){
         }
     return produce
 }
+function polearmSweep_(o){
+    const { hex, row } = o
+    const targetHex = $(`.hex_${hex}_in_row_${row}`)
+    const phase = phaser()
+    const tergets = $('[data-glow="polearmSweep"]')
+    const reGlower = (t,c) => {
+            t.attr('data-glow', c)
+            t.children('.top').attr('data-glow', c)
+            t.children('.bottom').attr('data-glow', c)
+    }
+    if( tergets.length < 1 && targetHex.attr('data-glow') ){
+        if(targetHex.attr('data-glow') === 'polearmSweep')
+            reGlower(targetHex,'redGlow')
+        else
+            reGlower(targethex,'polearmSweep')
+    } else if ( $('.selectedModel').hasClass('whiteTeam') ){
+        const doneTimes = 0
+        const targetHexes = $(`[data-glow="polearmSweep].hexagon`)
+        const interval = setInterval(function() {
+            if (doneTimes < 2) { 
+                const { baim, bdamage } = extractBoons_Blights($('.selectedModel'))
+                const { hex, row } = $(targetHexes[0])
+                doneTimes++
+                const multiAction = doneTimes === 1 ? true : false
+                socket.emit('rolloSkill',{ aim:(4 + baim), hurt:(4 + bdamage), socksMethod:"polearmSweepKill", hex, row, multiAction })
+            } else {
+                un_glow()
+                add_action_taken(`polearmSweep${phase}`)
+                clearInterval(interval)
+            }
+            
+        }, 1200);
+        }
+        //do damage here
+}
+function maelstromBonu(t){
+    if(t.data('type')==='unit')
+        return 1
+    else return 0
+}

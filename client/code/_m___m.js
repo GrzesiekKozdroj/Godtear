@@ -381,6 +381,10 @@ var _m_ = {
             else if( $('.shootAndScoot_selected').length )
                 shootAndScoot()
         }
+    },
+    bladeStorm:$thiz=>{
+        un_glow()
+        $('.bladeStorm').removeClass('bladeStorm bladeStorm_selected')
     }
 }
 

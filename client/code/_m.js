@@ -1294,4 +1294,36 @@ const _m = {
         if($target.hasClass(`blackTeam`) )
             socket.emit('rolloSkill',{ aim: (5 + baim), hurt:(3 + bdamage), socksMethod:"fieryBreath", hex, row })
     },
+    sharpenBlade:function(origin,target){
+        socket.emit('rolloSkill',{ socksMethod: 'sharpenBlade' })
+    },
+    pressForwardJeen:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill', { socksMethod: 'pressForwardJeen', hex, row })
+    },
+    polearmSweepBlack:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill', { socksMethod: 'polearmSweepBlack', hex, row })
+    },
+    polearmSweepWhite:function(origin,target){
+        const { hex, row } = target
+        socket.emit('rolloSkill', { socksMethod: 'polearmSweepWhite', hex, row })
+    },
+    bladeStorm:function(origin, target){
+        const { baim, bdamage } = extractBoons_Blights(origin)
+        const { hex, row } = target
+        const $target = $($(`.hex_${hex}_in_row_${row}`).children('.smallCard')[0])
+        if($target.hasClass(`blackTeam`) ) {
+            let modelCount = $(`.hex_${hex}_in_row_${row}`).children('.smallCard.unitModel').length
+            let doneTimes = 0
+        const interval = setInterval(function() {
+            if (doneTimes < modelCount) { 
+                doneTimes++
+                const multiAction = doneTimes === 1 ? true : false
+                socket.emit('rolloSkill',{ aim:(5 + baim), hurt:(5 + bdamage), socksMethod:"bladeStorm", hex, row, multiAction })
+            } else 
+                clearInterval(interval)
+        }, 1200);
+        }
+    },
 }

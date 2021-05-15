@@ -603,6 +603,7 @@ $('body').on('click','[data-glow].hexagon',function(e){
             extraMover('beastlyCharge',thiz,'walk',['onlyOneStep'])
         if( $('.leap_selected').length )extraMover('leap',thiz,'walk')
         if( $('.summonsWalk_selected').length )extraMover('summonsWalk',thiz,'walk',['onlyOneStep'])
+        if( $('.bladeStorm').length )extraMover('bladeStorm',thiz,'walk')
     }
 })
 $('body').on('click','.avalanche_moveable',function(e){

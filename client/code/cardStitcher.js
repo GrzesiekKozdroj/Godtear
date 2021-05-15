@@ -229,9 +229,9 @@ function selectionFirstInfo(){
     return `
         <div id="introductory_insructions_info" class="hinge-in-from-top mui-enter">
             <article>
-                <p id="st_info">click champ to see card</p>
-                <p id="nd_info">click again to add to roster</p>
-                <p id="rd_info">click to continue</p>
+                <p id="st_info">choose three champions</p>
+                <p id="nd_info"></p>
+                <p id="rd_info"></p>
             </article>
         </div>
     `

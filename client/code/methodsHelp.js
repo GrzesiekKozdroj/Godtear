@@ -457,8 +457,8 @@ const highlightDirectPaths = ( { origin, distance, colour } ) => {
         $(`.hex_${h + 1}_in_row_${r - 1}`).attr('data-glow',colour+3)
         $(`.hex_${h + 1}_in_row_${r + 1}`).attr('data-glow',colour+5)
     }
-    $(`[data-glow^="${colour}"`).children('.top').attr('data-glow',colour)
-    $(`[data-glow^="${colour}"`).children('.bottom').attr('data-glow',colour)
+    // $(`[data-glow^="${colour}"`).children('.top').attr('data-glow',colour)
+    // $(`[data-glow^="${colour}"`).children('.bottom').attr('data-glow',colour)
 }
 function extraMover(methodName,thiz,moveType,rules='empty string'){//<----needs another props: conditions to be considered
     const className = ( '.' + methodName + '_selected' )
@@ -503,12 +503,12 @@ function leave_only_selected_path(){
     $('[data-glow].hexagon').each(function(){
         if( $(this).attr('data-glow') === chosenGlows ){
             $(this).attr('data-glow','straitPaths')
-            $(this).children('.top').attr('data-glow','straitPaths')
-            $(this).children('.bottom').attr('data-glow','straitPaths')
+            // $(this).children('.top').attr('data-glow','straitPaths')
+            // $(this).children('.bottom').attr('data-glow','straitPaths')
         } else {
             $(this).removeAttr('data-glow')
-            $(this).children('.top').removeAttr('data-glow')
-            $(this).children('.bottom').removeAttr('data-glow')
+            // $(this).children('.top').removeAttr('data-glow')
+            // $(this).children('.bottom').removeAttr('data-glow')
         }
     })
 }
@@ -712,8 +712,8 @@ function lifeTradeRaise(){
     un_glow()
     let dad = $('.selectedModel').parent('.hexagon')
     dad.attr('data-glow','recruitGlow')
-    dad.children('.top').attr('data-glow','recruitGlow')
-    dad.children('.bottom').attr('data-glow','recruitGlow')
+    // dad.children('.top').attr('data-glow','recruitGlow')
+    // dad.children('.bottom').attr('data-glow','recruitGlow')
     m_.raiseDead({hex:dad.data('hex'),row:dad.data('row'),key:"lifeTrade"})
     un_glow()
 }
@@ -1543,18 +1543,18 @@ const rolloAndo = (that,name)=>{
     $('[data-glow^="str"].hexagon').each(function(){
       if ( $(this).attr('data-glow') !== $('.selectedModel').parent('.hexagon').attr('data-glow') ) {
           $(this).removeAttr('data-glow')
-          $(this).children('.top').removeAttr('data-glow')
-          $(this).children('.bottom').removeAttr('data-glow')
+        //   $(this).children('.top').removeAttr('data-glow')
+        //   $(this).children('.bottom').removeAttr('data-glow')
       }
     })
     $('[data-glow].hexagon').each(function(){
         $(this).attr('data-glow','straitPaths')
-        $(this).children('.top').attr('data-glow','straitPaths')
-        $(this).children('.bottom').attr('data-glow','straitPaths')
+        // $(this).children('.top').attr('data-glow','straitPaths')
+        // $(this).children('.bottom').attr('data-glow','straitPaths')
     })
     $('.selectedModel').parent('.hexagon').removeAttr('data-glow')
-    $('.selectedModel').siblings('.top').removeAttr('data-glow')
-    $('.selectedModel').siblings('.bottom').removeAttr('data-glow')
+    // $('.selectedModel').siblings('.top').removeAttr('data-glow')
+    // $('.selectedModel').siblings('.bottom').removeAttr('data-glow')
     if( !$('[data-glow="straitPaths"]').length ){
         $(`.${name}_selected`).removeClass(`${name}_selected ${name}`)
         if( !$('.roll').length )
@@ -1578,8 +1578,8 @@ function polearmSweep_(o){
     const tergets = $('[data-glow="polearmSweep"]')
     const reGlower = (t,c) => {
             t.attr('data-glow', c)
-            t.children('.top').attr('data-glow', c)
-            t.children('.bottom').attr('data-glow', c)
+            // t.children('.top').attr('data-glow', c)
+            // t.children('.bottom').attr('data-glow', c)
     }
     if( tergets.length < 1 && targetHex.attr('data-glow') ){
         if(targetHex.attr('data-glow') === 'polearmSweep')

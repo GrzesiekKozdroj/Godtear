@@ -147,10 +147,10 @@ const DETERMINE_WARBAND_TOKEN_POS = (side, dadNum) => {
             GAME_TURN - 1 === 4 ? 2 :
         1) * determentor )
     }
-const ONLY_EMPTY_HEX = (thiz)=>!thiz.hasClass('objectiveGlow') && thiz.children().length < 3
+const ONLY_EMPTY_HEX = (thiz)=>!thiz.hasClass('objectiveGlow') && thiz.children().length < 1
 const ONLY_ADJACENT_HEX = (thiz)=>{
     un_glow()
-    highlightHexes( {colour:'whiteGlow', dist: 1}, thiz.children('.top') )
+    highlightHexes( {colour:'whiteGlow', dist: 1}, {hex:thiz.data('hex'), row:thiz.data('row')} )
     return $('.objectiveGlow[data-glow="whiteGlow"]').length
 }
 const ONLY_OBJHEX = (thiz)=>thiz.hasClass('objectiveGlow')
@@ -266,9 +266,9 @@ const scenarios = [
                     $('.objMoveableEndPh').removeClass('objMoveableEndPh')
                     dad.addClass('objMoveableEndPh')
                     un_glow()
-                    highlightHexes({colour:'legendaryGlow',dist:1},$(dad.children()[0]))
+                    highlightHexes({colour:'legendaryGlow',dist:1},{hex, row})
                 }else if( dad.attr('data-glow') === 'legendaryGlow' && 
-                    dad.children().length < 3 && 
+                    dad.children().length < 1 && 
                     !dad.hasClass('objectiveGlow') ){//move onto empty hex
                     removeObjectiveHex($('.objMoveableEndPh').data('row'),$('.objMoveableEndPh').data('hex'))
                     un_glow()
@@ -351,14 +351,14 @@ const scenarios = [
         turnEndMessage:(r)=>`QUEST<br/>looser place 1 objective on empty hex`,
         ruleset:function({ hex, row }){
             if( 
-                $(`.hex_${hex}_in_row_${row}`). children().length < 3 && 
+                $(`.hex_${hex}_in_row_${row}`). children().length < 1 && 
                 GAME_SCENARIO.dieRoll &&
                 NO_INTERFERENCERS( $(`.hex_${hex}_in_row_${row}`))
             ){
                 const dad = $(`.hex_${hex}_in_row_${row}`)
                 un_glow()
-                highlightHexes( {colour:'whiteGlow', dist: 1}, dad.children('.top') )
-                if( $('[data-glow].objectiveGlow').length && dad.children().length < 3 && !dad.hasClass('objectiveGlow') ){
+                highlightHexes( {colour:'whiteGlow', dist: 1}, {hex, row} )
+                if( $('[data-glow].objectiveGlow').length && dad.children().length < 1 && !dad.hasClass('objectiveGlow') ){
                     GAME_SCENARIO.dieRoll = 0
                     makeObjectiveHex(row, hex)
                     turn_resetter(opoSkillTrack,'black','blackTeam')

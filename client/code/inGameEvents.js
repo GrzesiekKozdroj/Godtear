@@ -2,41 +2,41 @@ const makeObjectiveHex =  (row,hex) => {
     let random = Math.floor( Math.random () * (3 - 1 + 1)) + 1
     $(`[data-row=${row}][data-hex=${hex}]`)
         .addClass(`objectiveGlow obj${random}`)
-            .children('.top')
-                .addClass(`objectiveGlow obj${random}`)
-    $(`[data-row=${row}][data-hex=${hex}]`)
-        .children('.bottom')
-            .addClass(`objectiveGlow obj${random}`)
+    //         .children('.top')
+    //             .addClass(`objectiveGlow obj${random}`)
+    // $(`[data-row=${row}][data-hex=${hex}]`)
+    //     .children('.bottom')
+    //         .addClass(`objectiveGlow obj${random}`)
 }
 const removeObjectiveHex = (row,hex) => {
     $(`.hex_${hex}_in_row_${row}`)
         .removeClass('objectiveGlow obj1 obj2 obj3')
-            .children()
-                .removeClass('objectiveGlow obj1 obj2 obj3')
+            // .children()
+            //     .removeClass('objectiveGlow obj1 obj2 obj3')
 }
 const makeViableTarget = (row,hex) => {
     $(`[data-row=${row}][data-hex=${hex}]`)
         .addClass('viableTarget')
-            .children()
-                .addClass('viableTarget')
+            // .children()
+            //     .addClass('viableTarget')
 }
 const endViableTarget = (row,hex) => {
     $(`[data-row=${row}][data-hex=${hex}]`)
         .removeClass('viableTarget')
-            .children()
-                .removeClass('viableTarget')
+            // .children()
+            //     .removeClass('viableTarget')
 }
 const makeHexGlow = ({row, hex, color}) => {
     $(`[data-row=${row}][data-hex=${hex}]`)
         .addClass(color + 'Glow')
-            .children()
-                .addClass(color + 'Glow')
+            // .children()
+            //     .addClass(color + 'Glow')
 }
 const endHexGlow = ({row, hex, color}) => {
     $(`[data-row=${row}][data-hex=${hex}]`)
         .removeClass(color + 'Glow')
-            .children()
-                .removeClass(color + 'Glow')
+            // .children()
+            //     .removeClass(color + 'Glow')
 }
 const buildScenarioLayout = ({redHexes, greenHexes, objectiveHexes}) => {
     redHexes.forEach(el => {
@@ -147,8 +147,8 @@ const oddRowPosition = (r,h, colour = 'yellowGlow', type = 'glow') => {
     $(`.hex_${h + 1}_in_row_${r}`).attr(`data-${type}`,colour)
     $(`.hex_${h - 1}_in_row_${r + 1}`).attr(`data-${type}`,colour)
     $(`.hex_${h}_in_row_${r + 1}`).attr(`data-${type}`,colour)
-    $(`[data-${type}="${colour}"`).children('.top').attr(`data-${type}`,colour)
-    $(`[data-${type}="${colour}"`).children('.bottom').attr(`data-${type}`,colour)
+    // $(`[data-${type}="${colour}"`).children('.top').attr(`data-${type}`,colour)
+    // $(`[data-${type}="${colour}"`).children('.bottom').attr(`data-${type}`,colour)
 }
 
 const evenRowPosition = (r,h, colour = 'yellowGlow', type = 'glow') => {
@@ -159,8 +159,8 @@ const evenRowPosition = (r,h, colour = 'yellowGlow', type = 'glow') => {
     $(`.hex_${h + 1}_in_row_${r}`).attr(`data-${type}`,colour)
     $(`.hex_${h}_in_row_${r + 1}`).attr(`data-${type}`,colour)
     $(`.hex_${h + 1}_in_row_${r + 1}`).attr(`data-${type}`,colour)
-    $(`[data-${type}="${colour}"`).children('.top').attr(`data-${type}`,colour)
-    $(`[data-${type}="${colour}"`).children('.bottom').attr(`data-${type}`,colour)
+    // $(`[data-${type}="${colour}"`).children('.top').attr(`data-${type}`,colour)
+    // $(`[data-${type}="${colour}"`).children('.bottom').attr(`data-${type}`,colour)
 }
 const infectMovementHexesWithYellow = (r,h) => {
     if(r % 2 === 1) oddRowPosition(r,h) 

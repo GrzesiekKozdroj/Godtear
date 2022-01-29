@@ -42,13 +42,16 @@ function beginBattle(){
         for (let h = 1; h < 15; h++) {
             const tester_paragraph = `<p>${h} | ${r}</p>`
             let hexClass = "hexagon deployPhase hex_" + h + "_in_row_" + r;
-            let hex = `
+            let OLD_hex = `
             <div class="${hexClass}" data-row=${r} data-hex=${h}>
                 <div class="top"></div>
                 <div class="bottom"></div>
                 ${false ? tester_paragraph : ''}
             </div>`;
-            $(`.row${r}`).append(hex);
+            let NEW_hex = `
+            <div class="${hexClass}" data-row=${r} data-hex=${h}>
+            </div>`;
+            $(`.row${r}`).append(NEW_hex);
         }
     }
 }
@@ -108,21 +111,21 @@ function makeGameBoard(o,coin){
     beginBattle()
     buildLadder()
     //---------------------------------------------TEZT____PHASE-----------------------------------
-    //QUICK_DEEPLOY()//dont forget EVENTS.js
-    //setTimeout(()=>{
+    // QUICK_DEEPLOY()//dont forget EVENTS.js
+    // setTimeout(()=>{
     //  phase='black';
     // myNextPhase='black';
     // $(".plotPhase").removeClass("plotPhase").addClass("clashPhase")
-    //// //     //$('#gameScreen').append(wellPlayed());
+    // // //     //$('#gameScreen').append(wellPlayed());
     //   setTimeout(()=>{
-    //        // $(`.cardsContainer`)
-    //        //     .removeClass(`hinge-in-from-left hinge-in-from-right mui-enter mui-enter-active`)
-    //        //     .addClass(`hinge-out-from-left hinge-out-from-right mui-leave mui-leave-active`)
-    //        //     .remove()
-    //        // $("#WP")
-    //        //     .removeClass('hinge-out-from-top mui-leave mui-leave-active')
-    //        //     .addClass("hinge-in-from-top mui-enter mui-enter-active")
-    //     //  GAME_SCENARIO = scenarios[3]
+    //     //    $(`.cardsContainer`)
+    //     //        .removeClass(`hinge-in-from-left hinge-in-from-right mui-enter mui-enter-active`)
+    //     //        .addClass(`hinge-out-from-left hinge-out-from-right mui-leave mui-leave-active`)
+    //     //        .remove()
+    //     //    $("#WP")
+    //     //        .removeClass('hinge-out-from-top mui-leave mui-leave-active')
+    //     //        .addClass("hinge-in-from-top mui-enter mui-enter-active")
+    //      // GAME_SCENARIO = scenarios[3]
     //      $('.unitModel').each(function(){
     //          if( $(this).attr('data-name')!=="Titus")
     //              $(this).attr('data-actionstaken',2).addClass('activated')
@@ -130,7 +133,7 @@ function makeGameBoard(o,coin){
     //              MY_SCORE += 4
     //              OP_SCORE += 4
     //    },700)
-    ////  //   console.log('timeout')
+    // //  //   console.log('timeout')
     //  },2900)
     //----------------------------------------------------------------------------------------------
     GEEK[mySide]  = GEEK_MAKER(roster, opoRoster)
@@ -265,4 +268,3 @@ function QUICK_DEEPLOY() {
     $('.deployPhase').removeClass('deployPhase').addClass('plotPhase')
     socket.emit('beginBattle')
 }
-

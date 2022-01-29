@@ -867,8 +867,8 @@ const _m = {
         $(`[data-name="Hexlings"][data-tenmodel].${mySide}`)
             .parent('.hexagon').each(function(){
                 $(this).attr('data-glow','greenGlow')
-                $(this).children('.top').attr('data-glow','greenGlow')
-                $(this).children('.bottom').attr('data-glow','greenGlow')
+                // $(this).children('.top').attr('data-glow','greenGlow')
+                // $(this).children('.bottom').attr('data-glow','greenGlow')
             })
         if( $target.length ) 
             socket.emit('rolloSkill',{hex, row, socksMethod:'callTotems'})
@@ -1147,8 +1147,8 @@ const _m = {
                 const dad = $(this)
                 if( dad.children(`[data-name="RedBandits"][data-tenmodel].whiteTeam`).length < 3 ){
                     dad.attr('data-glow','recruitGlow')
-                    dad.children('.top').attr('data-glow','recruitGlow')
-                    dad.children('.bottom').attr('data-glow','recruitGlow')
+                    // dad.children('.top').attr('data-glow','recruitGlow')
+                    // dad.children('.bottom').attr('data-glow','recruitGlow')
                     river = [ "Rangosh", mySide, "unit", "RedBandits" ]
                 }
             })

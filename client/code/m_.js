@@ -1477,8 +1477,8 @@ var m_ = {
             $(`[data-name="Hexlings"][data-tenmodel].${side}`)
                 .parent('.hexagon').each(function(){
                     $(this).attr('data-glow','greenGlow')
-                    $(this).children('.top').attr('data-glow','greenGlow')
-                    $(this).children('.bottom').attr('data-glow','greenGlow')
+                    // $(this).children('.top').attr('data-glow','greenGlow')
+                    // $(this).children('.bottom').attr('data-glow','greenGlow')
                 })
         },900)
     },
@@ -1981,8 +1981,8 @@ var m_ = {
                 const dad = $(this)
                 if( dad.children(`[data-name="RedBandits"][data-tenmodel].${side}`).length < 3 ){
                     dad.attr('data-glow','inductGlow')
-                    dad.children('.top').attr('data-glow','inductGlow')
-                    dad.children('.bottom').attr('data-glow','inductGlow')
+                    // dad.children('.top').attr('data-glow','inductGlow')
+                    // dad.children('.bottom').attr('data-glow','inductGlow')
                 }
             })
             river = [ "Rangosh", side, "unit", "RedBandits" ]

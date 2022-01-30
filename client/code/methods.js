@@ -2177,127 +2177,127 @@ const m =
             }
         }
     },
-    Jeen:{
-        black:{
-            sharpenBlade:{
-                name:"Blade Storm",
-                desc:damageBoon,
-                icon:sefl,
-                unused:true,
-                m:"sharpenBlade"
-            },
-            pressForwardJeen:{
-                name:"Press Forward",
-                desc:speedBoon,
-                icon:cogs,
-                dist:2,
-                unused:true,
-                m:"pressForwardJeen"
-            },
-            polearmSweepBlack:{
-                name:"Polearm Sweep",
-                desc:`Choose up to 2 hexes within range that are adjacent to each other. This skill can target 1 model in each of those hexes`,
-                icon:skull,
-                dist:2,
-                aim:[4],
-                hurt:[4],
-                unused:true,
-                m:"polearmSweepBlack"
-            }
-        },
-        white:{
-            bladeStorm:{
-                name:"Blade Storm",
-                desc:`This skill may target up to three models in one hex. After using blade storm move Jeen up to 1 hex`,
-                icon:skull,
-                dist:1,
-                aim:[5],
-                hurt:[5],
-                unused:true,
-                m:"bladeStorm"
-            },
-            rapidStrike:{
-                name:"Rapid Strike",
-                desc:`Jeen may use this skill as a bonus action.</br> Must target a follower.`,
-                icon:skull,
-                dist:2,
-                aim:[3],
-                hurt:[3],
-                unused:true,
-                m:"rapidStrike"
-            },
-            polearmSweepWhite:{
-                name:"Polearm Sweep",
-                desc:`Choose up to 2 hexes within range that are adjacent to each other. This skill can target 1 model in each of those hexes`,
-                icon:skull,
-                dist:2,
-                aim:[4],
-                hurt:[4],
-                unused:true,
-                m:"polearmSweepWhite"
-            }
-        },
-        util:{
-            legendary:{
-                name:"Overrun",
-                desc:`Move Jeen up to 2 hexes. Then move each other friendly model within range up to 2 hexes in the order of your choice`,
-                icon:star,
-                dist:2,
-                unused:true,
-                legendaryUsed:false,
-                m:"overrun"
-            },
-            martialDiscipline:{
-                name:"Martial Discipline",
-                desc:`After Jeen gains one or more wound from an enemy, she may gain ${dodgeBoon} or ${protectionBoon}.`,
-                m:"martialDiscipline"
-            }
+    // Jeen:{
+    //     black:{
+    //         sharpenBlade:{
+    //             name:"Blade Storm",
+    //             desc:damageBoon,
+    //             icon:sefl,
+    //             unused:true,
+    //             m:"sharpenBlade"
+    //         },
+    //         pressForwardJeen:{
+    //             name:"Press Forward",
+    //             desc:speedBoon,
+    //             icon:cogs,
+    //             dist:2,
+    //             unused:true,
+    //             m:"pressForwardJeen"
+    //         },
+    //         polearmSweepBlack:{
+    //             name:"Polearm Sweep",
+    //             desc:`Choose up to 2 hexes within range that are adjacent to each other. This skill can target 1 model in each of those hexes`,
+    //             icon:skull,
+    //             dist:2,
+    //             aim:[4],
+    //             hurt:[4],
+    //             unused:true,
+    //             m:"polearmSweepBlack"
+    //         }
+    //     },
+    //     white:{
+    //         bladeStorm:{
+    //             name:"Blade Storm",
+    //             desc:`This skill may target up to three models in one hex. After using blade storm move Jeen up to 1 hex`,
+    //             icon:skull,
+    //             dist:1,
+    //             aim:[5],
+    //             hurt:[5],
+    //             unused:true,
+    //             m:"bladeStorm"
+    //         },
+    //         rapidStrike:{
+    //             name:"Rapid Strike",
+    //             desc:`Jeen may use this skill as a bonus action.</br> Must target a follower.`,
+    //             icon:skull,
+    //             dist:2,
+    //             aim:[3],
+    //             hurt:[3],
+    //             unused:true,
+    //             m:"rapidStrike"
+    //         },
+    //         polearmSweepWhite:{
+    //             name:"Polearm Sweep",
+    //             desc:`Choose up to 2 hexes within range that are adjacent to each other. This skill can target 1 model in each of those hexes`,
+    //             icon:skull,
+    //             dist:2,
+    //             aim:[4],
+    //             hurt:[4],
+    //             unused:true,
+    //             m:"polearmSweepWhite"
+    //         }
+    //     },
+    //     util:{
+    //         legendary:{
+    //             name:"Overrun",
+    //             desc:`Move Jeen up to 2 hexes. Then move each other friendly model within range up to 2 hexes in the order of your choice`,
+    //             icon:star,
+    //             dist:2,
+    //             unused:true,
+    //             legendaryUsed:false,
+    //             m:"overrun"
+    //         },
+    //         martialDiscipline:{
+    //             name:"Martial Discipline",
+    //             desc:`After Jeen gains one or more wound from an enemy, she may gain ${dodgeBoon} or ${protectionBoon}.`,
+    //             m:"martialDiscipline"
+    //         }
 
-        }
-    },
-    goldenShrikes:{
-        black:{
-            balancedStance:{
-                name:"Balanced Stance",
-                desc:`${dodgeBoon} or ${protectionBoon}`,
-                icon:sefl,
-                unused:true,
-                m:'balancedStance'
-            },
-            pressForwardShrikes:{
-                name:"Press Forward",
-                desc:speedBoon,
-                icon:cogs,
-                dist:2,
-                unused:true,
-                m:"pressForwardShrikes"
-            },
-        },
-        white:{
-            sprint:{
-                name:'Sprint',
-                desc:'One Golden Shrike may move up to 3 hexes',
-                icon:sefl,
-                unused:true,
-                m:'sprintShrikes'
-            },
-            slashAndDash:{
-                name:'Slash And Dash',
-                desc:'After using Slash And Dash, each Golden Shrike in this hex may move up to 1 hex.',
-                icon:skull,
-                dist: 1,
-                aim:[3,5,7],
-                hurt:[5,4,2],
-                unised:true,
-                m:'slashAndDash'
-            }
-        },
-        util:{
-            driveBack:{
-                name:"Drive Back",
-                desc:"At the end of Golden Shrikes activation, choose a hex adjacent to a Golden Shrike, you may move each enemy follower in that hex, up to 1 hex.",
-                m:'driveBack'
-            }
-        }
-    }
+    //     }
+    // },
+    // goldenShrikes:{
+    //     black:{
+    //         balancedStance:{
+    //             name:"Balanced Stance",
+    //             desc:`${dodgeBoon} or ${protectionBoon}`,
+    //             icon:sefl,
+    //             unused:true,
+    //             m:'balancedStance'
+    //         },
+    //         pressForwardShrikes:{
+    //             name:"Press Forward",
+    //             desc:speedBoon,
+    //             icon:cogs,
+    //             dist:2,
+    //             unused:true,
+    //             m:"pressForwardShrikes"
+    //         },
+    //     },
+    //     white:{
+    //         sprint:{
+    //             name:'Sprint',
+    //             desc:'One Golden Shrike may move up to 3 hexes',
+    //             icon:sefl,
+    //             unused:true,
+    //             m:'sprintShrikes'
+    //         },
+    //         slashAndDash:{
+    //             name:'Slash And Dash',
+    //             desc:'After using Slash And Dash, each Golden Shrike in this hex may move up to 1 hex.',
+    //             icon:skull,
+    //             dist: 1,
+    //             aim:[3,5,7],
+    //             hurt:[5,4,2],
+    //             unised:true,
+    //             m:'slashAndDash'
+    //         }
+    //     },
+    //     util:{
+    //         driveBack:{
+    //             name:"Drive Back",
+    //             desc:"At the end of Golden Shrikes activation, choose a hex adjacent to a Golden Shrike, you may move each enemy follower in that hex, up to 1 hex.",
+    //             m:'driveBack'
+    //         }
+    //     }
+    // }
 }

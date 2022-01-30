@@ -5,7 +5,7 @@ $((e) => {
     $('body').append(`<img id="map_place" src="../img/place${Math.floor(Math.random()*8)}.jpg" />`)
     $('#gameScreen').empty().append(firstStitch());
 //------------------QUICK__SETUP--------------------------------
-  //  socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:roster }  );
+  //  socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:["Jeen"] }  );
 //-------------------------------------------------------------------
     $('.selection_section').each(
         function(){

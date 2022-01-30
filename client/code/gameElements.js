@@ -174,7 +174,15 @@ function highlightHexes ({colour, dist},thiz = $('.selectedModel'), type = 'glow
         if(row % 2 === 1) oddRowPosition(row, hex, colour, type) 
         else if (row % 2 === 0) evenRowPosition(row, hex, colour, type)
     }
-    const {hex, row} = thiz.parent('.hexagon').data()
+    let hex, row
+    try {
+        hex = thiz.parent('.hexagon').data().hex
+        row = thiz.parent('.hexagon').data().row
+    } catch (error) {
+        hex = thiz.hex
+        row = thiz.row
+    }
+//    const {hex, row} = thiz.parent('.hexagon') ? thiz.parent('.hexagon').data() : thiz
     for(let m = 0; m < dist; m++ ){
         if(m === 0) 
             applyClass({colour, hex, row, type})

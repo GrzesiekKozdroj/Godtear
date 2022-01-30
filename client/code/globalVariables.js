@@ -1,8 +1,8 @@
 var nickName = (Math.floor(Math.floor( Math.random () * (1000 - 1 + 1)) + 1)).toString();
 var gamePlaceName = "Lothlorien";
-var roster = ["Rhodri","Morrigan","Blackjaw"];
+var roster = ["Jeen","Morrigan","Blackjaw"];
 var opoName = "BadBob";
-var opoRoster = ["Finvarr","SneakyPeet","Lorsann"];
+var opoRoster = ["Jeen","SneakyPeet","Lorsann"];
 var opoSide;
 var mySide;
 var myTurn;

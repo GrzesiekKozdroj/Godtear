@@ -111,7 +111,7 @@ const rosters =
         {champ:Blackjaw, grunt:UnburntReavers},
         {champ:Titus, grunt:GlorySeekers},
         {champ:Grimgut, grunt:Retchlings},
-        {champ:Jeen, grunt:goldenShrikes}
+   //     {champ:Jeen, grunt:goldenShrikes}
     ],
     shaper:
     [

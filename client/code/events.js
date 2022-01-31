@@ -5,8 +5,26 @@ $((e) => {
     $('body').append(`<img id="map_place" src="../img/place${Math.floor(Math.random()*8)}.jpg" />`)
     $('#gameScreen').empty().append(firstStitch());
 //------------------QUICK__SETUP--------------------------------
-  //  socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:["Jeen"] }  );
+   // socket.emit('namePlace',{nickName:nickName, place:'lotlorien', roster:["Keera"] }  );
 //-------------------------------------------------------------------
+$('body').on('click','.endHex', function(e){
+    e.preventDefault()
+    $('.endHex').remove()
+    // end the turn
+    //needs to emit command through socket
+})
+$('body').on('click','.scenario', function(e){
+    e.preventDefault()
+    $('body').append(game_scenario_infotablet())
+})
+$('body').on('click','.game-log', function(e){
+    e.preventDefault()
+    $('.sms_message').removeClass('fade_sms')
+    setTimeout( ()=>$('.sms_message').addClass('fade_sms'), 20 )
+})
+$('body').on('click','.game_scenario-info',function(e){
+    $('.game_scenario-info').remove()
+})
     $('.selection_section').each(
         function(){
             let daddy = $(this)

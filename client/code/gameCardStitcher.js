@@ -9,7 +9,14 @@ const makedata = (skill)=>{
     }
     return champDATA.join(' ')
 }
-
+const game_info = () => {
+    return `
+        <div class="q-contain">
+            <div class="scenario"></div>
+            <div class="game-log"></div>
+        </div>
+    `
+} 
 const bigCard_bb = (a,b)=>`<span class="${b>0?'booned':b<0?'blighted':'normal'} big_card__BB_skill">${a+b}</span>`
 
 const dis_min_BBs = (skill,baim,bdamage) => {
@@ -128,6 +135,8 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
             `
         }).join('') 
     }
+    const STYLED_ATTRIBUTES = phase === 'white' ? 
+            styled_attribute_number(speed[0],bspeed,name) : styled_attribute_number(speed[1],bspeed,name)
     return `
         <div id='game_card-big' class='${side}_card'
             data-klass='${klass}' 
@@ -156,9 +165,7 @@ function leftCard ({klass, type, name, unitSize, icon, speed, dodge, protection,
 
                 <div id='card_speed_${phase}' class='game_card-attrib offset-speed'>
                     <div class='top'></div>
-                    ${ phase === 'white' ? 
-                        styled_attribute_number(speed[0],bspeed,name) : styled_attribute_number(speed[1],bspeed,name)
-                    }
+                    ${ STYLED_ATTRIBUTES }
                     <div class='bottom'></div>
                 </div> 
 
@@ -430,6 +437,7 @@ function miniCard ({klass,type,name,unitSize,icon,speed,dodge,protection,health,
         </div>
         ${skillzBlack(skillx,phaze,side)}
         ${endActionButton(type,phaze,side,1)}
+        ${side === mySide ? game_info() : ''}
         <div id="dummy_contain" class="${side}">
             <div class="mini-card-actions">
                 <div id='claimAction' class='game_card-attrib card_base_action ${phaze} ${type} claim'>

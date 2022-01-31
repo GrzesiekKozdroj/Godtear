@@ -37,8 +37,8 @@ function displayAnimatedNews ({
     msg0, msg1, msg2, msg3
 }){
     const extractor = (model) => {
-        const name = model.data('name')
-        const team = model.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam'
+        const name = model.typeOf()!=='string'? model.data('name') : model
+        const team = model.typeOf()!=='string'? model.hasClass('whiteTeam') ? 'whiteTeam' : 'blackTeam' : ''
         return { name, team }
     }
     const uq_id = Math.floor( Math.random () * (1000 - 1 + 1)) + 1
@@ -667,3 +667,16 @@ function displatyTT(){
         </p>
     `)
 }
+
+const game_scenario_infotablet = () => {
+    return `
+        <div class="game_scenario-info">
+            <div class="zeros">
+                <div class='xx'>X</div>
+            </div>
+            <h5>${GAME_SCENARIO.name}</h5>
+            <p>${GAME_SCENARIO.desc}</p>
+        </div>
+    `
+}
+const end_hex_placements = () => `<div class="endHex">end<br/>turn</div>`

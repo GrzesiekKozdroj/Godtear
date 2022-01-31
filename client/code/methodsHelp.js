@@ -239,7 +239,7 @@ const forceKill = (target) => {
         }
     }, 700)
 }//<---killed units and champs need to give up their boons and blights, what about resurrected units??
-const moveLadder = (target,steps) => {
+const moveLadder = (target,steps,) => {
     const origin = $($('#coin').parent('.ladderBlock')).data('block')
     let direction = 0 //1   <--> 22
     if( target.hasClass('blackTeam') && target.hasClass('smallCard') ){
@@ -260,7 +260,7 @@ const moveLadder = (target,steps) => {
     displayAnimatedNews({
         templateType:'points',
         steps,
-        $victim:$('.selectedModel')
+        $victim: phase !== 'end' ? $('.selectedModel') : 'banners net worth '
     })
     counterMaker(target,'stepsEarned',steps)
     if( adres )
@@ -1531,6 +1531,7 @@ function turnTransition_ (dieRoll){
         update_basket()
         GAME_TURN++
         displayAnimatedNews(  { templateType:'info',msg0:GAME_SCENARIO.turnEndMessage(dieRoll) }  )
+        qEnd()
         if( GAME_SCENARIO.instaCall && MY_SCORE < 5 && OP_SCORE < 5 )
             GAME_SCENARIO.ruleset(0,0)
     }

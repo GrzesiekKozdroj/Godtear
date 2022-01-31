@@ -164,6 +164,7 @@ const PLACEMENT_RULESET = ({ empty = false, adjacent = false, objItself = false 
         (objItself ? ONLY_OBJHEX(t) : true)
     )
 }
+const qEnd = () => 0//!am_I_winner() && GAME_SCENARIO.name !== 'Knowledge' ? $('body').append( end_hex_placements() ) : null
 const scenarios = [
     {
         name:"Life",
@@ -310,7 +311,7 @@ const scenarios = [
         },
         instaCall:true,
         dieRoll:0,
-        turnEndMessage:(r)=>`KNOWLEDGE<br/>wealth is burden`,
+        turnEndMessage:(r)=>`KNOWLEDGE<br/>wealth is burden, winning warband token moves closer to the middle`,
         warbandTokens:{ left: 3, right: 20 },
         ruleset:function({ hex, row }){
             turn_resetter(opoSkillTrack,'black','blackTeam')

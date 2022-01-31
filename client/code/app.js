@@ -125,7 +125,7 @@ function makeGameBoard(o,coin){
     //     //    $("#WP")
     //     //        .removeClass('hinge-out-from-top mui-leave mui-leave-active')
     //     //        .addClass("hinge-in-from-top mui-enter mui-enter-active")
-    //      GAME_SCENARIO = scenarios[0]
+    //      //GAME_SCENARIO = scenarios[0]
     //      $('.unitModel').each(function(){
     //          if( $(this).attr('data-name')!=="Titus")
     //              $(this).attr('data-actionstaken',2).addClass('activated')

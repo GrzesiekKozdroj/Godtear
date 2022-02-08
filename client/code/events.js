@@ -55,8 +55,12 @@ $('body').on('click','.game_scenario-info',function(e){
             $(this).on('click',e=>{
                 e.preventDefault()
                 let chosen = $(this)
-                if( chosen.hasClass('cardDisplayed') )chosen_move(chosen)
-                else selection_animator({   champ:chosen  })
+                selection_animator({   champ:chosen  })
+                const timing = setTimeout(()=>{
+                    chosen_move(chosen)
+                }, 120)
+                // if( chosen.hasClass('cardDisplayed') )chosen_move(chosen)
+                // else selection_animator({   champ:chosen  })
             })
         }
     )

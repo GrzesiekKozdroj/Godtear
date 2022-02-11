@@ -419,9 +419,11 @@ function spinning_loader(b){
 }
 function infoIcon(text){
     return `
+        <div class='coiner'>
             <span class='questionMark'>
                 ${text}
             </span>
+        </div>
     `
 }
 // function hexoMaker ({img, background, text, classes}) {

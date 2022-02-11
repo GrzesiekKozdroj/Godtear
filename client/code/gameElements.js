@@ -658,12 +658,11 @@ const singleStatList = ({ch,side,c, thiz, line}) => {
 
     return CLAY_TABLET
 }
-function displatyTT(){
+function displatyTT(text){
     $('body').append(`
         <p id="rolledOutTT">
             <span id="closeTT">X</span>
-            All character names, abilities, rules and character images are registered trademarks of&nbsp;<a target="_blank" href="https://steamforged.com/">Steam Forged Games Ltd.</a>&nbsp;This site is not affiliated with&nbsp;<a target="_blank"  href="https://steamforged.com/">Steam Forged Games Ltd.</a>&nbsp;and no claim of ownership is made to any of these trademarks. Icons for skills, banners etc. are are graciously provided by&nbsp;<a target="_blank"  href="https://game-icons.net/">https://game-icons.net/</a>&nbsp;.<br/><br/>You expressly agree that use of this service is at your sole risk and is provided on an "as is" basis without warranties of any kind, either express or implied. No one can warrant that the service will be uninterrupted or error-free. Use at your own risk.
-            <span id="contact_me">larhendiel@yahoo.co.uk</span>
+            ${text}
         </p>
     `)
 }

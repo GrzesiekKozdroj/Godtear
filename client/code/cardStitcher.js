@@ -264,6 +264,7 @@ function selectionForm(){
                 </div>
             </div>
             <form id="gameTypeForm" class="slide-in-up mui-enter">
+                ${infoIcon('?')}
                 <input type="text" id="gamePlayerName" class="introductionInfo" placeholder="nickname" required>
                 <div id="wronCharWarning"></div>
                 <input type="text" id="gamePlaceName" class="introductionInfo" placeholder="battlefield" required>
@@ -416,8 +417,15 @@ function spinning_loader(b){
     `]
     return a[b]
 }
-function hexoMaker ({img, background, text, classes}) {
+function infoIcon(text){
     return `
-        <div 
+            <span class='questionMark'>
+                ${text}
+            </span>
     `
 }
+// function hexoMaker ({img, background, text, classes}) {
+//     return `
+//         <div 
+//     `
+// }

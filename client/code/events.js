@@ -176,7 +176,11 @@ $('body').on('click','.puller',function(e){
 })
 $('body').on('click','#TaT',function(e){
     e.preventDefault()
-    displatyTT()
+    displatyTT(TaT)
+})
+$('body').on('click','.questionMark',function(e){
+    e.preventDefault()
+    displatyTT(queztionMark)
 })
 $('body').on('click','#closeTT',function(e){
     e.preventDefault()

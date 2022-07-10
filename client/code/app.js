@@ -55,7 +55,8 @@ function beginBattle(){
         }
     }
 }
-const makeAnim = (model,whereTo,callback=false) => {//model, destination
+const makeAnim = (_model,whereTo,callback=false) => {//model, destination
+    const model = $(_model)
     if( model ){
         let ofsetSize = model.hasClass('champModel') ? [.3, 3.25] : [-0.75, -0.75]
         const left = -(whereTo.offset().left - ofsetSize[0] *(.248261 / 12  * 1.38 * km)- model.offset().left)+'px'

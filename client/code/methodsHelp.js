@@ -286,6 +286,7 @@ const extractBoons_Blights = (origin) => {
 const setBoons_Blights = (origin,props,local = false, {N , I} = false)=>{//$(), {baim:-1}
     let subject = local !== 'local' ? 
         $(`[data-name="${origin.data('name')}"][data-side="${origin.data('side')}"][data-tenmodel]`) : origin
+        console.log('root of problems??',subject, subject[0])
     displayAnimatedNews({
         $attacker:$(subject[0]),
         templateType:'boons',

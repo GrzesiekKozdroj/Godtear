@@ -138,7 +138,6 @@ for(let c in rosters){
 }
 const DETERMINE_WARBAND_TOKEN_POS = (side, dadNum) => {
     const determentor = side === 'left' ? -1 : 1
-    console.log(GAME_TURN)
      return dadNum - (
         (
             GAME_TURN - 1 === 1 ? 1 :
